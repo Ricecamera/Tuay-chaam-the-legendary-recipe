@@ -3,7 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Chaam
+  - Plant1
+  - Plant2
+  - Plant3
+  - Boss
+  - Enemy1
+  - Enemy2
+  - Enemy3
+  - Enemy4
+  - Spawner
+  - chaam
+  - boss
+  - enemy2
+  - enemy3
+  - plant2
+  - enemy1
   layers:
   - Default
   - TransparentFX
@@ -43,9 +59,6 @@ TagManager:
     locked: 0
   - name: Character
     uniqueID: 2601730019
-    locked: 0
-  - name: Special Character
-    uniqueID: 2795360155
     locked: 0
   - name: Overlay
     uniqueID: 3882733785
