@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleLogic {
+namespace BattleScene.BattleLogic {
 
     public class ActionCommand : IComparable, ICommand {
         private float speed;                // field that determine the execution order of skills

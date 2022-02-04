@@ -21,7 +21,7 @@ public class Spawner : MonoBehaviour {
     public Transform bossSpawnPos;          // reference of boss' spawn position
 
     [Header("Other scripts")]
-    public PakSelectionV2 pakSelection;     // reference of pakSelection object in scene
+    public PakSelection pakSelection;     // reference of pakSelection object in scene
 
     void Start() {
 

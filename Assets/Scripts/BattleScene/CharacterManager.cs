@@ -47,16 +47,17 @@ namespace BattleScene {
         }
 
         public GameObject GetCharacter(string tag, bool isPlayerFlag = false){
+            CharacterHolder output = null;
             try {
-                CharacterHolder output = null;
                 if (isPlayerFlag)
                     output = playerTeam[tag];
                 else
                     output = enemyTeam[tag];
                 return output.character;
             } catch {
-                return null;
+                Debug.LogError(string.Format("An element with Key = {0} doesn't exist.", tag));
             }
+            return output.character;
         }
 
         public bool hasCharacter(string tag, bool isPlayerFlag = false) {

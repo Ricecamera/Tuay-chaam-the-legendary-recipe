@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace BattleLogic {
+namespace BattleScene.BattleLogic {
     public class ActionCommandHandler : MonoBehaviour {
 
         public static event Action OnComplete;

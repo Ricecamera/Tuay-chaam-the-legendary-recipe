@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using BattleLogic;
+using BattleScene.BattleLogic;
 using Random = UnityEngine.Random;
 
 namespace BattleScene {

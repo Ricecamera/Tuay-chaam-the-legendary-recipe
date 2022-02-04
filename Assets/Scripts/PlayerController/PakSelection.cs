@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleScene;
-using BattleLogic;
+using BattleScene.BattleLogic;
 /*
     *** Overview of this class ***
     
@@ -13,7 +13,7 @@ using BattleLogic;
     -เปลี่ยน state ในการเลือกตามการกด ( default -> pakSelected -> skillSelected -> enemySelected -> pressOkButton )
 */
 
-public class PakSelectionV2 : MonoBehaviour {
+public class PakSelection : MonoBehaviour {
 
     enum InputState { DEFAULT, CHARCTER_SELECTED, SKILL_SELECTED, ENEMY_SELECTED, COMFIRMED, END_TURN };
 
