@@ -6,13 +6,19 @@ public class Transition : MonoBehaviour {
     // Start is called before the first frame update
     [SerializeField]
     private float delayTime;
+
+
     void Start() {
-        rend = GetComponent<SpriteRenderer>();
+        rend = GetComponentInChildren<SpriteRenderer>();
+
+        if (rend == null) return;
+        
+        Debug.Log(rend);
         Color c = rend.material.color;
         c.a = 0f;
         rend.material.color = c;
-        startFadeIn();
 
+        startFadeIn();
     }
 
     IEnumerator FadeIn() {
@@ -27,6 +33,8 @@ public class Transition : MonoBehaviour {
     }
 
     public void startFadeIn() {
+
+
         StartCoroutine("FadeIn");
     }
 

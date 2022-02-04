@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillMenuUI : MonoBehaviour {
+    private const float SIZE_MULTIPLER = 1.2f;
+
     [Header("Default image")]
     private Sprite defualtCharacter;
     private Sprite defaultButtonSprite;
@@ -23,13 +25,14 @@ public class SkillMenuUI : MonoBehaviour {
     }
     public void UpdateCharacterUI(Sprite sprite) {
         if (sprite) {
-
+            characterImage.color  = Color.white;
             characterImage.sprite = sprite;
 
             /**TODO: Set icon for each skill*/
         }
         else {
             characterImage.sprite = null;
+            characterImage.color  = Color.clear;
         }
         ToggleMenu(true);
     }
@@ -50,15 +53,15 @@ public class SkillMenuUI : MonoBehaviour {
         }
 
         if (skillToggle[index]) {
-            skills[index].GetComponent<RectTransform>().localScale = new Vector3(9f, 9f, 9f);
+            skills[index].GetComponent<RectTransform>().localScale = Vector3.one;
             skillToggle[index] = false;
         }
         else {
             for (int i = 0; i < skills.Length; i++) {
-                skills[i].GetComponent<RectTransform>().localScale = new Vector3(9f, 9f, 9f);
+                skills[i].GetComponent<RectTransform>().localScale = Vector3.one;
                 skillToggle[i] = false;
             }
-            skills[index].GetComponent<RectTransform>().localScale = new Vector3(10f, 10f, 10f);
+            skills[index].GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
             skillToggle[index] = true;
         }
     }

@@ -17,8 +17,8 @@ namespace BattleScene {
     }
 
     public class CharacterManager : MonoBehaviour {
-        public static Vector3 normalCharacterScale = new Vector3(0.3f, 0.3f, 0.3f);
-        public static Vector3 selectCharacterScale = new Vector3(0.35f, 0.35f, 0.35f);
+
+        private const float SIZE_MULTIPLER = 1.2f;
 
         private Dictionary<string, CharacterHolder> playerTeam;
         private Dictionary<string, CharacterHolder> enemyTeam;
@@ -71,10 +71,10 @@ namespace BattleScene {
                 CharacterHolder found = enemyTeam[tag];
                 found.isSelected = value;
                 if (value) {
-                    found.character.GetComponent<RectTransform>().localScale = selectCharacterScale;
+                    found.character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
                 }
                 else {
-                    found.character.GetComponent<RectTransform>().localScale = normalCharacterScale;
+                    found.character.GetComponent<RectTransform>().localScale = Vector3.one;
                 }
             }
             catch {
@@ -87,10 +87,10 @@ namespace BattleScene {
                 CharacterHolder found = playerTeam[tag];
                 found.isSelected = value;
                 if (value) {
-                    found.character.GetComponent<RectTransform>().localScale = selectCharacterScale;
+                    found.character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
                 }
                 else {
-                    found.character.GetComponent<RectTransform>().localScale = normalCharacterScale;
+                    found.character.GetComponent<RectTransform>().localScale = Vector3.one;
                 }
             }
             catch {

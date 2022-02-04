@@ -52,7 +52,7 @@ public class PakSelection : MonoBehaviour {
     }
 
     void Start() {
-        characters = GameObject.FindGameObjectWithTag("spawner").GetComponent<CharacterManager>();
+        characters = GameObject.FindGameObjectWithTag("Spawner").GetComponent<CharacterManager>();
 
         for (int i = 0; i < skillMenu.skills.Length; ++i) {
             int k = i;
@@ -121,8 +121,8 @@ public class PakSelection : MonoBehaviour {
 
             if (hit.collider != null) {
 
-                if (hit.collider.CompareTag("plant1") || hit.collider.CompareTag("plant2") 
-                    || hit.collider.CompareTag("plant3") || hit.collider.CompareTag("chaam")) {
+                if (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2") 
+                    || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam")) {
                     // find game object data with tag
                     if (!characters.hasCharacter(hit.collider.tag, true)) return InputState.DEFAULT;
 
@@ -168,8 +168,8 @@ public class PakSelection : MonoBehaviour {
 
 
             if ((selectedPak.CompareTo("") != 0) && 
-                    (hit.collider.CompareTag("plant1") || hit.collider.CompareTag("plant2") 
-                    || hit.collider.CompareTag("plant3") || hit.collider.CompareTag("chaam"))) {
+                    (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2") 
+                    || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam"))) {
 
                 characters.SelectAlly(selectedPak, false);
                 result.Clear();
@@ -224,8 +224,8 @@ public class PakSelection : MonoBehaviour {
 
             if (hit.collider == null) return InputState.SKILL_SELECTED;
 
-            if (hit.collider.CompareTag("enemy1") || hit.collider.CompareTag("enemy2") || hit.collider.CompareTag("enemy3")
-                || hit.collider.CompareTag("enemy4") || hit.collider.CompareTag("boss")) {
+            if (hit.collider.CompareTag("Enemy1") || hit.collider.CompareTag("Enemy2") || hit.collider.CompareTag("Enemy3")
+                || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss")) {
                 if (!characters.hasCharacter(hit.collider.tag)) return currentState;
 
                 selectedEnemy = hit.collider.tag;
@@ -250,8 +250,8 @@ public class PakSelection : MonoBehaviour {
             if (hit.collider == null) return currentState;
 
             if ( (selectedEnemy != "")
-                && (hit.collider.CompareTag("enemy1") || hit.collider.CompareTag("enemy2") || hit.collider.CompareTag("enemy3") 
-                || hit.collider.CompareTag("enemy4") || hit.collider.CompareTag("boss"))) {
+                && (hit.collider.CompareTag("Enemy1") || hit.collider.CompareTag("Enemy2") || hit.collider.CompareTag("Enemy3") 
+                || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss"))) {
                 if (!characters.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED;
                 
                 

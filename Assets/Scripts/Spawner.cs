@@ -20,10 +20,7 @@ public class Spawner : MonoBehaviour {
     public GameObject boss;                 // contains the prefab of an in-play boss
     public Transform bossSpawnPos;          // reference of boss' spawn position
 
-    [Header("Other scripts")]
-    public PakSelection pakSelection;     // reference of pakSelection object in scene
-
-    void Start() {
+    void Awake() {
 
         characterManager = GetComponent<CharacterManager>();
         characterManager.Intialize();
@@ -37,8 +34,8 @@ public class Spawner : MonoBehaviour {
         GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
         chaamObject.tag = chaamSpawnPos.gameObject.tag;
         characterManager.SetCharacter(chaamObject.tag, chaamObject, true);
-            
 
+            
         for (int i = 0; i < enemies.Count; i++) {
             GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
             e.tag = enemySpawnPos[i].gameObject.tag;
@@ -49,6 +46,5 @@ public class Spawner : MonoBehaviour {
         bossObject.tag = bossSpawnPos.gameObject.tag;
         characterManager.SetCharacter(bossObject.tag, bossObject);
 
-        pakSelection.reset();
     }
 }
