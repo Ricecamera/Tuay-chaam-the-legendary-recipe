@@ -28,6 +28,7 @@ public class PakSelection : MonoBehaviour {
     private bool okPressed = false;
     private bool endTurnPressed = false;
     private bool backPressed = false;
+
     private int selectSkillBuffer = -1;  // buffer for storing user's click input
 
     private CharacterManager characters;
@@ -40,6 +41,9 @@ public class PakSelection : MonoBehaviour {
 
     [SerializeField]
     private Button backButton;
+
+    [SerializeField]
+    private Button endTurnButton;
 
     private List<string> result;
 
@@ -61,6 +65,7 @@ public class PakSelection : MonoBehaviour {
 
         okButton.onClick.AddListener(() => okPressed = true);
         backButton.onClick.AddListener(() => backPressed = true);
+        endTurnButton.onClick.AddListener(() => endTurnPressed = true);
 
         reset();
     }
@@ -70,7 +75,7 @@ public class PakSelection : MonoBehaviour {
         InputState nextState = InputState.DEFAULT;
         switch (currentState) {
             case InputState.CHARCTER_SELECTED:
-                 nextState = ChooseSkill();
+                nextState = ChooseSkill();
                 currentState = nextState;
                 break;
             case InputState.SKILL_SELECTED:
@@ -110,6 +115,10 @@ public class PakSelection : MonoBehaviour {
             endTurnPressed = false;
         }
 
+        if (backPressed) {
+            backPressed = false;
+        }
+
         selectSkillBuffer = -1;
     }
 
@@ -132,8 +141,11 @@ public class PakSelection : MonoBehaviour {
                     // Send character to update on Skill menu
                     SendCharacterImage(ally);
 
+                    endTurnButton.gameObject.SetActive(false);
+
                     // Add value to result
                     result.Add(hit.collider.name);
+                    
                     return InputState.CHARCTER_SELECTED;
                 }
             }
@@ -176,6 +188,8 @@ public class PakSelection : MonoBehaviour {
 
                 if (hit.collider.CompareTag(selectedPak)) {
                     skillMenu.ToggleMenu(false);
+                    endTurnButton.gameObject.SetActive(true);
+                    
                     selectedPak = "";
                     result.Add(hit.collider.name);
                     return InputState.DEFAULT;
@@ -288,7 +302,8 @@ public class PakSelection : MonoBehaviour {
     }
 
     private InputState PlayerEndTurn() {
-        if (Input.GetKeyDown(KeyCode.R)) {
+        if (endTurnPressed) {
+            endTurnButton.gameObject.SetActive(false);
             BattleManager.instance.RunCommand();
             return InputState.END_TURN;
         }
@@ -346,6 +361,7 @@ public class PakSelection : MonoBehaviour {
         actionFinished = false;
         skillMenu.ToggleMenu(false);
         okButton.gameObject.SetActive(false);
+        endTurnButton.gameObject.SetActive(true);
     }
 
     public void SelectSkill(int index) {
