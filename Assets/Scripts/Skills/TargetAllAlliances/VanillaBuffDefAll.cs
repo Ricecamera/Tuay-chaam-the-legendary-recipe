@@ -16,11 +16,12 @@ public class VanillaBuffDefAll : Skill
     }
 
     //delegates
-    public Action<Entity[], int> BuffDefAllAlliance;
+    public Action<PakRender[], PakRender> BuffDefAllAlliance;
     //action
-    public void ActionVanillaBuffDefAll(Entity[] target, int buffValue){
-        foreach (Entity e in target){
-            e.Def+=buffValue;
+    public void ActionVanillaBuffDefAll(PakRender[] target, PakRender self){
+        int buffValue = (self.pak.Def)/4;
+        foreach (PakRender e in target){
+            e.pak.Def+=buffValue;
         }
         return;
     }

@@ -12,11 +12,23 @@ public class PakRender : MonoBehaviour
     public Canvas canvas;
     public HealthSystem healthSystem;
 
+    public Skill skill;
+
+    public GameObject plantpos ;
+
     // Start is called before the first frame update
     void Start()
     {
+        pak.Hp = pak.MaxHp;
         Debug.Log("start pakRender:"+ pak.Hp);
+        
         healthSystem = new HealthSystem(pak.Hp, hp);
+        this.skill = new VanillaAttackOne("atk1","AttackOneEnemy","This do damage to one enemy", 0);
+        if(this.skill == null){
+            Debug.Log("Skill in PakRender is null");
+        }else{
+            Debug.Log("Skill in PakRender is not null");
+        }
         // healthSystem = GetComponent<HealthSystem>();
         // healthSystem.initHealth(pak.Hp);
         // sr.sprite = pak.image;
@@ -61,4 +73,3 @@ public class PakRender : MonoBehaviour
     }
 
 }
-

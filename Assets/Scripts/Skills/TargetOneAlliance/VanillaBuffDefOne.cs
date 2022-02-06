@@ -16,10 +16,10 @@ public class VanillaBuffDefOne : Skill
     }
 
     //delegates
-    public Action<Entity, int> BuffDefOneAlliance;
+    public Action<PakRender, PakRender> BuffDefOneAlliance;
     //action
-    private void ActionVanillaBuffDefOne(Entity target, int value){
-        target.Def+=value;
+    private void ActionVanillaBuffDefOne(PakRender target, PakRender self){
+        target.pak.Def+=self.pak.Def/4;
         return;
     }
 }

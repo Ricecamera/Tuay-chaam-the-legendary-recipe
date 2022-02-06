@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleScene.BattleLogic {
+using BattleScene.BattleLogic;
 
-    public class ActionCommand : IComparable, ICommand {
+namespace BattleLogic {
+
+    public class ActionCommand : IComparable , ICommand{
         private float speed;                // field that determine the execution order of skills
 
         public PakRender caller;            // a index of the character calling this action
@@ -29,6 +31,7 @@ namespace BattleScene.BattleLogic {
         }
 
         public void Execute() {
+            Debug.Log("Do Execute");
             // Mock execution of the skill
             String callerName = caller.pak.EntityName;
             
@@ -39,9 +42,41 @@ namespace BattleScene.BattleLogic {
                 enemyName += target.pak?.EntityName;
                 targetNames.Add(enemyName);
             }
+            // work with skill
+            // caller.skill.AttackOneEnemy(targets[0], caller);
             
+            // 
+            // Debug.Log(caller.skill.GetType());
+            // Type t = caller.skill.GetType();
+            // T vskill = (T) caller.skill;
+            Debug.Log(targets[0].name);
+            Debug.Log(caller.name);
+
+            if(caller.plantpos.GetComponent<PakRender>().skill == null){
+                Debug.Log("caller.skill is null");
+            }else{
+                Debug.Log("caller.skill is not null");
+            }
+
+            PakRender caller2 = caller.plantpos.GetComponent<PakRender>();
+            PakRender target2 = targets[0].plantpos.GetComponent<PakRender>();
+            Debug.Log("Caller2 def:"+caller2.pak.Def);
+
+            Skill callerskill = caller2.skill;
+            
+
+            VanillaAttackOne vskill = (VanillaAttackOne) callerskill;
+            if(vskill == null){
+                Debug.Log("vskill is null");
+            }else{
+                Debug.Log(vskill.SkillId);
+            }
+            
+            vskill.AttackOneEnemy(target2, caller);
+
             string displaytext = string.Format("{0} calls {1} to {2}", callerName, selectedSkill, string.Join(", ", targetNames.ToArray()));
             Debug.Log(displaytext);
+            
         }
 
         public int CompareTo(object obj) {

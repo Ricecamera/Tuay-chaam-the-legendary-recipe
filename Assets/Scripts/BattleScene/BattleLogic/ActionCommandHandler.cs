@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using BattleLogic;
 
 namespace BattleScene.BattleLogic {
     public class ActionCommandHandler : MonoBehaviour {
@@ -76,6 +77,10 @@ namespace BattleScene.BattleLogic {
                 }
             }
             return null;
+        }
+
+        public List<ActionCommand> getCommandList(){
+            return commandList;
         }
     }
 }

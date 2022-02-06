@@ -15,9 +15,10 @@ MonoBehaviour:
   entityId: 
   entityName: 
   description: 
-  hp: 0
-  atk: 0
+  hp: 500
+  atk: 80
   def: 0
+  maxHp: 500
   image: {fileID: 0}
   bonusStatsPerLvl:
     addHp: 0

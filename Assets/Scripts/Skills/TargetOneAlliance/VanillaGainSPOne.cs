@@ -16,10 +16,10 @@ public class VanillaGainSPOne : Skill
     }
 
     //delegates
-    public Action<Pak, int> GainSPOneAlliance;
+    public Action<PakRender, PakRender> GainSPOneAlliance;
     //action
-    private void ActionVanillaGainSPOne(Pak target, int value){
-        target.Sp+=value;
+    private void ActionVanillaGainSPOne(PakRender target, PakRender self){
+        target.pak.Sp+=30;
         return;
     }
 }
