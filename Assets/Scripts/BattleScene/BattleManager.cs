@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using BattleScene.BattleLogic;
 using Random = UnityEngine.Random;
+using BattleLogic;
 
 namespace BattleScene {
 
@@ -16,6 +17,8 @@ namespace BattleScene {
 
         public Text actionText;
 
+        public AIController AI ;
+
         private void Awake() {
             if (instance == null) {
                 instance = this;
@@ -27,6 +30,7 @@ namespace BattleScene {
 
         private void OnEnable() {
             ActionCommandHandler.OnComplete += NextTurn;
+            
         }
 
         private void OnDisable() {
@@ -38,6 +42,7 @@ namespace BattleScene {
 
             actionCommandHandler = GetComponent<ActionCommandHandler>();
             actionText.gameObject.SetActive(false);
+            AI = new AIController();
         }
 
 
@@ -46,6 +51,48 @@ namespace BattleScene {
             /*TODO:
             * AI controller choose their action
             */
+            //  if (pakSelection.IsPlayerConfirmed()) {
+            //     /*TODO:
+            //         * AI controller choose their action 
+            //         1.get ว่าฝั่งผัก กับ AI เหลืออยู่ฝั่งละกี่ตัว(เอามาในรูปPakrender)
+            //         2.for loop แต่ละตัวของฝั่ง AI เพื่อสร้าง ActionCommand ทีละตัวยัดใส่ list (Random ตัวตีเลย) {not this...แต่ห้ามตีตัวที่เลือดหมดแล้ว} !!!!
+            //         3.return list ออกมา
+            //         4.เอา list ที่ออกมายัดใส่ actionCommandHandler
+            //     */
+            //     pakTeam = pakSelection.getPakTeam();
+            //     enemyTeam = pakSelection.getEnemyTeam();
+            //     List<ActionCommand> temp = AI.selectAction(pakTeam,enemyTeam);
+            //     foreach (ActionCommand e in temp){
+            //         actionCommandHandler.getCommandList().Add(e);
+            //     }
+                            
+                
+            //     state = GameState.BATTLE_PHASE;
+                
+            //     state = GameState.BATTLE_PHASE;
+            //     actionCommandHandler.RunCommands();
+
+            //---------------------------------New AI
+            CharacterManager character = GameObject.Find("Characters").GetComponent<CharacterManager>();
+            List<CharacterHolder> pakTeam = character.getPakTeam();
+            List<CharacterHolder> enemyTeam = character.getEnemyTeam();
+            
+            List<GameObject> pakTeamObject = new List<GameObject>();
+            List<GameObject> enemyTeamObject = new List<GameObject>();
+
+            foreach(CharacterHolder e in pakTeam){
+                pakTeamObject.Add(e.character);
+            }
+
+            foreach(CharacterHolder f in enemyTeam){
+                enemyTeamObject.Add(f.character);
+            }
+
+            List<ActionCommand> temp = AI.selectAction(pakTeamObject,enemyTeamObject);
+            foreach (ActionCommand e in temp){
+                actionCommandHandler.getCommandList().Add(e);
+            }
+            
             actionText.gameObject.SetActive(true);
             actionCommandHandler.RunCommands();
         }
@@ -72,7 +119,7 @@ namespace BattleScene {
                 return;
             }
 
-            float speed = Random.Range(10.0f, 30.0f);
+            float speed = Random.Range(10.0f, 30.0f); //Need to fix this.
             ActionCommand newCommand = new ActionCommand(pakCaller, skillName, pakTargets, speed);
             actionCommandHandler.AddCommand(newCommand);
         }

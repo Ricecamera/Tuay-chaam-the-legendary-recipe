@@ -17,14 +17,17 @@ public class VanillaAttackOne : Skill
     }
 
     //delegates
-    public Action<Entity, int> AttackOneEnemy;
+    public Action<PakRender, PakRender> AttackOneEnemy;
     //action
-    private void ActionVanillaAttackOne(Entity target, int atkValue) {
+    private void ActionVanillaAttackOne(PakRender target, PakRender self) {
         int damage;
-        if(atkValue - target.Def <=0) damage=0;
-        else damage = atkValue - target.Def;
-        target.Hp-=damage;
-        if(target.Hp<=0) target.Hp=0;
+        int atkValue = self.pak.Atk;
+        if(atkValue - target.pak.Def <=0) damage=0;
+        else damage = atkValue - target.pak.Def;
+        
+        target.pak.Hp-=damage;                  //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+        if(target.pak.Hp<=0) target.pak.Hp=0;   //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+        target.healthSystem.TakeDamage(damage, target.pak.Hp.ToString());
         return;
     }
 }

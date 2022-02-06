@@ -19,7 +19,7 @@ public class Entity : ScriptableObject {
     protected string description;
 
     [SerializeField]
-    protected int hp, atk, def;
+    protected int hp, atk, def,maxHp;
 
     [SerializeField]
     public Sprite image;                             // sprite of the character
@@ -67,5 +67,10 @@ public class Entity : ScriptableObject {
     public BonusStats BonusStatsPerLvl {
         get { return this.bonusStatsPerLvl; }
         set { this.bonusStatsPerLvl = value; }
+    }
+
+    public int MaxHp {
+        get { return this.maxHp; }
+        set { this.maxHp = value; }
     }
 }

@@ -17,11 +17,12 @@ public class VanillaGainSPAll : Skill
     }
 
     //delegates
-    public Action<Pak[], int> GainSPAllAlliance;
+    public Action<PakRender[], PakRender> GainSPAllAlliance;
     //action
-    public void ActionVanillaGainSPAll(Pak[] target, int spValue){
-        foreach (Pak e in target){
-            e.Sp+=spValue;
+    public void ActionVanillaGainSPAll(PakRender[] target, PakRender self){
+        int spValue = 10;
+        foreach (PakRender e in target){
+            e.pak.Sp+=spValue;
         }
         return;
     }

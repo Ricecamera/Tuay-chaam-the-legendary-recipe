@@ -17,11 +17,13 @@ public class VanillaHealAll : Skill
     }
 
     //delegates
-    public Action<Entity[], int> HealAllAlliance;
+    public Action<PakRender[], PakRender> HealAllAlliance;
     //action
-    public void ActionVanillaHealAll(Entity[] target, int healValue){
-        foreach (Entity e in target){
-            e.Hp+=healValue;
+    public void ActionVanillaHealAll(PakRender[] target, PakRender self){
+        int healValue = self.pak.Hp/4;
+        foreach (PakRender e in target){
+            e.pak.Hp+=healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+            e.healthSystem.Heal(healValue, e.pak.Hp.ToString());
         }
         return;
     }

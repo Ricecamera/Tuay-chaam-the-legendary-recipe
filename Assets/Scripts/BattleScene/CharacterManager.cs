@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleScene {
-    class CharacterHolder {
+    public class CharacterHolder {
         public GameObject character;
         public bool isSelected;
         public bool InAction;
@@ -102,6 +102,23 @@ namespace BattleScene {
             playerTeam?.Clear();
             enemyTeam?.Clear();
         }
+
+        public List<CharacterHolder> getPakTeam(){
+            List<CharacterHolder> temp = new List<CharacterHolder>();
+            foreach (CharacterHolder e in playerTeam.Values){
+                temp.Add(e);
+            }
+            return temp;
+        }
+
+        public List<CharacterHolder> getEnemyTeam(){
+            List<CharacterHolder> temp = new List<CharacterHolder>();
+            foreach (CharacterHolder e in enemyTeam.Values){
+                temp.Add(e);
+            }
+            return temp;
+        }
+
     }
 }
 

@@ -17,10 +17,12 @@ public class VanillaHealOne : Skill
     }
 
     //delegates
-    public Action<Entity, int> HealOneAlliance;
+    public Action<PakRender, PakRender> HealOneAlliance;
     //action
-    private void ActionVanillaHealOne(Entity target, int value){
-        target.Hp+=value;
+    private void ActionVanillaHealOne(PakRender target, PakRender self){
+        int healValue = self.pak.Hp/4;
+        target.pak.Hp+=healValue;           //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+        target.healthSystem.Heal(healValue, target.pak.Hp.ToString());
         return;
     }
 }

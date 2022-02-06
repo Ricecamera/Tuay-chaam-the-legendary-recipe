@@ -16,10 +16,10 @@ public class VanillaBuffAtkOne : Skill
     }
 
     //delegates
-    public Action<Entity, int> BuffAtkOneAlliance;
+    public Action<PakRender, PakRender> BuffAtkOneAlliance;
     //action
-    private void ActionVanillaBuffAtkOne(Entity target, int value){
-        target.Atk+=value;
+    private void ActionVanillaBuffAtkOne(PakRender target, PakRender self){ //should pass lv and stat of char and calculate value in this function.
+        target.pak.Atk+=self.pak.Atk/4;
         return;
     }
 }
