@@ -5,16 +5,13 @@ using UnityEngine.UI;
 
 public class PakRender : MonoBehaviour
 {
+    private HealthSystem healthSystem;
 
     public Pak pak;
-    public HealthBar hp;
-    //public int currentHp;
-    public Canvas canvas;
-    public HealthSystem healthSystem;
 
     public Skill skill;
 
-    public GameObject plantpos ;
+    public GameObject plantpos;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +19,9 @@ public class PakRender : MonoBehaviour
         pak.Hp = pak.MaxHp;
         Debug.Log("start pakRender:"+ pak.Hp);
         
-        healthSystem = new HealthSystem(pak.Hp, hp);
+        healthSystem = GetComponent<HealthSystem>();
+        healthSystem.Initialize(pak.Hp);
+
         this.skill = new VanillaAttackOne("atk1","AttackOneEnemy","This do damage to one enemy", 0);
         if(this.skill == null){
             Debug.Log("Skill in PakRender is null");
@@ -61,15 +60,4 @@ public class PakRender : MonoBehaviour
         Debug.Log("wowza");
 
     }*/
-
-    public void HideHpBar()
-    {
-        canvas.enabled = false;
-    }
-
-    public void ShowHpBar()
-    {
-        canvas.enabled = true;
-    }
-
 }
