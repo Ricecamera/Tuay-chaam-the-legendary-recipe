@@ -49,7 +49,7 @@ using BattleScene;
             GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
             chaamObject.tag = chaamSpawnPos.gameObject.tag;
             chaamObject.GetComponent<PakRender>().plantpos = chaamSpawnPos.gameObject ; // need to fix this
-            chaamSpawnPos.GetComponent<PakRender>().plantpos = chaamSpawnPos.gameObject; // need to fix this
+            chaamSpawnPos.GetComponent<PakRender>().plantpos = chaamSpawnPos.gameObject; // need to fix this. Can delete this line w/o crashing the game.
             characterManager.SetCharacter(chaamObject.tag, chaamObject, true);
             
 
@@ -65,7 +65,7 @@ using BattleScene;
             GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
             bossObject.tag = bossSpawnPos.gameObject.tag;
             bossObject.GetComponent<PakRender>().plantpos = bossSpawnPos.gameObject; // need to fix this
-            bossSpawnPos.GetComponent<PakRender>().plantpos = bossSpawnPos.gameObject;  // need to fix this
+            bossSpawnPos.GetComponent<PakRender>().plantpos = bossSpawnPos.gameObject;  // need to fix this. Can delete this line w/o crashing the game.
             characterManager.SetCharacter(bossObject.tag, bossObject);
 
             // for(int i = 0 ; i < 1;i++){
