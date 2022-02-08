@@ -20,10 +20,10 @@ public class VanillaHealAll : Skill
     public Action<PakRender[], PakRender> HealAllAlliance;
     //action
     public void ActionVanillaHealAll(PakRender[] target, PakRender self){
-        int healValue = self.pak.Hp/4;
+        int healValue = self.healthSystem.MaxHp /4;
         foreach (PakRender e in target){
-            e.pak.Hp+=healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-            e.healthSystem.Heal(healValue, e.pak.Hp.ToString());
+            e.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+            e.healthSystem.Heal(healValue);
         }
         return;
     }

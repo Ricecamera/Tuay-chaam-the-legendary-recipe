@@ -8,9 +8,9 @@ public class AllTargetAlliances : Skill
 
     }
 
-    public void VanillaHeal(Entity[] target, int healValue){
-        foreach (Entity e in target){
-            e.Hp+=healValue;
+    public void VanillaHeal(PakRender[] target, int healValue){
+        foreach (var e in target){
+            e.healthSystem.Heal(healValue);
         }
         return;
     }

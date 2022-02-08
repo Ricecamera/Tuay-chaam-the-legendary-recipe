@@ -34,9 +34,10 @@ public class HealthSystem : MonoBehaviour
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         healthBar.Reset();
+        Debug.Log(gameObject.name + " max hp is " + maxHp);
     }
 
-    public void TakeDamage(int damage , string name)
+    public void TakeDamage(int damage)
     {
         currentHp -= damage;
         if (currentHp < 0)
@@ -44,13 +45,13 @@ public class HealthSystem : MonoBehaviour
             currentHp = 0;
         }
 
-        float fill = currentHp / maxHp;
+        float fill = currentHp / (float) maxHp;
         healthBar.SetFill(fill);
-        Debug.Log(name+":"+currentHp);
+
 
     }
 
-    public void Heal(int healAmount,string name)
+    public void Heal(int healAmount)
     {
         currentHp += healAmount;
         if(currentHp > maxHp)
@@ -58,9 +59,8 @@ public class HealthSystem : MonoBehaviour
             currentHp = maxHp;
         }
 
-        float fill = currentHp / maxHp;
+        float fill = currentHp / (float) maxHp;
         healthBar.SetFill(fill);
-        Debug.Log(name + ":" + currentHp);
     } 
 
     

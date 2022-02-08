@@ -9,7 +9,7 @@ public class OneTargetAlliance : Skill
     }
     //all skills
     public void VanillaHeal(Entity target, int value){
-        target.Hp+=value;
+        target.MaxHp += value;
         return;
     }
 

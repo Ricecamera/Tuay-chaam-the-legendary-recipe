@@ -9,12 +9,11 @@ public class OneTargetEnemy : Skill
     }
 
     //all skills
-    public void VanillaAttack(Entity target, int atkValue) {
+    public void VanillaAttack(PakRender target, int atkValue) {
         int damage;
-        if(atkValue - target.Def <=0) damage=0;
-        else damage = atkValue - target.Def;
-        target.Hp-=damage;
-        if(target.Hp<=0) target.Hp=0;
+        if(atkValue - target.pak.Def <=0) damage=0;
+        else damage = atkValue - target.pak.Def;
+        target.healthSystem.TakeDamage(damage);
         return;
     }
 }
