@@ -25,10 +25,8 @@ public class VanillaAttackAll : Skill
         foreach (PakRender e in target){
             if(atkValue - e.pak.Def <=0) damage=0;
             else damage = atkValue - e.pak.Def;
-
-            e.pak.Hp-=damage;               //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-            if(e.pak.Hp<=0) e.pak.Hp=0;     //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-            e.healthSystem.TakeDamage(damage, e.pak.Hp.ToString());
+            
+            e.healthSystem.TakeDamage(damage);
         }       
         return;
     }

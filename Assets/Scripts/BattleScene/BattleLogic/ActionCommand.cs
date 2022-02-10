@@ -52,14 +52,14 @@ namespace BattleLogic {
             Debug.Log(targets[0].name);
             Debug.Log(caller.name);
 
-            if(caller.plantpos.GetComponent<PakRender>().skill == null){
+            if(caller.GetComponent<PakRender>().skill == null){
                 Debug.Log("caller.skill is null");
             }else{
                 Debug.Log("caller.skill is not null");
             }
 
-            PakRender caller2 = caller.plantpos.GetComponent<PakRender>();
-            PakRender target2 = targets[0].plantpos.GetComponent<PakRender>();
+            PakRender caller2 = caller.GetComponent<PakRender>();
+            PakRender target2 = targets[0].GetComponent<PakRender>();
             Debug.Log("Caller2 def:"+caller2.pak.Def);
 
             Skill callerskill = caller2.skill;

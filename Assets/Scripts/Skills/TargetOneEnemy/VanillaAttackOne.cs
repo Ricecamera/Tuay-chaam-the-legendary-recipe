@@ -27,7 +27,7 @@ public class VanillaAttackOne : Skill
         
         //target.pak.Hp-=damage;                  //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
         //if(target.pak.Hp<=0) target.pak.Hp=0;   //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-        target.healthSystem.TakeDamage(damage, target.pak.Hp.ToString());
+        target.healthSystem.TakeDamage(damage);
         return;
     }
 }

@@ -8,13 +8,12 @@ public class AllTargetEnemies : Skill
 
     }
 
-    public void VanillaAttackAll(Entity[] target, int atkValue) {
+    public void VanillaAttackAll(PakRender[] target, int atkValue) {
         int damage;
-        foreach (Entity e in target){
-            if(atkValue - e.Def <=0) damage=0;
-            else damage = atkValue - e.Def;
-            e.Hp-=damage;
-            if(e.Hp<=0) e.Hp=0;
+        foreach (var e in target){
+            if(atkValue - e.pak.Def <=0) damage=0;
+            else damage = atkValue - e.pak.Def;
+            e.healthSystem.TakeDamage(damage);
         }       
         return;
     }
