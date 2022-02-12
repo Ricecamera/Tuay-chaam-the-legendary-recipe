@@ -31,7 +31,7 @@ public class CharacterManager : MonoBehaviour {
 
         public void Select(bool value) {
             isSelected = value;
-            if (isSelected)
+            if (value)
             {
                 character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
             }

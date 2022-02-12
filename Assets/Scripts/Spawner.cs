@@ -44,7 +44,6 @@ using BattleScene;
             for (int i = 0; i < enemies.Count; i++) {
                 GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
                 e.tag = enemySpawnPos[i].gameObject.tag;
-                Debug.Log(e.tag);
                 enemyTeam.AddCharacter(e.tag, e);
             }
 

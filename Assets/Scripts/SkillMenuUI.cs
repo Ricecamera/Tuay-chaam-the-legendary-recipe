@@ -34,7 +34,6 @@ public class SkillMenuUI : MonoBehaviour {
             characterImage.sprite = null;
             characterImage.color  = Color.clear;
         }
-        ToggleMenu(true);
     }
 
     public void ToggleMenu(bool isShow) {
