@@ -31,7 +31,8 @@ public class PakSelection : MonoBehaviour {
 
     private int selectSkillBuffer = -1;  // buffer for storing user's click input
 
-    private CharacterManager characters;
+    private CharacterManager playerTeam;
+    private CharacterManager enemyTeam;
 
     [SerializeField]
     private SkillMenuUI skillMenu;
@@ -56,7 +57,8 @@ public class PakSelection : MonoBehaviour {
     }
 
     void Start() {
-        characters = GameObject.FindGameObjectWithTag("Spawner").GetComponent<CharacterManager>();
+        playerTeam = GameObject.Find("PlayerTeam").GetComponent<CharacterManager>();
+        enemyTeam = GameObject.Find("PlayerTeam").GetComponent<CharacterManager>();
 
         for (int i = 0; i < skillMenu.skills.Length; ++i) {
             int k = i;
@@ -133,10 +135,12 @@ public class PakSelection : MonoBehaviour {
                 if (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2") 
                     || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam")) {
                     // find game object data with tag
-                    if (!characters.hasCharacter(hit.collider.tag, true)) return InputState.DEFAULT;
+                    if (!playerTeam.hasCharacter(hit.collider.tag)) return InputState.DEFAULT;
 
                     selectedPak = hit.collider.tag;
                     GameObject ally = hit.collider.gameObject;
+
+                    playerTeam.SetSelect(selectedPak, true);
 
                     // Send character to update on Skill menu
                     SendCharacterImage(ally);
@@ -183,7 +187,7 @@ public class PakSelection : MonoBehaviour {
                     (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2") 
                     || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam"))) {
 
-                characters.SelectAlly(selectedPak, false);
+                playerTeam.SetSelect(selectedPak, true);
                 result.Clear();
 
                 if (hit.collider.CompareTag(selectedPak)) {
@@ -207,9 +211,6 @@ public class PakSelection : MonoBehaviour {
         }
         return InputState.CHARCTER_SELECTED;
     }
-    
-    //* Button btn = GameObject.Find("Skill1").GetComponent<Button>(); 
-    //* btn.onClick.AddListener(...); 
     
     private InputState ChooseSkillTarget() {
         if ((selectedSkill > -1)
@@ -240,10 +241,10 @@ public class PakSelection : MonoBehaviour {
 
             if (hit.collider.CompareTag("Enemy1") || hit.collider.CompareTag("Enemy2") || hit.collider.CompareTag("Enemy3")
                 || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss")) {
-                if (!characters.hasCharacter(hit.collider.tag)) return currentState;
+                if (!enemyTeam.hasCharacter(hit.collider.tag)) return currentState;
 
                 selectedEnemy = hit.collider.tag;
-                characters.SelectEnemy(selectedEnemy, true);
+                enemyTeam.SetSelect(selectedEnemy, true);
                 result.Add(hit.collider.name);
 
                 okButton.gameObject.SetActive(true);
@@ -266,17 +267,17 @@ public class PakSelection : MonoBehaviour {
             if ( (selectedEnemy != "")
                 && (hit.collider.CompareTag("Enemy1") || hit.collider.CompareTag("Enemy2") || hit.collider.CompareTag("Enemy3") 
                 || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss"))) {
-                if (!characters.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED;
+                if (!enemyTeam.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED;
                 
                 
-                characters.SelectEnemy(selectedEnemy, false);
-                GameObject oldEnemy = characters.GetCharacter(selectedEnemy);
+                enemyTeam.SetSelect(selectedEnemy, false);
+                GameObject oldEnemy = enemyTeam.GetCharacter(selectedEnemy).character;
                 result.Remove(oldEnemy.name);
 
                 if (hit.collider.tag != selectedEnemy) {
 
                     selectedEnemy = hit.collider.tag;
-                    characters.SelectEnemy(selectedEnemy, true);
+                    enemyTeam.SetSelect(selectedEnemy, true);
                     result.Add(hit.collider.name);
                 }
                 else {
@@ -325,16 +326,16 @@ public class PakSelection : MonoBehaviour {
         else if (chaamRender != null) {
             skillMenu.UpdateCharacterUI(chaamRender.chaam.image);
         }
-
-        // Update UI is skillMenu
-        
-        characters.SelectAlly(selectedPak, true);
     }
 
     public void SendCommand() {
-        GameObject caller = characters.GetCharacter(selectedPak, true);
+        GameObject caller = playerTeam.GetCharacter(selectedPak).character;
+        if (caller != null) {
+            
+        }
+
         string toCallSkill = string.Format("skill {0}", selectedSkill + 1);
-        GameObject[] targets =  { characters.GetCharacter(selectedEnemy) };
+        GameObject[] targets =  { enemyTeam.GetCharacter(selectedEnemy).character };
         BattleManager.instance.AddNewCommand(caller, toCallSkill, targets );
     }
 
@@ -342,18 +343,17 @@ public class PakSelection : MonoBehaviour {
         Debug.Log("Back to default state");
         currentState = InputState.DEFAULT;
 
-        if (selectedPak.CompareTo("") != 0)
-            characters.SelectAlly(selectedPak, false);
+        playerTeam.Reset();
+        enemyTeam.Reset();
+
         selectedPak = "";
+        selectedEnemy = "";
 
         if (selectedSkill > -1)
             skillMenu.ToggleSkillUI(selectedSkill);
         selectedSkill = -1;
         selectSkillBuffer = -1;
 
-        if (selectedEnemy.CompareTo("") != 0)
-            characters.SelectEnemy(selectedEnemy, false);
-        selectedEnemy = "";
 
         if (result == null)
             result = new List<string>();

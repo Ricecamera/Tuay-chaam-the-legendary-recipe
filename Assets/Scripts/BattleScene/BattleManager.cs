@@ -64,18 +64,19 @@ public class BattleManager : MonoBehaviour {
         //---------------------------------New AI ---------------------------------------------//
 
         // Get list of pakTeam and enemy Team
-        CharacterManager character = GameObject.Find("Characters").GetComponent<CharacterManager>();
-        List<CharacterManager.CharacterHolder> pakTeam = character.getPakTeam();
-        List<CharacterManager.CharacterHolder> enemyTeam = character.getEnemyTeam();
+        CharacterManager playerTeam = GameObject.Find("PlayerTeam").GetComponent<CharacterManager>();
+        CharacterManager enemyTeam = GameObject.Find("EnemyTeam").GetComponent<CharacterManager>();
+        List<CharacterManager.CharacterHolder> pakHolders = playerTeam.getHoldersList();
+        List<CharacterManager.CharacterHolder> enemyHolders = enemyTeam.getHoldersList();
         
         List<GameObject> pakTeamObject = new List<GameObject>();
         List<GameObject> enemyTeamObject = new List<GameObject>();
 
-        foreach(var e in pakTeam){
+        foreach(var e in pakHolders){
             pakTeamObject.Add(e.character);
         }
 
-        foreach(var f in enemyTeam){
+        foreach(var f in enemyHolders){
             enemyTeamObject.Add(f.character);
         }
 

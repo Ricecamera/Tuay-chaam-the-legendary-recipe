@@ -5,11 +5,12 @@ using UnityEngine;
 namespace BattleScene {
 public class CharacterManager : MonoBehaviour {
     public class CharacterHolder {
-        public GameObject character;    // game object of this character
-        public bool isSelected;         // Is this character selected by player?
-        public bool inAction;           // Is this character setted its action?
+        private bool isSelected;         // Is this character selected by player?
+        private bool inAction;           // Is this character setted its action?
 
-        // Constructors
+        public GameObject character;    // game object of this character
+
+            // Constructors
         public CharacterHolder() {
             character = null;
             isSelected = false;
@@ -21,26 +22,43 @@ public class CharacterManager : MonoBehaviour {
             isSelected = false;
             inAction = false;
         }
+
+        public void ResetState() {
+            isSelected = false;
+            inAction = false;
+            character.GetComponent<RectTransform>().localScale = Vector3.one;
+        }
+
+        public void Select(bool value) {
+            isSelected = value;
+            if (isSelected)
+            {
+                character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
+            }
+            else
+            {
+                character.GetComponent<RectTransform>().localScale = Vector3.one;
+            }
+        }
+
+        public void Action(bool value) {
+            inAction = value;
+        }
     }
 
-    private const float SIZE_MULTIPLER = 1.2f;                      // size mulitplier to be apply to the selected character
+    private const float SIZE_MULTIPLER = 1.2f;                   // size mulitplier to be apply to the selected character
 
-    private Dictionary<string, CharacterHolder> playerTeam;         // dictionary contains CharacterHolder of playerTeam
-    private Dictionary<string, CharacterHolder> enemyTeam;          // dictionary contains CharacterHolder of enemyTeam
+    private Dictionary<string, CharacterHolder> holders;         // dictionary contains character holder
 
     // Initialize character dictonarys
     public void Intialize() {
-        playerTeam = new Dictionary<string, CharacterHolder>();
-        enemyTeam = new Dictionary<string, CharacterHolder>();
+        holders = new Dictionary<string, CharacterHolder>();
     }
 
     // Add a new character
-    public void SetCharacter(string tag, GameObject character, bool isPlayerFlag = false){
+    public void AddCharacter(string tag, GameObject character){
         try {
-            if (isPlayerFlag)
-                playerTeam.Add(tag, new CharacterHolder(character));
-            else
-                enemyTeam.Add(tag, new CharacterHolder(character));
+            holders.Add(tag, new CharacterHolder(character));
         }
         catch (Exception e) {
             Debug.LogError(e.Message);
@@ -48,93 +66,73 @@ public class CharacterManager : MonoBehaviour {
     }
 
     // Remove a specific chacracter by tag and team flag
-    public bool RemoveCharacter(string tag, bool isPlayerFlag = false) {
-        if (isPlayerFlag)
-            return playerTeam.Remove(tag);
-        return enemyTeam.Remove(tag);
+    public bool RemoveCharacter(string tag) {
+        return holders.Remove(tag);
     }
 
     // Get a specific character by tag and team flag
-    public GameObject GetCharacter(string tag, bool isPlayerFlag = false){
+    public CharacterHolder GetCharacter(string tag){
         CharacterHolder output = null;
         try {
-            if (isPlayerFlag)
-                output = playerTeam[tag];
-            else
-                output = enemyTeam[tag];
-            return output.character;
+            output = holders[tag];
         } catch (Exception e) {
             Debug.LogError(e.Message);
+            output = null;
         }
-        return output.character;
+        return output;
     }
 
     // Check if the dictionary has this tag
-    public bool hasCharacter(string tag, bool isPlayerFlag = false) {
-        if (isPlayerFlag)
-            return playerTeam.ContainsKey(tag);
-        return enemyTeam.ContainsKey(tag);
+    public bool hasCharacter(string tag) {
+        return holders.ContainsKey(tag);
     }
 
     // Set selected state of enemy character
-    public void SelectEnemy(string tag, bool value) {
+    public void SetSelect(string tag, bool value) {
         try {
-            CharacterHolder found = enemyTeam[tag];
-            found.isSelected = value;
-            if (value) {
-                found.character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
-            }
-            else {
-                found.character.GetComponent<RectTransform>().localScale = Vector3.one;
-            }
+            CharacterHolder found = holders[tag];
+            found.Select(value);
         }
         catch {
             Debug.LogError("the enemy character isn't exist!!");
         }
     }
 
-    // Set select state of ally character
-    public void SelectAlly(string tag, bool value) {
-        try {
-            CharacterHolder found = playerTeam[tag];
-            found.isSelected = value;
-            if (value) {
-                found.character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
-            }
-            else {
-                found.character.GetComponent<RectTransform>().localScale = Vector3.one;
-            }
+    public void SetAction(string tag, bool value)
+    {
+        try
+        {
+            CharacterHolder found = holders[tag];
+            found.Action(value);
         }
-        catch {
+        catch
+        {
             Debug.LogError("the ally character isn't exist!!");
         }
     }
 
-    // Clear dictionarys
+
+    // Set select state of ally character
     public void Reset() {
-        playerTeam?.Clear();
-        enemyTeam?.Clear();
+        foreach (var p in holders) {
+            CharacterHolder holder = p.Value;
+            holder.ResetState();
+        }
+    }
+
+    // Clear dictionarys
+    public void Clear() {
+        holders?.Clear();
     }
 
     // Get a list of CharacterHolder of pakTeam
-    public List<CharacterHolder> getPakTeam(){
+    public List<CharacterHolder> getHoldersList(){
         List<CharacterHolder> temp = new List<CharacterHolder>();
-        foreach (CharacterHolder e in playerTeam.Values){
+        foreach (CharacterHolder e in holders.Values){
             temp.Add(e);
         }
         return temp;
     }
 
-
-    // Get a list of CharacterHolder of enemyTeam
-    public List<CharacterHolder> getEnemyTeam(){
-        List<CharacterHolder> temp = new List<CharacterHolder>();
-        foreach (CharacterHolder e in enemyTeam.Values){
-            temp.Add(e);
-        }
-        return temp;
-    }
-
-}
-}
+}}
 
