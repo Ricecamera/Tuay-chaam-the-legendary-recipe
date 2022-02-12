@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelLoader : MonoBehaviour {
+public class LevelLoader : MonoBehaviour
+{
     [SerializeField]
     private float transitionTime;
     [SerializeField]
@@ -20,12 +21,22 @@ public class LevelLoader : MonoBehaviour {
                 playButton.onClick.AddListener(LoadNextScene);
                 quitButton.onClick.AddListener(ExitGame);
             }
-            if (SceneManager.GetActiveScene().buildIndex == 1)
+
+            if (SceneManager.GetActiveScene().buildIndex == 2)
             {
                 Button startButton = GameObject.Find("Start Button").GetComponent<Button>();
+                Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
+                //Button helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
                 startButton.onClick.AddListener(LoadNextScene);
+                backButton.onClick.AddListener(LoadPrevScene);
+                //helpButton.onClick.AddListener(Help);
             }
         }
+    }
+
+    public void Help()
+    {
+        Debug.Log("Help");
     }
 
     public void ExitGame()
@@ -40,7 +51,18 @@ public class LevelLoader : MonoBehaviour {
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
-    IEnumerator LoadLevel(int levelIndex) {
+    public void LoadPrevScene()
+    {
+        Debug.Log("back");
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex - 1));
+    }
+
+    public void SwitchComponent()
+    {
+
+    }
+    IEnumerator LoadLevel(int levelIndex)
+    {
         //* 3 Steps 
         //* Play Animation 
         transition.SetTrigger("Start");

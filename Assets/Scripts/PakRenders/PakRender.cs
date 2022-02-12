@@ -14,19 +14,23 @@ public class PakRender : MonoBehaviour
 
     public Skill skill;
 
-    public GameObject plantpos ;
+    public GameObject plantpos;
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Level = " + LevelSelection.Level);
         pak.Hp = pak.MaxHp;
-        Debug.Log("start pakRender:"+ pak.Hp);
-        
+        Debug.Log("start pakRender:" + pak.Hp);
+
         healthSystem = new HealthSystem(pak.Hp, hp);
-        this.skill = new VanillaAttackOne("atk1","AttackOneEnemy","This do damage to one enemy", 0);
-        if(this.skill == null){
+        this.skill = new VanillaAttackOne("atk1", "AttackOneEnemy", "This do damage to one enemy", 0);
+        if (this.skill == null)
+        {
             Debug.Log("Skill in PakRender is null");
-        }else{
+        }
+        else
+        {
             Debug.Log("Skill in PakRender is not null");
         }
         // healthSystem = GetComponent<HealthSystem>();
@@ -41,26 +45,26 @@ public class PakRender : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            healthSystem.TakeDamage(5,pak.EntityName);
+            healthSystem.TakeDamage(5, pak.EntityName);
         }
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            healthSystem.Heal(5,pak.EntityName);
+            healthSystem.Heal(5, pak.EntityName);
         }
     }
-   
-/*    void TakeDamage(int damage)
-    {
-        if (currentHp - damage >= 0)
+
+    /*    void TakeDamage(int damage)
         {
-            currentHp -= damage;
-            hp.SetHealth(currentHp);
-        }
+            if (currentHp - damage >= 0)
+            {
+                currentHp -= damage;
+                hp.SetHealth(currentHp);
+            }
 
-        Debug.Log("wowza");
+            Debug.Log("wowza");
 
-    }*/
+        }*/
 
     public void HideHpBar()
     {
