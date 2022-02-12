@@ -869,6 +869,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae5799a06f1fd14ba170b929a6e96c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillMenu: {fileID: 543371959}
+  okButton: {fileID: 1503610348}
+  backButton: {fileID: 708669005}
+  endTurnButton: {fileID: 1966035253}
+  supportMenu: {fileID: 1473131846}
 --- !u!4 &1339217663
 Transform:
   m_ObjectHideFlags: 0
