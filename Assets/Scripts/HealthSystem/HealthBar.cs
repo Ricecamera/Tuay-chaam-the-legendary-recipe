@@ -6,25 +6,27 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
 
-    public Slider slider ;
+    public Image guage;
 
-    public void SetMaxHealth(int health)
+    private void OnEnable() {
+        guage.fillAmount = 0;
+    }
+
+    public void SetFill(float newValue)
     {
-        Debug.Log("SetMaxHealth HealthBar work");
-        slider.maxValue= health;
-        slider.value = health;
-        Debug.Log("Slider value:"+slider.value);
-        Debug.Log("Slider Maxvalue:"+slider.maxValue);
-        
+        if (newValue < 0)
+            guage.fillAmount = 0;
+        else if (newValue > 1)
+            guage.fillAmount = 1;
+        else
+            guage.fillAmount = newValue;
     }
 
-    public void SetHealth(int health)
-    {
-        slider.value = health;
+    public float getFill(){
+        return guage.fillAmount;
     }
 
-    public float getHealth(){
-        return slider.value;
+    public void Reset() {
+        guage.fillAmount = 1;
     }
-
 } 

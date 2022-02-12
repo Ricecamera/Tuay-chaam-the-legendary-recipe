@@ -14,12 +14,6 @@ TagManager:
   - Enemy3
   - Enemy4
   - Spawner
-  - chaam
-  - boss
-  - enemy2
-  - enemy3
-  - plant2
-  - enemy1
   layers:
   - Default
   - TransparentFX
