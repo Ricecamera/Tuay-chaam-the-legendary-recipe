@@ -6,7 +6,13 @@ using UnityEngine.UI;
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
 {
+    private static Color DARK_COLOR = new Color(.53f, .53f, .53f, 1);
+
+    [SerializeField]
+    private SpriteRenderer actionIcon;
     public HealthSystem healthSystem {get; private set;}
+
+    
 
     public Pak pak;
 
@@ -43,5 +49,18 @@ public class PakRender : MonoBehaviour
         {
             healthSystem.Heal(10);
         }
+    }
+
+    public void DisplayInAction(bool value) {
+        actionIcon.gameObject.SetActive(value);
+        SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
+    }
+
+    public void DisplayInAction(bool value, int index)
+    {
+        //actionIcon.sprite = skillImages[skillIndex];
+        DisplayInAction(value);
     }
 }

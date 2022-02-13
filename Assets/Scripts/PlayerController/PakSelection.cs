@@ -107,8 +107,11 @@ public class PakSelection : MonoBehaviour {
                 break;
             case InputState.END_TURN:
                 // Player clicked end-turn button
-                if (actionFinished)
+                if (actionFinished) {
                     reset();
+                    playerTeam.ResetAction();
+                    enemyTeam.ResetAction();
+                }
                 break;
             default:
                 nextState = PlayerEndTurn();
@@ -378,6 +381,8 @@ public class PakSelection : MonoBehaviour {
     public void SendCommand() {
         GameObject caller = playerTeam.GetCharacter(selectedPak).character;
         if (caller != null) {
+            // Set actions of selected Pak
+            playerTeam.SetAction(selectedPak, true);
             string toCallSkill = string.Format("skill {0}", selectedSkill + 1);
             GameObject[] targets = { enemyTeam.GetCharacter(selectedEnemy).character };
             BattleManager.instance.AddNewCommand(caller, toCallSkill, targets);

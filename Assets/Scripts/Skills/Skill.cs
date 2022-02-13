@@ -11,6 +11,7 @@ public class Skill
 
     [TextArea]
     protected string description;
+
     protected int cooldown;
 
     //Constructortor

@@ -21,12 +21,17 @@ public class CharacterManager : MonoBehaviour {
             this.character = character;
             isSelected = false;
             inAction = false;
+
+            // Hide Action Icon
+            PakRender render = character.GetComponent<PakRender>();
+            render.DisplayInAction(false);
         }
 
         public void ResetState() {
             isSelected = false;
-            inAction = false;
+            // Reduce scale to normal scale
             character.GetComponent<RectTransform>().localScale = Vector3.one;
+
         }
 
         public void Select(bool value) {
@@ -43,6 +48,11 @@ public class CharacterManager : MonoBehaviour {
 
         public void Action(bool value) {
             inAction = value;
+            PakRender render = character.GetComponent<PakRender>();
+            if (value)
+                render.DisplayInAction(true, 0);
+            else
+                render.DisplayInAction(false);
         }
     }
 
@@ -118,6 +128,14 @@ public class CharacterManager : MonoBehaviour {
             CharacterHolder holder = p.Value;
             holder.ResetState();
         }
+    }
+
+    public void ResetAction() {
+            foreach (var p in holders)
+            {
+                CharacterHolder holder = p.Value;
+                holder.Action(false);
+            }
     }
 
     // Clear dictionarys
