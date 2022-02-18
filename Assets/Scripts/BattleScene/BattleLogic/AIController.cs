@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 // using System;
 using UnityEngine;
-using BattleLogic;
+using BattleScene.BattleLogic;
 
 public class AIController {
     
@@ -20,7 +20,7 @@ public class AIController {
             GameObject target = pakTeam[target_num];
             targets.Add(target.GetComponent<PakRender>());
             //ตีธรรมดา Only
-            ActionCommand action = new ActionCommand(e.GetComponent<PakRender>(), "VanillaAttackOne", targets, 3.0f);
+            ActionCommand action = new ActionCommand(e.GetComponent<PakRender>(), 0, targets, 3.0f);
             actionList.Add(action);
         }
 

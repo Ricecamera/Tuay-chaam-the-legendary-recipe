@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using BattleScene.BattleLogic;
 using Random = UnityEngine.Random;
-using BattleLogic;
 
 namespace BattleScene {
 /*
@@ -15,8 +14,8 @@ namespace BattleScene {
 public class BattleManager : MonoBehaviour {
     public static BattleManager instance;                   // singleton instance of this class
     
-    private ActionCommandHandler actionCommandHandler;      // reference to ActionCommandHandler
-    private CharacterManager characters;
+    private CharacterManager characters;                
+    public ActionCommandHandler actionCommandHandler;
 
     public int currentTurn { get; private set; }            // keep track how many turn have pass
 
@@ -100,7 +99,7 @@ public class BattleManager : MonoBehaviour {
     }
 
 
-    public void AddNewCommand(GameObject caller, string skillName, GameObject[] targets) {
+    public void AddNewCommand(GameObject caller, int index, GameObject[] targets) {
         PakRender pakCaller = caller.GetComponent<PakRender>();
 
         // Get PakRender component of each game oject in `targets`
@@ -119,7 +118,7 @@ public class BattleManager : MonoBehaviour {
 
         // Set random speed for each action and initialize it.
         float speed = Random.Range(10.0f, 30.0f); //Need to fix this.
-        ActionCommand newCommand = new ActionCommand(pakCaller, skillName, pakTargets, speed);
+        ActionCommand newCommand = new ActionCommand(pakCaller, index, pakTargets, speed);
         actionCommandHandler.AddCommand(newCommand);
     }
 }

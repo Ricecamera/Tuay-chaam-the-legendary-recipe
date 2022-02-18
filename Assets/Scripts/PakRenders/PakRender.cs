@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
 {
-    private static Color DARK_COLOR = new Color(.53f, .53f, .53f, 1);
+    private static Color DARK_COLOR = new Color(99 / 255f, 238 / 255f, 108 / 255f, 1);
 
     [SerializeField]
     private SpriteRenderer actionIcon;
@@ -29,25 +29,11 @@ public class PakRender : MonoBehaviour
         }else{
             Debug.Log("Skill in PakRender is not null");
         }
-        // healthSystem = GetComponent<HealthSystem>();
-        // healthSystem.initHealth(pak.Hp);
-        // sr.sprite = pak.image;
-        //hp.SetMaxHealth(pak.Hp);
-        //currentHp = pak.Hp;
     }
 
     protected virtual void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            healthSystem.TakeDamage(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            healthSystem.Heal(10);
-        }
     }
 
     public void DisplayInAction(bool value) {

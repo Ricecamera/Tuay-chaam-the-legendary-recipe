@@ -15,7 +15,7 @@ using BattleScene.BattleLogic;
 
 public class PakSelection : MonoBehaviour {
 
-    enum InputState { DEFAULT, CHARCTER_SELECTED, SKILL_SELECTED, ENEMY_SELECTED, COMFIRMED, END_TURN };
+    enum InputState { DEFAULT, CHARCTER_SELECTED, SKILL_SELECTED, ENEMY_SELECTED, COMFIRMED, END_TURN, VIEW_ACTION };
 
     private InputState currentState = InputState.END_TURN;
     private InputState nextState;
@@ -26,9 +26,8 @@ public class PakSelection : MonoBehaviour {
     private int selectedSkill = -1;         // current selected skill
 
     // buffer field using to check state after the player clicked some of the field-related buttons
-    private bool okPressed = false;
-    private bool endTurnPressed = false;
-    private bool backPressed = false;
+    private bool okPressed = false, endTurnPressed = false, backPressed = false, cancelPressed = false;
+
 
     private int selectSkillBuffer = -1;     // buffer for storing user's click input
 
@@ -38,7 +37,7 @@ public class PakSelection : MonoBehaviour {
     private SkillMenuUI skillMenu;
 
     [SerializeField]
-    private Button okButton, backButton, endTurnButton;
+    private Button okButton, backButton, endTurnButton, cancelButton;
 
     [SerializeField]
     private GameObject supportMenu;
@@ -70,6 +69,7 @@ public class PakSelection : MonoBehaviour {
         okButton.onClick.AddListener(() => okPressed = true);
         backButton.onClick.AddListener(() => backPressed = true);
         endTurnButton.onClick.AddListener(() => endTurnPressed = true);
+        cancelButton.onClick.AddListener(() => cancelPressed = true);
 
         reset();
     }
@@ -80,11 +80,23 @@ public class PakSelection : MonoBehaviour {
         UpdateUI();
         currentState = nextState;
         
-        if (backPressed && 
-            (currentState > InputState.DEFAULT && currentState < InputState.COMFIRMED)) {
-            reset();
+        if (backPressed) {
+            if (currentState == InputState.ENEMY_SELECTED &&
+                selectedPak.CompareTo("") != 0) {
+                var holder = characterManager.GetCharacter(selectedPak);
+
+                // if select character is in action set it back to action state
+                if (holder.InAction) {
+                    var pakRender = holder.character.GetComponent<PakRender>();
+                    pakRender.DisplayInAction(true);
+                }
+                reset();
+            }
+            else if (currentState > InputState.DEFAULT && currentState < InputState.COMFIRMED)
+                reset();
             return;
         }
+
 
         // waiting for user inputs according to current state
         switch (currentState) {
@@ -92,17 +104,19 @@ public class PakSelection : MonoBehaviour {
                 // An ally character was choosed
                 nextState = ChooseSkill();
                 if (nextState != currentState)
-                    UpdateCharacterLayer();
+                    UpdateCharacterLayer(nextState);
                 break;
             case InputState.SKILL_SELECTED:
                 // An skill to be add to commnad list was selected
                 nextState = ChooseSkillTarget();
                 if (nextState != currentState)
-                    UpdateCharacterLayer();
+                    UpdateCharacterLayer(nextState);
                 break;
             case InputState.ENEMY_SELECTED:
                 // An target for skilled was selected
                 nextState = ConfirmAction();
+                if (nextState == InputState.DEFAULT)
+                    reset();
                 break;
             case InputState.COMFIRMED:
                 // Player clicked OK button
@@ -118,9 +132,10 @@ public class PakSelection : MonoBehaviour {
                 break;
             default:
                 nextState = PlayerEndTurn();
-                if (nextState != InputState.END_TURN) {
+                if (nextState != InputState.END_TURN)
                     nextState = chooseCharacter();
-                }
+                else
+                    UpdateCharacterLayer(nextState);
 
                 break;
         }
@@ -140,6 +155,9 @@ public class PakSelection : MonoBehaviour {
             backPressed = false;
         }
 
+        if (cancelPressed) {
+            cancelPressed = false;
+        }
         selectSkillBuffer = -1;
     }
 
@@ -156,18 +174,43 @@ public class PakSelection : MonoBehaviour {
                     // find game object data with tag
                     if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.DEFAULT;
 
-                    selectedPak = hit.collider.tag;
-                    GameObject ally = hit.collider.gameObject;
+                    CharacterHolder ally = characterManager.GetCharacter(hit.collider.tag);
 
-                    characterManager.SetSelect(selectedPak, true);
+                    if (ally != null) {
+                        // Select the ally
+                        selectedPak = hit.collider.tag;
+                        ally.Select(true);
 
-                    // Send character to update on Skill menu
-                    SendCharacterImage(ally);
+                        // Send character to update on Skill menu
+                        SendCharacterImage(ally.character);
 
-                    // Add value to result
-                    result.Add(hit.collider.name);
-                    
-                    return InputState.CHARCTER_SELECTED;
+                        if (ally.InAction) {
+                            // Get old action data
+                            ActionCommand action = BattleManager.instance.actionCommandHandler.GetAction(selectedPak);
+
+                            // get index of the called skill in the caller pak
+                            selectedSkill = action.selectedSkill;
+                            skillMenu.ToggleSkillUI(selectedSkill);
+
+                            // get game tag of the target
+                            selectedEnemy = action.targets[0].gameObject.tag;
+                            characterManager.SetSelect(selectedEnemy, true);
+
+                            // Change UI from DEFAULT scene to ENEMY_SELECTED
+                            skillMenu.ToggleMenu(true);
+                            endTurnButton.gameObject.SetActive(false);
+                            Backdrop.SetActive(true);
+                            UpdateCharacterLayer(InputState.ENEMY_SELECTED);
+                            action.caller.DisplayInAction(false);
+                            return InputState.ENEMY_SELECTED;                          
+                        }
+                       
+                        // Add value to result
+                        result.Add(hit.collider.name);
+
+                        return InputState.CHARCTER_SELECTED;
+                    }
+
                 }
             }
         }
@@ -231,9 +274,10 @@ public class PakSelection : MonoBehaviour {
         if ((selectedSkill > -1)
             && (selectSkillBuffer > -1)) {
 
-            skillMenu.ToggleSkillUI(selectedSkill);
+  
 
             if (selectedSkill == selectSkillBuffer) {
+                skillMenu.ToggleSkillUI(selectedSkill);
                 selectedSkill = -1;
                 result.RemoveAt(result.Count - 1);
                 return InputState.CHARCTER_SELECTED;
@@ -242,7 +286,7 @@ public class PakSelection : MonoBehaviour {
             result.Remove(string.Format("Skill {0}", selectedSkill + 1));
             result.Add(string.Format("Skill {0}", selectSkillBuffer + 1));
             selectedSkill = selectSkillBuffer;
-            
+            skillMenu.ToggleSkillUI(selectSkillBuffer);
 
             return InputState.SKILL_SELECTED;
         }
@@ -308,7 +352,27 @@ public class PakSelection : MonoBehaviour {
             }
         }
 
+        var holder = characterManager.GetCharacter(selectedPak);
+        // Player presses cancel button
+        if (cancelPressed && holder.InAction) {
+            // Remove action
+            var commandHandler = BattleManager.instance.actionCommandHandler;
+            commandHandler.RemoveAction(selectedPak);
+            holder.Action(false);
+            return InputState.DEFAULT;
+        }
+
+        // Player presses ok button
         if (okPressed) {
+            // If holder is In action remove old action
+            // then waiting for the new one
+            if (holder.InAction) {
+                var commandHandler = BattleManager.instance.actionCommandHandler;
+                commandHandler.RemoveAction(selectedPak);
+                holder.Action(false);
+            }
+            
+            // Add result string to output log
             string output = "Add command ";
             foreach (string name in result) {
                 output += name;
@@ -330,6 +394,7 @@ public class PakSelection : MonoBehaviour {
     }
 
     private void UpdateUI() {
+
         switch (nextState) {
             case InputState.CHARCTER_SELECTED:
                 skillMenu.ToggleMenu(true);
@@ -345,11 +410,18 @@ public class PakSelection : MonoBehaviour {
             case InputState.ENEMY_SELECTED:
                 okButton.gameObject.SetActive(true);
                 backButton.gameObject.SetActive(true);
+
+                // if the selected pak is already in action show cancel button
+                var pak = characterManager.GetCharacter(selectedPak);
+                if (pak.InAction) {
+                    cancelButton.gameObject.SetActive(true);
+                }
                 break;
             case InputState.COMFIRMED:
                 endTurnButton.gameObject.SetActive(false);
                 okButton.gameObject.SetActive(false);
                 backButton.gameObject.SetActive(false);
+                cancelButton.gameObject.SetActive(false);
                 break;
             case InputState.END_TURN:
                 endTurnButton.gameObject.SetActive(false);
@@ -360,6 +432,7 @@ public class PakSelection : MonoBehaviour {
                 skillMenu.ToggleMenu(false);
                 backButton.gameObject.SetActive(false);
                 okButton.gameObject.SetActive(false);
+                cancelButton.gameObject.SetActive(false);
                 endTurnButton.gameObject.SetActive(true);
                 supportMenu.SetActive(false);
                 Backdrop.SetActive(false);
@@ -367,13 +440,16 @@ public class PakSelection : MonoBehaviour {
         }
     }
 
-    private void UpdateCharacterLayer() {
-        if (nextState == InputState.SKILL_SELECTED) {
-            var enemyTags = new List<string>{ "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss"};
-            characterManager.HighLightCharacters(enemyTags);
+    private void UpdateCharacterLayer(InputState state) {
+        if (state == InputState.SKILL_SELECTED ||
+            (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED)) {
+            var characterTags = new List<string>{ "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss"};
+            characterTags.Add(selectedPak);
+            characterManager.HighLightCharacters(characterTags);
         }
-        else if (nextState == InputState.CHARCTER_SELECTED ||
-                 nextState == InputState.DEFAULT) {
+        else if (state == InputState.CHARCTER_SELECTED ||
+                 state == InputState.DEFAULT ||
+                 state == InputState.END_TURN) {
             // Reset all highlight to default
             characterManager.ResetHighLight();
         }
@@ -400,9 +476,8 @@ public class PakSelection : MonoBehaviour {
         if (caller != null) {
             // Set actions of selected Pak
             characterManager.SetAction(selectedPak, true);
-            string toCallSkill = string.Format("skill {0}", selectedSkill + 1);
             GameObject[] targets = { characterManager.GetCharacter(selectedEnemy).character };
-            BattleManager.instance.AddNewCommand(caller, toCallSkill, targets);
+            BattleManager.instance.AddNewCommand(caller, selectedSkill, targets);
         }
     }
 
@@ -424,7 +499,7 @@ public class PakSelection : MonoBehaviour {
             result = new List<string>();
 
         actionFinished = false;
-        UpdateCharacterLayer();
+        UpdateCharacterLayer(InputState.DEFAULT);
     }
 
     public void SelectSkill(int index) {
