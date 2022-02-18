@@ -16,6 +16,7 @@ public class BattleManager : MonoBehaviour {
     public static BattleManager instance;                   // singleton instance of this class
     
     private ActionCommandHandler actionCommandHandler;      // reference to ActionCommandHandler
+    private CharacterManager characters;
 
     public int currentTurn { get; private set; }            // keep track how many turn have pass
 
@@ -50,6 +51,7 @@ public class BattleManager : MonoBehaviour {
     void Start() {
         currentTurn = 0;
 
+        characters = GameObject.Find("Chracter Manager").GetComponent<CharacterManager>();
         actionCommandHandler = GetComponent<ActionCommandHandler>();
         actionText.gameObject.SetActive(false);
 
@@ -65,7 +67,6 @@ public class BattleManager : MonoBehaviour {
         //---------------------------------New AI ---------------------------------------------//
 
         // Get list of pakTeam and enemy Team
-        CharacterManager characters = GameObject.Find("Characters").GetComponent<CharacterManager>();
         List<CharacterHolder> pakHolders = characters.getTeamHolders(0);
         List<CharacterHolder> enemyHolders = characters.getTeamHolders(1);
         
