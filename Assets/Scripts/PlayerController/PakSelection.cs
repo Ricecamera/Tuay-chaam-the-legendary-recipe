@@ -32,8 +32,7 @@ public class PakSelection : MonoBehaviour {
 
     private int selectSkillBuffer = -1;     // buffer for storing user's click input
 
-    private CharacterManager playerTeam;
-    private CharacterManager enemyTeam;
+    private CharacterManager characterManager;
 
     [SerializeField]
     private SkillMenuUI skillMenu;
@@ -58,8 +57,8 @@ public class PakSelection : MonoBehaviour {
     }
 
     void Start() {
-        playerTeam = GameObject.Find("PlayerTeam").GetComponent<CharacterManager>();
-        enemyTeam = GameObject.Find("EnemyTeam").GetComponent<CharacterManager>();
+        Spawner spawn = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
+        characterManager = spawn.characters;
 
         // Set callback function for skill buttons
         for (int i = 0; i < skillMenu.skills.Length; ++i) {
@@ -114,8 +113,7 @@ public class PakSelection : MonoBehaviour {
                 // Player clicked end-turn button
                 if (actionFinished) {
                     reset();
-                    playerTeam.ResetAction();
-                    enemyTeam.ResetAction();
+                    characterManager.ResetAction();
                 }
                 break;
             default:
@@ -156,12 +154,12 @@ public class PakSelection : MonoBehaviour {
                 if (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2") 
                     || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam")) {
                     // find game object data with tag
-                    if (!playerTeam.hasCharacter(hit.collider.tag)) return InputState.DEFAULT;
+                    if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.DEFAULT;
 
                     selectedPak = hit.collider.tag;
                     GameObject ally = hit.collider.gameObject;
 
-                    playerTeam.SetSelect(selectedPak, true);
+                    characterManager.SetSelect(selectedPak, true);
 
                     // Send character to update on Skill menu
                     SendCharacterImage(ally);
@@ -205,7 +203,7 @@ public class PakSelection : MonoBehaviour {
                     (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2") 
                     || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam"))) {
 
-                playerTeam.SetSelect(selectedPak, false);
+                characterManager.SetSelect(selectedPak, false);
                 result.Clear();
 
                 if (hit.collider.CompareTag(selectedPak)) {
@@ -217,7 +215,7 @@ public class PakSelection : MonoBehaviour {
 
                 selectedPak = hit.collider.tag;
                 GameObject ally = hit.collider.gameObject;
-                playerTeam.SetSelect(selectedPak, true);
+                characterManager.SetSelect(selectedPak, true);
 
                 // Send character to update on Skill menu
                 SendCharacterImage(ally);
@@ -260,14 +258,14 @@ public class PakSelection : MonoBehaviour {
                 || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss")) {
                     
                 
-                if (!enemyTeam.hasCharacter(hit.collider.tag))  {
+                if (!characterManager.hasCharacter(hit.collider.tag))  {
                     Debug.Log(hit.collider.tag + " selected");
                     return currentState;
                 }
 
                 
                 selectedEnemy = hit.collider.tag;
-                enemyTeam.SetSelect(selectedEnemy, true);
+                characterManager.SetSelect(selectedEnemy, true);
                 result.Add(hit.collider.name);
 
                 return InputState.ENEMY_SELECTED;
@@ -289,17 +287,17 @@ public class PakSelection : MonoBehaviour {
             if ( (selectedEnemy != "")
                 && (hit.collider.CompareTag("Enemy1") || hit.collider.CompareTag("Enemy2") || hit.collider.CompareTag("Enemy3") 
                 || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss"))) {
-                if (!enemyTeam.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED;
-                
-                
-                enemyTeam.SetSelect(selectedEnemy, false);
-                GameObject oldEnemy = enemyTeam.GetCharacter(selectedEnemy).character;
+                if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED;
+
+
+                characterManager.SetSelect(selectedEnemy, false);
+                GameObject oldEnemy = characterManager.GetCharacter(selectedEnemy).character;
                 result.Remove(oldEnemy.name);
 
                 if (hit.collider.tag != selectedEnemy) {
 
                     selectedEnemy = hit.collider.tag;
-                    enemyTeam.SetSelect(selectedEnemy, true);
+                    characterManager.SetSelect(selectedEnemy, true);
                     result.Add(hit.collider.name);
                 }
                 else {
@@ -372,13 +370,12 @@ public class PakSelection : MonoBehaviour {
     private void UpdateCharacterLayer() {
         if (nextState == InputState.SKILL_SELECTED) {
             var enemyTags = new List<string>{ "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss"};
-            enemyTeam.HighLightCharacters(enemyTags);
+            characterManager.HighLightCharacters(enemyTags);
         }
         else if (nextState == InputState.CHARCTER_SELECTED ||
                  nextState == InputState.DEFAULT) {
             // Reset all highlight to default
-            enemyTeam.ResetHighLight();
-            playerTeam.ResetHighLight();
+            characterManager.ResetHighLight();
         }
     }
 
@@ -399,12 +396,12 @@ public class PakSelection : MonoBehaviour {
     }
 
     public void SendCommand() {
-        GameObject caller = playerTeam.GetCharacter(selectedPak).character;
+        GameObject caller = characterManager.GetCharacter(selectedPak).character;
         if (caller != null) {
             // Set actions of selected Pak
-            playerTeam.SetAction(selectedPak, true);
+            characterManager.SetAction(selectedPak, true);
             string toCallSkill = string.Format("skill {0}", selectedSkill + 1);
-            GameObject[] targets = { enemyTeam.GetCharacter(selectedEnemy).character };
+            GameObject[] targets = { characterManager.GetCharacter(selectedEnemy).character };
             BattleManager.instance.AddNewCommand(caller, toCallSkill, targets);
         }
     }
@@ -412,8 +409,7 @@ public class PakSelection : MonoBehaviour {
     public void reset() {
         nextState = InputState.DEFAULT;
 
-        playerTeam.Reset();
-        enemyTeam.Reset();
+        characterManager.Reset();
 
         selectedPak = "";
         selectedEnemy = "";

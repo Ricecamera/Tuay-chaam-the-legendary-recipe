@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour {
     public Text actionText;                                 // text that show when in battle
 
     public AIController AI;                                 // reference to AI controller class
+   
 
     // This ensure that the object of this class will be only one in the game.
     private void Awake() {
@@ -64,10 +65,9 @@ public class BattleManager : MonoBehaviour {
         //---------------------------------New AI ---------------------------------------------//
 
         // Get list of pakTeam and enemy Team
-        CharacterManager playerTeam = GameObject.Find("PlayerTeam").GetComponent<CharacterManager>();
-        CharacterManager enemyTeam = GameObject.Find("EnemyTeam").GetComponent<CharacterManager>();
-        List<CharacterHolder> pakHolders = playerTeam.getHoldersList();
-        List<CharacterHolder> enemyHolders = enemyTeam.getHoldersList();
+        CharacterManager characters = GameObject.Find("Characters").GetComponent<CharacterManager>();
+        List<CharacterHolder> pakHolders = characters.getTeamHolders(0);
+        List<CharacterHolder> enemyHolders = characters.getTeamHolders(1);
         
         List<GameObject> pakTeamObject = new List<GameObject>();
         List<GameObject> enemyTeamObject = new List<GameObject>();

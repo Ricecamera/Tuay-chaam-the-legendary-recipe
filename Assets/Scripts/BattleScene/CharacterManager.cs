@@ -4,27 +4,45 @@ using UnityEngine;
 
 namespace BattleScene {
     public class CharacterManager : MonoBehaviour {
-                  // size mulitplier to be apply to the selected characte
+    
+    enum Team {PLAYER_TEAM, ENEMY_TEAM };
+    private SortedList<string, Team> lookupTable;
     private Dictionary<string, CharacterHolder> holders;         // dictionary contains character holder
 
     // Initialize character dictonarys
     public void Intialize() {
+        lookupTable = new SortedList<string, Team>();
         holders = new Dictionary<string, CharacterHolder>();
     }
 
     // Add a new character
-    public void AddCharacter(string tag, GameObject character){
+    public void AddCharacter(string tag, GameObject character, int teamKey){
         try {
+            // find the team of added character
+            Team team;
+            if (teamKey == 0)
+                team= Team.PLAYER_TEAM;
+            else if (teamKey == 1)
+                team= Team.ENEMY_TEAM;
+            else
+                throw new Exception("team key is not valid");
+
+
             holders.Add(tag, new CharacterHolder(character));
+            lookupTable.Add(tag, team);
         }
         catch (Exception e) {
+            if (e is ArgumentException) {
+                Destroy(character); 
+            }
             Debug.LogError(e.Message);
         }
     }
 
     // Remove a specific chacracter by tag and team flag
-    public bool RemoveCharacter(string tag) {
-        return holders.Remove(tag);
+    public void RemoveCharacter(string tag) {
+        lookupTable.Remove(tag);
+        holders.Remove(tag);
     }
 
     // Get a specific character by tag and team flag
@@ -69,35 +87,49 @@ namespace BattleScene {
     }
 
 
-    // Set select state of ally character
-    public void Reset() {
-        foreach (var p in holders) {
-            CharacterHolder holder = p.Value;
-            holder.ResetState();
+    public string GetCharacterTeam(string tag) {
+        try {
+            Team team = lookupTable[tag];
+
+            if (team == Team.PLAYER_TEAM)
+                return "Player team";
+            return "Enemy team";
+        }
+        catch {
+            return "No team";
         }
     }
 
-    public void ResetAction() {
-            foreach (var p in holders)
-            {
-                CharacterHolder holder = p.Value;
-                holder.Action(false);
-            }
-    }
-
-    // Clear dictionarys
-    public void Clear() {
-        holders?.Clear();
-    }
-
     // Get a list of CharacterHolder of pakTeam
-    public List<CharacterHolder> getHoldersList(){
+    public List<CharacterHolder> getHolders(){
         List<CharacterHolder> temp = new List<CharacterHolder>();
         foreach (CharacterHolder e in holders.Values){
             temp.Add(e);
         }
         return temp;
     }
+
+    // 0 is PLAYER_TEAM
+    // 1 is ENEMY_TEAM
+    public List<CharacterHolder> getTeamHolders(int teamKey) {
+        List<CharacterHolder> temp = new List<CharacterHolder>();
+        if (teamKey < 0 || teamKey > 1) {
+            return temp;
+        }
+
+        Team team;
+        if (teamKey == 0)
+            team = Team.PLAYER_TEAM;
+        else
+            team = Team.ENEMY_TEAM;
+
+        foreach (var kv in lookupTable) {
+            if (kv.Value == team)
+                temp.Add(holders[kv.Key]);
+        }
+        return temp;
+    }
+
     
     public void HighLightCharacters(List<string> tags) {
         foreach (var k_v in holders) {
@@ -115,6 +147,26 @@ namespace BattleScene {
         foreach (var k_v in holders) {
              k_v.Value.HighLightLayer(false);
         }
+    }
+
+    // Set select state of ally character
+    public void Reset() {
+        foreach (var p in holders) {
+            CharacterHolder holder = p.Value;
+            holder.ResetState();
+        }
+    }
+
+    public void ResetAction() {
+        foreach (var p in holders) {
+            CharacterHolder holder = p.Value;
+            holder.Action(false);
+        }
+    }
+
+    // Clear dictionarys
+    public void Clear() {
+        holders?.Clear();
     }
 }
 }
