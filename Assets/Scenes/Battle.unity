@@ -609,7 +609,7 @@ MonoBehaviour:
   - {fileID: 1754832682}
   - {fileID: 1448943246}
   - {fileID: 1681661184}
-  skillToggle: 
+  skillToggle: 000000
 --- !u!1 &565492850
 GameObject:
   m_ObjectHideFlags: 0

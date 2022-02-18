@@ -15,6 +15,7 @@ public class CharacterManager : MonoBehaviour {
             character = null;
             isSelected = false;
             inAction = false;
+            
         }
 
         public CharacterHolder(GameObject character) {
@@ -55,6 +56,9 @@ public class CharacterManager : MonoBehaviour {
                 render.DisplayInAction(false);
         }
     }
+
+    private const int SORTING_LAYER_DEFAULT = 0;
+    private const int SORTING_LAYTER_FRONT = 4;
 
     private const float SIZE_MULTIPLER = 1.2f;                   // size mulitplier to be apply to the selected character
 

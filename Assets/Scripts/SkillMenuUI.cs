@@ -17,12 +17,6 @@ public class SkillMenuUI : MonoBehaviour {
 
     public List<bool> skillToggle;
 
-    public void Awake() {
-        skillToggle = new List<bool>(skills.Length);
-        for (int i = 0; i < skills.Length; i++) {
-            skillToggle.Add(false);
-        }
-    }
     public void UpdateCharacterUI(Sprite sprite) {
         if (sprite) {
             characterImage.color  = Color.white;
