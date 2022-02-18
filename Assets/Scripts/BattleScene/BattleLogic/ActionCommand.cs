@@ -2,19 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-using BattleScene.BattleLogic;
-
-namespace BattleLogic {
+namespace BattleScene.BattleLogic {
 
     public class ActionCommand : IComparable , ICommand{
         private float speed;                // field that determine the execution order of skills
 
         public PakRender caller;            // a index of the character calling this action
-        public string selectedSkill;        // a index of the skill to be execute
+        public int selectedSkill;        // a index of the skill to be execute
         public List<PakRender> targets;     // indice of the allied targets
 
         // Constructor
-        public ActionCommand(PakRender caller, string selectedSkill, List<PakRender> targets, float speed) {
+        public ActionCommand(PakRender caller, int selectedSkill, List<PakRender> targets, float speed) {
             this.caller = caller;
             this.selectedSkill = selectedSkill;
             this.targets = targets;
@@ -33,6 +31,7 @@ namespace BattleLogic {
         public void Execute() {
             Debug.Log("Do Execute");
             // Mock execution of the skill
+            caller.DisplayInAction(false);
             String callerName = caller.pak.EntityName;
             
             List<string> targetNames = new List<string>();
