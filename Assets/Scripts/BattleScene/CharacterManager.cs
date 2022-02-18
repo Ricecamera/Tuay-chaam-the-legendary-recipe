@@ -3,65 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleScene {
-public class CharacterManager : MonoBehaviour {
-    public class CharacterHolder {
-        private bool isSelected;         // Is this character selected by player?
-        private bool inAction;           // Is this character setted its action?
-
-        public GameObject character;    // game object of this character
-
-            // Constructors
-        public CharacterHolder() {
-            character = null;
-            isSelected = false;
-            inAction = false;
-            
-        }
-
-        public CharacterHolder(GameObject character) {
-            this.character = character;
-            isSelected = false;
-            inAction = false;
-
-            // Hide Action Icon
-            PakRender render = character.GetComponent<PakRender>();
-            render.DisplayInAction(false);
-        }
-
-        public void ResetState() {
-            isSelected = false;
-            // Reduce scale to normal scale
-            character.GetComponent<RectTransform>().localScale = Vector3.one;
-
-        }
-
-        public void Select(bool value) {
-            isSelected = value;
-            if (value)
-            {
-                character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
-            }
-            else
-            {
-                character.GetComponent<RectTransform>().localScale = Vector3.one;
-            }
-        }
-
-        public void Action(bool value) {
-            inAction = value;
-            PakRender render = character.GetComponent<PakRender>();
-            if (value)
-                render.DisplayInAction(true, 0);
-            else
-                render.DisplayInAction(false);
-        }
-    }
-
-    private const int SORTING_LAYER_DEFAULT = 0;
-    private const int SORTING_LAYTER_FRONT = 4;
-
-    private const float SIZE_MULTIPLER = 1.2f;                   // size mulitplier to be apply to the selected character
-
+    public class CharacterManager : MonoBehaviour {
+                  // size mulitplier to be apply to the selected characte
     private Dictionary<string, CharacterHolder> holders;         // dictionary contains character holder
 
     // Initialize character dictonarys
@@ -155,6 +98,24 @@ public class CharacterManager : MonoBehaviour {
         }
         return temp;
     }
+    
+    public void HighLightCharacters(List<string> tags) {
+        foreach (var k_v in holders) {
+            // if the llst contain a key then highlight the character
+            if (tags.Contains(k_v.Key)) {
+                k_v.Value.HighLightLayer(true);
+            }
+            else {
+                k_v.Value.HighLightLayer(false);
+            }
+        }
+    }
 
-}}
+    public void ResetHighLight() {
+        foreach (var k_v in holders) {
+             k_v.Value.HighLightLayer(false);
+        }
+    }
+}
+}
 

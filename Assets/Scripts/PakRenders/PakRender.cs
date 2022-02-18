@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
@@ -13,7 +13,6 @@ public class PakRender : MonoBehaviour
     public HealthSystem healthSystem {get; private set;}
 
     
-
     public Pak pak;
 
     public Skill skill;
@@ -62,5 +61,26 @@ public class PakRender : MonoBehaviour
     {
         //actionIcon.sprite = skillImages[skillIndex];
         DisplayInAction(value);
+    }
+
+    // Set sorting layer of Pak's sprite and its health bar
+    public void GoToLayer(string sortingLayer) {
+        try {
+            SpriteRenderer pakSprite = gameObject.GetComponent<SpriteRenderer>();
+            Canvas healthbar = healthSystem.healthBar.GetComponent<Canvas>();
+
+            Debug.Log(pakSprite.sortingLayerName);
+
+            pakSprite.sortingLayerName = sortingLayer;
+            if (sortingLayer.CompareTo("Front") == 0)
+                healthbar.sortingLayerName = "Front";
+            else
+                healthbar.sortingLayerName = "Overlay";
+            
+        }
+        catch (NullReferenceException error){
+            Debug.LogError(error.Message);
+        }
+
     }
 }

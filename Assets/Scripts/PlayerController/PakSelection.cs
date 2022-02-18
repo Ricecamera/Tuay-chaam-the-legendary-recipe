@@ -44,6 +44,9 @@ public class PakSelection : MonoBehaviour {
     [SerializeField]
     private GameObject supportMenu;
 
+    [SerializeField]
+    private GameObject Backdrop;
+
     private List<string> result;
 
     private void OnEnable() {
@@ -75,10 +78,8 @@ public class PakSelection : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         // Change state and update UI
-        if (currentState != nextState) {
-            currentState = nextState;
-            UpdateUI(currentState);
-        }
+        UpdateUI();
+        currentState = nextState;
         
         if (backPressed && 
             (currentState > InputState.DEFAULT && currentState < InputState.COMFIRMED)) {
@@ -91,10 +92,14 @@ public class PakSelection : MonoBehaviour {
             case InputState.CHARCTER_SELECTED:
                 // An ally character was choosed
                 nextState = ChooseSkill();
+                if (nextState != currentState)
+                    UpdateCharacterLayer();
                 break;
             case InputState.SKILL_SELECTED:
                 // An skill to be add to commnad list was selected
                 nextState = ChooseSkillTarget();
+                if (nextState != currentState)
+                    UpdateCharacterLayer();
                 break;
             case InputState.ENEMY_SELECTED:
                 // An target for skilled was selected
@@ -208,9 +213,7 @@ public class PakSelection : MonoBehaviour {
                     result.Add(hit.collider.name);
                     return InputState.DEFAULT;
                 }
-                skillMenu.ToggleSkillUI(selectedSkill);
-                selectedSkill = -1;
-                selectSkillBuffer = -1;
+ 
 
                 selectedPak = hit.collider.tag;
                 GameObject ally = hit.collider.gameObject;
@@ -230,6 +233,8 @@ public class PakSelection : MonoBehaviour {
         if ((selectedSkill > -1)
             && (selectSkillBuffer > -1)) {
 
+            skillMenu.ToggleSkillUI(selectedSkill);
+
             if (selectedSkill == selectSkillBuffer) {
                 selectedSkill = -1;
                 result.RemoveAt(result.Count - 1);
@@ -239,7 +244,7 @@ public class PakSelection : MonoBehaviour {
             result.Remove(string.Format("Skill {0}", selectedSkill + 1));
             result.Add(string.Format("Skill {0}", selectSkillBuffer + 1));
             selectedSkill = selectSkillBuffer;
-            skillMenu.ToggleSkillUI(selectedSkill);
+            
 
             return InputState.SKILL_SELECTED;
         }
@@ -326,16 +331,18 @@ public class PakSelection : MonoBehaviour {
         return InputState.DEFAULT;
     }
 
-    private void UpdateUI(InputState currentState) {
-        switch (currentState) {
+    private void UpdateUI() {
+        switch (nextState) {
             case InputState.CHARCTER_SELECTED:
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
+                Backdrop.SetActive(false);
                 break;
             case InputState.SKILL_SELECTED:
                 backButton.gameObject.SetActive(true);
                 okButton.gameObject.SetActive(false);
+                Backdrop.SetActive(true);
                 break;
             case InputState.ENEMY_SELECTED:
                 okButton.gameObject.SetActive(true);
@@ -357,10 +364,23 @@ public class PakSelection : MonoBehaviour {
                 okButton.gameObject.SetActive(false);
                 endTurnButton.gameObject.SetActive(true);
                 supportMenu.SetActive(false);
+                Backdrop.SetActive(false);
                 break;
         }
     }
 
+    private void UpdateCharacterLayer() {
+        if (nextState == InputState.SKILL_SELECTED) {
+            var enemyTags = new List<string>{ "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss"};
+            enemyTeam.HighLightCharacters(enemyTags);
+        }
+        else if (nextState == InputState.CHARCTER_SELECTED ||
+                 nextState == InputState.DEFAULT) {
+            // Reset all highlight to default
+            enemyTeam.ResetHighLight();
+            playerTeam.ResetHighLight();
+        }
+    }
 
     public void SendCharacterImage(GameObject ally) {
 
@@ -408,6 +428,7 @@ public class PakSelection : MonoBehaviour {
             result = new List<string>();
 
         actionFinished = false;
+        UpdateCharacterLayer();
     }
 
     public void SelectSkill(int index) {

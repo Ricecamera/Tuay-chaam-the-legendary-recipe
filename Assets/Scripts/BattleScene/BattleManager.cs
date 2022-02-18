@@ -66,8 +66,8 @@ public class BattleManager : MonoBehaviour {
         // Get list of pakTeam and enemy Team
         CharacterManager playerTeam = GameObject.Find("PlayerTeam").GetComponent<CharacterManager>();
         CharacterManager enemyTeam = GameObject.Find("EnemyTeam").GetComponent<CharacterManager>();
-        List<CharacterManager.CharacterHolder> pakHolders = playerTeam.getHoldersList();
-        List<CharacterManager.CharacterHolder> enemyHolders = enemyTeam.getHoldersList();
+        List<CharacterHolder> pakHolders = playerTeam.getHoldersList();
+        List<CharacterHolder> enemyHolders = enemyTeam.getHoldersList();
         
         List<GameObject> pakTeamObject = new List<GameObject>();
         List<GameObject> enemyTeamObject = new List<GameObject>();

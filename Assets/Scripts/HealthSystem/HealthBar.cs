@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable() {
         guage.fillAmount = 0;
+        gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
     }
 
     public void SetFill(float newValue)
