@@ -127,16 +127,17 @@ public class PakSelection : MonoBehaviour {
                 // Player clicked end-turn button
                 if (actionFinished) {
                     reset();
-                    characterManager.ResetAction();
                 }
                 break;
             default:
                 nextState = PlayerEndTurn();
-                if (nextState != InputState.END_TURN)
+                if (nextState != InputState.END_TURN) {
                     nextState = chooseCharacter();
-                else
+                }
+                else {
+                    characterManager.ResetAction();
                     UpdateCharacterLayer(nextState);
-
+                }
                 break;
         }
         

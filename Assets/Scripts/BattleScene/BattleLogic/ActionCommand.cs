@@ -31,7 +31,6 @@ namespace BattleScene.BattleLogic {
         public void Execute() {
             Debug.Log("Do Execute");
             // Mock execution of the skill
-            caller.DisplayInAction(false);
             String callerName = caller.pak.EntityName;
             
             List<string> targetNames = new List<string>();
