@@ -30,11 +30,9 @@ public class HealthSystem : MonoBehaviour
     }
 
      public void Initialize(int maxHp) {
-        Debug.Log("Health system work");
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         healthBar.Reset();
-        Debug.Log(gameObject.name + " max hp is " + maxHp);
     }
 
     public void TakeDamage(int damage)

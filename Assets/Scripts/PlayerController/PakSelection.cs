@@ -62,7 +62,7 @@ public class PakSelection : MonoBehaviour {
         // Set callback function for skill buttons
         for (int i = 0; i < skillMenu.skills.Length; ++i) {
             int k = i;
-            skillMenu.skills[i].onClick.AddListener(() => SelectSkill(k));
+            skillMenu.skills[i].AddListener(() => SelectSkill(k));
         }
 
         // Set callback function for game button

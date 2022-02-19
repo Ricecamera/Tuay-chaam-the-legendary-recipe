@@ -10,9 +10,11 @@ public class PakRender : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer actionIcon;
+
+    [SerializeField]
+    private GameObject selectedIcon;
     public HealthSystem healthSystem {get; private set;}
 
-    
     public Pak pak;
 
     public Skill skill;
@@ -22,6 +24,8 @@ public class PakRender : MonoBehaviour
     {
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.Initialize(pak.MaxHp);
+        ShowSelected(false);
+        DisplayInAction(false);
 
         this.skill = new VanillaAttackOne("atk1","AttackOneEnemy","This do damage to one enemy", 0);
         if(this.skill == null){
@@ -55,8 +59,6 @@ public class PakRender : MonoBehaviour
             SpriteRenderer pakSprite = gameObject.GetComponent<SpriteRenderer>();
             Canvas healthbar = healthSystem.healthBar.GetComponent<Canvas>();
 
-            Debug.Log(pakSprite.sortingLayerName);
-
             pakSprite.sortingLayerName = sortingLayer;
             if (sortingLayer.CompareTo("Front") == 0)
                 healthbar.sortingLayerName = "Front";
@@ -68,5 +70,9 @@ public class PakRender : MonoBehaviour
             Debug.LogError(error.Message);
         }
 
+    }
+
+    public void ShowSelected(bool value) {
+        selectedIcon.SetActive(value);
     }
 }

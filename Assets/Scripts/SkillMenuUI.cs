@@ -4,18 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillMenuUI : MonoBehaviour {
-    private const float SIZE_MULTIPLER = 1.2f;
-
+    
     [Header("Default image")]
-    private Sprite defualtCharacter;
-    private Sprite defaultButtonSprite;
+    private Sprite defualtCharacter;        // a image to show when the chracter doesn't have its image
+    
 
     [SerializeField]
     private Image characterImage;
 
-    public Button[] skills;
-
-    public List<bool> skillToggle;
+    public SkillUI[] skills;
 
     public void UpdateCharacterUI(Sprite sprite) {
         if (sprite) {
@@ -45,17 +42,18 @@ public class SkillMenuUI : MonoBehaviour {
             throw new IndexOutOfRangeException();
         }
 
-        if (skillToggle[index]) {
-            skills[index].GetComponent<RectTransform>().localScale = Vector3.one;
-            skillToggle[index] = false;
+        if (skills[index].Selected) {
+            skills[index].SetSelect(false);
         }
         else {
             for (int i = 0; i < skills.Length; i++) {
-                skills[i].GetComponent<RectTransform>().localScale = Vector3.one;
-                skillToggle[i] = false;
+                if (i != index) {
+                    skills[i].SetSelect(false);
+                }
+                else {
+                    skills[i].SetSelect(true);
+                }
             }
-            skills[index].GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
-            skillToggle[index] = true;
         }
     }
 }
