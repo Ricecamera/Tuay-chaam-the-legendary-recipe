@@ -77,8 +77,8 @@ public class PakRender : MonoBehaviour
 
     }
 
-    public void moveToEnemy(GameObject )
-    {
+    // public void moveToEnemy(GameObject )
+    // {
 
-    }
+    // }
 }
