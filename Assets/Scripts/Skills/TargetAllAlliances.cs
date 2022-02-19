@@ -4,34 +4,43 @@ using UnityEngine;
 
 public class AllTargetAlliances : Skill
 {
-    public AllTargetAlliances(string skillId, string skillName, string description, int cooldown):base(skillId, skillName, description, cooldown){
+    public AllTargetAlliances(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    {
 
     }
 
-    public void VanillaHeal(Entity[] target, int healValue){
-        foreach (Entity e in target){
-            e.Hp+=healValue;
+    public void VanillaHeal(PakRender[] target, int healValue)
+    {
+        foreach (var e in target)
+        {
+            e.healthSystem.Heal(healValue);
         }
         return;
     }
 
-    public void VanillaGainSP(Pak[] target, int spValue){
-        foreach (Pak e in target){
-            e.Sp+=spValue;
+    public void VanillaGainSP(Pak[] target, int spValue)
+    {
+        foreach (Pak e in target)
+        {
+            e.Sp += spValue;
         }
         return;
     }
 
-    public void VanillaBuffAtk(Entity[] target, int buffValue){
-        foreach (Entity e in target){
-            e.Atk+=buffValue;
+    public void VanillaBuffAtk(Entity[] target, int buffValue)
+    {
+        foreach (Entity e in target)
+        {
+            e.Atk += buffValue;
         }
         return;
     }
 
-    public void VanillaBuffDef(Entity[] target, int buffValue){
-        foreach (Entity e in target){
-            e.Def+=buffValue;
+    public void VanillaBuffDef(Entity[] target, int buffValue)
+    {
+        foreach (Entity e in target)
+        {
+            e.Def += buffValue;
         }
         return;
     }

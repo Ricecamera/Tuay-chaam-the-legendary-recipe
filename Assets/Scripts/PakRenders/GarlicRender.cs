@@ -1,11 +1,11 @@
-public class GarlicRender : PakRender {
-    // Start is called before the first frame update
-    void Start() {
+public class GarlicRender : PakRender
+{
 
+    protected override void Start()
+    {
+        base.Start();
+        skill.Add(new VanillaBuffAtkOne("buff2", "BuffoneEnemy", "", 0));
+        skill.Add(new VanillaHealAll("heal3", "HealAllEnemy", "", 0));
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
 }

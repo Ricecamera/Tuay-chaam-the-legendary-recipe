@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -13,6 +14,30 @@ public class LevelSelection : MonoBehaviour
     [SerializeField]
     public int levelname;
 
+    [SerializeField]
+    private Image padLock;
+
+
+    void Start()
+    {
+        padLock.enabled = true;
+        if (levelname == 1)
+        {
+            unlocked = true;
+        }
+    }
+
+    void Update()
+    {
+        if (unlocked)
+        {
+            padLock.enabled = false;
+        }
+        else
+        {
+            padLock.enabled = true;
+        }
+    }
 
     public void PressSelection(string level)
     {

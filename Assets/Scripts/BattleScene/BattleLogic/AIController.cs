@@ -16,7 +16,8 @@ public class AIController {
         
         foreach(GameObject e in enemyTeam) {
             List<PakRender> targets = new List<PakRender>();
-            int target_num = Random.Range(1,pakTeam.Count);
+            int target_num = Random.Range(0,pakTeam.Count);
+            Debug.Log("The target num is "+target_num);
             GameObject target = pakTeam[target_num];
             targets.Add(target.GetComponent<PakRender>());
             //ตีธรรมดา Only

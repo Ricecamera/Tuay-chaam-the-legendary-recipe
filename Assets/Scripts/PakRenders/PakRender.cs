@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
 {
+    public HealthSystem healthSystem { get; private set; }
 
     public Pak pak;
-    public HealthBar hp;
-    //public int currentHp;
-    public Canvas canvas;
-    public HealthSystem healthSystem;
 
-    public Skill skill;
+    public List<Skill> skill;
 
-    public GameObject plantpos;
+    private Coroutine flashcheck;
+
+
+
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        Debug.Log("Level = " + LevelSelection.Level);
-        pak.Hp = pak.MaxHp;
-        Debug.Log("start pakRender:" + pak.Hp);
+        healthSystem = GetComponent<HealthSystem>();
+        healthSystem.Initialize(pak.MaxHp);
 
-        healthSystem = new HealthSystem(pak.Hp, hp);
-        this.skill = new VanillaAttackOne("atk1", "AttackOneEnemy", "This do damage to one enemy", 0);
+        skill = new List<Skill>();
+
+        skill.Add(new VanillaAttackOne("atk1", "AttackOneEnemy", "This do damage to one enemy", 0));
         if (this.skill == null)
         {
             Debug.Log("Skill in PakRender is null");
@@ -40,40 +41,44 @@ public class PakRender : MonoBehaviour
         //currentHp = pak.Hp;
     }
 
-    void Update()
+    protected virtual void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            healthSystem.TakeDamage(5, pak.EntityName);
+            healthSystem.TakeDamage(10);
         }
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            healthSystem.Heal(5, pak.EntityName);
+            healthSystem.Heal(10);
         }
     }
 
-    /*    void TakeDamage(int damage)
+
+    public void switchMat()
+    {
+        if (flashcheck != null)
         {
-            if (currentHp - damage >= 0)
-            {
-                currentHp -= damage;
-                hp.SetHealth(currentHp);
-            }
+            StopCoroutine(flashcheck);
+        }
 
-            Debug.Log("wowza");
-
-        }*/
-
-    public void HideHpBar()
+        StartCoroutine(pause());
+    }
+    private IEnumerator pause()
     {
-        canvas.enabled = false;
+
+        Material whiteMat = (Material)Resources.Load<Material>("FlashMaterial");
+        Material originalMat = this.GetComponent<SpriteRenderer>().material;
+        this.GetComponent<SpriteRenderer>().material = whiteMat;
+        yield return new WaitForSeconds(0.5f);
+        this.GetComponent<SpriteRenderer>().material = originalMat;
+        flashcheck = null;
+
     }
 
-    public void ShowHpBar()
+    public void moveToEnemy(GameObject )
     {
-        canvas.enabled = true;
-    }
 
+    }
 }

@@ -1,11 +1,16 @@
-public class CarrotRender : PakRender {
-    // Start is called before the first frame update
-    void Start() {
+public class CarrotRender : PakRender
+{
 
+    protected override void Start()
+    {
+        base.Start();
+        skill.Add(new VanillaAttackAll("atk2", "AttackAllEnemy", "", 0));
+        skill.Add(new VanillaHealOne("heal3", "HealOneEnemy", "", 0));
     }
 
-    // Update is called once per frame
-    void Update() {
 
-    }
+
+
+
+
 }

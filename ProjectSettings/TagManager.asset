@@ -27,7 +27,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Tooltip
   - 
   - 
   - 
@@ -62,4 +62,7 @@ TagManager:
     locked: 0
   - name: Overlay
     uniqueID: 3882733785
+    locked: 0
+  - name: Tooltip
+    uniqueID: 1412850529
     locked: 0

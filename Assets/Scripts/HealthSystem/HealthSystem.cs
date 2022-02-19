@@ -2,56 +2,101 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem 
+public class HealthSystem : MonoBehaviour
 {
-
+    private bool isAlive;
     private int currentHp;
     private int maxHp;
-    public HealthBar hp;
+    public HealthBar healthBar;
 
-    // public void initHealth(int maxHp){
-    //     this.maxHp = maxHp;
-    //     this.currentHp = maxHp;
-    //     hp.SetMaxHealth(maxHp);
-    // }
-        
+    public int CurrentHp
+    {
+        get
+        {
+            return currentHp;
+        }
+        set
+        {
+            if (0 <= value && value <= maxHp)
+                currentHp = value;
+        }
+    }
 
-     public HealthSystem(int maxHp,HealthBar hp) {
+    public int MaxHp
+    {
+        get
+        {
+            return maxHp;
+        }
+        set
+        {
+            if (0 <= value && value <= maxHp)
+                maxHp = value;
+        }
+    }
+
+    public bool IsAlive
+    {
+        get
+        {
+            return isAlive;
+        }
+        set
+        {
+            isAlive = value;
+        }
+    }
+
+    public void Initialize(int maxHp)
+    {
         Debug.Log("Health system work");
         this.maxHp = maxHp;
-        currentHp = maxHp;
-        this.hp = hp;
-        hp.SetMaxHealth(maxHp);
+        this.currentHp = maxHp;
+        this.isAlive = true;
+        healthBar.Reset();
+        Debug.Log(gameObject.name + " max hp is " + maxHp);
     }
 
-    public int GetHealth()
-    {
-        return currentHp;
-    }
-
-    public void TakeDamage(int damage , string name)
+    public void TakeDamage(int damage)
     {
         currentHp -= damage;
         if (currentHp < 0)
         {
             currentHp = 0;
         }
-        hp.SetHealth(currentHp);
 
-        Debug.Log(name+":"+currentHp);
+        if (currentHp == 0)
+        {
+            isAlive = false;
+        }
+
+        float fill = currentHp / (float)maxHp;
+        healthBar.SetFill(fill);
+
 
     }
 
-    public void Heal(int healAmount,string name)
+    public void Heal(int healAmount)
     {
         currentHp += healAmount;
-        if(currentHp > maxHp)
+        if (currentHp > maxHp)
         {
             currentHp = maxHp;
         }
-        hp.SetHealth(currentHp);
-        Debug.Log(name + ":" + currentHp);
-    } 
 
+        float fill = currentHp / (float)maxHp;
+        healthBar.SetFill(fill);
+    }
+
+
+    public void HideHpBar()
+    {
+        healthBar.gameObject.SetActive(false);
+    }
+
+    public void ShowHpBar()
+    {
+        healthBar.gameObject.SetActive(true);
+    }
 
 }
