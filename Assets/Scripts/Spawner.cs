@@ -2,14 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleScene;
 
+[RequireComponent(typeof(CharacterManager))]
 public class Spawner : MonoBehaviour
 {
+
     public CharacterManager characters;
 
-    public List<GameObject> plants = new List<GameObject>();        // contains prefabs of all in-play plants
+    public List<GameObject> plants = new List<GameObject>();         // contains prefabs of all in-play plants
     public List<GameObject> enemies = new List<GameObject>();       // contains prefabs of all in-play enemies
     public List<Transform> allySpawnPos = new List<Transform>();    // reference of allies' spawn positions in scene
-    public List<Transform> enemySpawnPos = new List<Transform>();   // contains enemies' spawn positions in scene 
+    public List<Transform> enemySpawnPos = new List<Transform>();   // contains enemies' spawn positions in scene
+    public List<GameObject> healthBar = new List<GameObject>();
 
     [Header("Chaam")]
     public GameObject chaam;                // contains the prefab of an in-play chaam
@@ -22,25 +25,11 @@ public class Spawner : MonoBehaviour
     [Header("Other scripts")]
     public PakSelection pakSelection;     // reference of pakSelection object in scene
 
-    public void ConvertToGameObjectList(List<ItemObject> itemObjects)
-    {
-        foreach (var item in itemObjects)
-        {
-            plants.Add(item.prefab);
-        }
-    }
-
-    public void ConvertChaamToGameObject(ItemObject itemObject)
-    {
-        chaam = itemObject.prefab;
-    }
-
     void OnEnable()
     {
         characters.Intialize();
         ConvertToGameObjectList(CharacterSelecter.instance.GetCharacters());
         ConvertChaamToGameObject(CharacterSelecter.instance.GetChaam());
-
 
         for (int i = 0; i < plants.Count; i++)
         {
@@ -64,6 +53,19 @@ public class Spawner : MonoBehaviour
         GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
         bossObject.tag = bossSpawnPos.gameObject.tag;
         characters.AddCharacter(bossObject.tag, bossObject, 1);
+    }
+
+    public void ConvertToGameObjectList(List<ItemObject> itemObjects)
+    {
+        foreach (var item in itemObjects)
+        {
+            plants.Add(item.prefab);
+        }
+    }
+
+    public void ConvertChaamToGameObject(ItemObject itemObject)
+    {
+        chaam = itemObject.prefab;
     }
 
 }
