@@ -4,27 +4,32 @@ using UnityEngine;
 
 public class OneTargetAlliance : Skill
 {
-    public OneTargetAlliance(string skillId, string skillName, string description, int cooldown):base(skillId, skillName, description, cooldown){
+    public OneTargetAlliance(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneAlliance")
+    {
 
     }
     //all skills
-    public void VanillaHeal(Entity target, int value){
-        target.Hp+=value;
+    public void VanillaHeal(Entity target, int value)
+    {
+        target.MaxHp += value;
         return;
     }
 
-    public void VanillaGainSP(Pak target, int value){
-        target.Sp+=value;
+    public void VanillaGainSP(Pak target, int value)
+    {
+        target.Sp += value;
         return;
     }
 
-    public void VanillaBuffAtk(Entity target, int value){
-        target.Atk+=value;
+    public void VanillaBuffAtk(Entity target, int value)
+    {
+        target.Atk += value;
         return;
     }
 
-    public void VanillaBuffDef(Entity target, int value){
-        target.Def+=value;
+    public void VanillaBuffDef(Entity target, int value)
+    {
+        target.Def += value;
         return;
     }
 }

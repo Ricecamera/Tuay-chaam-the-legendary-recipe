@@ -1,11 +1,11 @@
-public class NormalprikRender : PakRender {
+using UnityEngine;
+public class NormalprikRender : PakRender
+{
     // Start is called before the first frame update
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+    protected override void Start()
+    {
+        base.Start();
+        Sprite skillIcon1 = Resources.Load("SkillIcons/sk3", typeof(Sprite)) as Sprite;
+        skill.Add(new VanillaAttackOne("VA1", "AttackOneEnemy", "This do damage to one enemy.", 0, skillIcon1));
     }
 }

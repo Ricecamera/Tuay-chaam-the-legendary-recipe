@@ -5,31 +5,33 @@ using System;
 
 public class VanillaAttackAll : Skill
 {
-    //fields
-    private string actionType = "TargetAllEnemies";
-    //getter
-    public string ActionType {
-        get {return this.actionType;}
-    }
     //constructor
-    public VanillaAttackAll(string skillId, string skillName, string description, int cooldown):base(skillId, skillName, description, cooldown){
+    public VanillaAttackAll(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies")
+    {
         AttackAllEnemy += ActionVanillaAttackAll;
+        //Yod Add this for use temp skill desc and cooldown //// 
+        this.description = "Attack all enemies at once.";
+        this.cooldown = 0;
+        this.icon = icon;
+        /////////
     }
 
     //delegates
-    public Action<PakRender[], PakRender> AttackAllEnemy;
+    public Action<List<PakRender>, PakRender> AttackAllEnemy;
     //action
-    public void ActionVanillaAttackAll(PakRender[] target, PakRender self) {
+    public void ActionVanillaAttackAll(List<PakRender> target, PakRender self)
+    {
         int damage;
         int atkValue = self.pak.Atk;
-        foreach (PakRender e in target){
-            if(atkValue - e.pak.Def <=0) damage=0;
-            else damage = atkValue - e.pak.Def;
+        foreach (PakRender e in target)
+        {
+            // damage = atkValue*(100/(100+e.pak.Def));
+            damage = (int)(atkValue * (float)(100 / (100 + e.pak.Def)));
 
-            e.pak.Hp-=damage;               //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-            if(e.pak.Hp<=0) e.pak.Hp=0;     //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-            e.healthSystem.TakeDamage(damage, e.pak.Hp.ToString());
-        }       
+            // e.pak.-=damage;               //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+            // if(e.pak.Hp<=0) e.pak.Hp=0;     //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+            e.healthSystem.TakeDamage(damage);
+        }
         return;
     }
 }

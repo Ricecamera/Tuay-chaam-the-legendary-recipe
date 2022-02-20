@@ -14,12 +14,12 @@ TagManager:
   - Enemy3
   - Enemy4
   - Spawner
+  - plant2
+  - enemy2
+  - enemy1
+  - enemy3
   - chaam
   - boss
-  - enemy2
-  - enemy3
-  - plant2
-  - enemy1
   layers:
   - Default
   - TransparentFX
@@ -27,7 +27,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Tooltip
   - 
   - 
   - 
@@ -62,4 +62,10 @@ TagManager:
     locked: 0
   - name: Overlay
     uniqueID: 3882733785
+    locked: 0
+  - name: Backdrop
+    uniqueID: 2147409085
+    locked: 0
+  - name: Front
+    uniqueID: 771028355
     locked: 0
