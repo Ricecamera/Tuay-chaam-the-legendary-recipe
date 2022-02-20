@@ -33,15 +33,6 @@ public class CharacterHolder
         render.DisplayInAction(false);
     }
 
-    public void ResetState()
-    {
-        Selected = false;
-        // Reduce scale to normal scale
-        character.GetComponent<RectTransform>().localScale = Vector3.one;
-        character.GetComponent<PakRender>().ShowSelected(false);
-
-    }
-
     public void Select(bool value)
     {
         Selected = value;
