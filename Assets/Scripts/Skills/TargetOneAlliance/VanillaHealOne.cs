@@ -6,19 +6,20 @@ using System;
 public class VanillaHealOne : Skill
 {
     //fields
-    private string actionType = "TargetOneAlliance";
+    //private string actionType = "TargetOneAlliance";
     //getter
-    public string ActionType
-    {
-        get { return this.actionType; }
-    }
+    // public string ActionType
+    // {
+    //     get { return this.actionType; }
+    // }
     //constructor
-    public VanillaHealOne(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    public VanillaHealOne(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneAlliance")
     {
         HealOneAlliance += ActionVanillaHealOne;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Target one alliance and heal it.";
         this.cooldown = 1;
+        this.icon = icon;
         /////////
     }
 

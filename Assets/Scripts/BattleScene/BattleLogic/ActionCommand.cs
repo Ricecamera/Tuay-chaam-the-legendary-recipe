@@ -87,10 +87,15 @@ namespace BattleLogic
                 Debug.Log(vskill.SkillId);
             }
 
-            vskill.AttackOneEnemy(target2, caller);
+
 
             //? Yod
-            target2.switchMat();
+            if (target2.healthSystem.IsAlive)
+            {
+                vskill.AttackOneEnemy(target2, caller);
+                caller2.moveToEnemy(caller2, target2);
+
+            }
 
             string displaytext = string.Format("{0} calls {1} to {2}", callerName, selectedSkill, string.Join(", ", targetNames.ToArray()));
             Debug.Log(displaytext);
@@ -139,7 +144,7 @@ namespace BattleLogic
                 // }
                 //*************************************
             }
-
+            Debug.Log("wowza");
             foreach (PakRender e in targets)
             {
                 Debug.Log(e.pak.EntityName);

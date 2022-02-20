@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AllTargetAlliances : Skill
 {
-    public AllTargetAlliances(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    public AllTargetAlliances(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllAlliances")
     {
 
     }

@@ -18,7 +18,12 @@ using UnityEngine.SceneManagement;
 public class PakSelection : MonoBehaviour
 {
 
-    enum InputState { DEFAULT, CHARCTER_SELECTED, SKILL_SELECTED, ENEMY_SELECTED, COMFIRMED, END_TURN };
+    enum InputState
+    {
+        DEFAULT, CHARCTER_SELECTED, SKILL_SELECTED, SKILL_SELECTED_ONE_ALLY,
+        SKILL_SELECTED_ALL_ALLIANCES, SKILL_SELECTED_ALL_ENEMIES, SKILL_SELECTED_WHOLE_FIELD,
+        ENEMY_SELECTED, COMFIRMED, END_TURN
+    };
 
     private InputState currentState = InputState.END_TURN;
     private InputState nextState;
@@ -139,6 +144,10 @@ public class PakSelection : MonoBehaviour
                         else
                         {
                             //do defeat stuff
+
+                            //! Don't forget to move to victory stuff 
+                            LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                            //! /////////////////////////////////////
                             SceneManager.LoadScene("LoseScene");
                         }
                     }
@@ -226,13 +235,38 @@ public class PakSelection : MonoBehaviour
                 Debug.LogError(e.Message);
                 nextState = InputState.DEFAULT;
             }
+            Debug.Log("Skill selected");
 
-            return InputState.SKILL_SELECTED;
+            //? Yod do
+            PakRender selectedPakRender = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
+            Skill pakSkill = selectedPakRender.skill[selectedSkill];
+
+
+
+            switch (pakSkill.ActionType)
+            {
+                case "TargetAllAlliance":
+                    return InputState.SKILL_SELECTED_ALL_ALLIANCES;
+                case "TargetOneAlliance":
+                    return InputState.SKILL_SELECTED_ONE_ALLY;
+                case "TargetAllEnemies":
+                    return InputState.SKILL_SELECTED_ALL_ENEMIES;
+                case "TargetOneEnemy":
+                    return InputState.SKILL_SELECTED;
+                case "TargetWholeField":
+                    return InputState.SKILL_SELECTED_WHOLE_FIELD;
+                default:
+                    Debug.LogError("Wrong Skill Type");
+                    break;
+            }
+
+
+
+            //return InputState.SKILL_SELECTED;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
@@ -270,6 +304,9 @@ public class PakSelection : MonoBehaviour
         }
         return InputState.CHARCTER_SELECTED;
     }
+
+
+
 
     private InputState ChooseSkillTarget()
     {
@@ -315,7 +352,6 @@ public class PakSelection : MonoBehaviour
                 selectedEnemy = hit.collider.tag;
                 enemyTeam.SetSelect(selectedEnemy, true);
                 result.Add(hit.collider.name);
-
                 return InputState.ENEMY_SELECTED;
             }
         }

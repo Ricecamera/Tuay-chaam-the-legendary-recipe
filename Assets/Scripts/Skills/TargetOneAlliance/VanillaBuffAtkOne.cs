@@ -5,19 +5,20 @@ using System;
 public class VanillaBuffAtkOne : Skill
 {
     //fields
-    private string actionType = "TargetOneAlliance";
-    //getter
-    public string ActionType
-    {
-        get { return this.actionType; }
-    }
+    // private string actionType = "TargetOneAlliance";
+    // //getter
+    // public string ActionType
+    // {
+    //     get { return this.actionType; }
+    // }
     //constructor
-    public VanillaBuffAtkOne(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    public VanillaBuffAtkOne(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneAlliance")
     {
         BuffAtkOneAlliance += ActionVanillaBuffAtkOne;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Target one alliance and buff its strength for the duration of this battle.";
         this.cooldown = 1;
+        this.icon = icon;
         /////////
     }
 

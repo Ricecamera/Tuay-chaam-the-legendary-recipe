@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TargetWholeField : Skill
 {
-    public TargetWholeField(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    public TargetWholeField(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetWholeField")
     {
 
     }

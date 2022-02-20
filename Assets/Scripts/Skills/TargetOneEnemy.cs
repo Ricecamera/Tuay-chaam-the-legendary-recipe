@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OneTargetEnemy : Skill
 {
-    public OneTargetEnemy(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    public OneTargetEnemy(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneEnemy")
     {
 
     }

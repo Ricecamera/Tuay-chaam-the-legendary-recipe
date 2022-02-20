@@ -6,21 +6,24 @@ using System;
 public class VanillaAttackOne : Skill
 {
     //fields
-    private string actionType = "TargetOneEnemy";
+    //private string actionType = "TargetOneEnemy";
+
+    public String test = "f";
 
 
     //getter
-    public string ActionType
-    {
-        get { return this.actionType; }
-    }
+    // public string ActionType
+    // {
+    //     get { return this.actionType; }
+    // }
     //constructor
-    public VanillaAttackOne(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    public VanillaAttackOne(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneEnemy")
     {
         AttackOneEnemy += ActionVanillaAttackOne;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Target one opponent to perform an attack";
         this.cooldown = 0;
+        this.icon = icon;
         /////////
 
     }

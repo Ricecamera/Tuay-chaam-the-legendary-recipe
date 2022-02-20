@@ -6,19 +6,20 @@ using System;
 public class VanillaAttackAll : Skill
 {
     //fields
-    private string actionType = "TargetAllEnemies";
-    //getter
-    public string ActionType
-    {
-        get { return this.actionType; }
-    }
+    // private string actionType = "TargetAllEnemies";
+    // //getter
+    // public string ActionType
+    // {
+    //     get { return this.actionType; }
+    // }
     //constructor
-    public VanillaAttackAll(string skillId, string skillName, string description, int cooldown) : base(skillId, skillName, description, cooldown)
+    public VanillaAttackAll(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies")
     {
         AttackAllEnemy += ActionVanillaAttackAll;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Attack all enemies at once.";
         this.cooldown = 0;
+        this.icon = icon;
         /////////
     }
 

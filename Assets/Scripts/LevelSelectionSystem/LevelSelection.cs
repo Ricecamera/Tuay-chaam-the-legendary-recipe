@@ -17,13 +17,19 @@ public class LevelSelection : MonoBehaviour
     [SerializeField]
     private Image padLock;
 
+    [SerializeField]
+    private Animator transition;
+
 
     void Start()
     {
-        padLock.enabled = true;
-        if (levelname == 1)
+
+        //padLock.enabled = true;
+        unlocked = LevelManager.instance.unlockStatus[levelname - 1];
+
+        if (unlocked)
         {
-            unlocked = true;
+            transition.SetTrigger("Unlock");
         }
     }
 
@@ -32,6 +38,7 @@ public class LevelSelection : MonoBehaviour
         if (unlocked)
         {
             padLock.enabled = false;
+
         }
         else
         {
@@ -44,7 +51,9 @@ public class LevelSelection : MonoBehaviour
         if (unlocked)
         {
             Level = levelname;
+            LevelManager.instance.thislevel = levelname;
             SceneManager.LoadScene(level);
         }
     }
+
 }
