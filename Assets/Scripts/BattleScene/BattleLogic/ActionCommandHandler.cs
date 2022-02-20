@@ -4,19 +4,44 @@ using System;
 using UnityEngine;
 using BattleLogic;
 
-namespace BattleScene.BattleLogic {
-    public class ActionCommandHandler : MonoBehaviour {
+namespace BattleScene.BattleLogic
+{
+    public class ActionCommandHandler : MonoBehaviour
+    {
 
         public static event Action OnComplete;          // this event invoke when `DoActionOverTIme` is called and completed
 
         [SerializeField]
         private List<ActionCommand> commandList = new List<ActionCommand>();    // temporary list that store all of actions to be executed
-        
+
+        public List<PakRender> diedThisTurn; //store PakRender who died this turn.
+
 
         // thread for executing each action in `commandList`
-        private IEnumerator DoActionOverTime() {
-            foreach (var action in commandList) {
-                action.Execute();
+        private IEnumerator DoActionOverTime()
+        {
+
+            List<PakRender> diedThisTurn = new List<PakRender>();
+
+            foreach (var action in commandList)
+            {
+                Debug.Log(action.caller);
+                Debug.Log(action.caller.healthSystem);
+                Debug.Log(action.caller.healthSystem.CurrentHp);
+                //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
+                // PakRender temp = action.caller.GetComponent<PakRender>();
+                // Debug.Log(temp.pak);
+                // Debug.Log(temp.healthSystem.GetHealth());
+                Debug.Log("Yes");
+                if (action.caller.healthSystem.IsAlive)
+                { //If the caller is alive, the skill is casted.
+                    action.Execute(diedThisTurn);               //used to be ref
+                }
+                else
+                {
+                    string callerName = action.caller.pak.EntityName;
+                    Debug.Log("The " + callerName + " is already dead.");
+                }
                 yield return new WaitForSeconds(1f);
             }
 
@@ -25,22 +50,27 @@ namespace BattleScene.BattleLogic {
         }
 
         // Add a new command to `commandList`
-        public void AddCommand(ICommand command) {
+        public void AddCommand(ICommand command)
+        {
             commandList.Add(command as ActionCommand);
         }
 
         // Execute all commands order by command's speed;
-        public void RunCommands() {
+        public void RunCommands()
+        {
             commandList.Sort();
             StartCoroutine(DoActionOverTime());
         }
 
 
         // Get the first selected selected action by specific character's tag in scene
-        public ActionCommand GetAction(string gameTag) {
+        public ActionCommand GetAction(string gameTag)
+        {
             // Remove the first skill name skillName called by the character
-            foreach (ActionCommand action in commandList) {
-                if (action.caller.CompareTag(gameTag)) {
+            foreach (ActionCommand action in commandList)
+            {
+                if (action.caller.CompareTag(gameTag))
+                {
                     return action;
                 }
             }
@@ -48,10 +78,13 @@ namespace BattleScene.BattleLogic {
         }
 
         // Get the first selected action by specific character's tag and skill's name
-        public ActionCommand GetAction(string gameTag, string skillName) {
-            foreach (ActionCommand action in commandList) {
+        public ActionCommand GetAction(string gameTag, string skillName)
+        {
+            foreach (ActionCommand action in commandList)
+            {
                 if (action.caller.CompareTag(gameTag)
-                    && action.selectedSkill.Equals(skillName)) {
+                    && action.selectedSkill.Equals(skillName))
+                {
                     return action;
                 }
             }
@@ -59,10 +92,13 @@ namespace BattleScene.BattleLogic {
         }
 
         // Remove the first skill that is called by the character with provided gameTag.
-        public ActionCommand RemoveAction(string gameTag) {
-            for (int i = 0; i < commandList.Count; i++) {
+        public ActionCommand RemoveAction(string gameTag)
+        {
+            for (int i = 0; i < commandList.Count; i++)
+            {
                 ActionCommand action = commandList[i];
-                if (action.caller.CompareTag(gameTag)) {
+                if (action.caller.CompareTag(gameTag))
+                {
                     commandList.RemoveAt(i);
                     return action;
                 }
@@ -71,10 +107,13 @@ namespace BattleScene.BattleLogic {
         }
 
         // Remove the specific skill that is called by the character with provided gameTag.
-        public ActionCommand RemoveAction(string gameTag, string skillName) {
-            for (int i = 0; i < commandList.Count; i++) {
+        public ActionCommand RemoveAction(string gameTag, string skillName)
+        {
+            for (int i = 0; i < commandList.Count; i++)
+            {
                 ActionCommand action = commandList[i];
-                if (action.caller.CompareTag(gameTag)) {
+                if (action.caller.CompareTag(gameTag))
+                {
                     commandList.RemoveAt(i);
                     return action;
                 }

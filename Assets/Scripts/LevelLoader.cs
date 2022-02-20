@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelLoader : MonoBehaviour {
+public class LevelLoader : MonoBehaviour
+{
     [SerializeField]
     private float transitionTime;
     [SerializeField]
@@ -20,7 +21,7 @@ public class LevelLoader : MonoBehaviour {
                 playButton.onClick.AddListener(LoadNextScene);
                 quitButton.onClick.AddListener(ExitGame);
             }
-            if (SceneManager.GetActiveScene().buildIndex == 1)
+            if (SceneManager.GetActiveScene().buildIndex == 3)
             {
                 Button startButton = GameObject.Find("Start Button").GetComponent<Button>();
                 startButton.onClick.AddListener(LoadNextScene);
@@ -40,7 +41,8 @@ public class LevelLoader : MonoBehaviour {
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
-    IEnumerator LoadLevel(int levelIndex) {
+    IEnumerator LoadLevel(int levelIndex)
+    {
         //* 3 Steps 
         //* Play Animation 
         transition.SetTrigger("Start");
