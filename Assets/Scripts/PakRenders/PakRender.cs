@@ -13,7 +13,7 @@ public class PakRender : MonoBehaviour
 
     [SerializeField]
     private GameObject selectedIcon;
-    public HealthSystem healthSystem {get; private set;}
+    public HealthSystem healthSystem { get; private set; }
 
     public Pak pak;
 
@@ -57,7 +57,8 @@ public class PakRender : MonoBehaviour
 
     }
 
-    public void DisplayInAction(bool value) {
+    public void DisplayInAction(bool value)
+    {
         actionIcon.gameObject.SetActive(value);
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
@@ -71,8 +72,10 @@ public class PakRender : MonoBehaviour
     }
 
     // Set sorting layer of Pak's sprite and its health bar
-    public void GoToLayer(string sortingLayer) {
-        try {
+    public void GoToLayer(string sortingLayer)
+    {
+        try
+        {
             SpriteRenderer pakSprite = gameObject.GetComponent<SpriteRenderer>();
             Canvas healthbar = healthSystem.healthBar.GetComponent<Canvas>();
 
@@ -81,15 +84,17 @@ public class PakRender : MonoBehaviour
                 healthbar.sortingLayerName = "Front";
             else
                 healthbar.sortingLayerName = "Overlay";
-            
+
         }
-        catch (NullReferenceException error){
+        catch (NullReferenceException error)
+        {
             Debug.LogError(error.Message);
         }
 
     }
 
-    public void ShowSelected(bool value) {
+    public void ShowSelected(bool value)
+    {
         selectedIcon.SetActive(value);
     }
 
@@ -122,31 +127,33 @@ public class PakRender : MonoBehaviour
     }
 
 
-    public void moveToEnemy(PakRender caller, PakRender target)
+    public void moveToEnemy(PakRender caller, List<PakRender> targets)
     {
-        string my_tag = caller.tag;
-        string enemy_tag = target.tag;
-        // Transform myObjectTransform = GameObject.Find(my_tag).GetComponent<Transform>();
-        Transform myObjectTransform = this.transform;
-        Transform opposeObjectTransform = target.transform;
-        //Vector3 myOldPos = new Vector3(myObjectTransform.position.x, myObjectTransform.position.y, myObjectTransform.position.z);
-
-        Debug.Log("Oppose pos " + opposeObjectTransform.position);
-        Vector3 desirePos;
-        if (caller.tag == "Plant1" || caller.tag == "Plant2" || caller.tag == "Plant3" || caller.tag == "Chaam")
+        foreach (PakRender target in targets)
         {
-            desirePos = new Vector3(opposeObjectTransform.position.x - 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
+            string my_tag = caller.tag;
+            string enemy_tag = target.tag;
+            // Transform myObjectTransform = GameObject.Find(my_tag).GetComponent<Transform>();
+            Transform myObjectTransform = this.transform;
+            Transform opposeObjectTransform = target.transform;
+            //Vector3 myOldPos = new Vector3(myObjectTransform.position.x, myObjectTransform.position.y, myObjectTransform.position.z);
+
+            Debug.Log("Oppose pos " + opposeObjectTransform.position);
+            Vector3 desirePos;
+            if (caller.tag == "Plant1" || caller.tag == "Plant2" || caller.tag == "Plant3" || caller.tag == "Chaam")
+            {
+                desirePos = new Vector3(opposeObjectTransform.position.x - 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
+            }
+            else
+            {
+                desirePos = new Vector3(opposeObjectTransform.position.x + 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
+            }
+
+            // myObjectTransform.position = new Vector3(opposeObjectTransform.position.x + 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
+
+            this.switchMat(target, desirePos);
+            //this.transform.position = initPos;
         }
-        else
-        {
-            desirePos = new Vector3(opposeObjectTransform.position.x + 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
-        }
-
-        // myObjectTransform.position = new Vector3(opposeObjectTransform.position.x + 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
-
-        this.switchMat(target, desirePos);
-        //this.transform.position = initPos;
-
     }
 
 }

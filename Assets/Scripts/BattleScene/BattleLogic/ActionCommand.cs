@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleScene.BattleLogic {
+namespace BattleScene.BattleLogic
+
+{
 
     public class ActionCommand : IComparable, ICommand
     {
@@ -13,7 +15,9 @@ namespace BattleScene.BattleLogic {
         public List<PakRender> targets;     // indice of the allied targets
 
         // Constructor
-        public ActionCommand(PakRender caller, int selectedSkill, List<PakRender> targets, float speed) {
+
+        public ActionCommand(PakRender caller, int selectedSkill, List<PakRender> targets, float speed)
+        {
             this.caller = caller;
             this.selectedSkill = selectedSkill;
             this.targets = targets;
@@ -70,7 +74,7 @@ namespace BattleScene.BattleLogic {
             {
                 //dynamic skill call
                 callerskill.performSkill(callerskill, caller2, targets);
-                caller2.moveToEnemy(caller2, target2);
+                caller2.moveToEnemy(caller2, targets);
 
             }
 
@@ -97,7 +101,7 @@ namespace BattleScene.BattleLogic {
                     callerGameObject.SetActive(false);
                 }
             }
-            
+
             Debug.Log("wowza");
             foreach (PakRender e in targets)
             {
