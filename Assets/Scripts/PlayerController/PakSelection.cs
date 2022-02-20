@@ -424,6 +424,7 @@ public class PakSelection : MonoBehaviour
                 }
 
 
+
                 selectedEnemy = hit.collider.tag;
                 enemyTeam.SetSelect(selectedEnemy, true);
                 result.Add(hit.collider.name);

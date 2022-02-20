@@ -119,7 +119,6 @@ namespace BattleScene
             actionText.gameObject.SetActive(false);
         }
 
-
         public void AddNewCommand(GameObject caller, string skillName, GameObject[] targets)
         {
             PakRender pakCaller = caller.GetComponent<PakRender>();

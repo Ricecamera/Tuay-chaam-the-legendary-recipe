@@ -161,6 +161,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1104277533132985389, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
       propertyPath: m_Name
+<<<<<<< HEAD
       value: Health Bar
       objectReference: {fileID: 0}
     - target: {fileID: 1949201016546742641, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
@@ -174,6 +175,15 @@ PrefabInstance:
     - target: {fileID: 1949201016546742641, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
       propertyPath: m_Color.r
       value: 1
+||||||| 4c0f5fe
+      value: Health Bar (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441032822151258039, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+      propertyPath: m_Camera
+      value: 
+=======
+      value: Health Bar
+>>>>>>> master
       objectReference: {fileID: 0}
     - target: {fileID: 5822007782164566723, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -292,9 +302,24 @@ PrefabInstance:
 --- !u!224 &48352404019241720 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8098668150518746894, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+<<<<<<< HEAD
   m_PrefabInstance: {fileID: 8128988013245689334}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7672620086513344193 stripped
+||||||| 4c0f5fe
+  m_PrefabInstance: {fileID: 1356907791929163622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &4401623687395844305 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 3441032822151258039, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+  m_PrefabInstance: {fileID: 1356907791929163622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5163999283869772085 stripped
+=======
+  m_PrefabInstance: {fileID: 8128988013245689334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7672620086513344193 stripped
+>>>>>>> master
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1924559684670157623, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
   m_PrefabInstance: {fileID: 8128988013245689334}

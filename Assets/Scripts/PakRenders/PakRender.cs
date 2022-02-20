@@ -18,7 +18,6 @@ public class PakRender : MonoBehaviour
 
 
 
-
     // Start is called before the first frame update
     protected virtual void Start()
     {
