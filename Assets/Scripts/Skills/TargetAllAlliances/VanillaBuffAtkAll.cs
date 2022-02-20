@@ -4,12 +4,6 @@ using UnityEngine;
 using System;
 public class VanillaBuffAtkAll : Skill
 {
-    //fields
-    // private string actionType = "TargetAllAlliances";
-    //getter
-    // public string ActionType {
-    //     get {return this.actionType;}
-    // }
     //constructor
     public VanillaBuffAtkAll(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllAlliances")
     {
@@ -18,9 +12,9 @@ public class VanillaBuffAtkAll : Skill
     }
 
     //delegates
-    public Action<PakRender[], PakRender> BuffAtkAllAlliance;
+    public Action<List<PakRender>, PakRender> BuffAtkAllAlliance;
     //action
-    public void ActionVanillaBuffAtkAll(PakRender[] target, PakRender self)
+    public void ActionVanillaBuffAtkAll(List<PakRender> target, PakRender self)
     {
         int buffValue = (self.pak.Atk) / 4;
         foreach (PakRender e in target)

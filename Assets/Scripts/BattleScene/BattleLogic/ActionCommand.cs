@@ -74,25 +74,39 @@ namespace BattleLogic
             PakRender target2 = targets[0].GetComponent<PakRender>();
             Debug.Log("Caller2 def:" + caller2.pak.Def);
 
-            Skill callerskill = caller2.skill[0];
+            //This table map between string that denoted skill to idx of skill list in char.
+            var quickLookUpTable = new Dictionary<string, int>(){
+                {"skill 1", 0},
+                {"skill 2", 1},
+                {"skill 3", 2},
+                {"skill 4", 3}      //Ultimate skill
+            };
 
+            Debug.Log("--------------------------------------------------------------");
+            Debug.Log(this.selectedSkill);
+            Debug.Log(quickLookUpTable[this.selectedSkill]);
+            Debug.Log("--------------------------------------------------------------");
 
-            VanillaAttackOne vskill = (VanillaAttackOne)callerskill;
-            if (vskill == null)
-            {
-                Debug.Log("vskill is null");
-            }
-            else
-            {
-                Debug.Log(vskill.SkillId);
-            }
+            int selectedSkillInt = quickLookUpTable[this.selectedSkill];
 
+            Skill callerskill = caller2.skill[selectedSkillInt]; //used to be Skill callerskill = caller2.skill[0];
 
+            //This only do attack one skill
+            // VanillaAttackOne vskill = (VanillaAttackOne)callerskill;
+            // if (vskill == null)
+            // {
+            //     Debug.Log("vskill is null");
+            // }
+            // else
+            // {
+            //     Debug.Log(vskill.SkillId);
+            // }
 
             //? Yod
             if (target2.healthSystem.IsAlive)
             {
-                vskill.AttackOneEnemy(target2, caller);
+                //dynamic skill call
+                callerskill.performSkill(callerskill, caller2, targets);
                 caller2.moveToEnemy(caller2, target2);
 
             }

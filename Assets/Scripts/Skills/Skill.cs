@@ -29,23 +29,82 @@ public class Skill
     }
 
     //functions
-    // public void performSkill(Skill skill, Caller, target){
-    //     switch (skill.skillId)
-    //     {   
-    //         case "VA1":
-    //             VanillaAttackOne vskill = (VanillaAttackOne)skill;
-    //             vskill.AttackOneEnemy()
-    //             break;
+    public void performSkill(Skill skill, PakRender caller, List<PakRender> target)
+    {
+        switch (skill.skillId)
+        {
+            case "VA1":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackOneEnemy is called");
+                VanillaAttackOne vskill = (VanillaAttackOne)skill;
+                vskill.AttackOneEnemy(target, caller);
+                break;
 
-    //         case "VAA":
+            case "VAA":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackAllEnemy is called");
+                VanillaAttackAll vskill2 = (VanillaAttackAll)skill;
+                vskill2.AttackAllEnemy(target, caller);
+                break;
 
-    //             break;
+            case "VBA1":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkOneAlliance is called");
+                VanillaBuffAtkOne vskill3 = (VanillaBuffAtkOne)skill;
+                vskill3.BuffAtkOneAlliance(target, caller);
+                break;
 
-    //         default:
+            case "VBD1":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefOneAlliance is called");
+                VanillaBuffDefOne vskill4 = (VanillaBuffDefOne)skill;
+                vskill4.BuffDefOneAlliance(target, caller);
+                break;
 
-    //             break;
-    //     }
-    // }
+            case "VGSP1":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GainSPOneAlliance is called");
+                VanillaGainSPOne vskill5 = (VanillaGainSPOne)skill;
+                vskill5.GainSPOneAlliance(target, caller);
+                break;
+
+            case "VH1":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealOneAlliance is called");
+                VanillaHealOne vskill6 = (VanillaHealOne)skill;
+                vskill6.HealOneAlliance(target, caller);
+                break;
+
+            case "VBAA":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkAllAlliance is called");
+                VanillaBuffAtkAll vskill7 = (VanillaBuffAtkAll)skill;
+                vskill7.BuffAtkAllAlliance(target, caller);
+                break;
+
+            case "VBDA":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefAllAlliance is called");
+                VanillaBuffDefAll vskill8 = (VanillaBuffDefAll)skill;
+                vskill8.BuffDefAllAlliance(target, caller);
+                break;
+
+            case "VGSPA":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GainSPAllAlliance is called");
+                VanillaGainSPAll vskill9 = (VanillaGainSPAll)skill;
+                vskill9.GainSPAllAlliance(target, caller);
+                break;
+
+            case "VHA":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealAllAlliance is called");
+                VanillaHealAll vskill10 = (VanillaHealAll)skill;
+                vskill10.HealAllAlliance(target, caller);
+                break;
+
+            case "B:)":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ActionBuum is called");
+                Buum vskill11 = (Buum)skill;
+                vskill11.AttackWholeField(target, caller);
+                break;
+
+            default:
+                Debug.Log("Skill ID not matched");
+                Debug.LogError("Skill not being call.");
+                break;
+        }
+    }
 
     //getters setters
     public string SkillId

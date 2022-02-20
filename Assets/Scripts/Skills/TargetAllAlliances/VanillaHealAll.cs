@@ -5,13 +5,6 @@ using System;
 
 public class VanillaHealAll : Skill
 {
-    //fields
-    // private string actionType = "TargetAllAlliances";
-    // //getter
-    // public string ActionType
-    // {
-    //     get { return this.actionType; }
-    // }
     //constructor
     public VanillaHealAll(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllAlliances")
     {
@@ -24,9 +17,9 @@ public class VanillaHealAll : Skill
     }
 
     //delegates
-    public Action<PakRender[], PakRender> HealAllAlliance;
+    public Action<List<PakRender>, PakRender> HealAllAlliance;
     //action
-    public void ActionVanillaHealAll(PakRender[] target, PakRender self)
+    public void ActionVanillaHealAll(List<PakRender> target, PakRender self)
     {
         int healValue = self.healthSystem.MaxHp / 4;
         foreach (PakRender e in target)

@@ -4,13 +4,6 @@ using UnityEngine;
 using System;
 public class VanillaBuffAtkOne : Skill
 {
-    //fields
-    // private string actionType = "TargetOneAlliance";
-    // //getter
-    // public string ActionType
-    // {
-    //     get { return this.actionType; }
-    // }
     //constructor
     public VanillaBuffAtkOne(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneAlliance")
     {
@@ -23,11 +16,11 @@ public class VanillaBuffAtkOne : Skill
     }
 
     //delegates
-    public Action<PakRender, PakRender> BuffAtkOneAlliance;
+    public Action<List<PakRender>, PakRender> BuffAtkOneAlliance;
     //action
-    private void ActionVanillaBuffAtkOne(PakRender target, PakRender self)
+    private void ActionVanillaBuffAtkOne(List<PakRender> target, PakRender self)
     { //should pass lv and stat of char and calculate value in this function.
-        target.pak.Atk += self.pak.Atk / 4;
+        target[0].pak.Atk += self.pak.Atk / 4;
         return;
     }
 }

@@ -5,13 +5,6 @@ using System;
 
 public class VanillaAttackAll : Skill
 {
-    //fields
-    // private string actionType = "TargetAllEnemies";
-    // //getter
-    // public string ActionType
-    // {
-    //     get { return this.actionType; }
-    // }
     //constructor
     public VanillaAttackAll(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies")
     {
@@ -24,9 +17,9 @@ public class VanillaAttackAll : Skill
     }
 
     //delegates
-    public Action<PakRender[], PakRender> AttackAllEnemy;
+    public Action<List<PakRender>, PakRender> AttackAllEnemy;
     //action
-    public void ActionVanillaAttackAll(PakRender[] target, PakRender self)
+    public void ActionVanillaAttackAll(List<PakRender> target, PakRender self)
     {
         int damage;
         int atkValue = self.pak.Atk;
