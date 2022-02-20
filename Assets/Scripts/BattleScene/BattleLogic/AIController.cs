@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 // using System;
 using UnityEngine;
-using BattleLogic;
+using BattleScene.BattleLogic;
 
 public class AIController
 {
-
-    // public AIController(){
-
-    // }
-
     public List<ActionCommand> selectAction(List<GameObject> pakTeam, List<GameObject> enemyTeam)
     { //pakTeam count the one that dead?
         List<ActionCommand> actionList = new List<ActionCommand>();
@@ -24,7 +19,7 @@ public class AIController
             GameObject target = pakTeam[target_num];
             targets.Add(target.GetComponent<PakRender>());
             //ตีธรรมดา Only
-            ActionCommand action = new ActionCommand(e.GetComponent<PakRender>(), "skill 1", targets, 3.0f);
+            ActionCommand action = new ActionCommand(e.GetComponent<PakRender>(), 0, targets, 3.0f);
             actionList.Add(action);
         }
 

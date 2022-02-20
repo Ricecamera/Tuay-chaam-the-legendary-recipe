@@ -15,11 +15,10 @@ MonoBehaviour:
   entityId: 
   entityName: 
   description: 
-  hp: 300
   atk: 20
   def: 60
   maxHp: 300
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 70aa1bce74800774ba7a64796bd131d9, type: 3}
   bonusStatsPerLvl:
     addHp: 0
     addAtk: 0

@@ -14,14 +14,5 @@ public class ChaamRender : MonoBehaviour
     protected virtual void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            healthSystem.TakeDamage(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            healthSystem.Heal(10);
-        }
     }
 }

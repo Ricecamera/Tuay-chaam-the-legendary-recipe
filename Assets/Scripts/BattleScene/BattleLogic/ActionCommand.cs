@@ -1,25 +1,19 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using BattleScene;
 
-using BattleScene.BattleLogic;
-
-namespace BattleLogic
-{
+namespace BattleScene.BattleLogic {
 
     public class ActionCommand : IComparable, ICommand
     {
         private float speed;                // field that determine the execution order of skills
 
         public PakRender caller;            // a index of the character calling this action
-        public string selectedSkill;        // a index of the skill to be execute
+        public int selectedSkill;        // a index of the skill to be execute
         public List<PakRender> targets;     // indice of the allied targets
 
         // Constructor
-        public ActionCommand(PakRender caller, string selectedSkill, List<PakRender> targets, float speed)
-        {
+        public ActionCommand(PakRender caller, int selectedSkill, List<PakRender> targets, float speed) {
             this.caller = caller;
             this.selectedSkill = selectedSkill;
             this.targets = targets;
@@ -51,13 +45,7 @@ namespace BattleLogic
                 enemyName += target.pak?.EntityName;
                 targetNames.Add(enemyName);
             }
-            // work with skill
-            // caller.skill.AttackOneEnemy(targets[0], caller);
 
-            // 
-            // Debug.Log(caller.skill.GetType());
-            // Type t = caller.skill.GetType();
-            // T vskill = (T) caller.skill;
             Debug.Log(targets[0].name);
             Debug.Log(caller.name);
 
@@ -74,33 +62,8 @@ namespace BattleLogic
             PakRender target2 = targets[0].GetComponent<PakRender>();
             Debug.Log("Caller2 def:" + caller2.pak.Def);
 
-            //This table map between string that denoted skill to idx of skill list in char.
-            var quickLookUpTable = new Dictionary<string, int>(){
-                {"skill 1", 0},
-                {"skill 2", 1},
-                {"skill 3", 2},
-                {"skill 4", 3}      //Ultimate skill
-            };
+            Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
 
-            Debug.Log("--------------------------------------------------------------");
-            Debug.Log(this.selectedSkill);
-            Debug.Log(quickLookUpTable[this.selectedSkill]);
-            Debug.Log("--------------------------------------------------------------");
-
-            int selectedSkillInt = quickLookUpTable[this.selectedSkill];
-
-            Skill callerskill = caller2.skill[selectedSkillInt]; //used to be Skill callerskill = caller2.skill[0];
-
-            //This only do attack one skill
-            // VanillaAttackOne vskill = (VanillaAttackOne)callerskill;
-            // if (vskill == null)
-            // {
-            //     Debug.Log("vskill is null");
-            // }
-            // else
-            // {
-            //     Debug.Log(vskill.SkillId);
-            // }
 
             //? Yod
             if (target2.healthSystem.IsAlive)
@@ -133,31 +96,8 @@ namespace BattleLogic
                     GameObject callerGameObject = caller.gameObject;
                     callerGameObject.SetActive(false);
                 }
-
-                //*************************************
-                // List<CharacterManager.CharacterHolder> pakInBattle = spawner.playerTeam.getHoldersList();
-                // List<CharacterManager.CharacterHolder> enemyInBattle = spawner.enemyTeam.getHoldersList();
-
-                // foreach (CharacterManager.CharacterHolder e in pakInBattle){
-                //     PakRender temp = e.character.gameObject.GetComponent(typeof(PakRender)) as PakRender;
-                //     Debug.Log("the moment of truth");
-                //     Debug.Log(temp);
-                //     if(!temp.healthSystem.IsAlive){
-                //         //disable it
-                //         e.character.SetActive(false);
-                //     }
-                // }
-
-                // foreach (CharacterManager.CharacterHolder e in enemyInBattle){
-                //     PakRender temp = e.character.gameObject.GetComponent(typeof(PakRender)) as PakRender;
-                //     Debug.Log(temp);
-                //     if(!temp.healthSystem.IsAlive){
-                //         //disable it
-                //         e.character.SetActive(false);
-                //     }
-                // }
-                //*************************************
             }
+            
             Debug.Log("wowza");
             foreach (PakRender e in targets)
             {
@@ -193,9 +133,6 @@ namespace BattleLogic
                 throw new ArgumentException("Object doesn't have a property speed");
             }
         }
-
-
     }
-
 }
 

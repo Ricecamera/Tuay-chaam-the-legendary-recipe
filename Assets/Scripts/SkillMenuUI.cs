@@ -3,34 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillMenuUI : MonoBehaviour
-{
-    private const float SIZE_MULTIPLER = 1.2f;
-
+public class SkillMenuUI : MonoBehaviour {
+    
     [Header("Default image")]
-    private Sprite defualtCharacter;
-    private Sprite defaultButtonSprite;
+    private Sprite defualtCharacter;        // a image to show when the chracter doesn't have its image
+    
 
     [SerializeField]
     private Image characterImage;
+    
+    public SkillUI[] skills;
 
-    public Button[] skills;
-
-    public List<bool> skillToggle;
-
-    public void Awake()
-    {
-        skillToggle = new List<bool>(skills.Length);
-        for (int i = 0; i < skills.Length; i++)
-        {
-            skillToggle.Add(false);
-        }
-    }
-    public void UpdateCharacterUI(Sprite sprite)
-    {
-        if (sprite)
-        {
-            characterImage.color = Color.white;
+    public void UpdateCharacterUI(Sprite sprite) {
+        if (sprite) {
+            characterImage.color  = Color.white;
             characterImage.sprite = sprite;
 
             /**TODO: Set icon for each skill*/
@@ -65,20 +51,18 @@ public class SkillMenuUI : MonoBehaviour
             throw new IndexOutOfRangeException();
         }
 
-        if (skillToggle[index])
-        {
-            skills[index].GetComponent<RectTransform>().localScale = Vector3.one;
-            skillToggle[index] = false;
+        if (skills[index].Selected) {
+            skills[index].SetSelect(false);
         }
-        else
-        {
-            for (int i = 0; i < skills.Length; i++)
-            {
-                skills[i].GetComponent<RectTransform>().localScale = Vector3.one;
-                skillToggle[i] = false;
+        else {
+            for (int i = 0; i < skills.Length; i++) {
+                if (i != index) {
+                    skills[i].SetSelect(false);
+                }
+                else {
+                    skills[i].SetSelect(true);
+                }
             }
-            skills[index].GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
-            skillToggle[index] = true;
         }
     }
 

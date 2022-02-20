@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    private bool isAlive;
     private int currentHp;
     private int maxHp;
     public HealthBar healthBar;
@@ -39,11 +36,14 @@ public class HealthSystem : MonoBehaviour
     {
         get
         {
-            return isAlive;
+            return currentHp > 0;
         }
         set
         {
-            isAlive = value;
+            if (value)
+                currentHp = (int) Mathf.Round(maxHp * 0.5f);
+            else
+                currentHp = 0;
         }
     }
 
@@ -52,9 +52,7 @@ public class HealthSystem : MonoBehaviour
         Debug.Log("Health system work");
         this.maxHp = maxHp;
         this.currentHp = maxHp;
-        this.isAlive = true;
         healthBar.Reset();
-        Debug.Log(gameObject.name + " max hp is " + maxHp);
     }
 
     public void TakeDamage(int damage)
@@ -63,11 +61,6 @@ public class HealthSystem : MonoBehaviour
         if (currentHp < 0)
         {
             currentHp = 0;
-        }
-
-        if (currentHp == 0)
-        {
-            isAlive = false;
         }
 
         float fill = currentHp / (float)maxHp;

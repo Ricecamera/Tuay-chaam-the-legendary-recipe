@@ -13,6 +13,7 @@ public class Skill
 
     [TextArea]
     protected string description;
+
     protected int cooldown;
 
     protected string actionType;
