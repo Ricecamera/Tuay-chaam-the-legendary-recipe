@@ -226,6 +226,7 @@ public class PakSelection : MonoBehaviour
 
     private InputState chooseCharacter()
     {
+        // Player select ally character to use skill
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -249,7 +250,7 @@ public class PakSelection : MonoBehaviour
                         ally.Select(true);
 
                         // Send character to update on Skill menu
-                        SendCharacterImage(ally.character);
+                        UpdateSkillUIImage(ally.character);
 
                         if (ally.InAction) {
                             // Get old action data
@@ -277,14 +278,6 @@ public class PakSelection : MonoBehaviour
 
                         return InputState.CHARCTER_SELECTED;
                     }
-
-                    //Send skill picture to update on Skill menu
-                    SendSkillImage(ally.character);
-
-                    // Add value to result
-                    result.Add(hit.collider.name);
-                    
-                    return InputState.CHARCTER_SELECTED;
                 }
             }
         }
@@ -338,6 +331,7 @@ public class PakSelection : MonoBehaviour
             //return InputState.SKILL_SELECTED;
         }
 
+        // Check if player has change ally targets
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -367,7 +361,7 @@ public class PakSelection : MonoBehaviour
                 characterManager.SetSelect(selectedPak, true);
 
                 // Send character to update on Skill menu
-                SendCharacterImage(ally);
+                UpdateSkillUIImage(ally);
 
                 // Add value to result
                 result.Add(hit.collider.name);
@@ -593,9 +587,9 @@ public class PakSelection : MonoBehaviour
                 skillMenu.ToggleMenu(true);
                 //? Yod do
                 PakRender pak = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-                GameObject.Find("Skill1").GetComponent<Tooltiptrigger>().setContent(pak.skill[0].Description);
-                GameObject.Find("Skill2").GetComponent<Tooltiptrigger>().setContent(pak.skill[1].Description);
-                GameObject.Find("Skill3").GetComponent<Tooltiptrigger>().setContent(pak.skill[2].Description);
+                skillMenu.skills[0].GetComponent<Tooltiptrigger>().setContent(pak.skill[0].Description);
+                skillMenu.skills[1].GetComponent<Tooltiptrigger>().setContent(pak.skill[1].Description);
+                skillMenu.skills[2].GetComponent<Tooltiptrigger>().setContent(pak.skill[2].Description);
                 // Debug.Log("Skill class is" + pak.GetType()); // GetType() return original type of this obj.
                 //?
 
@@ -661,42 +655,21 @@ public class PakSelection : MonoBehaviour
         }
     }
 
-    public void SendCharacterImage(GameObject ally)
+    public void UpdateSkillUIImage(GameObject ally)
     {
 
         PakRender pakRender = ally.GetComponent<PakRender>();
-        ChaamRender chaamRender = ally.GetComponent<ChaamRender>();
 
         // Check  if the ally gameobject has PakRende or ChaamRender
         // WSprite is null if the ally does not have both
         if (pakRender != null)
         {
             skillMenu.UpdateCharacterUI(pakRender.pak.Image);
+            skillMenu.UpdateSkillUI(pakRender);
 
-        }
-        else if (chaamRender != null)
-        {
-            // skillMenu.UpdateCharacterUI(chaamRender.chaam.image);
         }
     }
 
-    public void SendSkillImage(GameObject ally)
-    {
-        PakRender pakRender = ally.GetComponent<PakRender>();
-        ChaamRender chaamRender = ally.GetComponent<ChaamRender>();
-
-        // Check  if the ally gameobject has PakRende or ChaamRender
-        // WSprite is null if the ally does not have both
-        skillMenu.UpdateSkillUI(pakRender);
-
-        //! need to make a chaam update skill as well when we are ready.
-        // if (pakRender != null) {
-        //     skillMenu.UpdateSkillUI(pakRender);
-        // }
-        // else if (chaamRender != null) {
-        //     //! skillMenu.UpdateSkillUIChaam(pakRender);
-        // }
-    }
 
     public void SendCommand()
     {

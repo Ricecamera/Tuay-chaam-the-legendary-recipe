@@ -13,7 +13,7 @@ namespace BattleScene {
 [RequireComponent(typeof(ActionCommandHandler))]
 public class BattleManager : MonoBehaviour {
     public static BattleManager instance;                   // singleton instance of this class
-    public ActionCommandHandler actionCommandHandler;       // reference to ActionCommandHandler
+    
     public int currentTurn { get; private set; }            // keep track how many turn have pass
 
     public Text actionText;                                 // text that show when in battle
@@ -21,8 +21,20 @@ public class BattleManager : MonoBehaviour {
     public AIController AI;                                 // reference to AI controller class
 
     private CharacterManager characters;
-        // Subscribe OnComplete event
-        // the event invokes went actionCommandHandler finish execute all of characters' actions.
+    public ActionCommandHandler actionCommandHandler {get; private set; }       // reference to ActionCommandHandler
+
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
+
+    // Subscribe OnComplete event
+    // the event invokes went actionCommandHandler finish execute all of characters' actions.
     private void OnEnable() {
         ActionCommandHandler.OnComplete += NextTurn;
     }

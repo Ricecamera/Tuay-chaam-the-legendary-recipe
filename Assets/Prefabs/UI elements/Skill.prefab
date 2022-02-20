@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 4979081179272731599}
   - component: {fileID: 2048845942644133041}
   - component: {fileID: 3650434731194585364}
+  - component: {fileID: 5806628625362844147}
   m_Layer: 5
   m_Name: Skill
   m_TagString: Untagged
@@ -263,3 +264,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4979081178105077277}
   defaultSprite: {fileID: 21300000, guid: 1eb9bc54f052d7442a13353944c30503, type: 3}
+--- !u!114 &5806628625362844147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4979081179272731597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237f9a885d48b484db18675943319b91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: 
