@@ -1063,10 +1063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a9a768e4893fc45831b457c1aefd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plants:
-  - {fileID: 6133672455091789994, guid: 46ce9656f5b80374aaced8b7bcd80fad, type: 3}
-  - {fileID: 2500631127275958802, guid: dd6a9f6ce9eab964cb29484bf13da09e, type: 3}
-  - {fileID: 8542214097770956033, guid: aa005ca77feba874db9296edf0c3cdb9, type: 3}
+  plants: []
   enemies:
   - {fileID: 1676348087460524731, guid: c087df6303e007f44aebdc2c7d366f58, type: 3}
   - {fileID: 4698015606216624904, guid: cf4a5c950cd6aba4688d6d4fbc001b49, type: 3}

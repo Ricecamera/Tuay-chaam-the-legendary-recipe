@@ -14,19 +14,19 @@ public class LevelLoader : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (SceneManager.GetActiveScene().buildIndex == 0)
+            if (SceneManager.GetActiveScene().buildIndex == 0) //* Main menu
             {
                 Button playButton = GameObject.Find("Play").GetComponent<Button>();
                 Button quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
                 playButton.onClick.AddListener(LoadNextScene);
                 quitButton.onClick.AddListener(ExitGame);
             }
-            if (SceneManager.GetActiveScene().buildIndex == 1)
+            if (SceneManager.GetActiveScene().buildIndex == 1) //* Character Select
             {
                 Button startButton = GameObject.Find("Start Button").GetComponent<Button>();
                 Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
                 Button helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
-                startButton.onClick.AddListener(LoadNextScene);
+                startButton.onClick.AddListener(StartGame);
                 backButton.onClick.AddListener(LoadPrevScene);
                 helpButton.onClick.AddListener(Help);
             }
@@ -56,10 +56,17 @@ public class LevelLoader : MonoBehaviour
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex - 1));
     }
 
-    public void SwitchComponent()
+    public void ExportCharacter()
     {
-
+        // SelectCharacter.prefab = CharacterSelecter.GetCharacter();
     }
+
+    public void StartGame()
+    {
+        ExportCharacter();
+        LoadNextScene();
+    }
+
     IEnumerator LoadLevel(int levelIndex)
     {
         //* 3 Steps 

@@ -16,10 +16,15 @@ public class SwitchTab : MonoBehaviour
     Transform main;
     Transform chaam;
     Transform support;
+
     // Start is called before the first frame update
+    // [SerializeField]
+    // private List<GameObject> itemList;
     void Start()
     {
         tab = gameObject.GetComponentsInChildren<Transform>();
+        // itemList = GetComponent<ItemData>().itemList;
+
 
         foreach (var t in tab)
         {
@@ -36,6 +41,7 @@ public class SwitchTab : MonoBehaviour
                 {
                     main = t;
                 }
+
             }
             else if ((t.name).Contains("Support") && !(t.name).Contains("Select"))
             {
@@ -62,11 +68,15 @@ public class SwitchTab : MonoBehaviour
                 {
                     chaam = t;
                 }
+                // else if (t.name == "ChaamItem")
+                // {
+                //     chaamObj = t.gameObject;
+                // }
             }
         }
-        Debug.Log(chaam);
-        Debug.Log(main);
-        Debug.Log(support);
+        // Debug.Log(chaam);
+        // Debug.Log(main);
+        // Debug.Log(support);
     }
 
     // Update is called once per frame
@@ -84,18 +94,25 @@ public class SwitchTab : MonoBehaviour
     {
         if (button.name == "ChaamButton")
         {
+
+            DisplayInventory.ChangeSlot3(1);
+
             chaam.gameObject.SetActive(true);
             main.gameObject.SetActive(false);
             support.gameObject.SetActive(false);
         }
         else if (button.name == "MainButton")
         {
+            DisplayInventory.ChangeSlot3(2);
+
             chaam.gameObject.SetActive(false);
             main.gameObject.SetActive(true);
             support.gameObject.SetActive(false);
         }
         if (button.name == "SupportButton")
         {
+            DisplayInventory.ChangeSlot3(3);
+
             chaam.gameObject.SetActive(false);
             main.gameObject.SetActive(false);
             support.gameObject.SetActive(true);
