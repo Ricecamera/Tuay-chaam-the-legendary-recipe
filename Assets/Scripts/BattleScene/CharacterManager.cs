@@ -16,7 +16,7 @@ namespace BattleScene {
     }
 
     // Add a new character
-    public void AddCharacter(string tag, GameObject character, int teamKey){
+    public void AddCharacter(string tag, GameObject character, int teamKey) {
         try {
             // find the team of added character
             Team team;
@@ -46,14 +46,16 @@ namespace BattleScene {
     }
 
     // Get a specific character by tag and team flag
-    public CharacterHolder GetCharacter(string tag){
+    public CharacterHolder GetCharacter(string tag) {
         CharacterHolder output = null;
         try {
             output = holders[tag];
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             Debug.LogError(e.Message);
             output = null;
         }
+        
         return output;
     }
 
@@ -69,7 +71,7 @@ namespace BattleScene {
             found.Select(value);
         }
         catch {
-            Debug.LogError("the enemy character isn't exist!!");
+            Debug.LogError("the character isn't exist!!");
         }
     }
 
@@ -82,10 +84,9 @@ namespace BattleScene {
         }
         catch
         {
-            Debug.LogError("the ally character isn't exist!!");
+            Debug.LogError("the character isn't exist!!");
         }
     }
-
 
     public string GetCharacterTeam(string tag) {
         try {
@@ -150,10 +151,10 @@ namespace BattleScene {
     }
 
     // Set select state of ally character
-    public void Reset() {
+    public void ResetSelect() {
         foreach (var p in holders) {
             CharacterHolder holder = p.Value;
-            holder.ResetState();
+            holder.Select(false);
         }
     }
 
@@ -170,4 +171,5 @@ namespace BattleScene {
     }
 }
 }
+
 

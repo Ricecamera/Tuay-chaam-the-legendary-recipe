@@ -8,8 +8,7 @@ public class Spawner : MonoBehaviour {
     public List<GameObject> plants = new List<GameObject>();        // contains prefabs of all in-play plants
     public List<GameObject> enemies = new List<GameObject>();       // contains prefabs of all in-play enemies
     public List<Transform> allySpawnPos = new List<Transform>();    // reference of allies' spawn positions in scene
-    public List<Transform> enemySpawnPos = new List<Transform>();   // contains enemies' spawn positions in scene
-    public List<GameObject> healthBar = new List<GameObject>();   
+    public List<Transform> enemySpawnPos = new List<Transform>();   // contains enemies' spawn positions in scene 
 
     [Header("Chaam")]
     public GameObject chaam;                // contains the prefab of an in-play chaam

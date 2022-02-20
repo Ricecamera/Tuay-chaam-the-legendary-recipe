@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleScene.BattleLogic;
 
-public class AIController {
-    
-    // public AIController(){
-        
-    // }
-
-    public List<ActionCommand> selectAction(List<GameObject> pakTeam , List<GameObject>  enemyTeam ){ //pakTeam count the one that dead?
+public class AIController
+{
+    public List<ActionCommand> selectAction(List<GameObject> pakTeam, List<GameObject> enemyTeam)
+    { //pakTeam count the one that dead?
         List<ActionCommand> actionList = new List<ActionCommand>();
 
-        
-        foreach(GameObject e in enemyTeam) {
+
+        foreach (GameObject e in enemyTeam)
+        {
             List<PakRender> targets = new List<PakRender>();
-            int target_num = Random.Range(1,pakTeam.Count);
+            int target_num = Random.Range(0, pakTeam.Count);
+            Debug.Log("The target num is " + target_num);
             GameObject target = pakTeam[target_num];
             targets.Add(target.GetComponent<PakRender>());
             //ตีธรรมดา Only

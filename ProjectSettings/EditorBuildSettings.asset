@@ -9,9 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/ModeSelection.unity
+    guid: 645be61aa6eacdb41aa7de8c300b3f0c
+  - enabled: 1
+    path: Assets/Scenes/LevelSelection.unity
+    guid: d0f28c50455c85c4daab58c22951e573
+  - enabled: 1
     path: Assets/Scenes/CharacterSelection.unity
     guid: 833c394e8177a5447879be9e686cfe86
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: fcec781c1fdbfd04bb493f296037e4eb
+  - enabled: 1
+    path: Assets/Scenes/VictoryScene.unity
+    guid: a84cb94f83a12554aac651a811e58f88
+  - enabled: 1
+    path: Assets/Scenes/LoseScene.unity
+    guid: 99f8c9567b660944da9d37e010150137
   m_configObjects: {}

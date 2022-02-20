@@ -13,32 +13,18 @@ namespace BattleScene {
 [RequireComponent(typeof(ActionCommandHandler))]
 public class BattleManager : MonoBehaviour {
     public static BattleManager instance;                   // singleton instance of this class
-    
-    private CharacterManager characters;                
-    public ActionCommandHandler actionCommandHandler;
-
+    public ActionCommandHandler actionCommandHandler;       // reference to ActionCommandHandler
     public int currentTurn { get; private set; }            // keep track how many turn have pass
 
     public Text actionText;                                 // text that show when in battle
 
     public AIController AI;                                 // reference to AI controller class
-   
 
-    // This ensure that the object of this class will be only one in the game.
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
-        else {
-            Destroy(gameObject);
-        }
-    }
-
-    // Subscribe OnComplete event
-    // the event invokes went actionCommandHandler finish execute all of characters' actions.
+    private CharacterManager characters;
+        // Subscribe OnComplete event
+        // the event invokes went actionCommandHandler finish execute all of characters' actions.
     private void OnEnable() {
         ActionCommandHandler.OnComplete += NextTurn;
-        
     }
 
     // Unsubscribe OnComplete event when this object disable from game.
@@ -72,54 +58,97 @@ public class BattleManager : MonoBehaviour {
         List<GameObject> pakTeamObject = new List<GameObject>();
         List<GameObject> enemyTeamObject = new List<GameObject>();
 
-        foreach(var e in pakHolders){
-            pakTeamObject.Add(e.character);
+
+        foreach (var e in pakHolders)
+        {
+            if (e.character.activeSelf)
+            {
+                pakTeamObject.Add(e.character);
+            }
         }
 
-        foreach(var f in enemyHolders){
-            enemyTeamObject.Add(f.character);
+        foreach (var f in enemyHolders)
+        {
+            if (f.character.activeSelf)
+            {
+                enemyTeamObject.Add(f.character);
+            }
         }
 
         // Let AI controller selection its actions
-        List<ActionCommand> temp = AI.selectAction(pakTeamObject,enemyTeamObject);
-        foreach (ActionCommand e in temp){
+        List<ActionCommand> temp = AI.selectAction(pakTeamObject, enemyTeamObject);
+        foreach (ActionCommand e in temp)
+        {
             actionCommandHandler.AddCommand(e);
         }
 
         actionText.gameObject.SetActive(true);
         actionCommandHandler.RunCommands();
+
+        //****
     }
 
     // Go to next turn this method call when OnComplete event is triggered
-    public void NextTurn() {
+    public void NextTurn()
+    {
         Debug.Log("Battle End!!");
 
         currentTurn++;
         actionText.gameObject.SetActive(false);
     }
 
-
-    public void AddNewCommand(GameObject caller, int index, GameObject[] targets) {
+    public void AddNewCommand(GameObject caller, int skillIndex, GameObject[] targets)
+    {
         PakRender pakCaller = caller.GetComponent<PakRender>();
 
         // Get PakRender component of each game oject in `targets`
         // and push it into pakTargets list.
         List<PakRender> pakTargets = new List<PakRender>();
-        foreach (var target in targets) {
+        foreach (var target in targets)
+        {
             PakRender tmp = target.GetComponent<PakRender>();
             if (tmp != null) pakTargets.Add(tmp);
         }
 
         // Log error when the caller does not exist or there are not available target.
-        if (pakCaller == null || pakTargets.Count == 0) {
+        if (pakCaller == null || pakTargets.Count == 0)
+        {
             Debug.LogError("The caller or targets do not contain PakRender");
             return;
         }
 
         // Set random speed for each action and initialize it.
         float speed = Random.Range(10.0f, 30.0f); //Need to fix this.
-        ActionCommand newCommand = new ActionCommand(pakCaller, index, pakTargets, speed);
+        ActionCommand newCommand = new ActionCommand(pakCaller, skillIndex, pakTargets, speed);
         actionCommandHandler.AddCommand(newCommand);
+    }
+
+    public bool IsPlayerLose()
+    {
+        Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
+        List<CharacterHolder> pakInBattle = characters.getTeamHolders(0);
+        foreach (CharacterHolder e in pakInBattle)
+        {
+            if (e.character.activeSelf)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool IsPlayerWin()
+    {
+        Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
+        List<CharacterHolder> enemyInBattle = characters.getTeamHolders(1);
+        foreach (CharacterHolder e in enemyInBattle)
+        {
+            if (e.character.activeSelf)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
 }

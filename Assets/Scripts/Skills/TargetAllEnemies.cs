@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class AllTargetEnemies : Skill
 {
-    public AllTargetEnemies(string skillId, string skillName, string description, int cooldown):base(skillId, skillName, description, cooldown){
+    public AllTargetEnemies(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies")
+    {
 
     }
 
-    public void VanillaAttackAll(PakRender[] target, int atkValue) {
+    public void VanillaAttackAll(PakRender[] target, int atkValue)
+    {
         int damage;
-        foreach (var e in target){
-            if(atkValue - e.pak.Def <=0) damage=0;
+        foreach (var e in target)
+        {
+            if (atkValue - e.pak.Def <= 0) damage = 0;
             else damage = atkValue - e.pak.Def;
             e.healthSystem.TakeDamage(damage);
-        }       
+        }
         return;
     }
 }
