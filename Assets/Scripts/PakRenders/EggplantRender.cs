@@ -11,9 +11,9 @@ public class EggplantRender : PakRender
         Sprite skillIconUnti = Resources.Load("SkillIcons/sk1", typeof(Sprite)) as Sprite;
         base.Start();
         //!
-        skill.Add(new VanillaAttackOne("VA1", "AttackOneEnemy", "This do damage to one enemy.", 0, skillIcon1));
-        skill.Add(new VanillaAttackAll("VAA", "AttackAllEnemy", "Attack all enemies at once.", 0, skillIcon2));
-        skill.Add(new VanillaBuffAtkOne("VBA1", "BuffAtkOneAlliance", "Target one alliance and buff its strength for the duration of this battle.", 0, skillIcon3));
-        skill.Add(new VanillaBuffAtkAll("VBAA", "BuffAtkAllAlliance", "Buff all alliance to increase their strenght for the duration of this battle.", 0, skillIconUnti));
+        skill.Add(new VanillaAttackOne("VA1", "AttackOneEnemy", "This do damage to one enemy.", 1, skillIcon1));
+        skill.Add(new VanillaAttackAll("VAA", "AttackAllEnemy", "Attack all enemies at once.", 3, skillIcon2));
+        skill.Add(new VanillaBuffAtkOne("VBA1", "BuffAtkOneAlliance", "Target one alliance and buff its strength for the duration of this battle.", 2, skillIcon3));
+        skill.Add(new VanillaBuffAtkAll("VBAA", "BuffAtkAllAlliance", "Buff all alliance to increase their strenght for the duration of this battle.", 5, skillIconUnti));
     }
 }

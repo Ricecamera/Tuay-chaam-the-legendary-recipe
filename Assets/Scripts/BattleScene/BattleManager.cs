@@ -107,6 +107,11 @@ public class BattleManager : MonoBehaviour {
 
         currentTurn++;
         actionText.gameObject.SetActive(false);
+        List<CharacterHolder> holders = characters.getHolders();
+        foreach (var holder in holders) {
+            PakRender pak = holder.character.GetComponent<PakRender>();
+            pak.UpdateTurn();
+        }
     }
 
     public void AddNewCommand(GameObject caller, int skillIndex, GameObject[] targets)

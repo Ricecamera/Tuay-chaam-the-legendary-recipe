@@ -10,7 +10,6 @@ public class VanillaBuffAtkOne : Skill
         BuffAtkOneAlliance += ActionVanillaBuffAtkOne;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Target one alliance and buff its strength for the duration of this battle.";
-        this.cooldown = 1;
         this.icon = icon;
         /////////
     }

@@ -1,8 +1,10 @@
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(Button))]
+
+[RequireComponent(typeof(Image), typeof(Button))]
 public class SkillUI : MonoBehaviour
 {
     public const float SIZE_MULTIPLER = 1.12f;
@@ -12,17 +14,16 @@ public class SkillUI : MonoBehaviour
     private GameObject effect;
 
     [SerializeField]
-    private Sprite defaultSprite;     // a image to show when the skill doesn't have its image
-    
+    private TextMeshProUGUI cooldown;
 
-    private SpriteRenderer myRenderer;
+    private Image myImage;
     private Button myButton;
 
     public bool Selected {get; private set; }
     // Start is called before the first frame update
     void Start()
     {
-        myRenderer = GetComponent<SpriteRenderer>();
+        myImage = GetComponent<Image>();
         myButton = GetComponent<Button>();
         Selected = false;
         effect.SetActive(false);
@@ -43,11 +44,20 @@ public class SkillUI : MonoBehaviour
         Selected = value;
     }
 
-    public void SetSkillImage(Sprite image) {
-        if (image == null)
-            myRenderer.sprite = defaultSprite;
-        else
-            myRenderer.sprite = image;        
+    public void SetSkill(Skill skill) {
+        if (skill == null) {
+            myImage.sprite = null;
+            gameObject.SetActive(false);
+            myButton.interactable = false;
+        }
+        else {
+            myImage.sprite = skill.Icon;        
+            gameObject.SetActive(true);
+            bool show = skill.Cooldown == 0;
+            myButton.interactable = show;
+            cooldown.gameObject.SetActive(!show);
+            cooldown.text = skill.Cooldown.ToString();
+        }
     }
 
     public void AddListener(UnityAction callback) {
