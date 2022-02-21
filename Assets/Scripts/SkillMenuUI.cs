@@ -68,22 +68,17 @@ public class SkillMenuUI : MonoBehaviour {
 
     public void UpdateSkillUI(PakRender pak)
     {
-        // System.Type pakSpecificType = pak.GetType(); //get the actual type (lowest level) of the object.
-        // var pakSpecific = Convert.ChangeType(pak, pakSpecificType);
-        // if () {
-        //     characterImage.color  = Color.white;
-        //     characterImage.sprite = sprite;
+        int i = 0;
 
-        //     /**TODO: Set icon for each skill*/
-        // }
-        // else {
-        //     characterImage.sprite = null;
-        //     characterImage.color  = Color.clear;
-        // }
-        Debug.Log("Show Type");
-        Debug.Log(pak);
-        Debug.Log(pak.skill[0]);
-        //var a = pak.skill[0].Icon;
+        // Set skills for each skill button
+        for (; i < pak.skill.Count && i < skills.Length; ++i) {
+            skills[i].SetSkill(pak.skill[i]);
+        }
+
+        // hide all skill button that doesn't set skill
+        for (; i < skills.Length; ++i) {
+            skills[i].SetSkill(null);
+        }
 
         Image temp1 = skills[0].GetComponent<Image>();
         temp1.sprite = pak.skill[0].Icon;
@@ -91,8 +86,6 @@ public class SkillMenuUI : MonoBehaviour {
         temp2.sprite = pak.skill[1].Icon;
         Image temp3 = skills[2].GetComponent<Image>();
         temp3.sprite = pak.skill[2].Icon;
-        // Image temp4 = skills[3].GetComponent<Image>();
-        // temp4.sprite = pak.skill[3].Icon;
 
     }
 }

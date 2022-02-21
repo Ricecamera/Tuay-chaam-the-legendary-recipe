@@ -11,7 +11,6 @@ public class VanillaAttackAll : Skill
         AttackAllEnemy += ActionVanillaAttackAll;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Attack all enemies at once.";
-        this.cooldown = 0;
         this.icon = icon;
         /////////
     }

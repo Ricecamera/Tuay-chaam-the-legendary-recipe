@@ -11,7 +11,6 @@ public class VanillaAttackOne : Skill
         AttackOneEnemy += ActionVanillaAttackOne;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Target one opponent to perform an attack";
-        this.cooldown = 0;
         this.icon = icon;
         /////////
 

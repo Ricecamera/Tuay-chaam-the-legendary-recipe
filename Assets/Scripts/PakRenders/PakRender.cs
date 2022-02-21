@@ -156,4 +156,13 @@ public class PakRender : MonoBehaviour
         }
     }
 
+    public void UpdateTurn() {
+        // Update skill cooldown
+        for (int i = 0; i < skill.Count; ++i) {
+            skill[i].Cooldown--;
+        }
+
+        // Do something about this character when end turn ex. buff effect, burn damage, etc
+    }
+
 }
