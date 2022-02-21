@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TChaamController : MonoBehaviour
 {
@@ -28,5 +29,28 @@ public class TChaamController : MonoBehaviour
         position.y = position.y + 5.0f * vertical * Time.deltaTime;
 
         rigidbody2d.MovePosition(position);
+
+        if (transform.rotation.z != 0)
+        {
+            transform.Rotate(0, 0, -transform.rotation.z);
+        }
     }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        collider.GetComponent<LevelSelection>().PressSelection("CharacterSelection");
+        if (!collider.GetComponent<LevelSelection>().getUnlocked())
+        {
+            collider.isTrigger = false;
+        }
+    }
+
+    // private void levelSelect(string name, int level)
+    // {
+    //     if (name == "wellLevel1")
+    //     {
+    //         SceneManager.LoadScene("CharacterSelection");
+    //         LevelManager.instance.thislevel = level;
+    //     }
+    // }
 }

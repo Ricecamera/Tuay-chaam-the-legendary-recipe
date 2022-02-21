@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/ModeSelection.unity
     guid: 645be61aa6eacdb41aa7de8c300b3f0c
   - enabled: 1
-    path: Assets/Scenes/LevelSelection.unity
-    guid: d0f28c50455c85c4daab58c22951e573
+    path: Assets/Scenes/opened-map.unity
+    guid: 6042555466edee84d99b39dd454adfa1
   - enabled: 1
     path: Assets/Scenes/CharacterSelection.unity
     guid: a819b7017c35b82408d46cb5494cb56e

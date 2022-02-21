@@ -1,224 +1,78 @@
 Using pre-set license
-Built from '2020.3/staging' branch; Version is '2020.3.25f1 (9b9180224418) revision 10195328'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10  (10.0.17763) 64bit Professional' Language: 'en' Physical Memory: 8131 MB
+Built from '2020.3/staging' branch; Version is '2020.3.26f1 (7298b473bc1a) revision 7510196'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit CoreSingleLanguage' Language: 'en' Physical Memory: 7540 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
 COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\2020.3.25f1\Editor\Unity.exe
+C:\Program Files\Unity\Hub\Editor\2020.3.26f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker0
 -projectPath
-D:/peem/Games_Creating/Unity/Tuay-Chaam_Version_3_(Kendo's_variation)/Tuay-chaam-the-legendary-recipe
+C:/Users/Pakorn Kongrit/TuayChaam2/Tuay-chaam-the-legendary-recipe
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-58267
-Successfully changed project path to: D:/peem/Games_Creating/Unity/Tuay-Chaam_Version_3_(Kendo's_variation)/Tuay-chaam-the-legendary-recipe
-D:/peem/Games_Creating/Unity/Tuay-Chaam_Version_3_(Kendo's_variation)/Tuay-chaam-the-legendary-recipe
+62847
+Successfully changed project path to: C:/Users/Pakorn Kongrit/TuayChaam2/Tuay-chaam-the-legendary-recipe
+C:/Users/Pakorn Kongrit/TuayChaam2/Tuay-chaam-the-legendary-recipe
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 88.72 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 55.71 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Initialize engine version: 2020.3.25f1 (9b9180224418)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path D:/peem/Games_Creating/Unity/Tuay-Chaam_Version_3_(Kendo's_variation)/Tuay-chaam-the-legendary-recipe/Assets
+Initialize engine version: 2020.3.26f1 (7298b473bc1a)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Pakorn Kongrit/TuayChaam2/Tuay-chaam-the-legendary-recipe/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1c03)
+    Renderer: NVIDIA GeForce GTX 1650 (ID=0x1f99)
     Vendor:   
-    VRAM:     6052 MB
-    Driver:   25.21.14.1917
+    VRAM:     3962 MB
+    Driver:   30.0.14.7247
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56476
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56880
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.25f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002672 seconds.
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001881 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 87.51 ms, found 3 plugins.
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 45.92 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.043 seconds
+- Completed reload, in  0.530 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1044ms)
-		BeginReloadAssembly (95ms)
+	ReloadAssembly (530ms)
+		BeginReloadAssembly (46ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (826ms)
-			LoadAssemblies (92ms)
+		EndReloadAssembly (417ms)
+			LoadAssemblies (45ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (288ms)
+			SetupTypeCache (137ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (55ms)
-			SetupLoadedEditorAssemblies (302ms)
+			RebuildScriptCaches (28ms)
+			SetupLoadedEditorAssemblies (162ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (8ms)
+				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (88ms)
-				BeforeProcessingInitializeOnLoad (21ms)
-				ProcessInitializeOnLoadAttributes (139ms)
-				ProcessInitializeOnLoadMethodAttributes (45ms)
+				RefreshPlugins (46ms)
+				BeforeProcessingInitializeOnLoad (13ms)
+				ProcessInitializeOnLoadAttributes (72ms)
+				ProcessInitializeOnLoadMethodAttributes (25ms)
 				AfterProcessingInitializeOnLoad (0ms)
-				EditorAssembliesLoaded (1ms)
+				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.005916 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 72.68 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.955 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1957ms)
-		BeginReloadAssembly (261ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (10ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (32ms)
-		EndReloadAssembly (1586ms)
-			LoadAssemblies (147ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (568ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (96ms)
-			SetupLoadedEditorAssemblies (560ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (6ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (73ms)
-				BeforeProcessingInitializeOnLoad (131ms)
-				ProcessInitializeOnLoadAttributes (311ms)
-				ProcessInitializeOnLoadMethodAttributes (29ms)
-				AfterProcessingInitializeOnLoad (10ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (10ms)
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.09 seconds
-Refreshing native plugins compatible for Editor in 1.38 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2282 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 100.9 MB.
-System memory in use after: 101.1 MB.
-
-Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 2716.
-Total: 4.477900 ms (FindLiveObjects: 0.363100 ms CreateObjectMapping: 0.133700 ms MarkObjects: 3.866200 ms  DeleteObjects: 0.113500 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  path: Assets/Scriptable Objects/Cheepha.asset
-  artifactKey: Guid(8bb766d10606b6f48b06569bf90dacd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/Cheepha.asset using Guid(8bb766d10606b6f48b06569bf90dacd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9a76062bc5a4a66a0d581f1392b83a52') in 0.083170 seconds 
-  Import took 0.096654 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000276 seconds.
-  path: Assets/Scriptable Objects/PrikThai.asset
-  artifactKey: Guid(7afc78ca94c88f24ca3881cfe5f04524) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/PrikThai.asset using Guid(7afc78ca94c88f24ca3881cfe5f04524) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8bafe8a19157814a198bfd6b060aaa09') in 0.003633 seconds 
-  Import took 0.015062 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000349 seconds.
-  path: Assets/Scriptable Objects/Chaam_temp_pak.asset
-  artifactKey: Guid(3645b6319246b6b498c740cbabb73b06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/Chaam_temp_pak.asset using Guid(3645b6319246b6b498c740cbabb73b06) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae8c5907f6876b8a4b2e1b0d8e3f38ff') in 0.004130 seconds 
-  Import took 0.019738 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000247 seconds.
-  path: Assets/Scriptable Objects/Eggplant.asset
-  artifactKey: Guid(60ac1a85496730b478610f68ccc92f8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/Eggplant.asset using Guid(60ac1a85496730b478610f68ccc92f8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '684cd65559b9b56e664cd86f4a070b5d') in 0.004140 seconds 
-  Import took 0.016927 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000217 seconds.
-  path: Assets/Scriptable Objects/TestPak.asset
-  artifactKey: Guid(fed70b042012ba74cbce5c9218619ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/TestPak.asset using Guid(fed70b042012ba74cbce5c9218619ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eaec3eadf343622a89f5634ac0ca7220') in 0.003285 seconds 
-  Import took 0.025060 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000207 seconds.
-  path: Assets/Scriptable Objects/NormalPrik.asset
-  artifactKey: Guid(72e7da00404ce7240be0da2f35a88111) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/NormalPrik.asset using Guid(72e7da00404ce7240be0da2f35a88111) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc302f92185eb14ac3cf4247ec38c75b') in 0.004263 seconds 
-  Import took 0.011014 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000170 seconds.
-  path: Assets/Scriptable Objects/Carrot.asset
-  artifactKey: Guid(a189162f4599fa544aeea5bb05ba0974) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/Carrot.asset using Guid(a189162f4599fa544aeea5bb05ba0974) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e93370184bbcb25d2eb9116d9925c353') in 0.003700 seconds 
-  Import took 0.010738 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000209 seconds.
-  path: Assets/Scriptable Objects/TestCharacter.asset
-  artifactKey: Guid(0566da4d3b70c7149a8f8146eed568e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/TestCharacter.asset using Guid(0566da4d3b70c7149a8f8146eed568e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f2fff9671e0962cc75d7948c8d8a187') in 0.004194 seconds 
-  Import took 0.016417 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000245 seconds.
-  path: Assets/Scriptable Objects/Garlic.asset
-  artifactKey: Guid(df6a097e3a47e8246b317d4e5b353f1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scriptable Objects/Garlic.asset using Guid(df6a097e3a47e8246b317d4e5b353f1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec96c577f70fe4ac0042b6ced715a0f7') in 0.005354 seconds 
-  Import took 0.014012 seconds .
-
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 8.33 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 15 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 53.7 MB.
-System memory in use after: 53.8 MB.
-
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 2716.
-Total: 11.203600 ms (FindLiveObjects: 0.601000 ms CreateObjectMapping: 0.196600 ms MarkObjects: 10.363600 ms  DeleteObjects: 0.039700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+Registered in 0.005834 seconds.
