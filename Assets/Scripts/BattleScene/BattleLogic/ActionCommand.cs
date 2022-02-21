@@ -76,6 +76,8 @@ namespace BattleScene.BattleLogic
                 callerskill.performSkill(callerskill, caller2, targets);
                 caller2.moveToEnemy(caller2, targets);
 
+            }else{
+                Debug.Log("The target is already died.");
             }
 
             string displaytext = string.Format("{0} calls {1} to {2}", callerName, selectedSkill, string.Join(", ", targetNames.ToArray()));
