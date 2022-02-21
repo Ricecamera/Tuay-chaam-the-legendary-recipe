@@ -19,6 +19,7 @@ namespace BattleScene {
     public void AddCharacter(string tag, GameObject character, int teamKey) {
         try {
             // find the team of added character
+            Debug.Log(character);
             Team team;
             if (teamKey == 0)
                 team= Team.PLAYER_TEAM;
@@ -75,12 +76,12 @@ namespace BattleScene {
         }
     }
 
-    public void SetAction(string tag, bool value)
+    public void SetAction(string tag, bool value, int index=0)
     {
         try
         {
             CharacterHolder found = holders[tag];
-            found.Action(value);
+            found.Action(value,index);
         }
         catch
         {
@@ -161,7 +162,7 @@ namespace BattleScene {
     public void ResetAction() {
         foreach (var p in holders) {
             CharacterHolder holder = p.Value;
-            holder.Action(false);
+            holder.Action(false, 0);
         }
     }
 
