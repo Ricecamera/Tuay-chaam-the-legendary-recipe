@@ -913,7 +913,6 @@ public class PakSelection : MonoBehaviour
             }
         }
 
-        //? might allow to change skill here?
         var holder = characterManager.GetCharacter(selectedPak);
         // Player presses cancel button
         if (cancelPressed && holder.InAction)
