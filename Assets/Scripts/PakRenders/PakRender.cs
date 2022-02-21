@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
 {
-    private static Color DARK_COLOR = new Color(99 / 255f, 238 / 255f, 108 / 255f, 1);
+    private static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
 
     [SerializeField]
     private SpriteRenderer actionIcon;
@@ -31,7 +31,10 @@ public class PakRender : MonoBehaviour
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.Initialize(pak.MaxHp);
         ShowSelected(false);
-        DisplayInAction(false);
+//!
+        actionIcon.gameObject.SetActive(false);
+        SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spirteRenderer.color = Color.white;
 
         skill = new List<Skill>();
 
@@ -57,18 +60,16 @@ public class PakRender : MonoBehaviour
 
     }
 
-    public void DisplayInAction(bool value)
+    public void DisplayInAction(bool value, int index=0)
     {
+        if(index <0 || index>skill.Count){
+            Debug.LogError("Skill index out of range and couldn't load skill icon.");
+        }
+        actionIcon.sprite = skill[index].Icon;
         actionIcon.gameObject.SetActive(value);
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
-    }
-
-    public void DisplayInAction(bool value, int index)
-    {
-        //actionIcon.sprite = skillImages[skillIndex];
-        DisplayInAction(value);
     }
 
     // Set sorting layer of Pak's sprite and its health bar

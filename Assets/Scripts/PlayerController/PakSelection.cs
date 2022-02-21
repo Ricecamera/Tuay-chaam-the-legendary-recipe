@@ -921,7 +921,7 @@ public class PakSelection : MonoBehaviour
             // Remove action
             var commandHandler = BattleManager.instance.actionCommandHandler;
             commandHandler.RemoveAction(selectedPak);
-            holder.Action(false);
+            holder.Action(false,0);
             return InputState.DEFAULT;
         }
 
@@ -934,7 +934,7 @@ public class PakSelection : MonoBehaviour
             {
                 var commandHandler = BattleManager.instance.actionCommandHandler;
                 commandHandler.RemoveAction(selectedPak);
-                holder.Action(false);
+                holder.Action(false,0);
             }
 
             // Add result string to output log
@@ -1120,6 +1120,7 @@ public class PakSelection : MonoBehaviour
         GameObject caller = characterManager.GetCharacter(selectedPak).character;
         if (caller != null)
         {
+            characterManager.SetAction(selectedPak,true,selectedSkill);
             Debug.Log(selectedEnemy);
             if (selectedEnemy.Contains(","))
             {

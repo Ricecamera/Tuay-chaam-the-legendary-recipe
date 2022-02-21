@@ -30,7 +30,7 @@ public class CharacterHolder
 
         // Hide Action Icon
         PakRender render = character.GetComponent<PakRender>();
-        render.DisplayInAction(false);
+        // render.DisplayInAction(false);
     }
 
     public void Select(bool value)
@@ -47,14 +47,14 @@ public class CharacterHolder
         character.GetComponent<PakRender>().ShowSelected(value);
     }
 
-    public void Action(bool value)
+    public void Action(bool value, int index)
     {
         InAction = value;
         PakRender render = character.GetComponent<PakRender>();
         if (value)
-            render.DisplayInAction(true, 0);
+            render.DisplayInAction(true, index);
         else
-            render.DisplayInAction(false);
+            render.DisplayInAction(false, index);
     }
 
     public void HighLightLayer(bool isHighLight) {
