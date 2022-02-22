@@ -5,31 +5,54 @@ using UnityEngine;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
-{
+{   
+    private enum State {
+        Idle,
+        Sliding,
+        Busy
+    }
+
     private static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
+
 
     [SerializeField]
     private SpriteRenderer actionIcon;
 
     [SerializeField]
     private GameObject selectedIcon;
+
+    [SerializeField]
+    private float slideSpeed = 6f, attackDistance = 1.75f;
+
+    private Vector3 targetPos;
+    private State state;
+
+    private Coroutine flashcheck;
+    private Action onSlideComplete;
+
     public HealthSystem healthSystem { get; private set; }
 
-    public Pak pak;
+    [SerializeField]
+    private Pak pak;
 
     public List<Skill> skill;
 
-    private Vector3 initPos;
+    public ParticleSystem defBuffVfx, atkBuffVfx;
 
-    private Coroutine flashcheck;
+    public int currentAtk, currentDef, currentSpeed, currentSp, maxSp;
 
-
+    public Pak Pak { get { return pak;} }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.Initialize(pak.MaxHp);
+        currentAtk = pak.BaseAtk;
+        currentDef = pak.BaseDef;
+        currentSpeed = pak.BaseSpeed;
+        maxSp = pak.MaxSp;
+        currentSp = 0;
         ShowSelected(false);
 //!
         actionIcon.gameObject.SetActive(false);
@@ -52,12 +75,26 @@ public class PakRender : MonoBehaviour
         //hp.SetMaxHealth(pak.Hp);
         //currentHp = pak.Hp;
 
-        initPos = this.transform.position;
     }
 
     protected virtual void Update()
     {
+        switch (state) {
+            case State.Idle:
+                break;
+            case State.Busy:
+                break;
+            case State.Sliding:
+                transform.position += (targetPos - GetPosition()) * slideSpeed * Time.deltaTime;
 
+                float reachedDistance = 0.2f;
+                if (Vector3.Distance(GetPosition(), targetPos) < reachedDistance) {
+                    // Arrived at Slide Target Position
+                    //transform.position = slideTargetPosition;
+                    onSlideComplete();
+                }
+                break;
+        }
     }
 
     public void DisplayInAction(bool value, int index=0)
@@ -100,23 +137,18 @@ public class PakRender : MonoBehaviour
     }
 
 
-    private IEnumerator pause(PakRender target, Vector3 desirePos)
+    private IEnumerator DamageEffect()
     {
-        this.transform.position = desirePos;
         SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
-        sp.sortingLayerName = "Tooltip";
         Material whiteMat = (Material)Resources.Load<Material>("FlashMaterial");
-        Material originalMat = target.GetComponent<SpriteRenderer>().material;
-        target.GetComponent<SpriteRenderer>().material = whiteMat;
+        Material originalMat = GetComponent<SpriteRenderer>().material;
+        sp.material = whiteMat;
         yield return new WaitForSeconds(0.5f);
-        target.GetComponent<SpriteRenderer>().material = originalMat;
+        sp.material = originalMat;
         flashcheck = null;
-        this.transform.position = this.initPos;
-        sp.sortingLayerName = "Character";
-
     }
 
-    public void switchMat(PakRender target, Vector3 desirePos)
+    public void switchMat()
     {
         if (flashcheck != null)
         {
@@ -124,11 +156,63 @@ public class PakRender : MonoBehaviour
             StopCoroutine(flashcheck);
         }
 
-        StartCoroutine(pause(target, desirePos));
+        StartCoroutine(DamageEffect());
     }
 
+    private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete) {
+        this.targetPos = slideTargetPosition;
+        this.onSlideComplete = onSlideComplete;
+        state = State.Sliding;
+    }
 
-    public void moveToEnemy(PakRender caller, List<PakRender> targets)
+    public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete) {
+        Vector3 slideTargetPostion = targetPosition + (GetPosition() - targetPosition).normalized * attackDistance;
+        Vector3 startingPostion = GetPosition();
+
+        // Set sorting layer
+        SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
+
+        sp.sortingLayerName = "Front";
+        // Slide to the target
+        SlideToPosition(slideTargetPostion, () => {
+            state = State.Busy;
+
+            // TO DO: add attack animation here
+            /* insert sound here! */
+            onReachTarget();
+            SlideToPosition(startingPostion, () => {
+                state = State.Idle;
+                sp.sortingLayerName = "Character";
+                onComplete();
+            });
+        });
+    }
+
+    private IEnumerator SpellAnimation(string skillId, Action onEffect, Action onComplete) {
+        /* insert spell animation here */
+        yield return new WaitForSeconds(0.2f);
+        onEffect();
+        /* insert sound here! */
+        yield return new WaitForSeconds(1.5f);
+        onComplete();
+    }
+
+    public void RangedBuff(string skillId, Action buffEffect, Action onComplete) {
+        state = State.Busy;
+        SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
+        sp.sortingLayerName = "Front";
+        StartCoroutine(SpellAnimation(
+            skillId,
+            buffEffect,
+            () => {
+                onComplete();
+                state = State.Idle;
+                sp.sortingLayerName = "Character";
+            })
+        );
+    }
+
+    /*public void moveToEnemy(PakRender caller, List<PakRender> targets)
     {
         foreach (PakRender target in targets)
         {
@@ -155,7 +239,7 @@ public class PakRender : MonoBehaviour
             this.switchMat(target, desirePos);
             //this.transform.position = initPos;
         }
-    }
+    }*/
 
     public void UpdateTurn() {
         // Update skill cooldown
@@ -164,6 +248,10 @@ public class PakRender : MonoBehaviour
         }
 
         // Do something about this character when end turn ex. buff effect, burn damage, etc
+    }
+
+    public Vector3 GetPosition() {
+        return transform.position;
     }
 
 }

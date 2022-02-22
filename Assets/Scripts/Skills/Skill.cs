@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class Skill
 
     protected int maxCooldown;
 
+    public event Action OnFinishExecute;
+
     //Constructortor
     public Skill(string skillId, string skillName, string description, int cooldown, Sprite icon, string actionType)
     {
@@ -33,86 +36,74 @@ public class Skill
     }
 
     //functions
-    public void performSkill(Skill skill, PakRender caller, List<PakRender> target)
+    public void performSkill( PakRender caller, List<PakRender> target)
     {
-  
-        switch (skill.skillId)
+        switch (this.skillId)
         {
             case "VA1":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackOneEnemy is called");
-                VanillaAttackOne vskill = (VanillaAttackOne)skill;
-                vskill.AttackOneEnemy(target, caller);
-                cooldown = maxCooldown;
+                VanillaAttackOne vskill = (VanillaAttackOne) this;
+                Attack(caller, target, vskill.AttackOneEnemy);
                 break;
 
             case "VAA":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackAllEnemy is called");
-                VanillaAttackAll vskill2 = (VanillaAttackAll)skill;
-                vskill2.AttackAllEnemy(target, caller);
-                cooldown = maxCooldown;
+                VanillaAttackAll vskill2 = (VanillaAttackAll) this;
+                Attack(caller, target, vskill2.AttackAllEnemy);
                 break;
 
             case "VBA1":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkOneAlliance is called");
-                VanillaBuffAtkOne vskill3 = (VanillaBuffAtkOne)skill;
-                vskill3.BuffAtkOneAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaBuffAtkOne vskill3 = (VanillaBuffAtkOne) this;
+                Buff(caller, target, vskill3.BuffAtkOneAlliance);
                 break;
 
             case "VBD1":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefOneAlliance is called");
-                VanillaBuffDefOne vskill4 = (VanillaBuffDefOne)skill;
-                vskill4.BuffDefOneAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaBuffDefOne vskill4 = (VanillaBuffDefOne) this;
+                Buff(caller, target, vskill4.BuffDefOneAlliance);
                 break;
 
             case "VGSP1":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GainSPOneAlliance is called");
-                VanillaGainSPOne vskill5 = (VanillaGainSPOne)skill;
-                vskill5.GainSPOneAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaGainSPOne vskill5 = (VanillaGainSPOne) this;
+                Buff(caller, target, vskill5.GainSPOneAlliance);
                 break;
 
             case "VH1":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealOneAlliance is called");
-                VanillaHealOne vskill6 = (VanillaHealOne)skill;
-                vskill6.HealOneAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaHealOne vskill6 = (VanillaHealOne) this;
+                Buff(caller, target, vskill6.HealOneAlliance);
                 break;
 
             case "VBAA":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkAllAlliance is called");
-                VanillaBuffAtkAll vskill7 = (VanillaBuffAtkAll)skill;
-                vskill7.BuffAtkAllAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaBuffAtkAll vskill7 = (VanillaBuffAtkAll) this;
+                Buff(caller, target, vskill7.BuffAtkAllAlliance);
                 break;
 
             case "VBDA":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefAllAlliance is called");
-                VanillaBuffDefAll vskill8 = (VanillaBuffDefAll)skill;
-                vskill8.BuffDefAllAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaBuffDefAll vskill8 = (VanillaBuffDefAll) this;
+                Buff(caller, target, vskill8.BuffDefAllAlliance);
                 break;
 
             case "VGSPA":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GainSPAllAlliance is called");
-                VanillaGainSPAll vskill9 = (VanillaGainSPAll)skill;
-                vskill9.GainSPAllAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaGainSPAll vskill9 = (VanillaGainSPAll) this;
+                Buff(caller, target, vskill9.GainSPAllAlliance);
                 break;
 
             case "VHA":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealAllAlliance is called");
-                VanillaHealAll vskill10 = (VanillaHealAll)skill;
-                vskill10.HealAllAlliance(target, caller);
-                cooldown = maxCooldown;
+                VanillaHealAll vskill10 = (VanillaHealAll) this;
+                Buff(caller, target, vskill10.HealAllAlliance);
                 break;
 
             case "B:)":
                 Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ActionBuum is called");
-                Buum vskill11 = (Buum)skill;
-                vskill11.AttackWholeField(target, caller);
-                cooldown = maxCooldown;
+                Buum vskill11 = (Buum) this;
+                Buff(caller, target, vskill11.AttackWholeField);
                 break;
 
             default:
@@ -121,6 +112,32 @@ public class Skill
                 break;
         }
     }
+
+    private void Attack(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall) {
+        Vector3 targetPos = target[0].GetPosition();
+        caller.Attack(targetPos, () => {
+            // Callback of attack effect
+            toBeCall(target, caller);
+        },
+        () => {
+            // Complete callback
+            OnFinishExecute.Invoke();
+            cooldown = maxCooldown;
+        });
+    }
+
+    private void Buff(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall) {
+        caller.RangedBuff(this.skillId,
+            () => {
+                toBeCall(target, caller);
+            },
+            () => {
+                // Complete callback
+                OnFinishExecute.Invoke();
+                cooldown = maxCooldown;
+            });
+    }
+
 
     //getters setters
     public string SkillId

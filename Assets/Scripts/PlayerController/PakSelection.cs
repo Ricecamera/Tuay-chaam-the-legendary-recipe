@@ -1112,7 +1112,7 @@ public class PakSelection : MonoBehaviour
         // WSprite is null if the ally does not have both
         if (pakRender != null)
         {
-            skillMenu.UpdateCharacterUI(pakRender.pak.Image);
+            skillMenu.UpdateCharacterUI(pakRender.Pak.Image);
             skillMenu.UpdateSkillUI(pakRender);
 
         }

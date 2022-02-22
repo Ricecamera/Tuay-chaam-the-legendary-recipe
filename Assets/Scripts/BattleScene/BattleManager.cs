@@ -135,7 +135,7 @@ public class BattleManager : MonoBehaviour {
         }
 
         // Set random speed for each action and initialize it.
-        float speed = Random.Range(10.0f, 30.0f); //Need to fix this.
+        float speed = pakCaller.currentSpeed;
         ActionCommand newCommand = new ActionCommand(pakCaller, skillIndex, pakTargets, speed);
         actionCommandHandler.AddCommand(newCommand);
     }

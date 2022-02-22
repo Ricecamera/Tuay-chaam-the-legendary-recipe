@@ -22,18 +22,13 @@ public class VanillaAttackOne : Skill
     private void ActionVanillaAttackOne(List<PakRender> target, PakRender self)
     {
         int damage;
-        int atkValue = self.pak.Atk;
-        damage = (int)(atkValue * (decimal)(100f / (100f + target[0].pak.Def)));
+        int atkValue = self.currentAtk;
+        damage = (int)(atkValue * (decimal)(100f / (100f + target[0].currentDef)));
 
         //target.pak.Hp-=damage;                  //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
         //if(target.pak.Hp<=0) target.pak.Hp=0;   //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-        Debug.Log("The attack is " + atkValue.ToString());
-        Debug.Log("The def is " + target[0].pak.Def.ToString());
-        Debug.Log("0ro is " + (100f + target[0].pak.Def));
-        Debug.Log("1st is " + (decimal)(100f / (100f + target[0].pak.Def)));
-        Debug.Log("2st is " + atkValue * (decimal)(100f / (100f + target[0].pak.Def)));
-        Debug.Log("The damage is " + damage.ToString());
         target[0].healthSystem.TakeDamage(damage);
+        target[0].switchMat();
         return;
     }
 }

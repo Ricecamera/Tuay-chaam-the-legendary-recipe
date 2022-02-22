@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: NormalPrik
   m_EditorClassIdentifier: 
   entityId: 
-  entityName: 
+  entityName: Normal prik
   description: 
-  atk: 50
-  def: 0
-  maxHp: 200
+  baseAtk: 65
+  baseDef: 0
+  maxHp: 150
+  baseSpeed: 22
   image: {fileID: 21300000, guid: b02bbccb8c95d2f4581357f36269693b, type: 3}
   bonusStatsPerLvl:
     addHp: 0
     addAtk: 0
     addDef: 0
-  maxSp: 0
+  maxSp: 50
   taste: 0

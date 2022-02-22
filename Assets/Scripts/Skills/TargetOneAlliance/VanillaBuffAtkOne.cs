@@ -19,7 +19,8 @@ public class VanillaBuffAtkOne : Skill
     //action
     private void ActionVanillaBuffAtkOne(List<PakRender> target, PakRender self)
     { //should pass lv and stat of char and calculate value in this function.
-        target[0].pak.Atk += self.pak.Atk / 4;
+        target[0].currentAtk += self.currentAtk / 4;
+        target[0].atkBuffVfx.Play();
         return;
     }
 }
