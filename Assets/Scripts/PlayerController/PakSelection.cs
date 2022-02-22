@@ -119,13 +119,14 @@ public class PakSelection : MonoBehaviour
                     pakRender.DisplayInAction(true);
                 }
 
-                selectedPak="";
+                selectedPak = "";
                 LockChar();
-                
+
                 reset();
             }
-            else if(currentState == InputState.SKILL_SELECTED || currentState == InputState.SKILL_SELECTED_ALL_ALLIANCES || currentState == InputState.SKILL_SELECTED_ALL_ENEMIES || currentState == InputState.SKILL_SELECTED_ONE_ALLY|| currentState == InputState.SKILL_SELECTED_WHOLE_FIELD){
-                selectedPak="";
+            else if (currentState == InputState.SKILL_SELECTED || currentState == InputState.SKILL_SELECTED_ALL_ALLIANCES || currentState == InputState.SKILL_SELECTED_ALL_ENEMIES || currentState == InputState.SKILL_SELECTED_ONE_ALLY || currentState == InputState.SKILL_SELECTED_WHOLE_FIELD)
+            {
+                selectedPak = "";
                 LockChar();
                 reset();
             }
@@ -144,10 +145,10 @@ public class PakSelection : MonoBehaviour
 
                 nextState = ChooseSkill();
                 // if (nextState != currentState)
-                    UpdateCharacterLayer(nextState);
+                UpdateCharacterLayer(nextState);
                 break;
 
-        //************************************************************************** Select target state
+            //************************************************************************** Select target state
             case InputState.SKILL_SELECTED: //now is Skill_Selected_one_enemy
                 // An skill to be add to commnad list was selected
                 selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
@@ -190,7 +191,7 @@ public class PakSelection : MonoBehaviour
                 if (nextState != currentState)
                     UpdateCharacterLayer(nextState);
                 break;
-        //************************************************************************** Select target state
+            //************************************************************************** Select target state
 
             case InputState.ENEMY_SELECTED:
                 // An target for skilled was selected
@@ -226,14 +227,11 @@ public class PakSelection : MonoBehaviour
                         {
                             //do victory stuff
                             SceneManager.LoadScene("VictoryScene");
+                            LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
                         }
                         else
                         {
                             //do defeat stuff
-
-                            //! Don't forget to move to victory stuff 
-                            LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
-                            //! /////////////////////////////////////
                             SceneManager.LoadScene("LoseScene");
                         }
                     }
@@ -561,7 +559,8 @@ public class PakSelection : MonoBehaviour
         // }
 
         //need to click on one enemy to proceed
-        if(Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0))
+        {
             Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit2 = Physics2D.Raycast(ray2.origin, ray2.direction);
 
@@ -586,7 +585,7 @@ public class PakSelection : MonoBehaviour
                 return InputState.ENEMY_SELECTED;
             }
         }
-        
+
         return InputState.SKILL_SELECTED_ALL_ENEMIES;
     }
 
@@ -648,7 +647,8 @@ public class PakSelection : MonoBehaviour
         //     return currentState;
         // }
 
-        if(Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0))
+        {
             Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit2 = Physics2D.Raycast(ray2.origin, ray2.direction);
 
@@ -673,7 +673,7 @@ public class PakSelection : MonoBehaviour
                 return InputState.ENEMY_SELECTED;
             }
         }
-        
+
         return InputState.SKILL_SELECTED_ALL_ALLIANCES;
     }
 
@@ -735,7 +735,8 @@ public class PakSelection : MonoBehaviour
         //     return currentState;
         // }
 
-        if(Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0))
+        {
             Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit2 = Physics2D.Raycast(ray2.origin, ray2.direction);
 
@@ -913,7 +914,6 @@ public class PakSelection : MonoBehaviour
             }
         }
 
-        //? might allow to change skill here?
         var holder = characterManager.GetCharacter(selectedPak);
         // Player presses cancel button
         if (cancelPressed && holder.InAction)
@@ -921,7 +921,7 @@ public class PakSelection : MonoBehaviour
             // Remove action
             var commandHandler = BattleManager.instance.actionCommandHandler;
             commandHandler.RemoveAction(selectedPak);
-            holder.Action(false,0);
+            holder.Action(false, 0);
             return InputState.DEFAULT;
         }
 
@@ -934,7 +934,7 @@ public class PakSelection : MonoBehaviour
             {
                 var commandHandler = BattleManager.instance.actionCommandHandler;
                 commandHandler.RemoveAction(selectedPak);
-                holder.Action(false,0);
+                holder.Action(false, 0);
             }
 
             // Add result string to output log
@@ -1007,17 +1007,20 @@ public class PakSelection : MonoBehaviour
                 TooltipScreenSpaceUI.hideTooltip_Static();
                 okButton.gameObject.SetActive(true);
                 backButton.gameObject.SetActive(true);
-                if(selectedSkill == 0){
+                if (selectedSkill == 0)
+                {
                     skillMenu.skills[1].GetComponent<Button>().interactable = false;
                     skillMenu.skills[2].GetComponent<Button>().interactable = false;
                     //SkillMenuUI.skills[3].GetComponent<Button>().interactable = false; //ulti skill
                 }
-                if(selectedSkill == 1){
+                if (selectedSkill == 1)
+                {
                     skillMenu.skills[0].GetComponent<Button>().interactable = false;
                     skillMenu.skills[2].GetComponent<Button>().interactable = false;
                     //SkillMenuUI.skills[3].GetComponent<Button>().interactable = false; //ulti skill
                 }
-                if(selectedSkill == 2){
+                if (selectedSkill == 2)
+                {
                     skillMenu.skills[0].GetComponent<Button>().interactable = false;
                     skillMenu.skills[1].GetComponent<Button>().interactable = false;
                     //SkillMenuUI.skills[3].GetComponent<Button>().interactable = false; //ulti skill
@@ -1025,7 +1028,7 @@ public class PakSelection : MonoBehaviour
                 // if(selectedSkill == 3){
                 //     skillMenu.skills[0].GetComponent<Button>().interactable = false;
                 //     skillMenu.skills[1].GetComponent<Button>().interactable = false;
-                    //SkillMenuUI.skills[2].GetComponent<Button>().interactable = false;
+                //SkillMenuUI.skills[2].GetComponent<Button>().interactable = false;
                 // }
 
                 // if the selected pak is already in action show cancel button
@@ -1072,7 +1075,7 @@ public class PakSelection : MonoBehaviour
             characterTags.Add(selectedPak);
             characterManager.HighLightCharacters(characterTags);
         }
-        else if(state == InputState.SKILL_SELECTED_ONE_ALLY || state == InputState.SKILL_SELECTED_ALL_ALLIANCES ||
+        else if (state == InputState.SKILL_SELECTED_ONE_ALLY || state == InputState.SKILL_SELECTED_ALL_ALLIANCES ||
             (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED))
         {
             characterManager.ResetHighLight();
@@ -1092,7 +1095,8 @@ public class PakSelection : MonoBehaviour
             // Reset all highlight to default
             characterManager.ResetHighLight();
         }
-        else if (state == InputState.CHARCTER_SELECTED){
+        else if (state == InputState.CHARCTER_SELECTED)
+        {
             var characterTags = new List<string>();
             characterTags.Add(selectedPak);
             characterManager.HighLightCharacters(characterTags);
@@ -1120,7 +1124,7 @@ public class PakSelection : MonoBehaviour
         GameObject caller = characterManager.GetCharacter(selectedPak).character;
         if (caller != null)
         {
-            characterManager.SetAction(selectedPak,true,selectedSkill);
+            characterManager.SetAction(selectedPak, true, selectedSkill);
             Debug.Log(selectedEnemy);
             if (selectedEnemy.Contains(","))
             {
@@ -1178,22 +1182,26 @@ public class PakSelection : MonoBehaviour
         actionFinished = true;
     }
 
-    private void LockChar(){
-        if(selectedPak.CompareTo("")!=0){
+    private void LockChar()
+    {
+        if (selectedPak.CompareTo("") != 0)
+        {
             GameObject caller = characterManager.GetCharacter(selectedPak).character;
             alreadySelectSkill.Add(caller);
         }
         foreach (GameObject e in alreadySelectSkill)
         {
-            e.GetComponent<BoxCollider2D>().enabled=false;
+            e.GetComponent<BoxCollider2D>().enabled = false;
         }
         return;
     }
 
-    private void UnlockChar(){
+    private void UnlockChar()
+    {
         List<CharacterHolder> temp = characterManager.getHolders();
-        foreach(CharacterHolder e in temp){
-            e.character.GetComponent<BoxCollider2D>().enabled=true;
+        foreach (CharacterHolder e in temp)
+        {
+            e.character.GetComponent<BoxCollider2D>().enabled = true;
         }
         return;
     }
