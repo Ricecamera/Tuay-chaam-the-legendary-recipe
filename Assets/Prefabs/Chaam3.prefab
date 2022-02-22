@@ -158,9 +158,14 @@ MonoBehaviour:
   selectedIcon: {fileID: 5002778894034587527}
   slideSpeed: 6
   attackDistance: 1.75
-  pak: {fileID: 11400000, guid: 3645b6319246b6b498c740cbabb73b06, type: 2}
+  pak: {fileID: 11400000, guid: 6c2f111287864c946b81516e3f556617, type: 2}
   defBuffVfx: {fileID: 8173584785705913775}
   atkBuffVfx: {fileID: 2923931976305378683}
+  currentAtk: 0
+  currentDef: 0
+  currentSpeed: 0
+  currentSp: 0
+  maxSp: 0
 --- !u!1001 &193916780056086655
 PrefabInstance:
   m_ObjectHideFlags: 0

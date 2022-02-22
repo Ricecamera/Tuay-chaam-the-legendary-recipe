@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fba16c883dd02f4e8476bd8cc8ffe1f, type: 3}
-  m_Name: TestCharacter
+  m_Name: Broken_Chaam
   m_EditorClassIdentifier: 
   entityId: 
-  entityName: 
+  entityName: Chaam Tak
   description: 
-  hp: 0
-  atk: 0
-  def: 0
-  image: {fileID: 0}
+  baseAtk: 20
+  baseDef: 0
+  maxHp: 150
+  baseSpeed: 16
+  image: {fileID: -6009021687113889179, guid: ad3fe121ffb18f442a3fd14e55e62995, type: 3}
   bonusStatsPerLvl:
     addHp: 0
     addAtk: 0

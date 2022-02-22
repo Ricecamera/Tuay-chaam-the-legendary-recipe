@@ -15,7 +15,7 @@ MonoBehaviour:
   entityId: 
   entityName: Chaam na ja
   description: 
-  baseAtk: 18
+  baseAtk: 24
   baseDef: 26
   maxHp: 160
   baseSpeed: 16

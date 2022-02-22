@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fba16c883dd02f4e8476bd8cc8ffe1f, type: 3}
-  m_Name: TestPak
+  m_Name: TonHom
   m_EditorClassIdentifier: 
   entityId: 
-  entityName: 
-  description: 
-  hp: 0
-  atk: 0
-  def: 0
-  image: {fileID: 0}
+  entityName: Tonhom
+  description: I'm Tonhom.
+  baseAtk: 40
+  baseDef: 30
+  maxHp: 180
+  baseSpeed: 24
+  image: {fileID: -2658520230801257717, guid: 6b2fb54480ca318408469bbc2fd82bba, type: 3}
   bonusStatsPerLvl:
     addHp: 0
     addAtk: 0
     addDef: 0
-  maxSp: 0
+  maxSp: 50
   taste: 0

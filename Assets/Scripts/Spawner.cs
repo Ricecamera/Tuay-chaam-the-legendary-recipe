@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleScene;
@@ -28,31 +29,39 @@ public class Spawner : MonoBehaviour
     void OnEnable()
     {
         characters.Intialize();
-        ConvertToGameObjectList(CharacterSelecter.instance.GetCharacters());
-        ConvertChaamToGameObject(CharacterSelecter.instance.GetChaam());
+        //ConvertToGameObjectList(CharacterSelecter.instance.GetCharacters());
+        //ConvertChaamToGameObject(CharacterSelecter.instance.GetChaam());
 
-        for (int i = 0; i < plants.Count; i++)
-        {
-            GameObject p = Instantiate(plants[i], allySpawnPos[i].position, Quaternion.identity, allySpawnPos[i]);
-            p.tag = allySpawnPos[i].gameObject.tag;
-            characters.AddCharacter(p.tag, p, 0);
+        try {
+
+            for (int i = 0; i < plants.Count; i++)
+            {
+                GameObject p = Instantiate(plants[i], allySpawnPos[i].position, Quaternion.identity, allySpawnPos[i]);
+                p.tag = allySpawnPos[i].gameObject.tag;
+                characters.AddCharacter(p.tag, p, 0);
+            }
+
+            GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
+            chaamObject.tag = chaamSpawnPos.gameObject.tag;
+            characters.AddCharacter(chaamObject.tag, chaamObject, 0);
+
         }
-
-        GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
-        chaamObject.tag = chaamSpawnPos.gameObject.tag;
-        characters.AddCharacter(chaamObject.tag, chaamObject, 0);
-
-
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
-            e.tag = enemySpawnPos[i].gameObject.tag;
-            characters.AddCharacter(e.tag, e, 1);
+        catch (Exception e) {
+            Debug.LogError(e.Message);
         }
+        finally {
+            for (int i = 0; i < enemies.Count; i++) {
+                GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
+                e.tag = enemySpawnPos[i].gameObject.tag;
+                characters.AddCharacter(e.tag, e, 1);
+            }
 
-        GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
-        bossObject.tag = bossSpawnPos.gameObject.tag;
-        characters.AddCharacter(bossObject.tag, bossObject, 1);
+            if (boss != null) {
+                GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
+                bossObject.tag = bossSpawnPos.gameObject.tag;
+                characters.AddCharacter(bossObject.tag, bossObject, 1);
+            }
+        }     
     }
 
     public void ConvertToGameObjectList(List<ItemObject> itemObjects)

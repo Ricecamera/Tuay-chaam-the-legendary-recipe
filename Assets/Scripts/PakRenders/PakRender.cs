@@ -39,7 +39,11 @@ public class PakRender : MonoBehaviour
 
     public ParticleSystem defBuffVfx, atkBuffVfx;
 
-    public int currentAtk, currentDef, currentSpeed, currentSp, maxSp;
+    public int currentAtk { get; set; }
+    public int currentDef {  get; set; }
+    public int currentSpeed { get; set; }
+    public int currentSp { get; set; }
+    public int maxSp { get; set; }
 
     public Pak Pak { get { return pak;} }
 
