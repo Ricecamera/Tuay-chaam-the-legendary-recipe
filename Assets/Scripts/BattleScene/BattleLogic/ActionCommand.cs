@@ -75,14 +75,24 @@ namespace BattleScene.BattleLogic
             Debug.Log("Do Execute");
 
             PakRender caller2 = caller.GetComponent<PakRender>();
-            PakRender target2 = targets[0].GetComponent<PakRender>();
             Debug.Log("Caller2 def:" + caller2.pak.Def);
 
             Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
 
+            bool pass = false;
+            // if the selected skill is attackWholefield, do it !!
+            if (caller.skill[selectedSkill].SkillId.CompareTo("B:)") == 0)
+                pass = true;
+            else
+                // if not check if some targets are alive
+                foreach (var target in targets) {
+                    if (target.healthSystem.IsAlive) {
+                        pass = true;
+                        break;
+                    }
+                }
 
-            //? Yod
-            if (target2.healthSystem.IsAlive)
+            if (pass)
             {
                 // Invoke Oncomplete and unsubscribe FinishExecute event
                 Action finishCallback = () => {

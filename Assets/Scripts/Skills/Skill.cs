@@ -127,7 +127,7 @@ public class Skill
     }
 
     private void Buff(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall) {
-        caller.RangedBuff(
+        caller.RangedBuff(this.skillId,
             () => {
                 toBeCall(target, caller);
             },

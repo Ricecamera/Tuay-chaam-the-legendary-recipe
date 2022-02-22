@@ -11,7 +11,6 @@ public class VanillaHealAll : Skill
         HealAllAlliance += ActionVanillaHealAll;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Heal all alliances at once.";
-        this.cooldown = 2;
         this.icon = icon;
         /////////
     }

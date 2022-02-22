@@ -20,6 +20,7 @@ public class VanillaBuffDefAll : Skill
         foreach (PakRender e in target)
         {
             e.pak.Def += buffValue;
+            e.defBuffVfx.Play();
         }
         return;
     }

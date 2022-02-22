@@ -21,6 +21,7 @@ public class VanillaGainSPAll : Skill
         foreach (PakRender e in target)
         {
             e.pak.Sp += spValue;
+            e.defBuffVfx.Play();
         }
         return;
     }

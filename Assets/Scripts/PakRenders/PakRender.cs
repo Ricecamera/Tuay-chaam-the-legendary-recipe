@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
-{
+{   
     private enum State {
         Idle,
         Sliding,
@@ -13,6 +13,7 @@ public class PakRender : MonoBehaviour
     }
 
     private static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
+
 
     [SerializeField]
     private SpriteRenderer actionIcon;
@@ -34,6 +35,8 @@ public class PakRender : MonoBehaviour
     public Pak pak;
 
     public List<Skill> skill;
+
+    public ParticleSystem defBuffVfx, atkBuffVfx;
 
 
     // Start is called before the first frame update
@@ -164,8 +167,9 @@ public class PakRender : MonoBehaviour
         // Slide to the target
         SlideToPosition(slideTargetPostion, () => {
             state = State.Busy;
-            
+
             // TO DO: add attack animation here
+            /* insert sound here! */
             onReachTarget();
             SlideToPosition(startingPostion, () => {
                 state = State.Idle;
@@ -175,18 +179,21 @@ public class PakRender : MonoBehaviour
         });
     }
 
-    private IEnumerator SpellAnimation(Action buffEffect, Action onComplete) {
+    private IEnumerator SpellAnimation(string skillId, Action onEffect, Action onComplete) {
+        /* insert spell animation here */
         yield return new WaitForSeconds(0.2f);
-        buffEffect();
-        yield return new WaitForSeconds(0.35f);
+        onEffect();
+        /* insert sound here! */
+        yield return new WaitForSeconds(1.5f);
         onComplete();
     }
 
-    public void RangedBuff(Action buffEffect, Action onComplete) {
+    public void RangedBuff(string skillId, Action buffEffect, Action onComplete) {
         state = State.Busy;
         SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
         sp.sortingLayerName = "Front";
         StartCoroutine(SpellAnimation(
+            skillId,
             buffEffect,
             () => {
                 onComplete();

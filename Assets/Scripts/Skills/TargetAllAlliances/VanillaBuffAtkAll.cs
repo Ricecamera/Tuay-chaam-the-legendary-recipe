@@ -20,6 +20,7 @@ public class VanillaBuffAtkAll : Skill
         foreach (PakRender e in target)
         {
             e.pak.Atk += buffValue;
+            e.atkBuffVfx.Play();
         }
         return;
     }
