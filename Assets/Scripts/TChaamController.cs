@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TChaamController : MonoBehaviour
 {
@@ -9,10 +8,18 @@ public class TChaamController : MonoBehaviour
     float horizontal;
     float vertical;
 
+    public float JumpForce = 1;
+
+    private float counter;
+    private float frequency;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+        counter = 0;
+        frequency = 2;
     }
 
     // Update is called once per frame
@@ -20,37 +27,53 @@ public class TChaamController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+
     }
 
     void FixedUpdate()
     {
         Vector2 position = rigidbody2d.position;
-        position.x = position.x + 5.0f * horizontal * Time.deltaTime;
-        position.y = position.y + 5.0f * vertical * Time.deltaTime;
+        counter = counter + Time.deltaTime;
+        if (vertical == 0)
+        {
+            position.y = position.y + (0.01f * Mathf.Sin(counter * frequency));
+        }
+        else
+        {
+            counter = 0;
+        }
+
+
+        position.x = position.x + 6.0f * horizontal * Time.deltaTime;
+        position.y = position.y + 6.0f * vertical * Time.deltaTime;
 
         rigidbody2d.MovePosition(position);
 
-        if (transform.rotation.z != 0)
-        {
-            transform.Rotate(0, 0, -transform.rotation.z);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        collider.GetComponent<LevelSelection>().PressSelection("CharacterSelection");
-        if (!collider.GetComponent<LevelSelection>().getUnlocked())
-        {
-            collider.isTrigger = false;
-        }
-    }
+        // if (collider.name.Contains("Square"))
+        // {
+        //     Debug.Log(collider.name);
+        //     if (collider.name.CompareTo("SquareUp") == 0)
+        //     {
 
-    // private void levelSelect(string name, int level)
-    // {
-    //     if (name == "wellLevel1")
-    //     {
-    //         SceneManager.LoadScene("CharacterSelection");
-    //         LevelManager.instance.thislevel = level;
-    //     }
-    // }
+        //         Debug.Log("Go into if ");
+        //         rigidbody2d.MovePosition(new Vector2(0, 0));
+
+
+        //     }
+        // }
+
+        if (collider.name.Contains("well"))
+        {
+            collider.GetComponent<LevelSelection>().PressSelection("CharacterSelection");
+            if (!collider.GetComponent<LevelSelection>().getUnlocked())
+            {
+                collider.isTrigger = false;
+            }
+        }
+
+    }
 }
