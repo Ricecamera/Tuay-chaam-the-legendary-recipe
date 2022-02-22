@@ -17,6 +17,7 @@ public class VanillaGainSPOne : Skill
     private void ActionVanillaGainSPOne(List<PakRender> target, PakRender self)
     {
         target[0].pak.Sp += 30;
+        target[0].defBuffVfx.Play();
         return;
     }
 }
