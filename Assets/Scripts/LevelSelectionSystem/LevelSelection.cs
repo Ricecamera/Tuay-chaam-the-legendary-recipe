@@ -24,7 +24,7 @@ public class LevelSelection : MonoBehaviour
     void Start()
     {
 
-        //padLock.enabled = true;
+        padLock.enabled = true;
         unlocked = LevelManager.instance.unlockStatus[levelname - 1];
 
         if (unlocked)
@@ -55,5 +55,12 @@ public class LevelSelection : MonoBehaviour
             SceneManager.LoadScene(level);
         }
     }
+
+    public bool getUnlocked()
+    {
+        return unlocked;
+    }
+
+
 
 }

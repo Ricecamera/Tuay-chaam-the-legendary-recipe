@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        unlockStatus = new List<bool>() { true, false, false };
+        unlockStatus = new List<bool>() { true, false, false, false };
 
     }
 
