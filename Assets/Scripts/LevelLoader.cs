@@ -29,6 +29,8 @@ public class LevelLoader : MonoBehaviour
                 startButton.onClick.AddListener(StartGame);
                 backButton.onClick.AddListener(LoadPrevScene);
                 helpButton.onClick.AddListener(Help);
+                CharacterSelecter.instance.SetPopup(GameObject.Find("PopupUI").transform.GetChild(0).gameObject);
+                //Debug.Log(GameObject.Find("PopupUI").name);
             }
         }
     }
@@ -63,8 +65,17 @@ public class LevelLoader : MonoBehaviour
 
     public void StartGame()
     {
-        ExportCharacter();
-        LoadNextScene();
+        if (CharacterSelecter.instance.GetCharacters().Count >= 1 && CharacterSelecter.instance.GetChaam() != null)
+        {
+            ExportCharacter();
+            LoadNextScene();
+        }
+        else
+        {
+            CharacterSelecter.instance.ShowPopup();
+            //GameObject.Find("Popup").SetActive(true);
+            Debug.Log("You need to pick character at least 2");
+        }
     }
 
     IEnumerator LoadLevel(int levelIndex)

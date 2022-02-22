@@ -31,6 +31,7 @@ public class Spawner : MonoBehaviour
         ConvertToGameObjectList(CharacterSelecter.instance.GetCharacters());
         ConvertChaamToGameObject(CharacterSelecter.instance.GetChaam());
 
+
         for (int i = 0; i < plants.Count; i++)
         {
             GameObject p = Instantiate(plants[i], allySpawnPos[i].position, Quaternion.identity, allySpawnPos[i]);
@@ -53,6 +54,8 @@ public class Spawner : MonoBehaviour
         GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
         bossObject.tag = bossSpawnPos.gameObject.tag;
         characters.AddCharacter(bossObject.tag, bossObject, 1);
+
+        //CharacterSelecter.instance.ResetCharacter();
     }
 
     public void ConvertToGameObjectList(List<ItemObject> itemObjects)
@@ -66,6 +69,7 @@ public class Spawner : MonoBehaviour
     public void ConvertChaamToGameObject(ItemObject itemObject)
     {
         chaam = itemObject.prefab;
+        Debug.Log(chaam);
     }
 
 }
