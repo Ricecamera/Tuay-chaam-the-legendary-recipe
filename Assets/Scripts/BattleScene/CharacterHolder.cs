@@ -6,7 +6,6 @@ public class CharacterHolder
 {
     static string LAYER_DEFAULT = "Default";
     static string LAYTER_FRONT = "Front";
-    static float SIZE_MULTIPLER = 1.12f;
 
     public bool Selected {get; private set;}    // Is this character selected by player?
     public bool InAction {get; private set;}     // Is this character setted its action?
@@ -36,14 +35,6 @@ public class CharacterHolder
     public void Select(bool value)
     {
         Selected = value;
-        if (value)
-        {
-            character.GetComponent<RectTransform>().localScale = Vector3.one * SIZE_MULTIPLER;
-        }
-        else
-        {
-            character.GetComponent<RectTransform>().localScale = Vector3.one;
-        }
         character.GetComponent<PakRender>().ShowSelected(value);
     }
 

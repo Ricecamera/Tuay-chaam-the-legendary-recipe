@@ -6,6 +6,9 @@ public class HealthSystem : MonoBehaviour
     private int maxHp;
     public HealthBar healthBar;
 
+    public ParticleSystem healVfx;
+    public ParticleSystem damagedVfx;
+
     public int CurrentHp
     {
         get
@@ -57,6 +60,7 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        damagedVfx.Play();
         currentHp -= damage;
         if (currentHp < 0)
         {
@@ -71,6 +75,7 @@ public class HealthSystem : MonoBehaviour
 
     public void Heal(int healAmount)
     {
+        healVfx.Play();
         currentHp += healAmount;
         if (currentHp > maxHp)
         {
