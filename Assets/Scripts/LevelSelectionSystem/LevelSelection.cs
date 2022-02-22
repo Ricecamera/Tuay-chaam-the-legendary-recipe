@@ -29,7 +29,8 @@ public class LevelSelection : MonoBehaviour
 
         if (unlocked)
         {
-            transition.SetTrigger("Unlock");
+            padLock.enabled = false;
+            padLock.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
@@ -37,12 +38,14 @@ public class LevelSelection : MonoBehaviour
     {
         if (unlocked)
         {
+            transition.SetTrigger("Unlock");
             padLock.enabled = false;
-
+            padLock.GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {
             padLock.enabled = true;
+            padLock.GetComponent<BoxCollider2D>().enabled = true;
         }
     }
 
