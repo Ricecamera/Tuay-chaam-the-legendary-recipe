@@ -24,6 +24,7 @@ public class Buum : Skill
             damage = (int)(self.healthSystem.CurrentHp * 0.6);
             if (damage - e.pak.Def <= 0) damage = 0;
             e.healthSystem.TakeDamage(damage);
+            e.switchMat();
         }
         self.healthSystem.TakeDamage((int)(self.healthSystem.CurrentHp / 1.5));
         return;

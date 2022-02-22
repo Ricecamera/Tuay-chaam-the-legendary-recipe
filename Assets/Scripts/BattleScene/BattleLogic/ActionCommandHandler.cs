@@ -19,7 +19,7 @@ namespace BattleScene.BattleLogic
         // thread for executing each action in `commandList`
         private IEnumerator DoActionOverTime()
         {
-
+            // list storing characters which have died this turn
             List<PakRender> diedThisTurn = new List<PakRender>();
 
             foreach (var action in commandList)
@@ -32,18 +32,30 @@ namespace BattleScene.BattleLogic
                 // Debug.Log(temp.pak);
                 // Debug.Log(temp.healthSystem.GetHealth());
                 Debug.Log("Yes");
+
+                //If the caller is alive, the skill is casted.
                 if (action.caller.healthSystem.IsAlive)
-                { //If the caller is alive, the skill is casted.
-                    action.Execute(diedThisTurn);               //used to be ref
+                {   
+
+                    // wait for action to finishes
+                    bool finish = false;
+                    action.Execute(() => {finish = true;});
+                    do {
+                        // if the action isn't finish wait for the next frame
+                        yield return null;
+                    } while (!finish);
+                    action.CheckDead(diedThisTurn);
                 }
                 else
                 {
+                    // the target is dead
                     string callerName = action.caller.pak.EntityName;
                     Debug.Log("The " + callerName + " is already dead.");
                 }
-                yield return new WaitForSeconds(1f);
+                yield return null; // wait for the next frame
             }
 
+            // Clear commandList
             commandList.Clear();
             OnComplete?.Invoke();
         }

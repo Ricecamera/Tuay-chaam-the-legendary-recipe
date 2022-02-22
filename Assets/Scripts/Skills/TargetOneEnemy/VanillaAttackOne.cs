@@ -34,6 +34,7 @@ public class VanillaAttackOne : Skill
         Debug.Log("2st is " + atkValue * (decimal)(100f / (100f + target[0].pak.Def)));
         Debug.Log("The damage is " + damage.ToString());
         target[0].healthSystem.TakeDamage(damage);
+        target[0].switchMat();
         return;
     }
 }
