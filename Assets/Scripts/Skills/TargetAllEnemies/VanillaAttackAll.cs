@@ -21,14 +21,14 @@ public class VanillaAttackAll : Skill
     public void ActionVanillaAttackAll(List<PakRender> target, PakRender self)
     {
         int damage;
-        int atkValue = self.pak.Atk;
+        int atkValue = self.currentAtk;
         foreach (PakRender e in target)
         {
             // damage = atkValue*(100/(100+e.pak.Def));
-            damage = (int)(atkValue * (float)(100 / (100 + e.pak.Def)));
+            damage = (int) (atkValue * 0.65f * (100f / (100f + e.currentDef)));
             if (damage <= 0)
             {
-                damage = 20;
+                damage = 1;
             }
             // e.pak.-=damage;               //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
             // if(e.pak.Hp<=0) e.pak.Hp=0;     //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.

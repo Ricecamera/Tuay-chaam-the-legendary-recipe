@@ -32,18 +32,27 @@ public class PakRender : MonoBehaviour
 
     public HealthSystem healthSystem { get; private set; }
 
-    public Pak pak;
+    [SerializeField]
+    private Pak pak;
 
     public List<Skill> skill;
 
     public ParticleSystem defBuffVfx, atkBuffVfx;
 
+    public int currentAtk, currentDef, currentSpeed, currentSp, maxSp;
+
+    public Pak Pak { get { return pak;} }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.Initialize(pak.MaxHp);
+        currentAtk = pak.BaseAtk;
+        currentDef = pak.BaseDef;
+        currentSpeed = pak.BaseSpeed;
+        maxSp = pak.MaxSp;
+        currentSp = 0;
         ShowSelected(false);
 //!
         actionIcon.gameObject.SetActive(false);

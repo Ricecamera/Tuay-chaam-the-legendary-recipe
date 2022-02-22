@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Eggplant
   m_EditorClassIdentifier: 
   entityId: 
-  entityName: 
+  entityName: Egg point
   description: 
-  atk: 100
-  def: 20
-  maxHp: 90
+  baseAtk: 80
+  baseDef: 40
+  maxHp: 260
+  baseSpeed: 12
   image: {fileID: 21300000, guid: ce8073b024df1ab4380edc9ea0b83c72, type: 3}
   bonusStatsPerLvl:
     addHp: 0
     addAtk: 0
     addDef: 0
-  maxSp: 0
+  maxSp: 80
   taste: 0

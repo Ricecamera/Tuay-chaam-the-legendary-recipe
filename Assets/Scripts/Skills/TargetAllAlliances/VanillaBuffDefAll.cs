@@ -16,10 +16,10 @@ public class VanillaBuffDefAll : Skill
     //action
     public void ActionVanillaBuffDefAll(List<PakRender> target, PakRender self)
     {
-        int buffValue = (self.pak.Def) / 4;
+        int buffValue = (self.currentDef) / 6;
         foreach (PakRender e in target)
         {
-            e.pak.Def += buffValue;
+            e.currentDef += buffValue;
             e.defBuffVfx.Play();
         }
         return;

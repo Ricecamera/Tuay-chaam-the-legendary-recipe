@@ -49,7 +49,7 @@ namespace BattleScene.BattleLogic
                 else
                 {
                     // the target is dead
-                    string callerName = action.caller.pak.EntityName;
+                    string callerName = action.caller.Pak.EntityName;
                     Debug.Log("The " + callerName + " is already dead.");
                 }
                 yield return null; // wait for the next frame

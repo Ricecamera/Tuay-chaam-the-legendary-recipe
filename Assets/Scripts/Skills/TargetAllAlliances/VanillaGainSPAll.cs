@@ -20,7 +20,7 @@ public class VanillaGainSPAll : Skill
         int spValue = 10;
         foreach (PakRender e in target)
         {
-            e.pak.Sp += spValue;
+            e.currentSp += spValue;
             e.defBuffVfx.Play();
         }
         return;

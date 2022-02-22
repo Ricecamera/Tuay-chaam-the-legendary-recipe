@@ -16,7 +16,7 @@ public class VanillaBuffDefOne : Skill
     //action
     private void ActionVanillaBuffDefOne(List<PakRender> target, PakRender self)
     {
-        target[0].pak.Def += self.pak.Def / 4;
+        target[0].currentDef += self.currentDef / 4;
         target[0].defBuffVfx.Play();
         return;
     }

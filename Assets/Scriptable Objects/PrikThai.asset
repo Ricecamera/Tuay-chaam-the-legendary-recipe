@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: PrikThai
   m_EditorClassIdentifier: 
   entityId: 
-  entityName: 
+  entityName: Prik Thai
   description: 
-  atk: 40
-  def: 20
+  baseAtk: 28
+  baseDef: 26
   maxHp: 200
+  baseSpeed: 16
   image: {fileID: 21300000, guid: 20065a957b7d8614db704bc2c90e95dc, type: 3}
   bonusStatsPerLvl:
     addHp: 0
     addAtk: 0
     addDef: 0
-  maxSp: 0
+  maxSp: 50
   taste: 0

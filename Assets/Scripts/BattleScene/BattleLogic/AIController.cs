@@ -19,7 +19,8 @@ public class AIController
             GameObject target = pakTeam[target_num];
             targets.Add(target.GetComponent<PakRender>());
             //ตีธรรมดา Only
-            ActionCommand action = new ActionCommand(e.GetComponent<PakRender>(), 0, targets, 3.0f);
+            float speed = e.GetComponent<PakRender>().currentSpeed;
+            ActionCommand action = new ActionCommand(e.GetComponent<PakRender>(), 0, targets, speed);
             actionList.Add(action);
         }
 

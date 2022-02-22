@@ -43,7 +43,7 @@ namespace BattleScene.BattleLogic
             //Check death. If dead, the dead animation should be play
             if (!caller.healthSystem.IsAlive && !diedThisTurn.Contains(caller)) {
                 diedThisTurn.Add(caller);
-                Debug.Log(caller.pak.EntityName + " is killed.");
+                Debug.Log(caller.Pak.EntityName + " is killed.");
                 /* TODO: Insert some death animation here. */
 
 
@@ -54,12 +54,11 @@ namespace BattleScene.BattleLogic
                 }
             }
 
-            Debug.Log("wowza");
             foreach (PakRender e in targets) {
-                Debug.Log(e.pak.EntityName);
+                Debug.Log(e.Pak.EntityName);
                 if (!e.healthSystem.IsAlive && !diedThisTurn.Contains(e)) { //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
                     diedThisTurn.Add(e);
-                    Debug.Log(e.pak.EntityName + " is killed.");
+                    Debug.Log(e.Pak.EntityName + " is killed.");
                     /* TODO: Insert some death animation here. */
 
                     //set disable is better
@@ -72,10 +71,8 @@ namespace BattleScene.BattleLogic
 
         public void Execute(Action onComplete)
         {
-            Debug.Log("Do Execute");
 
             PakRender caller2 = caller.GetComponent<PakRender>();
-            Debug.Log("Caller2 def:" + caller2.pak.Def);
 
             Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
 

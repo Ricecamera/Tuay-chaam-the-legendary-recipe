@@ -19,53 +19,49 @@ public class Entity : ScriptableObject {
     protected string description;
 
     [SerializeField]
-    protected int atk, def, maxHp;
+    protected int baseAtk, baseDef, maxHp, baseSpeed;
 
     [SerializeField]
     public Sprite image;                             // sprite of the character
 
     [SerializeField]
-    protected BonusStats bonusStatsPerLvl;                 // the bonus stats that will add the character's base stats when it levels up
+    protected BonusStats bonusStatsPerLvl;              // the bonus stats that will add the character's base stats when it levels up
 
 
     // Getter Setter
     public string EntityId {
         get { return this.entityId; }
-        set { this.entityId = value; }
     }
 
     public string EntityName {
         get { return this.entityName; }
-        set { this.entityName = value; }
     }
 
     public string Description {
         get { return this.description; }
-        set { this.description = value; }
     }
     
-    public int Atk {
-        get { return this.atk; }
-        set { this.atk = value; }
+    public int BaseAtk {
+        get { return this.baseAtk; }
     }
 
-    public int Def {
-        get { return this.def; }
-        set { this.def = value; }
+    public int BaseDef {
+        get { return this.baseDef; }
     }
 
     public Sprite Image {
         get { return this.image; }
-        set { this.image = value; }
     }
 
     public BonusStats BonusStatsPerLvl {
         get { return this.bonusStatsPerLvl; }
-        set { this.bonusStatsPerLvl = value; }
     }
 
     public int MaxHp {
         get { return this.maxHp; }
-        set { this.maxHp = value; }
+    }
+
+    public int BaseSpeed {
+        get { return this.baseSpeed; }
     }
 }
