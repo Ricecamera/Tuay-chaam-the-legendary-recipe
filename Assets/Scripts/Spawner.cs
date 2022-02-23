@@ -29,8 +29,8 @@ public class Spawner : MonoBehaviour
     void OnEnable()
     {
         characters.Intialize();
-        ConvertToGameObjectList(CharacterSelecter.instance.GetCharacters());
-        ConvertChaamToGameObject(CharacterSelecter.instance.GetChaam());
+        ConvertToGameObjectList(CharacterSelecter.instance?.GetCharacters());
+        ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
 
         try {
 
@@ -66,6 +66,9 @@ public class Spawner : MonoBehaviour
 
     public void ConvertToGameObjectList(List<ItemObject> itemObjects)
     {
+        if (itemObjects == null)
+            return;
+
         foreach (var item in itemObjects)
         {
             plants.Add(item.prefab);
@@ -74,7 +77,8 @@ public class Spawner : MonoBehaviour
 
     public void ConvertChaamToGameObject(ItemObject itemObject)
     {
-        chaam = itemObject.prefab;
+        if(itemObject != null)
+            chaam = itemObject.prefab;
     }
 
 }
