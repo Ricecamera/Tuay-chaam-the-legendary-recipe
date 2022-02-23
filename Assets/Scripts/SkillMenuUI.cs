@@ -79,13 +79,5 @@ public class SkillMenuUI : MonoBehaviour {
         for (; i < skills.Length; ++i) {
             skills[i].SetSkill(null);
         }
-
-        Image temp1 = skills[0].GetComponent<Image>();
-        temp1.sprite = pak.skill[0].Icon;
-        Image temp2 = skills[1].GetComponent<Image>();
-        temp2.sprite = pak.skill[1].Icon;
-        Image temp3 = skills[2].GetComponent<Image>();
-        temp3.sprite = pak.skill[2].Icon;
-
     }
 }

@@ -20,6 +20,8 @@ public class BattleManager : MonoBehaviour {
 
     public AIController AI;                                 // reference to AI controller class
 
+    public Sprite dummySkill;
+
     private CharacterManager characters;
     public ActionCommandHandler actionCommandHandler {get; private set; }       // reference to ActionCommandHandler
 

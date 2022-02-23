@@ -22,8 +22,10 @@ public class Buum : Skill
         foreach (PakRender e in target)
         {
             if (damage - e.currentDef <= 0) damage = 0;
-            e.healthSystem.TakeDamage(damage);
-            e.switchMat();
+            if (e.healthSystem.IsAlive) {
+                e.switchMat();
+                e.healthSystem.TakeDamage(damage);
+            }
         }
         self.healthSystem.TakeDamage((int)(self.healthSystem.CurrentHp / 1.5));
         return;

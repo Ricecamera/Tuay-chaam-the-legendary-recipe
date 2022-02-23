@@ -53,7 +53,6 @@ public class PakSelection : MonoBehaviour
     [SerializeField]
     private GameObject Backdrop;
 
-    private List<string> result;
 
     //Text
     public Text selectTargetText;
@@ -327,8 +326,6 @@ public class PakSelection : MonoBehaviour
                             return InputState.ENEMY_SELECTED;
                         }
 
-                        // Add value to result
-                        result.Add(hit.collider.name);
 
                         return InputState.CHARCTER_SELECTED;
                     }
@@ -348,7 +345,6 @@ public class PakSelection : MonoBehaviour
             {
                 selectedSkill = selectSkillBuffer;
                 skillMenu.ToggleSkillUI(selectedSkill);
-                result.Add(string.Format("Skill {0}", selectedSkill + 1));
             }
             catch (IndexOutOfRangeException e)
             {
@@ -400,12 +396,10 @@ public class PakSelection : MonoBehaviour
             {
 
                 characterManager.SetSelect(selectedPak, false);
-                result.Clear();
 
                 if (hit.collider.CompareTag(selectedPak))
                 {
                     selectedPak = "";
-                    result.Add(hit.collider.name);
                     return InputState.DEFAULT;
                 }
 
@@ -416,9 +410,6 @@ public class PakSelection : MonoBehaviour
 
                 // Send character to update on Skill menu
                 UpdateSkillUIImage(ally);
-
-                // Add value to result
-                result.Add(hit.collider.name);
             }
         }
         return InputState.CHARCTER_SELECTED;
@@ -434,12 +425,9 @@ public class PakSelection : MonoBehaviour
             if (selectedSkill == selectSkillBuffer)
             {
                 selectedSkill = -1;
-                result.RemoveAt(result.Count - 1);
                 return InputState.CHARCTER_SELECTED;
             }
 
-            result.Remove(string.Format("Skill {0}", selectedSkill + 1));
-            result.Add(string.Format("Skill {0}", selectSkillBuffer + 1));
             selectedSkill = selectSkillBuffer;
             skillMenu.ToggleSkillUI(selectedSkill);
 
@@ -492,7 +480,6 @@ public class PakSelection : MonoBehaviour
 
                 selectedEnemy = hit.collider.tag;
                 characterManager.SetSelect(selectedEnemy, true);
-                result.Add(hit.collider.name);
                 return InputState.ENEMY_SELECTED;
             }
         }
@@ -510,12 +497,8 @@ public class PakSelection : MonoBehaviour
             if (selectedSkill == selectSkillBuffer)
             {
                 selectedSkill = -1;
-                result.RemoveAt(result.Count - 1);
                 return InputState.CHARCTER_SELECTED;
             }
-
-            result.Remove(string.Format("Skill {0}", selectedSkill + 1));
-            result.Add(string.Format("Skill {0}", selectSkillBuffer + 1));
             selectedSkill = selectSkillBuffer;
             skillMenu.ToggleSkillUI(selectedSkill);
 
@@ -576,12 +559,10 @@ public class PakSelection : MonoBehaviour
                     selectedEnemySum += e.character.tag;
                     selectedEnemySum += ",";
                     characterManager.SetSelect(selectedEnemy, true);
-                    result.Add(e.character.name);
                 }
                 selectedEnemy = selectedEnemySum;
                 // selectedEnemy = hit2.collider.tag;
                 // characterManager.SetSelect(selectedEnemy, true);
-                // result.Add(hit2.collider.name);
                 return InputState.ENEMY_SELECTED;
             }
         }
@@ -599,12 +580,10 @@ public class PakSelection : MonoBehaviour
             if (selectedSkill == selectSkillBuffer)
             {
                 selectedSkill = -1;
-                result.RemoveAt(result.Count - 1);
                 return InputState.CHARCTER_SELECTED;
             }
 
-            result.Remove(string.Format("Skill {0}", selectedSkill + 1));
-            result.Add(string.Format("Skill {0}", selectSkillBuffer + 1));
+
             selectedSkill = selectSkillBuffer;
             skillMenu.ToggleSkillUI(selectedSkill);
 
@@ -664,12 +643,11 @@ public class PakSelection : MonoBehaviour
                     selectedEnemySum += e.character.tag;
                     selectedEnemySum += ",";
                     characterManager.SetSelect(selectedEnemy, true);
-                    result.Add(e.character.name);
                 }
                 selectedEnemy = selectedEnemySum;
                 // selectedEnemy = hit2.collider.tag;
                 // characterManager.SetSelect(selectedEnemy, true);
-                // result.Add(hit2.collider.name);
+
                 return InputState.ENEMY_SELECTED;
             }
         }
@@ -687,12 +665,10 @@ public class PakSelection : MonoBehaviour
             if (selectedSkill == selectSkillBuffer)
             {
                 selectedSkill = -1;
-                result.RemoveAt(result.Count - 1);
                 return InputState.CHARCTER_SELECTED;
             }
 
-            result.Remove(string.Format("Skill {0}", selectedSkill + 1));
-            result.Add(string.Format("Skill {0}", selectSkillBuffer + 1));
+
             selectedSkill = selectSkillBuffer;
             skillMenu.ToggleSkillUI(selectedSkill);
 
@@ -758,12 +734,10 @@ public class PakSelection : MonoBehaviour
                     selectedEnemySum += e.character.tag;
                     selectedEnemySum += ",";
                     characterManager.SetSelect(selectedEnemy, true);
-                    result.Add(e.character.name);
                 }
                 selectedEnemy = selectedEnemySum;
                 // selectedEnemy = hit.collider.tag;
                 // characterManager.SetSelect(selectedEnemy, true);
-                // result.Add(hit.collider.name);
                 return InputState.ENEMY_SELECTED;
             }
         }
@@ -783,12 +757,9 @@ public class PakSelection : MonoBehaviour
             if (selectedSkill == selectSkillBuffer)
             {
                 selectedSkill = -1;
-                result.RemoveAt(result.Count - 1);
                 return InputState.CHARCTER_SELECTED;
             }
 
-            result.Remove(string.Format("Skill {0}", selectedSkill + 1));
-            result.Add(string.Format("Skill {0}", selectSkillBuffer + 1));
             selectedSkill = selectSkillBuffer;
             skillMenu.ToggleSkillUI(selectSkillBuffer);
             Debug.Log("Now chabg skill to" + selectSkillBuffer); //selectSkillBuffer is index of skill in SkillMenuUI
@@ -842,7 +813,6 @@ public class PakSelection : MonoBehaviour
 
                 selectedEnemy = hit.collider.tag;
                 characterManager.SetSelect(selectedEnemy, true);
-                result.Add(hit.collider.name);
                 return InputState.ENEMY_SELECTED;
             }
         }
@@ -870,14 +840,11 @@ public class PakSelection : MonoBehaviour
 
                 characterManager.SetSelect(selectedEnemy, false);
                 GameObject oldEnemy = characterManager.GetCharacter(selectedEnemy).character;
-                result.Remove(oldEnemy.name);
 
                 if (hit.collider.tag != selectedEnemy)
                 {
-
                     selectedEnemy = hit.collider.tag;
                     characterManager.SetSelect(selectedEnemy, true);
-                    result.Add(hit.collider.name);
                 }
                 else
                 {
@@ -893,17 +860,14 @@ public class PakSelection : MonoBehaviour
             {
                 if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED_ONE_ALLY;
 
-
                 characterManager.SetSelect(selectedEnemy, false);
                 GameObject oldEnemy = characterManager.GetCharacter(selectedEnemy).character;
-                result.Remove(oldEnemy.name);
 
                 if (hit.collider.tag != selectedEnemy)
                 {
 
                     selectedEnemy = hit.collider.tag;
                     characterManager.SetSelect(selectedEnemy, true);
-                    result.Add(hit.collider.name);
                 }
                 else
                 {
@@ -937,14 +901,6 @@ public class PakSelection : MonoBehaviour
                 holder.Action(false, 0);
             }
 
-            // Add result string to output log
-            string output = "Add command ";
-            foreach (string name in result)
-            {
-                output += name;
-                output += " ";
-            }
-            Debug.Log(output);
             return InputState.COMFIRMED;
         }
 
@@ -1057,9 +1013,10 @@ public class PakSelection : MonoBehaviour
                 endTurnButton.gameObject.SetActive(true);
                 supportMenu.SetActive(false);
                 Backdrop.SetActive(false);
-                skillMenu.skills[0].GetComponent<Button>().interactable = true;
-                skillMenu.skills[1].GetComponent<Button>().interactable = true;
-                skillMenu.skills[2].GetComponent<Button>().interactable = true;
+                foreach (SkillUI skill in skillMenu.skills) {
+                    if (skill.isActiveAndEnabled)
+                        skill.GetComponent<Button>().interactable = true;
+                }
                 //skillMenu.skills[3].GetComponent<Button>().interactable = true; //ulti skill
                 break;
         }
@@ -1165,8 +1122,6 @@ public class PakSelection : MonoBehaviour
         selectSkillBuffer = -1;
 
 
-        if (result == null)
-            result = new List<string>();
 
         actionFinished = false;
         UpdateCharacterLayer(InputState.DEFAULT);

@@ -6,7 +6,7 @@ public class EggplantRender : PakRender
     protected override void Start()
     {
         Sprite skillIcon1 = Resources.Load("SkillIcons/sk3", typeof(Sprite)) as Sprite;
-        Sprite skillIcon2 = Resources.Load("SkillIcons/sk1", typeof(Sprite)) as Sprite;
+        Sprite skillIcon2 = Resources.Load("SkillIcons/sk2", typeof(Sprite)) as Sprite;
         Sprite skillIcon3 = Resources.Load("SkillIcons/sk4", typeof(Sprite)) as Sprite;
         Sprite skillIconUnti = Resources.Load("SkillIcons/sk1", typeof(Sprite)) as Sprite;
         base.Start();

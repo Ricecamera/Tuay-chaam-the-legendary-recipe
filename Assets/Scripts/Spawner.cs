@@ -29,8 +29,8 @@ public class Spawner : MonoBehaviour
     void OnEnable()
     {
         characters.Intialize();
-        //ConvertToGameObjectList(CharacterSelecter.instance.GetCharacters());
-        //ConvertChaamToGameObject(CharacterSelecter.instance.GetChaam());
+        ConvertToGameObjectList(CharacterSelecter.instance.GetCharacters());
+        ConvertChaamToGameObject(CharacterSelecter.instance.GetChaam());
 
         try {
 
