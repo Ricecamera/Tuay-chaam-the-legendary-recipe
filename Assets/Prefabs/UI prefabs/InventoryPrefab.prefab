@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemImage: {fileID: 7206165315307966156}
-  itemType: 1
+  itemType: 0
 --- !u!114 &4220677305299369146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,8 +145,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5059475219625658790}
   m_Layer: 5
-  m_Name: InventoryPrefab1
-  m_TagString: Untagged
+  m_Name: InventoryPrefab
+  m_TagString: inventory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

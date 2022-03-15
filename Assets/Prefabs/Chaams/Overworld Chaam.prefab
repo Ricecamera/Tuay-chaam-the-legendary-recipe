@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2246359553835692082}
   - component: {fileID: 2246359553835692083}
-  - component: {fileID: 2246359553835692080}
   - component: {fileID: 2246359553835692081}
   - component: {fileID: 6187742476328363738}
   - component: {fileID: 6020628913370660863}
   m_Layer: 0
-  m_Name: broken-Chaam-EMOT_0
+  m_Name: Overworld Chaam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2246359553835692084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.4876, z: -0.48}
-  m_LocalScale: {x: 0.36222383, y: 0.36222383, z: 0.36222383}
+  m_LocalScale: {x: 0.29542974, y: 0.29542974, z: 0.29542974}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -86,25 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!95 &2246359553835692080
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2246359553835692084}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7caeeaaf6cad9de41bd3828e4e9b64a7, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2246359553835692081
 MonoBehaviour:
   m_ObjectHideFlags: 0
