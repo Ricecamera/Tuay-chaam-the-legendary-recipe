@@ -63,6 +63,8 @@ public class BattleManager : MonoBehaviour {
     public void RunCommand() {
         Debug.Log("Battle Start!!");
 
+        CharacterSelecter.instance?.ResetCharacter();
+
         //---------------------------------New AI ---------------------------------------------//
 
         // Get list of pakTeam and enemy Team
