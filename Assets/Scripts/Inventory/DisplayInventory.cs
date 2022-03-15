@@ -22,80 +22,10 @@ public class DisplayInventory : MonoBehaviour
     static Dictionary<GameObject, InventorySlot> SupportItems = new Dictionary<GameObject, InventorySlot>();
     void Start()
     {
-        CreateSlots2();
+        CreateSlots();
     }
 
-    void Update()
-    {
-
-    }
-
-    // Initialize slot with item
-    // public void CreateSlots()
-    // {
-    //     ChaamItems = new Dictionary<GameObject, InventorySlot>();
-    //     for (int i = 0; i < inventory.Container.Items.Length; i++)
-    //     {
-    //         var obj = Instantiate(InventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-    //         obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-    //         Debug.Log(inventory.Container.Items[i].item);
-    //         if (inventory.Container.Items[i].item != null)
-    //         {
-    //             obj.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = inventory.Container.Items[i].item.uiDisplay;
-    //         }
-    //         else
-    //         {
-    //             obj.transform.GetChild(1).gameObject.SetActive(false);
-    //         }
-
-    //         ChaamItems.Add(obj, inventory.Container.Items[i]);
-    //     }
-    // }
-
-    // public void CreateSlots()
-    // {
-    //     ChaamItems = new Dictionary<GameObject, InventorySlot>();
-    //     for (int i = 0; i < inventory.Container.ChaamItems.Length; i++)
-    //     {
-    //         var obj = Instantiate(InventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-    //         obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-    //         // Debug.Log(inventory.Container.ChaamItems[i].item);
-    //         if (inventory.Container.ChaamItems[i].item != null)
-    //         {
-    //             obj.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = inventory.Container.ChaamItems[i].item.uiDisplay;
-    //         }
-    //         else
-    //         {
-    //             obj.transform.GetChild(1).gameObject.SetActive(false);
-    //         }
-
-    //         ChaamItems.Add(obj, inventory.Container.ChaamItems[i]);
-    //     }
-
-    //     // MainItems = new Dictionary<GameObject, InventorySlot>();
-    //     // for (int i = 0; i < inventory.Container.MainItems.Length; i++)
-    //     // {
-    //     //     var obj = Instantiate(InventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-    //     //     obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-    //     //     Debug.Log(inventory.Container.MainItems[i].item);
-    //     //     if (inventory.Container.MainItems[i].item != null)
-    //     //     {
-    //     //         obj.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = inventory.Container.MainItems[i].item.uiDisplay;
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         obj.transform.GetChild(1).gameObject.SetActive(false);
-    //     //     }
-
-    //     //     MainItems.Add(obj, inventory.Container.MainItems[i]);
-    //     // }
-    // }
-
-    // เปลี่ยน tab
-
-
-
-    public void CreateSlots2()
+    public void CreateSlots()
     {
         ChaamItems = new Dictionary<GameObject, InventorySlot>();
         MainItems = new Dictionary<GameObject, InventorySlot>();
@@ -350,28 +280,6 @@ public class DisplayInventory : MonoBehaviour
         }
 
     }
-
-
-    // เมื่อกดปุ่มเพื่อดูของใน inventory เพิ่มเติม
-    // public void UpdateSlot()
-    // {
-    //     foreach (KeyValuePair<GameObject,InventorySlot> _slot in itemsDisplayed)
-    //     {
-    //         if (_slot.Value.ID >= 0)
-    //         {
-    //             _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
-    //             _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
-
-    //         }
-    //         else
-    //         {
-    //             _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-    //             _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-    //             _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
-    //         }
-    //     }
-    // }
-
     public Vector3 GetPosition(int i)
     {
         Vector3 v = new Vector3(0f, 0f, 0f); ;

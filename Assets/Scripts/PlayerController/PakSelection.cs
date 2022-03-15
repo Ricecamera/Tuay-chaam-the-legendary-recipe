@@ -225,6 +225,7 @@ public class PakSelection : MonoBehaviour
                         if (isPlayerWin)
                         {
                             //do victory stuff
+                            LevelManager.instance.winTime+=1;
                             SceneManager.LoadScene("VictoryScene");
                             LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
                         }
