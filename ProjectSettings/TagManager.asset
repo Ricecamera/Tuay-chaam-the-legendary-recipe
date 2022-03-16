@@ -20,6 +20,8 @@ TagManager:
   - enemy3
   - chaam
   - boss
+  - inventory
+  - slot
   layers:
   - Default
   - TransparentFX
@@ -71,4 +73,7 @@ TagManager:
     locked: 0
   - name: Front
     uniqueID: 771028355
+    locked: 0
+  - name: VeryFront
+    uniqueID: 3015287721
     locked: 0

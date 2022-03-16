@@ -9,8 +9,26 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/ModeSelection.unity
-    guid: 645be61aa6eacdb41aa7de8c300b3f0c
+    path: Assets/Scenes/CutScene/CutScene_1.unity
+    guid: 966e88437ed83b84c9770ba75d0d8931
+  - enabled: 1
+    path: Assets/Scenes/Default_level_1-1.unity
+    guid: ce4cedd021796c241817f7a35601f687
+  - enabled: 1
+    path: Assets/Scenes/TutorialS/TutorialScene.unity
+    guid: 4b6e9341a27790346a5d2edf588adaa1
+  - enabled: 1
+    path: Assets/Scenes/CutScene/CutScene_2.unity
+    guid: 100e22a372f0caa4c9f43c75f852ff20
+  - enabled: 1
+    path: Assets/Scenes/Battle/Battle-1-2.unity
+    guid: 08a5354ba0d6a644cbe93c066252f1bd
+  - enabled: 1
+    path: Assets/Scenes/CutScene/CutScene_3.unity
+    guid: 8653ae2e2d1e5824e8367d3f8db72227
+  - enabled: 1
+    path: Assets/Scenes/TutorialS/ModeSelectionForTutorial.unity
+    guid: 4b7520d051d50b94ba35cbef997d435a
   - enabled: 1
     path: Assets/Scenes/opened-map.unity
     guid: 5f81b82477c653140859e82f171756c5
@@ -18,12 +36,18 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelection.unity
     guid: a819b7017c35b82408d46cb5494cb56e
   - enabled: 1
-    path: Assets/Scenes/Battle.unity
+    path: Assets/Scenes/Battle/Battle.unity
     guid: fcec781c1fdbfd04bb493f296037e4eb
   - enabled: 1
     path: Assets/Scenes/VictoryScene.unity
     guid: a84cb94f83a12554aac651a811e58f88
   - enabled: 1
+    path: Assets/Scenes/CutScene/CutScene_4.unity
+    guid: 169fa9c8a0cd1e641b8f654704ed6d76
+  - enabled: 1
     path: Assets/Scenes/LoseScene.unity
     guid: 99f8c9567b660944da9d37e010150137
+  - enabled: 1
+    path: Assets/Scenes/ModeSelection.unity
+    guid: 645be61aa6eacdb41aa7de8c300b3f0c
   m_configObjects: {}

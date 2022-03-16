@@ -25,26 +25,22 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        //Debug.Log("Click point");
         transform.parent.SetAsLastSibling();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("Drag");
         rt.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("Begin Drag");
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = .6f;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("End Drag");
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;
         eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = eventData.pointerDrag.transform.parent.GetChild(0).GetComponent<RectTransform>().anchoredPosition;
@@ -73,16 +69,35 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
             eventData.pointerCurrentRaycast.gameObject.GetComponent<ImageHandler>().itemObject.type == eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject.type) //TODO
         {
 
+            SwapItem(eventData.pointerDrag.gameObject, eventData.pointerCurrentRaycast.gameObject);
+
             Sprite tempImage = eventData.pointerDrag.gameObject.GetComponent<Image>().sprite;
-            Debug.Log("#1" + eventData.pointerCurrentRaycast.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
-            Debug.Log("#1" + eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
+            //Debug.Log("#1" + eventData.pointerCurrentRaycast.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
+            //Debug.Log("#1" + eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
             ItemObject tempObject = itemObject;
             eventData.pointerDrag.gameObject.GetComponent<Image>().sprite = eventData.pointerCurrentRaycast.gameObject.GetComponent<Image>().sprite;
             eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject = eventData.pointerCurrentRaycast.gameObject.GetComponent<ImageHandler>().itemObject;
             eventData.pointerCurrentRaycast.gameObject.GetComponent<Image>().sprite = tempImage;
             eventData.pointerCurrentRaycast.gameObject.GetComponent<ImageHandler>().itemObject = tempObject;
-            Debug.Log("#2" + eventData.pointerCurrentRaycast.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
-            Debug.Log("#2" + eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
+            //Debug.Log("#2" + eventData.pointerCurrentRaycast.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
+            //Debug.Log("#2" + eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject.uiDisplay);
+
+
+        }
+    }
+
+    public static void SwapItem(GameObject dragItem, GameObject currentItem)
+    {
+        if (dragItem.transform.parent.CompareTag("slot") && currentItem.transform.parent.CompareTag("inventory"))
+        {
+            if (dragItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
+
+            if (currentItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.AddCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
+        }
+        else if (currentItem.transform.parent.CompareTag("slot") && dragItem.transform.parent.CompareTag("inventory"))
+        {
+            if (currentItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
+            if (dragItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.AddCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
         }
     }
 }

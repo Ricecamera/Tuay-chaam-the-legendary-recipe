@@ -12,22 +12,24 @@ public class InventoryHandler : MonoBehaviour, IDropHandler
     public ItemType itemType;
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("Drop");
+        //Debug.Log("Drop");
         if (eventData.pointerDrag != null)
         {
-            Debug.Log(eventData.pointerDrag.name);
-            Debug.Log(eventData.pointerDrag.transform.parent);
+            //Debug.Log(eventData.pointerDrag.name);
+            //Debug.Log(eventData.pointerDrag.transform.parent);
 
             // swap item กับ ช่องว่าง
-            if (!ItemImage.activeSelf && itemType == eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject.type)
+            if (!ItemImage.activeSelf && itemType == eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject.type &&
+                (!ItemImage.transform.parent.CompareTag("inventory") || !eventData.pointerDrag.transform.parent.CompareTag("inventory")))
             {
+
+                ImageHandler.SwapItem(eventData.pointerDrag.gameObject, ItemImage);
+
                 ItemImage.SetActive(true);
                 ItemImage.GetComponent<Image>().sprite = eventData.pointerDrag.gameObject.GetComponent<Image>().sprite;
 
-                //TODO
                 ItemImage.GetComponent<ImageHandler>().itemObject = eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject;
 
-                //TODO
                 eventData.pointerDrag.gameObject.GetComponent<ImageHandler>().itemObject = null;
 
                 eventData.pointerDrag.gameObject.GetComponent<Image>().sprite = null;
@@ -36,14 +38,17 @@ public class InventoryHandler : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.gameObject.GetComponent<CanvasGroup>().alpha = 1f;
                 eventData.pointerDrag.gameObject.SetActive(false);
                 Debug.Log("check swap");
-                if (itemType != ItemType.Chaam)
-                {
-                    UpdateCharacter(ItemImage);
-                }
-                else
-                {
-                    UpdateChaam(ItemImage);
-                }
+
+                // if (itemType != ItemType.Chaam)
+                // {
+                //     UpdateCharacter(ItemImage);
+                // }
+                // else
+                // {
+                //     UpdateChaam(ItemImage);
+                // }
+
+
 
             }
 
@@ -57,6 +62,8 @@ public class InventoryHandler : MonoBehaviour, IDropHandler
             //     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = eventData.pointerDrag.transform.parent.GetChild(0).GetComponent<RectTransform>().anchoredPosition;
             //     Debug.Log("#2 : " + eventData.pointerDrag.gameObject.GetComponent<Image>().sprite + " / " + ItemImage.GetComponent<Image>().sprite);
             // }
+
+
         }
     }
 
@@ -64,7 +71,7 @@ public class InventoryHandler : MonoBehaviour, IDropHandler
     {
         CharacterSelecter.instance.AddCharacter(character.GetComponent<ImageHandler>().itemObject);
         // CharacterSelecter.instance.AddCharacterName(character.GetComponent<ImageHandler>().itemObject.name);
-        Debug.Log(CharacterSelecter.instance.GetCharacters().Count);
+        //Debug.Log(CharacterSelecter.instance.GetCharacters().Count);
     }
 
     public void UpdateChaam(GameObject chaam)
