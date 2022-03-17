@@ -17,6 +17,7 @@ public class SceneLoader : MonoBehaviour
             if(instance == null){
                 GameObject go = new GameObject("SceneLoader");
                 go.AddComponent<SceneLoader>();
+                go.GetComponent<SceneLoader>().transition = go.AddComponent<Animator>();
             }
             return instance;
         }
@@ -24,7 +25,7 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
-        instance = this; 
+        instance = this;
     }
 
     public void LoadNextScene()
