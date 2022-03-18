@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6b2fb54480ca318408469bbc2fd82bba
+guid: a5a2eec7a4f81774fa8b3ac2e65c5ed4
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -96,6 +96,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -105,7 +117,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1444
+        width: 1447
         height: 1985
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -124,9 +136,9 @@ TextureImporter:
       name: Tonhom-EMOT_1
       rect:
         serializedVersion: 2
-        x: 1444
+        x: 1442
         y: 0
-        width: 1444
+        width: 1448
         height: 1985
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -145,9 +157,9 @@ TextureImporter:
       name: Tonhom-EMOT_2
       rect:
         serializedVersion: 2
-        x: 2888
+        x: 2886
         y: 0
-        width: 1444
+        width: 1455
         height: 1985
       alignment: 0
       pivot: {x: 0, y: 0}

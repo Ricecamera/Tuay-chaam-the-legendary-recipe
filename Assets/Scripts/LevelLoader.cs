@@ -34,12 +34,12 @@ public class LevelLoader : MonoBehaviour
                 playButton.onClick.AddListener(LoadNextScene);
                 quitButton.onClick.AddListener(ExitGame);
             }
-            if (SceneManager.GetActiveScene().buildIndex == 9) //* Character Select
+            if (SceneManager.GetActiveScene().buildIndex == 5) //* Character Select
             {
                 Button startButton = GameObject.Find("Start Button").GetComponent<Button>();
                 Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
                 Button helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
-                startButton.onClick.AddListener(LoadNextScene);
+                startButton.onClick.AddListener(StartGame);
                 backButton.onClick.AddListener(LoadPrevScene);
                 helpButton.onClick.AddListener(Help);
             }

@@ -36,7 +36,7 @@ namespace DialogueSystem
                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().isFinish);
             }
             gameObject.SetActive(false);
-            LevelLoader.instance.LoadSpecificScene("TutorialScene");
+            LevelLoader.instance.LoadNextScene();
         }
 
         public void Deactivate()
