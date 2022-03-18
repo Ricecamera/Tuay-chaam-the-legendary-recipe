@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleScene;
-public class Chaamrender_temp : PakRender
+public class ChaamRender : PakRender
 {
     protected override void Start()
     {
