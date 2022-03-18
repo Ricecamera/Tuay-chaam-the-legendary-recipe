@@ -18,12 +18,13 @@ public class SceneLoader : MonoBehaviour
                 GameObject go = new GameObject("SceneLoader");
                 go.AddComponent<SceneLoader>();
                 go.GetComponent<SceneLoader>().transition = go.AddComponent<Animator>();
+                DontDestroyOnLoad(go);
             }
             return instance;
         }
     }
 
-    private void Awake()
+    public void Awake()
     {
         instance = this;
     }

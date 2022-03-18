@@ -33,7 +33,7 @@ namespace DialogueSystem
                     chaam.SetTrigger("Come_out");
                     Debug.Log(transform.childCount);
                 }
-                yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().isFinish);
+                yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().isFinish || Input.GetMouseButtonDown(0));
             }
             gameObject.SetActive(false);
             LevelLoader.instance.LoadSpecificScene("TutorialScene");

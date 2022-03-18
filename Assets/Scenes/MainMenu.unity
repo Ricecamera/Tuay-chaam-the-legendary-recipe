@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 196641967}
   - component: {fileID: 196641968}
+  - component: {fileID: 196641969}
   m_Layer: 5
   m_Name: Button Panel
   m_TagString: Untagged
@@ -301,6 +302,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &196641969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196641966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b16351a448a6764c8a85199ed3a43f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &227420451
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 993729459355217117, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 993729459355217118, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
       propertyPath: m_RootOrder
