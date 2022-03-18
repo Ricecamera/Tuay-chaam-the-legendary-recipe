@@ -136,16 +136,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3678362646462264695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a53f634998ea64b9b92fde30d0c0ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e3a0f58d9cbb384993ddeb44b1fe08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionIcon: {fileID: 8324893053176995767}
-  selectedIcon: {fileID: 5513673626026838053}
-  slideSpeed: 6
-  attackDistance: 1.75
-  pak: {fileID: 11400000, guid: 3645b6319246b6b498c740cbabb73b06, type: 2}
   defBuffVfx: {fileID: 3321399129092016794}
   atkBuffVfx: {fileID: 1632400571838659093}
+  actionIcon: {fileID: 8324893053176995767}
+  selectedIcon: {fileID: 5513673626026838053}
+  enitityData: {fileID: 11400000, guid: 3645b6319246b6b498c740cbabb73b06, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!114 &3246793316793962671
 MonoBehaviour:
   m_ObjectHideFlags: 0

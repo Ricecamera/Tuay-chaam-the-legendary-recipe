@@ -139,13 +139,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e73f7e42cba3247a214c1f24ceec0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionIcon: {fileID: 3677977293078899627}
-  selectedIcon: {fileID: 3423446083752308146}
-  slideSpeed: 6
-  attackDistance: 1.75
-  pak: {fileID: 11400000, guid: 60ac1a85496730b478610f68ccc92f8e, type: 2}
   defBuffVfx: {fileID: 2246186123840612263}
   atkBuffVfx: {fileID: 8670913593264202018}
+  actionIcon: {fileID: 3677977293078899627}
+  selectedIcon: {fileID: 3423446083752308146}
+  enitityData: {fileID: 11400000, guid: 60ac1a85496730b478610f68ccc92f8e, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!114 &5140027003103578455
 MonoBehaviour:
   m_ObjectHideFlags: 0
