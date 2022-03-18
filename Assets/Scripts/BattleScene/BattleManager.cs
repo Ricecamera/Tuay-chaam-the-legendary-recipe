@@ -68,28 +68,30 @@ public class BattleManager : MonoBehaviour {
         //---------------------------------New AI ---------------------------------------------//
 
         // Get list of pakTeam and enemy Team
-        List<PakRender> pakHolders = characters.getTeamHolders(0);
-        List<PakRender> enemyHolders = characters.getTeamHolders(1);
+        List<PakRender> pakHolders = new List<PakRender>();
+        List<PakRender> enemyHolders = new List<PakRender>();
+
+
         
         // Remove dead characters from player team and enemy team
-        foreach (var e in pakHolders)
+        foreach (var e in characters.getTeamHolders(0))
         {
-            if (!e.gameObject.activeSelf)
+            if (e.gameObject.activeSelf)
             {
-                pakHolders.Remove(e);
+                pakHolders.Add(e);
             }
         }
 
-        foreach (var f in enemyHolders)
+        foreach (var f in characters.getTeamHolders(1))
         {
-            if (!f.gameObject.activeSelf)
+            if (f.gameObject.activeSelf)
             {
-                enemyHolders.Remove(f);
+                enemyHolders.Add(f);
             }
         }
 
         // Let AI controller selection its actions
-        List<ActionCommand> temp = AI.selectAction(pakHolders, pakHolders);
+        List<ActionCommand> temp = AI.selectAction(pakHolders, enemyHolders);
         foreach (ActionCommand e in temp)
         {
             actionCommandHandler.AddCommand(e);
