@@ -66,13 +66,13 @@ public class SkillMenuUI : MonoBehaviour {
         }
     }
 
-    public void UpdateSkillUI(PakRender pak)
+    public void UpdateSkillUI(List<Skill> charaterSkills)
     {
         int i = 0;
 
         // Set skills for each skill button
-        for (; i < pak.skill.Count && i < skills.Length; ++i) {
-            skills[i].SetSkill(pak.skill[i]);
+        for (; i < charaterSkills.Count && i < skills.Length; ++i) {
+            skills[i].SetSkill(charaterSkills[i]);
         }
 
         // hide all skill button that doesn't set skill

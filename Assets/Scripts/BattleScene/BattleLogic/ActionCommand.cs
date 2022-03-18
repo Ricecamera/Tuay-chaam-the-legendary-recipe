@@ -43,7 +43,7 @@ namespace BattleScene.BattleLogic
             //Check death. If dead, the dead animation should be play
             if (!caller.healthSystem.IsAlive && !diedThisTurn.Contains(caller)) {
                 diedThisTurn.Add(caller);
-                Debug.Log(caller.Pak.EntityName + " is killed.");
+                Debug.Log(caller.Entity.EntityName + " is killed.");
                 /* TODO: Insert some death animation here. */
 
 
@@ -55,10 +55,10 @@ namespace BattleScene.BattleLogic
             }
 
             foreach (PakRender e in targets) {
-                Debug.Log(e.Pak.EntityName);
+                Debug.Log(e.Entity.EntityName);
                 if (!e.healthSystem.IsAlive && !diedThisTurn.Contains(e)) { //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
                     diedThisTurn.Add(e);
-                    Debug.Log(e.Pak.EntityName + " is killed.");
+                    Debug.Log(e.Entity.EntityName + " is killed.");
                     /* TODO: Insert some death animation here. */
 
                     //set disable is better

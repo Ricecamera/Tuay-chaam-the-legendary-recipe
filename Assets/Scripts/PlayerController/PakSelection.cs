@@ -109,12 +109,11 @@ public class PakSelection : MonoBehaviour
             if (currentState == InputState.ENEMY_SELECTED &&
                 selectedPak.CompareTo("") != 0)
             {
-                var holder = characterManager.GetCharacter(selectedPak);
+                var pakRender = characterManager.GetCharacter(selectedPak);
 
                 // if select character is in action set it back to action state
-                if (holder.InAction)
+                if (pakRender.InAction())
                 {
-                    var pakRender = holder.character.GetComponent<PakRender>();
                     pakRender.DisplayInAction(true);
                 }
 
@@ -242,7 +241,7 @@ public class PakSelection : MonoBehaviour
                 }
                 else
                 {
-                    characterManager.ResetAction();
+                    characterManager.ResetState(0);
                     UnlockChar();
                     alreadySelectSkill = new List<GameObject>();
                     UpdateCharacterLayer(nextState);
@@ -294,18 +293,18 @@ public class PakSelection : MonoBehaviour
                     // find game object data with tag
                     if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.DEFAULT;
 
-                    CharacterHolder ally = characterManager.GetCharacter(hit.collider.tag);
+                    PakRender ally = characterManager.GetCharacter(hit.collider.tag);
 
                     if (ally != null)
                     {
                         // Select the ally
                         selectedPak = hit.collider.tag;
-                        ally.Select(true);
+                        ally.Selected = true;
 
                         // Send character to update on Skill menu
-                        UpdateSkillUIImage(ally.character);
+                        UpdateSkillUIImage(ally);
 
-                        if (ally.InAction)
+                        if (ally.InAction())
                         {
                             // Get old action data
                             ActionCommand action = BattleManager.instance.actionCommandHandler.GetAction(selectedPak);
@@ -316,7 +315,7 @@ public class PakSelection : MonoBehaviour
 
                             // get game tag of the target
                             selectedEnemy = action.targets[0].gameObject.tag;
-                            characterManager.SetSelect(selectedEnemy, true);
+                            characterManager.GetCharacter(selectedEnemy).Selected = true;
 
                             // Change UI from DEFAULT scene to ENEMY_SELECTED
                             skillMenu.ToggleMenu(true);
@@ -395,8 +394,8 @@ public class PakSelection : MonoBehaviour
                     (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2")
                     || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam")))
             {
-
-                characterManager.SetSelect(selectedPak, false);
+                // Set selected of the old selected character to false
+                characterManager.GetCharacter(selectedPak).Selected = false;
 
                 if (hit.collider.CompareTag(selectedPak))
                 {
@@ -404,13 +403,13 @@ public class PakSelection : MonoBehaviour
                     return InputState.DEFAULT;
                 }
 
-
+                // Set selected state of the new character
                 selectedPak = hit.collider.tag;
-                GameObject ally = hit.collider.gameObject;
-                characterManager.SetSelect(selectedPak, true);
+                PakRender newPak = characterManager.GetCharacter(selectedPak);
+                newPak.Selected = false;
 
                 // Send character to update on Skill menu
-                UpdateSkillUIImage(ally);
+                UpdateSkillUIImage(newPak);
             }
         }
         return InputState.CHARCTER_SELECTED;
@@ -480,7 +479,7 @@ public class PakSelection : MonoBehaviour
                 }
 
                 selectedEnemy = hit.collider.tag;
-                characterManager.SetSelect(selectedEnemy, true);
+                characterManager.GetCharacter(selectedEnemy).Selected = true;
                 return InputState.ENEMY_SELECTED;
             }
         }
@@ -554,12 +553,12 @@ public class PakSelection : MonoBehaviour
                 || hit2.collider.CompareTag("Enemy4") || hit2.collider.CompareTag("Boss"))
             {
                 string selectedEnemySum = "";
-                foreach (CharacterHolder e in characterManager.getTeamHolders(1))
+                foreach (PakRender e in characterManager.getTeamHolders(1))
                 {
-                    selectedEnemy = e.character.tag;
-                    selectedEnemySum += e.character.tag;
+                    selectedEnemy = e.tag;
+                    selectedEnemySum += e.tag;
                     selectedEnemySum += ",";
-                    characterManager.SetSelect(selectedEnemy, true);
+                    characterManager.GetCharacter(selectedEnemy).Selected = true;
                 }
                 selectedEnemy = selectedEnemySum;
                 // selectedEnemy = hit2.collider.tag;
@@ -638,12 +637,12 @@ public class PakSelection : MonoBehaviour
                 || hit2.collider.CompareTag("Plant4") || hit2.collider.CompareTag("Chaam"))
             {
                 string selectedEnemySum = "";
-                foreach (CharacterHolder e in characterManager.getTeamHolders(0))
+                foreach (PakRender e in characterManager.getTeamHolders(0))
                 {
-                    selectedEnemy = e.character.tag;
-                    selectedEnemySum += e.character.tag;
+                    selectedEnemy = e.tag;
+                    selectedEnemySum += e.tag;
                     selectedEnemySum += ",";
-                    characterManager.SetSelect(selectedEnemy, true);
+                    characterManager.GetCharacter(selectedEnemy).Selected = true;
                 }
                 selectedEnemy = selectedEnemySum;
                 // selectedEnemy = hit2.collider.tag;
@@ -725,16 +724,16 @@ public class PakSelection : MonoBehaviour
             {
 
                 string selectedEnemySum = "";
-                List<CharacterHolder> chars = new List<CharacterHolder>();
+                List<PakRender> chars = new List<PakRender>();
                 chars.AddRange(characterManager.getTeamHolders(0));
                 chars.AddRange(characterManager.getTeamHolders(1));
 
-                foreach (CharacterHolder e in chars)
+                foreach (PakRender e in chars)
                 {
-                    selectedEnemy = e.character.tag;
-                    selectedEnemySum += e.character.tag;
+                    selectedEnemy = e.tag;
+                    selectedEnemySum += e.tag;
                     selectedEnemySum += ",";
-                    characterManager.SetSelect(selectedEnemy, true);
+                    characterManager.GetCharacter(selectedEnemy).Selected = true;
                 }
                 selectedEnemy = selectedEnemySum;
                 // selectedEnemy = hit.collider.tag;
@@ -813,7 +812,7 @@ public class PakSelection : MonoBehaviour
 
 
                 selectedEnemy = hit.collider.tag;
-                characterManager.SetSelect(selectedEnemy, true);
+                characterManager.GetCharacter(selectedEnemy).Selected = true;
                 return InputState.ENEMY_SELECTED;
             }
         }
@@ -838,14 +837,12 @@ public class PakSelection : MonoBehaviour
             {
                 if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED;
 
-
-                characterManager.SetSelect(selectedEnemy, false);
-                GameObject oldEnemy = characterManager.GetCharacter(selectedEnemy).character;
+                characterManager.GetCharacter(selectedEnemy).Selected = false;
 
                 if (hit.collider.tag != selectedEnemy)
                 {
                     selectedEnemy = hit.collider.tag;
-                    characterManager.SetSelect(selectedEnemy, true);
+                    characterManager.GetCharacter(selectedEnemy).Selected = true;
                 }
                 else
                 {
@@ -861,14 +858,13 @@ public class PakSelection : MonoBehaviour
             {
                 if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED_ONE_ALLY;
 
-                characterManager.SetSelect(selectedEnemy, false);
-                GameObject oldEnemy = characterManager.GetCharacter(selectedEnemy).character;
+                characterManager.GetCharacter(selectedEnemy).Selected = false;
 
                 if (hit.collider.tag != selectedEnemy)
                 {
 
                     selectedEnemy = hit.collider.tag;
-                    characterManager.SetSelect(selectedEnemy, true);
+                    characterManager.GetCharacter(selectedEnemy).Selected = true;
                 }
                 else
                 {
@@ -881,12 +877,13 @@ public class PakSelection : MonoBehaviour
 
         var holder = characterManager.GetCharacter(selectedPak);
         // Player presses cancel button
-        if (cancelPressed && holder.InAction)
+        if (cancelPressed && holder.InAction())
         {
             // Remove action
             var commandHandler = BattleManager.instance.actionCommandHandler;
             commandHandler.RemoveAction(selectedPak);
-            holder.Action(false, 0);
+            holder.currentState = PakRender.State.Idle;
+            holder.DisplayInAction(false);
             return InputState.DEFAULT;
         }
 
@@ -895,11 +892,12 @@ public class PakSelection : MonoBehaviour
         {
             // If holder is In action remove old action
             // then waiting for the new one
-            if (holder.InAction)
+            if (holder.InAction())
             {
                 var commandHandler = BattleManager.instance.actionCommandHandler;
                 commandHandler.RemoveAction(selectedPak);
-                holder.Action(false, 0);
+                holder.currentState = PakRender.State.Idle;
+                holder.DisplayInAction(false, 0);
             }
 
             return InputState.COMFIRMED;
@@ -990,7 +988,7 @@ public class PakSelection : MonoBehaviour
 
                 // if the selected pak is already in action show cancel button
                 var pakHolder = characterManager.GetCharacter(selectedPak);
-                if (pakHolder.InAction)
+                if (pakHolder.InAction())
                 {
                     cancelButton.gameObject.SetActive(true);
                 }
@@ -1028,7 +1026,7 @@ public class PakSelection : MonoBehaviour
         if (state == InputState.SKILL_SELECTED || state == InputState.SKILL_SELECTED_ALL_ENEMIES ||
             (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED))
         {
-            characterManager.ResetHighLight();
+            characterManager.ResetState(3);
             var characterTags = new List<string> { "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss" };
             characterTags.Add(selectedPak);
             characterManager.HighLightCharacters(characterTags);
@@ -1036,14 +1034,14 @@ public class PakSelection : MonoBehaviour
         else if (state == InputState.SKILL_SELECTED_ONE_ALLY || state == InputState.SKILL_SELECTED_ALL_ALLIANCES ||
             (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED))
         {
-            characterManager.ResetHighLight();
+            characterManager.ResetState(3);
             var characterTags = new List<string> { "Plant1", "Plant2", "Plant3", "Plant4", "Chaam" };
             characterManager.HighLightCharacters(characterTags);
         }
         else if (state == InputState.SKILL_SELECTED_WHOLE_FIELD ||
             (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED))
         {
-            characterManager.ResetHighLight();
+            characterManager.ResetState(3);
             var characterTags = new List<string> { "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss", "Plant1", "Plant2", "Plant3", "Plant4", "Chaam" };
             characterManager.HighLightCharacters(characterTags);
         }
@@ -1051,7 +1049,7 @@ public class PakSelection : MonoBehaviour
                  state == InputState.END_TURN)
         {
             // Reset all highlight to default
-            characterManager.ResetHighLight();
+            characterManager.ResetState(3);
         }
         else if (state == InputState.CHARCTER_SELECTED)
         {
@@ -1061,17 +1059,15 @@ public class PakSelection : MonoBehaviour
         }
     }
 
-    public void UpdateSkillUIImage(GameObject ally)
+    public void UpdateSkillUIImage(PakRender ally)
     {
-
-        PakRender pakRender = ally.GetComponent<PakRender>();
 
         // Check  if the ally gameobject has PakRende or ChaamRender
         // WSprite is null if the ally does not have both
-        if (pakRender != null)
+        if (ally != null)
         {
-            skillMenu.UpdateCharacterUI(pakRender.Pak.Image);
-            skillMenu.UpdateSkillUI(pakRender);
+            skillMenu.UpdateCharacterUI(ally.Entity.Image);
+            skillMenu.UpdateSkillUI(ally.skill);
 
         }
     }
@@ -1079,28 +1075,36 @@ public class PakSelection : MonoBehaviour
 
     public void SendCommand()
     {
-        GameObject caller = characterManager.GetCharacter(selectedPak).character;
-        if (caller != null)
+        PakRender pakCaller = characterManager.GetCharacter(selectedPak);
+        if (pakCaller != null)
         {
-            characterManager.SetAction(selectedPak, true, selectedSkill);
-            Debug.Log(selectedEnemy);
+            pakCaller.currentState = PakRender.State.InAction;
+            pakCaller.DisplayInAction(true, selectedSkill);
+            List<PakRender> targets = new List<PakRender>();
+
+            // Convert selectedEnemy to list of Pakrender
             if (selectedEnemy.Contains(","))
             {
+                // selectedEnemy has multiple tags
                 List<string> selectedEnemyList = new List<string>(selectedEnemy.Split(','));
-                selectedEnemyList.RemoveAt(selectedEnemyList.Count - 1);
-                GameObject[] targets = new GameObject[selectedEnemyList.Count];
-                for (int i = 0; i < selectedEnemyList.Count; i++)
+                selectedEnemyList.RemoveAt(selectedEnemyList.Count - 1); // remove space in the end
+                foreach (var enemy in characterManager.getTeamHolders(1))
                 {
-                    Debug.Log(selectedEnemyList[i]);
-                    targets[i] = characterManager.GetCharacter(selectedEnemyList[i]).character;
+                    if (selectedEnemyList.Contains(enemy.tag)) {
+                        Debug.Log(enemy.tag);
+                        targets.Add(enemy);
+                    }
                 }
-                BattleManager.instance.AddNewCommand(caller, selectedSkill, targets);
             }
             else
             {
-                GameObject[] targets = { characterManager.GetCharacter(selectedEnemy).character };
-                BattleManager.instance.AddNewCommand(caller, selectedSkill, targets);
+                // selectedEnemy has only one tag
+                targets.Add(characterManager.GetCharacter(selectedEnemy));
             }
+
+            float speed = pakCaller.currentSpeed;
+            ActionCommand newCommand = new ActionCommand(pakCaller, selectedSkill, targets, speed);
+            BattleManager.instance.actionCommandHandler.AddCommand(newCommand);
 
         }
     }
@@ -1112,7 +1116,7 @@ public class PakSelection : MonoBehaviour
 
         nextState = InputState.DEFAULT;
 
-        characterManager.ResetSelect();
+        characterManager.ResetState(2);
 
         selectedPak = "";
         selectedEnemy = "";
@@ -1142,7 +1146,7 @@ public class PakSelection : MonoBehaviour
     {
         if (selectedPak.CompareTo("") != 0)
         {
-            GameObject caller = characterManager.GetCharacter(selectedPak).character;
+            GameObject caller = characterManager.GetCharacter(selectedPak).gameObject;
             alreadySelectSkill.Add(caller);
         }
         foreach (GameObject e in alreadySelectSkill)
@@ -1154,10 +1158,10 @@ public class PakSelection : MonoBehaviour
 
     private void UnlockChar()
     {
-        List<CharacterHolder> temp = characterManager.getHolders();
-        foreach (CharacterHolder e in temp)
+        List<PakRender> temp = characterManager.getHolders();
+        foreach (PakRender e in temp)
         {
-            e.character.GetComponent<BoxCollider2D>().enabled = true;
+            e.GetComponent<BoxCollider2D>().enabled = true;
         }
         return;
     }

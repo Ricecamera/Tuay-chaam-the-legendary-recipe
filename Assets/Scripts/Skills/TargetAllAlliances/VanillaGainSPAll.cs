@@ -17,11 +17,11 @@ public class VanillaGainSPAll : Skill
     //action
     public void ActionVanillaGainSPAll(List<PakRender> target, PakRender self)
     {
-        int spValue = 10;
+//        int spValue = 10;
         foreach (PakRender e in target)
         {
-            e.currentSp += spValue;
-            e.defBuffVfx.Play();
+/*            e.currentSp += spValue;
+            e.defBuffVfx.Play();*/
         }
         return;
     }

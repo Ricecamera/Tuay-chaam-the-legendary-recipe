@@ -68,31 +68,28 @@ public class BattleManager : MonoBehaviour {
         //---------------------------------New AI ---------------------------------------------//
 
         // Get list of pakTeam and enemy Team
-        List<CharacterHolder> pakHolders = characters.getTeamHolders(0);
-        List<CharacterHolder> enemyHolders = characters.getTeamHolders(1);
+        List<PakRender> pakHolders = characters.getTeamHolders(0);
+        List<PakRender> enemyHolders = characters.getTeamHolders(1);
         
-        List<GameObject> pakTeamObject = new List<GameObject>();
-        List<GameObject> enemyTeamObject = new List<GameObject>();
-
-
+        // Remove dead characters from player team and enemy team
         foreach (var e in pakHolders)
         {
-            if (e.character.activeSelf)
+            if (!e.gameObject.activeSelf)
             {
-                pakTeamObject.Add(e.character);
+                pakHolders.Remove(e);
             }
         }
 
         foreach (var f in enemyHolders)
         {
-            if (f.character.activeSelf)
+            if (!f.gameObject.activeSelf)
             {
-                enemyTeamObject.Add(f.character);
+                enemyHolders.Remove(f);
             }
         }
 
         // Let AI controller selection its actions
-        List<ActionCommand> temp = AI.selectAction(pakTeamObject, enemyTeamObject);
+        List<ActionCommand> temp = AI.selectAction(pakHolders, pakHolders);
         foreach (ActionCommand e in temp)
         {
             actionCommandHandler.AddCommand(e);
@@ -111,46 +108,18 @@ public class BattleManager : MonoBehaviour {
 
         currentTurn++;
         actionText.gameObject.SetActive(false);
-        List<CharacterHolder> holders = characters.getHolders();
-        foreach (var holder in holders) {
-            PakRender pak = holder.character.GetComponent<PakRender>();
+        List<PakRender> holders = characters.getHolders();
+        foreach (var pak in holders)
             pak.UpdateTurn();
-        }
-    }
-
-    public void AddNewCommand(GameObject caller, int skillIndex, GameObject[] targets)
-    {
-        PakRender pakCaller = caller.GetComponent<PakRender>();
-
-        // Get PakRender component of each game oject in `targets`
-        // and push it into pakTargets list.
-        List<PakRender> pakTargets = new List<PakRender>();
-        foreach (var target in targets)
-        {
-            PakRender tmp = target.GetComponent<PakRender>();
-            if (tmp != null) pakTargets.Add(tmp);
-        }
-
-        // Log error when the caller does not exist or there are not available target.
-        if (pakCaller == null || pakTargets.Count == 0)
-        {
-            Debug.LogError("The caller or targets do not contain PakRender");
-            return;
-        }
-
-        // Set random speed for each action and initialize it.
-        float speed = pakCaller.currentSpeed;
-        ActionCommand newCommand = new ActionCommand(pakCaller, skillIndex, pakTargets, speed);
-        actionCommandHandler.AddCommand(newCommand);
     }
 
     public bool IsPlayerLose()
     {
         Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
-        List<CharacterHolder> pakInBattle = characters.getTeamHolders(0);
-        foreach (CharacterHolder e in pakInBattle)
+        List<PakRender> pakInBattle = characters.getTeamHolders(0);
+        foreach (var e in pakInBattle)
         {
-            if (e.character.activeSelf)
+            if (e.gameObject.activeSelf)
             {
                 return false;
             }
@@ -161,10 +130,10 @@ public class BattleManager : MonoBehaviour {
     public bool IsPlayerWin()
     {
         Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
-        List<CharacterHolder> enemyInBattle = characters.getTeamHolders(1);
-        foreach (CharacterHolder e in enemyInBattle)
+        List<PakRender> enemyInBattle = characters.getTeamHolders(1);
+        foreach (PakRender e in enemyInBattle)
         {
-            if (e.character.activeSelf)
+            if (e.gameObject.activeSelf)
             {
                 return false;
             }

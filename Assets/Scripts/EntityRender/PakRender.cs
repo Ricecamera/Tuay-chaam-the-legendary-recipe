@@ -6,13 +6,28 @@ using UnityEngine;
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour
 {   
-    private enum State {
+    static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
+    static string LAYER_CHARACTER = "Character";
+    static string LAYER_OVERLAY = "Overlay";
+    static string LAYER_FRONT = "Front";
+
+    public enum State {
         Idle,
         Sliding,
-        Busy
+        Busy,
+        InAction
     }
 
-    private static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
+    public HealthSystem healthSystem { get; private set; }
+
+
+    public List<Skill> skill;
+
+    public ParticleSystem defBuffVfx, atkBuffVfx;
+
+    public int currentAtk { get; set; }
+    public int currentDef { get; set; }
+    public int currentSpeed { get; set; }
 
 
     [SerializeField]
@@ -22,42 +37,41 @@ public class PakRender : MonoBehaviour
     private GameObject selectedIcon;
 
     [SerializeField]
+    private Entity enitityData;
+
+    [SerializeField]
     private float slideSpeed = 6f, attackDistance = 1.75f;
 
     private Vector3 targetPos;
     private State state;
+    private bool selected;  // Is this character selected by player?
 
     private Coroutine flashcheck;
     private Action onSlideComplete;
 
-    public HealthSystem healthSystem { get; private set; }
+    public Entity Entity { get { return enitityData;} }
+    public State currentState { get; set;}
+    public bool Selected {
+        get {
+            return selected;
+        }
 
-    [SerializeField]
-    private Pak pak;
-
-    public List<Skill> skill;
-
-    public ParticleSystem defBuffVfx, atkBuffVfx;
-
-    public int currentAtk { get; set; }
-    public int currentDef {  get; set; }
-    public int currentSpeed { get; set; }
-    public int currentSp { get; set; }
-    public int maxSp { get; set; }
-
-    public Pak Pak { get { return pak;} }
+        set {
+            selected = value;
+            selectedIcon.SetActive(value);
+        }
+    }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         healthSystem = GetComponent<HealthSystem>();
-        healthSystem.Initialize(pak.MaxHp);
-        currentAtk = pak.BaseAtk;
-        currentDef = pak.BaseDef;
-        currentSpeed = pak.BaseSpeed;
-        maxSp = pak.MaxSp;
-        currentSp = 0;
-        ShowSelected(false);
+        healthSystem.Initialize(enitityData.MaxHp);
+        currentAtk = enitityData.BaseAtk;
+        currentDef = enitityData.BaseDef;
+        currentSpeed = enitityData.BaseSpeed;
+        state = State.Idle;
+        Selected = false;
 //!
         actionIcon.gameObject.SetActive(false);
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -73,12 +87,6 @@ public class PakRender : MonoBehaviour
         {
             Debug.Log("Skill in PakRender is not null");
         }
-        // healthSystem = GetComponent<HealthSystem>();
-        // healthSystem.initHealth(pak.Hp);
-        // sr.sprite = pak.image;
-        //hp.SetMaxHealth(pak.Hp);
-        //currentHp = pak.Hp;
-
     }
 
     protected virtual void Update()
@@ -101,31 +109,39 @@ public class PakRender : MonoBehaviour
         }
     }
 
-    public void DisplayInAction(bool value, int index=0)
+
+    public void DisplayInAction(bool value, int skillIndex=0)
     {
-        if(index <0 || index>skill.Count){
+        // Prevent index out of bound error
+        if(skillIndex < 0 || skillIndex > skill.Count){
             Debug.LogError("Skill index out of range and couldn't load skill icon.");
         }
-        actionIcon.sprite = skill[index].Icon;
-        actionIcon.gameObject.SetActive(value);
+        
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
+        if (value) {
+            // Display inAction indicator
+            actionIcon.sprite = skill[skillIndex].Icon;
+        }
+        else {
+            // Hide InAction indicator
+            actionIcon.sprite = null;
+        }
+
+        actionIcon.gameObject.SetActive(value);
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
     }
 
     // Set sorting layer of Pak's sprite and its health bar
-    public void GoToLayer(string sortingLayer)
+    public void GoToFrontLayer(bool value)
     {
         try
         {
-            SpriteRenderer pakSprite = gameObject.GetComponent<SpriteRenderer>();
+            SpriteRenderer enitityDataSprite = gameObject.GetComponent<SpriteRenderer>();
             Canvas healthbar = healthSystem.healthBar.GetComponent<Canvas>();
 
-            pakSprite.sortingLayerName = sortingLayer;
-            if (sortingLayer.CompareTo("Front") == 0)
-                healthbar.sortingLayerName = "Front";
-            else
-                healthbar.sortingLayerName = "Overlay";
+            enitityDataSprite.sortingLayerName = value ? LAYER_FRONT: LAYER_CHARACTER;
+            healthbar.sortingLayerName = value ? LAYER_FRONT : LAYER_OVERLAY;
 
         }
         catch (NullReferenceException error)
@@ -133,23 +149,6 @@ public class PakRender : MonoBehaviour
             Debug.LogError(error.Message);
         }
 
-    }
-
-    public void ShowSelected(bool value)
-    {
-        selectedIcon.SetActive(value);
-    }
-
-
-    private IEnumerator DamageEffect()
-    {
-        SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
-        Material whiteMat = (Material)Resources.Load<Material>("FlashMaterial");
-        Material originalMat = GetComponent<SpriteRenderer>().material;
-        sp.material = whiteMat;
-        yield return new WaitForSeconds(0.5f);
-        sp.material = originalMat;
-        flashcheck = null;
     }
 
     public void switchMat()
@@ -161,12 +160,6 @@ public class PakRender : MonoBehaviour
         }
 
         StartCoroutine(DamageEffect());
-    }
-
-    private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete) {
-        this.targetPos = slideTargetPosition;
-        this.onSlideComplete = onSlideComplete;
-        state = State.Sliding;
     }
 
     public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete) {
@@ -192,15 +185,6 @@ public class PakRender : MonoBehaviour
         });
     }
 
-    private IEnumerator SpellAnimation(string skillId, Action onEffect, Action onComplete) {
-        /* insert spell animation here */
-        yield return new WaitForSeconds(0.2f);
-        onEffect();
-        /* insert sound here! */
-        yield return new WaitForSeconds(1.5f);
-        onComplete();
-    }
-
     public void RangedBuff(string skillId, Action buffEffect, Action onComplete) {
         state = State.Busy;
         SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
@@ -216,35 +200,6 @@ public class PakRender : MonoBehaviour
         );
     }
 
-    /*public void moveToEnemy(PakRender caller, List<PakRender> targets)
-    {
-        foreach (PakRender target in targets)
-        {
-            string my_tag = caller.tag;
-            string enemy_tag = target.tag;
-            // Transform myObjectTransform = GameObject.Find(my_tag).GetComponent<Transform>();
-            Transform myObjectTransform = this.transform;
-            Transform opposeObjectTransform = target.transform;
-            //Vector3 myOldPos = new Vector3(myObjectTransform.position.x, myObjectTransform.position.y, myObjectTransform.position.z);
-
-            Debug.Log("Oppose pos " + opposeObjectTransform.position);
-            Vector3 desirePos;
-            if (caller.tag == "Plant1" || caller.tag == "Plant2" || caller.tag == "Plant3" || caller.tag == "Chaam")
-            {
-                desirePos = new Vector3(opposeObjectTransform.position.x - 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
-            }
-            else
-            {
-                desirePos = new Vector3(opposeObjectTransform.position.x + 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
-            }
-
-            // myObjectTransform.position = new Vector3(opposeObjectTransform.position.x + 2, opposeObjectTransform.position.y, opposeObjectTransform.position.z);
-
-            this.switchMat(target, desirePos);
-            //this.transform.position = initPos;
-        }
-    }*/
-
     public void UpdateTurn() {
         // Update skill cooldown
         for (int i = 0; i < skill.Count; ++i) {
@@ -258,4 +213,34 @@ public class PakRender : MonoBehaviour
         return transform.position;
     }
 
+    public bool InAction() {
+        return state == State.InAction;
+    }
+
+    private IEnumerator DamageEffect() {
+        SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
+        Material whiteMat = (Material) Resources.Load<Material>("FlashMaterial");
+        Material originalMat = GetComponent<SpriteRenderer>().material;
+        sp.material = whiteMat;
+        yield return new WaitForSeconds(0.5f);
+        sp.material = originalMat;
+        flashcheck = null;
+    }
+
+
+    private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete) {
+        this.targetPos = slideTargetPosition;
+        this.onSlideComplete = onSlideComplete;
+        state = State.Sliding;
+    }
+
+
+    private IEnumerator SpellAnimation(string skillId, Action onEffect, Action onComplete) {
+        /* insert spell animation here */
+        yield return new WaitForSeconds(0.2f);
+        onEffect();
+        /* insert sound here! */
+        yield return new WaitForSeconds(1.5f);
+        onComplete();
+    }
 }
