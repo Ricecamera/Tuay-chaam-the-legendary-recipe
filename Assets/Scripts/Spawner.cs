@@ -22,10 +22,6 @@ public class Spawner : MonoBehaviour
     [Header("Boss")]
     public GameObject boss;                 // contains the prefab of an in-play boss
     public Transform bossSpawnPos;          // reference of boss' spawn position
-
-    [Header("Other scripts")]
-    public PakSelection pakSelection;     // reference of pakSelection object in scene
-
     void OnEnable()
     {
         characters.Intialize();
