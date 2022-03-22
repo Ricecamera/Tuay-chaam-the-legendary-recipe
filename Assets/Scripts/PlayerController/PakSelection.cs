@@ -34,7 +34,8 @@ public class PakSelection : MonoBehaviour
     private int selectedSkill = -1;         // current selected skill
 
     // buffer field using to check state after the player clicked some of the field-related buttons
-    private bool okPressed = false, endTurnPressed = false, backPressed = false, cancelPressed = false;
+    private bool okPressed = false, endTurnPressed = false, backPressed = false, cancelPressed = false, cookPressed = false;
+    private bool support1Pressed = false, support2Pressed = false, support3Pressed = false;
 
 
     private int selectSkillBuffer = -1;     // buffer for storing user's click input
@@ -52,6 +53,33 @@ public class PakSelection : MonoBehaviour
 
     [SerializeField]
     private GameObject Backdrop;
+
+    [SerializeField]
+    private Button cookButton;
+
+    [SerializeField]
+    private Button support1;
+
+    [SerializeField]
+    private Button support2;
+
+    [SerializeField]
+    private Button support3;
+
+    [SerializeField]
+    private GameObject tickCook1;
+
+    [SerializeField]
+    private GameObject tickCook2;
+
+    [SerializeField]
+    private GameObject tickCook3;
+
+    [SerializeField]
+    private GameObject comboPanel;
+
+    [SerializeField]
+    private Button cookStartButton;
 
 
     //Text
@@ -87,12 +115,30 @@ public class PakSelection : MonoBehaviour
         backButton.onClick.AddListener(() => backPressed = true);
         endTurnButton.onClick.AddListener(() => endTurnPressed = true);
         cancelButton.onClick.AddListener(() => cancelPressed = true);
+        cookButton.onClick.AddListener(() => cookPressed = true);
+        support1.onClick.AddListener(() => tickCook1.SetActive(!tickCook1.activeSelf));
+        support2.onClick.AddListener(() => tickCook2.SetActive(!tickCook2.activeSelf));
+        support3.onClick.AddListener(() => tickCook3.SetActive(!tickCook3.activeSelf));
+        cookStartButton.onClick.AddListener(() =>
+        {
+            selectedSkill = 3;
+            nextState = InputState.SKILL_SELECTED;
+            comboPanel.SetActive(false);
+            cookPressed = false;
+        });
+
+        comboPanel.SetActive(false);
 
         //Set text during pak selection to not active
         selectTargetText.gameObject.SetActive(false);
         selectSkillText.gameObject.SetActive(false);
 
         alreadySelectSkill = new List<GameObject>(); //create a empty list
+
+        support1.image.sprite = CharacterSelecter.instance?.GetSupports()[0].uiDisplay;
+        support2.image.sprite = CharacterSelecter.instance?.GetSupports()[1].uiDisplay;
+        support3.image.sprite = CharacterSelecter.instance?.GetSupports()[2].uiDisplay;
+
 
         reset();
     }
@@ -141,7 +187,6 @@ public class PakSelection : MonoBehaviour
             case InputState.CHARCTER_SELECTED:
                 // An ally character was choosed
                 selectSkillText.gameObject.SetActive(true); //set select skill text to actives
-
                 nextState = ChooseSkill();
                 // if (nextState != currentState)
                 UpdateCharacterLayer(nextState);
@@ -225,7 +270,7 @@ public class PakSelection : MonoBehaviour
                         if (isPlayerWin)
                         {
                             //do victory stuff
-                            LevelManager.instance.winTime+=1;
+                            LevelManager.instance.winTime += 1;
                             SceneManager.LoadScene("VictoryScene");
                             LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
                         }
@@ -273,6 +318,14 @@ public class PakSelection : MonoBehaviour
         {
             cancelPressed = false;
         }
+
+        // if (cookPressed)
+        // {
+        //     cookPressed = false;
+        // }
+
+
+
         selectSkillBuffer = -1;
     }
 
@@ -936,11 +989,24 @@ public class PakSelection : MonoBehaviour
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
                 Backdrop.SetActive(true);
+                if (pak.tag == "Chaam")
+                {
+                    cookButton.gameObject.SetActive(true);
+                }
+
+                if (cookPressed)
+                {
+                    //for cook
+                    cookSystem();
+                }
+
+
                 break;
             case InputState.SKILL_SELECTED:
                 backButton.gameObject.SetActive(true);
                 okButton.gameObject.SetActive(false);
                 Backdrop.SetActive(true);
+                cookButton.gameObject.SetActive(false);
                 break;
 
             case InputState.SKILL_SELECTED_ONE_ALLY:
@@ -1014,7 +1080,12 @@ public class PakSelection : MonoBehaviour
                 endTurnButton.gameObject.SetActive(true);
                 supportMenu.SetActive(false);
                 Backdrop.SetActive(false);
-                foreach (SkillUI skill in skillMenu.skills) {
+                cookButton.gameObject.SetActive(false);
+                tickCook1.SetActive(false);
+                tickCook2.SetActive(false);
+                tickCook3.SetActive(false);
+                foreach (SkillUI skill in skillMenu.skills)
+                {
                     if (skill.isActiveAndEnabled)
                         skill.GetComponent<Button>().interactable = true;
                 }
@@ -1161,4 +1232,18 @@ public class PakSelection : MonoBehaviour
         }
         return;
     }
+
+    private void cookSystem()
+    {
+        if (!supportMenu.activeSelf) supportMenu.SetActive(true);
+        if (tickCook1.activeSelf && tickCook2.activeSelf && tickCook3.activeSelf)
+        {
+            comboPanel.SetActive(true);
+        }
+        else
+        {
+            comboPanel.SetActive(false);
+        }
+    }
+
 }

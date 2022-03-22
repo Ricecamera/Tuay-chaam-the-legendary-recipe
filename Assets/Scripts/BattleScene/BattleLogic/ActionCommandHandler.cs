@@ -35,12 +35,13 @@ namespace BattleScene.BattleLogic
 
                 //If the caller is alive, the skill is casted.
                 if (action.caller.healthSystem.IsAlive)
-                {   
+                {
 
                     // wait for action to finishes
                     bool finish = false;
-                    action.Execute(() => {finish = true;});
-                    do {
+                    action.Execute(() => { finish = true; });
+                    do
+                    {
                         // if the action isn't finish wait for the next frame
                         yield return null;
                     } while (!finish);

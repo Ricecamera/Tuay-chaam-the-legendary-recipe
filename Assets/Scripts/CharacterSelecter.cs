@@ -9,11 +9,17 @@ public class CharacterSelecter : MonoBehaviour
 
     public GameObject popup;
 
-    private List<ItemObject> characters = new List<ItemObject>();
-    private ItemObject chaam;
+    public List<ItemObject> characters = new List<ItemObject>();
+    public ItemObject chaam;
+    public List<ItemObject> supports = new List<ItemObject>();
     public List<ItemObject> GetCharacters()
     {
         return characters;
+    }
+
+    public List<ItemObject> GetSupports()
+    {
+        return supports;
     }
 
     public ItemObject GetChaam()
@@ -30,7 +36,12 @@ public class CharacterSelecter : MonoBehaviour
         {
             chaam = itemObject;
         }
+        else if (itemObject.type == ItemType.Support)
+        {
+            this.supports.Add(itemObject);
+        }
     }
+
 
     void Awake()
     {
@@ -48,6 +59,7 @@ public class CharacterSelecter : MonoBehaviour
     public void ResetCharacter()
     {
         this.characters = new List<ItemObject>();
+        this.supports = new List<ItemObject>();
         this.chaam = null;
         Debug.Log("Reset all characters");
     }
@@ -62,6 +74,10 @@ public class CharacterSelecter : MonoBehaviour
         {
             this.characters.Remove(itemObject);
         }
+        else if (itemObject.type == ItemType.Support & this.supports.Contains(itemObject))
+        {
+            this.supports.Remove(itemObject);
+        }
     }
 
     public void SetChaam(ItemObject chaam)
@@ -69,10 +85,15 @@ public class CharacterSelecter : MonoBehaviour
         this.chaam = chaam;
     }
 
-    public void SetCharacter(List<ItemObject> characters)
-    {
-        this.characters = characters;
-    }
+    // public void SetCharacter(List<ItemObject> characters)
+    // {
+    //     this.characters = characters;
+    // }
+
+    // public void SetSupport(List<ItemObject> supports)
+    // {
+    //     this.supports = supports;
+    // }
 
     public void SetPopup(GameObject popup)
     {

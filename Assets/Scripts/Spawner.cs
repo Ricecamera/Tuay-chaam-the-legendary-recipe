@@ -11,6 +11,11 @@ public class Spawner : MonoBehaviour
 
     public List<GameObject> plants = new List<GameObject>();         // contains prefabs of all in-play plants
     public List<GameObject> enemies = new List<GameObject>();       // contains prefabs of all in-play enemies
+
+    // Add supports
+    public List<GameObject> supports = new List<GameObject>();
+
+
     public List<Transform> allySpawnPos = new List<Transform>();    // reference of allies' spawn positions in scene
     public List<Transform> enemySpawnPos = new List<Transform>();   // contains enemies' spawn positions in scene
     public List<GameObject> healthBar = new List<GameObject>();
@@ -29,10 +34,13 @@ public class Spawner : MonoBehaviour
     void OnEnable()
     {
         characters.Intialize();
-        ConvertToGameObjectList(CharacterSelecter.instance?.GetCharacters());
+        ConvertPlantToGameObject(CharacterSelecter.instance?.GetCharacters());
         ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
+        //ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
+        Debug.Log(CharacterSelecter.instance?.GetSupports()[0]);
 
-        try {
+        try
+        {
 
             for (int i = 0; i < plants.Count; i++)
             {
@@ -46,25 +54,29 @@ public class Spawner : MonoBehaviour
             characters.AddCharacter(chaamObject.tag, chaamObject, 0);
 
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             Debug.LogError(e.Message);
         }
-        finally {
-            for (int i = 0; i < enemies.Count; i++) {
+        finally
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
                 GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
                 e.tag = enemySpawnPos[i].gameObject.tag;
                 characters.AddCharacter(e.tag, e, 1);
             }
 
-            if (boss != null) {
+            if (boss != null)
+            {
                 GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
                 bossObject.tag = bossSpawnPos.gameObject.tag;
                 characters.AddCharacter(bossObject.tag, bossObject, 1);
             }
-        }     
+        }
     }
 
-    public void ConvertToGameObjectList(List<ItemObject> itemObjects)
+    public void ConvertPlantToGameObject(List<ItemObject> itemObjects)
     {
         if (itemObjects == null)
             return;
@@ -75,9 +87,24 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void ConvertSupportToGameObject(List<ItemObject> itemObjects)
+    {
+        if (itemObjects == null)
+        {
+            Debug.Log("itemObjects is NULL");
+            return;
+        }
+
+        Debug.Log("itemObjects is NOT NULL");
+        foreach (var item in itemObjects)
+        {
+            supports.Add(item.prefab);
+        }
+    }
+
     public void ConvertChaamToGameObject(ItemObject itemObject)
     {
-        if(itemObject != null)
+        if (itemObject != null)
             chaam = itemObject.prefab;
     }
 

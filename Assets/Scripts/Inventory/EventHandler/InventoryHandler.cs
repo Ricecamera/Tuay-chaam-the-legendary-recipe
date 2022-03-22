@@ -74,6 +74,13 @@ public class InventoryHandler : MonoBehaviour, IDropHandler
         //Debug.Log(CharacterSelecter.instance.GetCharacters().Count);
     }
 
+    public void UpdateSupport(GameObject support)
+    {
+        CharacterSelecter.instance.AddCharacter(support.GetComponent<ImageHandler>().itemObject);
+        // CharacterSelecter.instance.AddCharacterName(character.GetComponent<ImageHandler>().itemObject.name);
+        //Debug.Log(CharacterSelecter.instance.GetCharacters().Count);
+    }
+
     public void UpdateChaam(GameObject chaam)
     {
         CharacterSelecter.instance.SetChaam(chaam.GetComponent<ImageHandler>().itemObject);
