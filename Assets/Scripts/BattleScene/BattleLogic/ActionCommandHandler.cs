@@ -24,15 +24,6 @@ namespace BattleScene.BattleLogic
 
             foreach (var action in commandList)
             {
-                Debug.Log(action.caller);
-                Debug.Log(action.caller.healthSystem);
-                Debug.Log(action.caller.healthSystem.CurrentHp);
-                //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
-                // PakRender temp = action.caller.GetComponent<PakRender>();
-                // Debug.Log(temp.pak);
-                // Debug.Log(temp.healthSystem.GetHealth());
-                Debug.Log("Yes");
-
                 //If the caller is alive, the skill is casted.
                 if (action.caller.healthSystem.IsAlive)
                 {   
@@ -89,12 +80,12 @@ namespace BattleScene.BattleLogic
         }
 
         // Get the first selected action by specific character's tag and skill's name
-        public ActionCommand GetAction(string gameTag, string skillName)
+        public ActionCommand GetAction(string gameTag, int skillIndex)
         {
             foreach (ActionCommand action in commandList)
             {
                 if (action.caller.CompareTag(gameTag)
-                    && action.selectedSkill.Equals(skillName))
+                    && action.selectedSkill == skillIndex)
                 {
                     return action;
                 }
@@ -118,12 +109,12 @@ namespace BattleScene.BattleLogic
         }
 
         // Remove the specific skill that is called by the character with provided gameTag.
-        public ActionCommand RemoveAction(string gameTag, string skillName)
+        public ActionCommand RemoveAction(string gameTag, int skillIndex)
         {
             for (int i = 0; i < commandList.Count; i++)
             {
                 ActionCommand action = commandList[i];
-                if (action.caller.CompareTag(gameTag))
+                if (action.caller.CompareTag(gameTag) && action.selectedSkill == skillIndex)
                 {
                     commandList.RemoveAt(i);
                     return action;
