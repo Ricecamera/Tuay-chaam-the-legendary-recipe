@@ -16,35 +16,6 @@ namespace BattleScene {
     }
 
     // Add a new character
-    public void AddCharacter(string tag, GameObject character, int teamKey) {
-        try {
-            // find the team of added character
-            Debug.Log(character);
-            Team team;
-            if (teamKey == 0)
-                team= Team.PLAYER_TEAM;
-            else if (teamKey == 1)
-                team= Team.ENEMY_TEAM;
-            else
-                throw new Exception("team key is not valid");
-
-
-            holders.Add(tag, character.GetComponent<PakRender>());
-            lookupTable.Add(tag, team);
-        }
-        catch (Exception e) {
-            if (e is ArgumentException) {
-                Destroy(character); 
-            }
-            Debug.LogError(e.Message);
-        }
-    }
-
-    // Remove a specific chacracter by tag and team flag
-    public void RemoveCharacter(string tag) {
-        lookupTable.Remove(tag);
-        holders.Remove(tag);
-    }
 
     // Get a specific character by tag and team flag
     public PakRender GetCharacter(string tag) {
@@ -65,8 +36,6 @@ namespace BattleScene {
         return holders.ContainsKey(tag);
     }
 
-   
-
     public string GetCharacterTeam(string tag) {
         try {
             Team team = lookupTable[tag];
@@ -78,6 +47,36 @@ namespace BattleScene {
         catch {
             return "No team";
         }
+    }
+
+    public void AddCharacter(string tag, GameObject character, int teamKey) {
+        try {
+            // find the team of added character
+            Debug.Log(character);
+            Team team;
+            if (teamKey == 0)
+                team = Team.PLAYER_TEAM;
+            else if (teamKey == 1)
+                team = Team.ENEMY_TEAM;
+            else
+                throw new Exception("team key is not valid");
+
+
+            holders.Add(tag, character.GetComponent<PakRender>());
+            lookupTable.Add(tag, team);
+        }
+        catch (Exception e) {
+            if (e is ArgumentException) {
+                Destroy(character);
+            }
+            Debug.LogError(e.Message);
+        }
+    }
+
+    // Remove a specific chacracter by tag and team flag
+    public void RemoveCharacter(string tag) {
+        lookupTable.Remove(tag);
+        holders.Remove(tag);
     }
 
     // Get a list of CharacterHolder of pakTeam
