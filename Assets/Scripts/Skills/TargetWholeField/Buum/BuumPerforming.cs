@@ -1,21 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-public class Buum : Skill
+
+public class BuumPerforming : Performable
 {
-    //constructor
-    public Buum(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetWholeField")
-    {
-        AttackWholeField += ActionBuum;
-        this.icon = icon;
-    }
-
-    //delegates
-    public Action<List<PakRender>, PakRender> AttackWholeField;
-
-    //action
-    private void ActionBuum(List<PakRender> target, PakRender self)
+    public void performSkill(List<PakRender> target, PakRender self)
     { //target can be the list of all Pakrender in the fighting scene.
         int damage = (int)(self.healthSystem.MaxHp * 0.6);
         target.Remove(self);

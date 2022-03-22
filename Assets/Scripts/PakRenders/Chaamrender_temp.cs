@@ -13,21 +13,21 @@ public class Chaamrender_temp : PakRender
             Sprite skillIcon3 = Resources.Load("SkillIcons/sk1", typeof(Sprite)) as Sprite;
             Sprite skillIconUnti = Resources.Load("SkillIcons/sk2", typeof(Sprite)) as Sprite;
         
-            //!
+            //! might need to add skill 4
             skill.Add(new VanillaAttackOne("VA1", "AttackOneEnemy", "This do damage to one enemy.", 1, skillIcon2));
             skill.Add(new VanillaBuffAtkAll("VBAA", "BuffAtkAllAlliance", "Buff all alliance to increase their strength for the duration of this battle.", 3, skillIcon3));
             skill.Add(new VanillaHealAll("VHA", "HealAllAlliance", "Heal all alliances.", 4, skillIcon1));
-            skill.Add(new VanillaGainSPOne("VGSP1", "GainSPOneAlliance", "Target one alliance and it gain 1 SP.", 3, skillIconUnti));
+            // skill.Add(new VanillaGainSPOne("VGSP1", "GainSPOneAlliance", "Target one alliance and it gain 1 SP.", 3, skillIconUnti));
         }
         catch {
             Debug.Log("skill icons not found!!");
             Sprite dummyImage = BattleManager.instance.dummySkill;
 
-            //!
+            //! might need to add skill 4
             skill.Add(new VanillaAttackOne("VA1", "AttackOneEnemy", "This do damage to one enemy.", 1, dummyImage));
             skill.Add(new VanillaBuffAtkAll("VBAA", "BuffAtkAllAlliance", "Buff all alliance to increase their strength for the duration of this battle.", 3, dummyImage));
             skill.Add(new VanillaHealAll("VHA", "HealAllAlliance", "Heal all alliances.", 4, dummyImage));
-            skill.Add(new VanillaGainSPOne("VGSP1", "GainSPOneAlliance", "Target one alliance and it gain 1 SP.", 3, dummyImage));
+            // skill.Add(new VanillaGainSPOne("VGSP1", "GainSPOneAlliance", "Target one alliance and it gain 1 SP.", 3, dummyImage));
 
         }
     }

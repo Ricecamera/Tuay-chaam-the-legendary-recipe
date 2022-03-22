@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class TimerCutScene1 : MonoBehaviour
 {
-    private string levelToLoad="Default_level_1-1";
-    private float timer = 43f;
+    private string levelToLoad="TutorialScene";
+    private float timer = 1f; //43f;
     // Start is called before the first frame update
     void Start()
     {

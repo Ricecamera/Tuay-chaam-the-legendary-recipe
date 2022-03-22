@@ -1,24 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class VanillaAttackAll : Skill
+public class VanillaAttackAllPerforming : Performable
 {
-    //constructor
-    public VanillaAttackAll(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies")
-    {
-        AttackAllEnemy += ActionVanillaAttackAll;
-        //Yod Add this for use temp skill desc and cooldown //// 
-        this.description = "Attack all enemies at once.";
-        this.icon = icon;
-        /////////
-    }
-
-    //delegates
-    public Action<List<PakRender>, PakRender> AttackAllEnemy;
-    //action
-    public void ActionVanillaAttackAll(List<PakRender> target, PakRender self)
+    public void performSkill(List<PakRender> target, PakRender self)
     {
         int damage;
         int atkValue = self.currentAtk;
@@ -35,6 +21,6 @@ public class VanillaAttackAll : Skill
             e.healthSystem.TakeDamage(damage);
             e.switchMat();
         }
-        return;
+        return;   
     }
 }
