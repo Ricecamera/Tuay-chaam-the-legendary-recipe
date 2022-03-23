@@ -106,6 +106,18 @@ public class Skill
                 Buff(caller, target, vskill11.AttackWholeField);
                 break;
 
+            case "HPTO1":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ SetOneEnemyHPTo1 is called");
+                SetOneEnemyHPTo10 vskill12 = (SetOneEnemyHPTo10) this;
+                Attack(caller, target, vskill12.SetOneEnemyHealthTo10);
+                break;
+
+            case "HAHP":
+                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HalfEnemiesHealth is called");
+                HalfEnemiesHealth vskill13 = (HalfEnemiesHealth) this;
+                Attack(caller, target, vskill13.HalfAllEnemiesHealth);
+                break;
+
             default:
                 Debug.Log("Skill ID not matched");
                 Debug.LogError("Skill not being call.");
