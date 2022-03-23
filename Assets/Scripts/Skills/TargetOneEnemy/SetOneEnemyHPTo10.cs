@@ -6,9 +6,9 @@ using System;
 public class SetOneEnemyHPTo10 : Skill
 {
     //constructor
-    public SetOneEnemyHPTo10(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneEnemies")
+    public SetOneEnemyHPTo10(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetOneEnemy")
     {
-        SetOneEnemyHealthTo10 += SetOneEnemyHealthTo10;
+        SetOneEnemyHealthTo10 += ActionSetOneEnemyHPTo10;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Set one enemy health to 10";
         this.icon = icon;
@@ -21,7 +21,7 @@ public class SetOneEnemyHPTo10 : Skill
     //action
     public void ActionSetOneEnemyHPTo10(List<PakRender> target, PakRender self)
     {
-            target[0].healthSystem.CurrentHp=10;
+            target[0].healthSystem.TakeDamage(target[0].healthSystem.CurrentHp-10);
         return;
     }
 }

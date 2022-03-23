@@ -8,7 +8,7 @@ public class HalfEnemiesHealth : Skill
     //constructor
     public HalfEnemiesHealth(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies")
     {
-        HalfAllEnemiesHealth += HalfAllEnemiesHealth;
+        HalfAllEnemiesHealth += ActionHalfEnemiesHealth;
         //Yod Add this for use temp skill desc and cooldown //// 
         this.description = "Half health of all enemies.";
         this.icon = icon;
