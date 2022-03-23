@@ -8,11 +8,6 @@ namespace DialogueSystem
 {
     public class DialogueHolder : MonoBehaviour
     {
-
-        [Header("Character Animations")]
-        [SerializeField] private Animator tonhom;
-        [SerializeField] private Animator chaam;
-
         private void Awake()
         {
             StartCoroutine(dialogueSequence());
@@ -27,16 +22,11 @@ namespace DialogueSystem
                 Deactivate();
                 Debug.Log(transform.GetChild(i).name);
                 transform.GetChild(i).gameObject.SetActive(true);
-                if (transform.GetChild(i).name.Contains("Tonhom"))
-                {
-                    tonhom.SetTrigger("Come_in");
-                    chaam.SetTrigger("Come_out");
-                    Debug.Log(transform.childCount);
-                }
-                yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().isFinish || Input.GetMouseButtonDown(0));
+                yield return new WaitUntil(() => transform.GetChild(i).GetComponent<DialogueLine>().isFinish);
             }
             gameObject.SetActive(false);
-            LevelLoader.instance.LoadSpecificScene("TutorialScene");
+
+            SceneLoader.Instance.LoadNextScene();
         }
 
         public void Deactivate()
