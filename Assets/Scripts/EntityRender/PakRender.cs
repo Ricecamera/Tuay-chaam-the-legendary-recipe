@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HealthSystem))]
-public class PakRender : MonoBehaviour
+public class PakRender : MonoBehaviour, IComparable
 {   
     static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
     static string LAYER_CHARACTER = "Character";
@@ -109,6 +109,16 @@ public class PakRender : MonoBehaviour
         }
     }
 
+    public int CompareTo(object obj) {
+        if (obj == null) return 1;
+        PakRender nextEvent = obj as PakRender;
+        if (nextEvent != null) {
+            return this.GetInstanceID().CompareTo(nextEvent.GetInstanceID());
+        }
+        else {
+            throw new ArgumentException("Object doesn't have a property speed");
+        }
+    }
 
     public void DisplayInAction(bool value, int skillIndex=0)
     {
