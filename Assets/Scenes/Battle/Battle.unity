@@ -856,8 +856,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.6, y: 240.22}
-  m_SizeDelta: {x: 1503, y: 915}
+  m_AnchoredPosition: {x: 101.38252, y: 240.22}
+  m_SizeDelta: {x: 3138.6504, y: 915}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &554195604
 MonoBehaviour:
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4b2045697a0e8624a803f78776cf73ca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd55e5b34d2a1fd4d9df5a5d49708db4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2161,8 +2161,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.798, y: -132.9339}
-  m_SizeDelta: {x: 1229.34, y: 442.036}
+  m_AnchoredPosition: {x: 19.512, y: -132.9339}
+  m_SizeDelta: {x: 2674.993, y: 442.036}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1596370311
 MonoBehaviour:
@@ -2186,18 +2186,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a5dc3a83b9786d341b0c904c4385381b, type: 3}
-    m_FontSize: 200
+    m_FontSize: 204
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
-    m_MaxSize: 200
+    m_MaxSize: 204
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Triple atk of Chaam
+  m_Text: 'Honey Lemon: It will deal great damage to one enemy.'
 --- !u!222 &1596370312
 CanvasRenderer:
   m_ObjectHideFlags: 0

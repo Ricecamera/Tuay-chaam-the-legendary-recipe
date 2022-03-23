@@ -31,7 +31,7 @@ public class LevelLoader : MonoBehaviour
             {
                 Button playButton = GameObject.Find("Play").GetComponent<Button>();
                 Button quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
-                playButton.onClick.AddListener(LoadNextScene);
+                playButton.onClick.AddListener(() => SceneManager.LoadScene("ModeSelection"));
                 quitButton.onClick.AddListener(ExitGame);
             }
             if (SceneManager.GetActiveScene().buildIndex == 2) //* Character Select

@@ -125,6 +125,7 @@ public class PakSelection : MonoBehaviour
             nextState = InputState.SKILL_SELECTED;
             comboPanel.SetActive(false);
             cookPressed = false;
+            UpdateCharacterLayer(nextState);
         });
 
         comboPanel.SetActive(false);
@@ -177,6 +178,10 @@ public class PakSelection : MonoBehaviour
             }
             else if (currentState > InputState.DEFAULT && currentState < InputState.COMFIRMED)
                 reset();
+
+            comboPanel.SetActive(false);
+            supportMenu.SetActive(false);
+            cookPressed = false;
             return;
         }
 

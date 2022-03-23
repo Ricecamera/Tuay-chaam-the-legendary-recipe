@@ -21,7 +21,8 @@ public class SetOneEnemyHPTo10 : Skill
     //action
     public void ActionSetOneEnemyHPTo10(List<PakRender> target, PakRender self)
     {
-            target[0].healthSystem.TakeDamage(target[0].healthSystem.CurrentHp-10);
+        if(target[0].healthSystem.CurrentHp <280) target[0].healthSystem.TakeDamage(target[0].healthSystem.CurrentHp-10);
+        else target[0].healthSystem.TakeDamage(target[0].healthSystem.CurrentHp/2);
         return;
     }
 }
