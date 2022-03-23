@@ -7,8 +7,6 @@ using BattleScene;
 public class Spawner : MonoBehaviour
 {
 
-    public CharacterManager characters;
-
     public List<GameObject> plants = new List<GameObject>();         // contains prefabs of all in-play plants
     public List<GameObject> enemies = new List<GameObject>();       // contains prefabs of all in-play enemies
     public List<Transform> allySpawnPos = new List<Transform>();    // reference of allies' spawn positions in scene
@@ -24,7 +22,6 @@ public class Spawner : MonoBehaviour
     public Transform bossSpawnPos;          // reference of boss' spawn position
     void OnEnable()
     {
-        characters.Intialize();
         ConvertToGameObjectList(CharacterSelecter.instance?.GetCharacters());
         ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
 
@@ -34,12 +31,12 @@ public class Spawner : MonoBehaviour
             {
                 GameObject p = Instantiate(plants[i], allySpawnPos[i].position, Quaternion.identity, allySpawnPos[i]);
                 p.tag = allySpawnPos[i].gameObject.tag;
-                characters.AddCharacter(p.tag, p, 0);
+                CharacterManager.instance.AddCharacter(p.tag, p);
             }
 
             GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
             chaamObject.tag = chaamSpawnPos.gameObject.tag;
-            characters.AddCharacter(chaamObject.tag, chaamObject, 0);
+            CharacterManager.instance.AddCharacter(chaamObject.tag, chaamObject);
 
         }
         catch (Exception e) {
@@ -49,13 +46,13 @@ public class Spawner : MonoBehaviour
             for (int i = 0; i < enemies.Count; i++) {
                 GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
                 e.tag = enemySpawnPos[i].gameObject.tag;
-                characters.AddCharacter(e.tag, e, 1);
+                CharacterManager.instance.AddCharacter(e.tag, e);
             }
 
             if (boss != null) {
                 GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
                 bossObject.tag = bossSpawnPos.gameObject.tag;
-                characters.AddCharacter(bossObject.tag, bossObject, 1);
+                CharacterManager.instance.AddCharacter(bossObject.tag, bossObject);
             }
         }     
     }

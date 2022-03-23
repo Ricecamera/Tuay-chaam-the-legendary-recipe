@@ -3,19 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleScene {
-    public class CharacterManager : MonoBehaviour {
-    
+public class CharacterManager : MonoBehaviour {
+    public static CharacterManager instance;     
     enum Team {PLAYER_TEAM, ENEMY_TEAM };
-    private SortedList<string, Team> lookupTable;
-    private Dictionary<string, PakRender> holders;         // dictionary contains character holder
+    private Dictionary<string, PakRender> holders = new Dictionary<string, PakRender>();         // dictionary contains character holder
 
-    // Initialize character dictonarys
-    public void Intialize() {
-        lookupTable = new SortedList<string, Team>();
-        holders = new Dictionary<string, PakRender>();
+    // Check team of tag object
+    public static bool IsPlayerTeam(string tag) {
+        return (tag.CompareTo("Plant1") == 0 || tag.CompareTo("Plant2") == 0
+                    || tag.CompareTo("Plant3") == 0|| tag.CompareTo("Chaam") == 0);
     }
 
-    // Add a new character
+    public static bool IsEnemyTeam(string tag) {
+        return (tag.CompareTo("Enemy1") == 0 || tag.CompareTo("Enemy2") == 0 || tag.CompareTo("Enemy3") == 0
+            || tag.CompareTo("Enemy4") == 0 || tag.CompareTo("Boss") == 0);
+    }
+
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
 
     // Get a specific character by tag and team flag
     public PakRender GetCharacter(string tag) {
@@ -36,34 +48,12 @@ namespace BattleScene {
         return holders.ContainsKey(tag);
     }
 
-    public string GetCharacterTeam(string tag) {
-        try {
-            Team team = lookupTable[tag];
-
-            if (team == Team.PLAYER_TEAM)
-                return "Player team";
-            return "Enemy team";
-        }
-        catch {
-            return "No team";
-        }
-    }
-
-    public void AddCharacter(string tag, GameObject character, int teamKey) {
+    // Add a new character
+    public void AddCharacter(string tag, GameObject character) {
         try {
             // find the team of added character
             Debug.Log(character);
-            Team team;
-            if (teamKey == 0)
-                team = Team.PLAYER_TEAM;
-            else if (teamKey == 1)
-                team = Team.ENEMY_TEAM;
-            else
-                throw new Exception("team key is not valid");
-
-
             holders.Add(tag, character.GetComponent<PakRender>());
-            lookupTable.Add(tag, team);
         }
         catch (Exception e) {
             if (e is ArgumentException) {
@@ -75,7 +65,6 @@ namespace BattleScene {
 
     // Remove a specific chacracter by tag and team flag
     public void RemoveCharacter(string tag) {
-        lookupTable.Remove(tag);
         holders.Remove(tag);
     }
 
@@ -96,15 +85,17 @@ namespace BattleScene {
             return temp;
         }
 
-        Team team;
-        if (teamKey == 0)
-            team = Team.PLAYER_TEAM;
-        else
-            team = Team.ENEMY_TEAM;
 
-        foreach (var kv in lookupTable) {
-            if (kv.Value == team)
-                temp.Add(holders[kv.Key]);
+        foreach (var kv in holders) {
+            if (teamKey == 0) {
+                if (IsPlayerTeam(kv.Value.tag))
+                    temp.Add(kv.Value);
+                }
+            else {
+                if (IsEnemyTeam(kv.Value.tag)) {
+                    temp.Add(kv.Value);
+                }
+            }     
         }
         return temp;
     }
@@ -122,12 +113,35 @@ namespace BattleScene {
         }
     }
 
+    public void LockAllCharacters(bool value, int teamKey) {
+        if (teamKey < 0 || teamKey > 2) {
+            throw new Exception("Invalid team key");
+        }
+
+        foreach (var k_v in holders) { 
+            if (teamKey == 2) {
+                k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
+            }
+            else {
+                if (teamKey == 0) {
+                    if (IsPlayerTeam(k_v.Value.tag))
+                        k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
+                    }
+                else {
+                    if (IsEnemyTeam(k_v.Value.tag)) {
+                        k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
+                    }
+                }
+            }
+        }
+    }
+
     /** Reset state of all characters
-     * 0.Reset all state
-     * 1.Reset Action
-     * 2.Reset Select
-     * 3.Reset HighLight
-     */
+        * 0.Reset all state
+        * 1.Reset Action
+        * 2.Reset Select
+        * 3.Reset HighLight
+        */
     public void ResetState(int options) {
         foreach (var k_v in holders) {
             switch(options) {
@@ -153,12 +167,10 @@ namespace BattleScene {
         }
     }
 
-
     // Clear dictionarys
     public void Clear() {
         holders?.Clear();
     }
-
 }
 }
 
