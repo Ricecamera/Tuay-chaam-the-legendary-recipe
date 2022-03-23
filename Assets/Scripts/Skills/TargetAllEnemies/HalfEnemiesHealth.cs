@@ -34,6 +34,11 @@ public class HalfEnemiesHealth : Skill
             e.healthSystem.TakeDamage(damage);
             e.switchMat();
         }
+        
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("HitOneHard", soundBank[0].GetComponent<BattleSound>().clips);
+
         return;
     }
 }

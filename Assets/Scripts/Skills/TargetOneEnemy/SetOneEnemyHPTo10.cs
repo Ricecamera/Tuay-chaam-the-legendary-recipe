@@ -23,6 +23,11 @@ public class SetOneEnemyHPTo10 : Skill
     {
         if(target[0].healthSystem.CurrentHp <280) target[0].healthSystem.TakeDamage(target[0].healthSystem.CurrentHp-10);
         else target[0].healthSystem.TakeDamage(target[0].healthSystem.CurrentHp/2);
+
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("HitOneHard", soundBank[0].GetComponent<BattleSound>().clips);
+        
         return;
     }
 }

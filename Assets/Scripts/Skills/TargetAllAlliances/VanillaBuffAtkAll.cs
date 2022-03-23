@@ -22,6 +22,11 @@ public class VanillaBuffAtkAll : Skill
             e.currentAtk += buffValue;
             e.atkBuffVfx.Play();
         }
+
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("Buff", soundBank[0].GetComponent<BattleSound>().clips);
+
         return;
     }
 }

@@ -35,6 +35,11 @@ public class VanillaAttackAll : Skill
             e.healthSystem.TakeDamage(damage);
             e.switchMat();
         }
+
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("HitAll", soundBank[0].GetComponent<BattleSound>().clips);
+
         return;
     }
 }

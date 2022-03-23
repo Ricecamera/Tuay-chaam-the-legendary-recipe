@@ -11,11 +11,11 @@ public class LevelManager : MonoBehaviour
     public int thislevel { get; set; }
 
     //number of time map was open;
-    public int mapArrived;
+    public int mapArrived; 
     public int winTime = 0;
 
-    void Start() {
-        unlockStatus = new List<bool>() { true, true, true, false };
+    void Start() { 
+        unlockStatus = new List<bool>() { true, false, false, false };
         mapArrived = 2;
     }
 
@@ -30,10 +30,10 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    private void Update() {
-        if (mapArrived < unlockStatus.Count
-            && !unlockStatus[mapArrived]) {
-            unlockStatus[mapArrived] = true;
-        }
-    }
+    // private void Update() {
+    //     if (mapArrived < unlockStatus.Count
+    //         && !unlockStatus[mapArrived]) {
+    //         unlockStatus[mapArrived] = true;
+    //     }
+    // }
 }

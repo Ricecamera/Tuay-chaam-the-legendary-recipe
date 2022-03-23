@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
         ConvertPlantToGameObject(CharacterSelecter.instance?.GetCharacters());
         ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
         //ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
-        Debug.Log(CharacterSelecter.instance?.GetSupports()[0]);
+        //Debug.Log(CharacterSelecter.instance?.GetSupports()[0]);
 
         try
         {
@@ -104,8 +104,12 @@ public class Spawner : MonoBehaviour
 
     public void ConvertChaamToGameObject(ItemObject itemObject)
     {
-        if (itemObject != null)
+        if (itemObject != null) {
+            Debug.Log(itemObject.prefab.name);
             chaam = itemObject.prefab;
+        }
+        else {
+            Debug.Log("Chaam not found");
+        }
     }
-
 }

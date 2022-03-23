@@ -28,6 +28,11 @@ public class Buum : Skill
             }
         }
         self.healthSystem.TakeDamage((int)(self.healthSystem.CurrentHp / 1.5));
+
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("Buum", soundBank[0].GetComponent<BattleSound>().clips);
+
         return;
     }
 }

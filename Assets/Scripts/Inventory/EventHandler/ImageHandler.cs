@@ -61,7 +61,7 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("Pointer Up");
+        //Debug.Log("Pointer Up");
 
 
         // swap between item and item
@@ -92,12 +92,16 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         {
             if (dragItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
 
-            if (currentItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.AddCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
+            if (currentItem.GetComponent<ImageHandler>().itemObject != null) {
+                CharacterSelecter.instance.AddCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
+            } 
         }
         else if (currentItem.transform.parent.CompareTag("slot") && dragItem.transform.parent.CompareTag("inventory"))
         {
             if (currentItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
-            if (dragItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.AddCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
+            if (dragItem.GetComponent<ImageHandler>().itemObject != null) {
+                CharacterSelecter.instance.AddCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
+            }
         }
     }
 }

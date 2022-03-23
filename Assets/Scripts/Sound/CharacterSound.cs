@@ -12,4 +12,8 @@ public class CharacterSound : MonoBehaviour
         SoundManager.Instance.PlaySound("button", clips);
     }
 
+    public void PlaySoundByName(string name) {
+        SoundManager.Instance.PlaySound(name,clips);
+    }
+
 }

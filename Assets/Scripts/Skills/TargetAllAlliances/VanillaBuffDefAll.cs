@@ -22,6 +22,11 @@ public class VanillaBuffDefAll : Skill
             e.currentDef += buffValue;
             e.defBuffVfx.Play();
         }
+
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("Buff", soundBank[0].GetComponent<BattleSound>().clips);
+
         return;
     }
 }

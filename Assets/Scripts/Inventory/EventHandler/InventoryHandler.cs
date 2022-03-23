@@ -37,7 +37,7 @@ public class InventoryHandler : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 eventData.pointerDrag.gameObject.GetComponent<CanvasGroup>().alpha = 1f;
                 eventData.pointerDrag.gameObject.SetActive(false);
-                Debug.Log("check swap");
+                //Debug.Log("check swap");
 
                 // if (itemType != ItemType.Chaam)
                 // {

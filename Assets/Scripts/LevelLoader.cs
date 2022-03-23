@@ -38,10 +38,10 @@ public class LevelLoader : MonoBehaviour
             {
                 Button startButton = GameObject.Find("Start Button").GetComponent<Button>();
                 Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
-                Button helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
+                // Button helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
                 startButton.onClick.AddListener(LoadNextScene);
                 backButton.onClick.AddListener(LoadPrevScene);
-                helpButton.onClick.AddListener(Help);
+                // helpButton.onClick.AddListener(Help);
             }
         }
     }

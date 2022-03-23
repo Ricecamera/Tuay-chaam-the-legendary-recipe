@@ -21,6 +21,11 @@ public class VanillaBuffAtkOne : Skill
     { //should pass lv and stat of char and calculate value in this function.
         target[0].currentAtk += self.currentAtk / 4;
         target[0].atkBuffVfx.Play();
+
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("Buff", soundBank[0].GetComponent<BattleSound>().clips);
+        
         return;
     }
 }

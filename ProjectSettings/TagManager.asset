@@ -22,6 +22,7 @@ TagManager:
   - boss
   - inventory
   - slot
+  - SoundBank
   layers:
   - Default
   - TransparentFX

@@ -23,6 +23,11 @@ public class VanillaHealOne : Skill
         int healValue = self.healthSystem.MaxHp / 4;
 
         target[0].healthSystem.Heal(healValue);
+
+        //add sound effect
+        GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
+        SoundManager.Instance.PlaySound("Heal", soundBank[0].GetComponent<BattleSound>().clips);
+
         return;
     }
 }

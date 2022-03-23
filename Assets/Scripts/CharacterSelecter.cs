@@ -7,7 +7,7 @@ public class CharacterSelecter : MonoBehaviour
 {
     public static CharacterSelecter instance;
 
-    public GameObject popup;
+    public GameObject popup; 
 
     public List<ItemObject> characters = new List<ItemObject>();
     public ItemObject chaam;
@@ -30,14 +30,18 @@ public class CharacterSelecter : MonoBehaviour
     {
         if (itemObject.type == ItemType.Pak)
         {
+            Debug.Log("Add Pak");
             this.characters.Add(itemObject);
         }
-        else if (itemObject.type == ItemType.Chaam)
+        else if (itemObject.type == ItemType.Chaam) 
         {
+            Debug.Log("Add Chaam");
             chaam = itemObject;
+            Debug.Log(chaam.name);
         }
         else if (itemObject.type == ItemType.Support)
         {
+            Debug.Log("Add Support");
             this.supports.Add(itemObject);
         }
     }
