@@ -25,7 +25,7 @@ namespace DialogueSystem
             for (int i = 0; i < transform.childCount; i++)
             {
                 Deactivate();
-                Debug.Log(i);
+                Debug.Log(transform.GetChild(i).name);
                 transform.GetChild(i).gameObject.SetActive(true);
                 if (transform.GetChild(i).name.Contains("Tonhom"))
                 {
