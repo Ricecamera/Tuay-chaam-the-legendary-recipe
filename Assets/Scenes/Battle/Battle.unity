@@ -627,7 +627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a9a768e4893fc45831b457c1aefd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plants: []
+  plants:
+  - {fileID: 122150217594594949, guid: 3320c255addfe464dbf08fef2eaa63c7, type: 3}
   enemies:
   - {fileID: 1676348087460524731, guid: c087df6303e007f44aebdc2c7d366f58, type: 3}
   - {fileID: 4698015606216624904, guid: cf4a5c950cd6aba4688d6d4fbc001b49, type: 3}
@@ -641,7 +642,7 @@ MonoBehaviour:
   - {fileID: 481780095}
   - {fileID: 1602421391}
   healthBar: []
-  chaam: {fileID: 0}
+  chaam: {fileID: 3678362646462264695, guid: e567f4a398e3e2c46adc29ceacd20c3b, type: 3}
   chaamSpawnPos: {fileID: 1943614277}
   boss: {fileID: 5526432194195436290, guid: 2cd829a40a75d2a4fbebd2aaca1effab, type: 3}
   bossSpawnPos: {fileID: 565492851}
@@ -1771,7 +1772,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ae11751be5185488d18d3a36dc37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandList: []
   diedThisTurn: []
 --- !u!4 &1662004682
 Transform:
