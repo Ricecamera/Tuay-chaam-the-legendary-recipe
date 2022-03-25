@@ -309,6 +309,7 @@ GameObject:
   - component: {fileID: 411038000}
   - component: {fileID: 411037999}
   - component: {fileID: 411037998}
+  - component: {fileID: 411038001}
   m_Layer: 5
   m_Name: Select Skill Text
   m_TagString: Untagged
@@ -377,6 +378,21 @@ RectTransform:
   m_AnchoredPosition: {x: 6.5, y: -115.400024}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &411038001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411037997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &426689974
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +594,6 @@ GameObject:
   m_Component:
   - component: {fileID: 539540503}
   - component: {fileID: 539540504}
-  - component: {fileID: 539540505}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Spawner
@@ -612,7 +627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a9a768e4893fc45831b457c1aefd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characters: {fileID: 110392428}
   plants: []
   enemies:
   - {fileID: 1676348087460524731, guid: c087df6303e007f44aebdc2c7d366f58, type: 3}
@@ -627,23 +641,10 @@ MonoBehaviour:
   - {fileID: 481780095}
   - {fileID: 1602421391}
   healthBar: []
-  chaam: {fileID: 3678362646462264695, guid: ae49261d00e4a814c9d425c93447cf9b, type: 3}
+  chaam: {fileID: 0}
   chaamSpawnPos: {fileID: 1943614277}
   boss: {fileID: 5526432194195436290, guid: 2cd829a40a75d2a4fbebd2aaca1effab, type: 3}
   bossSpawnPos: {fileID: 565492851}
-  pakSelection: {fileID: 0}
---- !u!114 &539540505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539540502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6404a7daf12a1f4b903044f656c9994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &543371956 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7173921338258702980, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
@@ -1003,6 +1004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1339217663}
   - component: {fileID: 1339217662}
+  - component: {fileID: 1339217664}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: GameController
@@ -1019,18 +1021,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1339217661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ae5799a06f1fd14ba170b929a6e96c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 99279dbe83372f6489b9e89d3dd0e3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillMenu: {fileID: 543371959}
-  okButton: {fileID: 1503610348}
-  backButton: {fileID: 708669005}
-  endTurnButton: {fileID: 1966035253}
-  cancelButton: {fileID: 1591717853}
-  supportMenu: {fileID: 1473131846}
-  Backdrop: {fileID: 156448288}
-  selectTargetText: {fileID: 1882819453}
-  selectSkillText: {fileID: 411037998}
+  selectedTargets: []
+  battleManger: {fileID: 1662004680}
 --- !u!4 &1339217663
 Transform:
   m_ObjectHideFlags: 0
@@ -1045,6 +1040,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1339217664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339217661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8883911939d95e240ba9fad11e7532df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillMenu: {fileID: 543371959}
+  okButton: {fileID: 1503610348}
+  backButton: {fileID: 708669005}
+  endTurnButton: {fileID: 1966035253}
+  cancelButton: {fileID: 1591717853}
+  supportMenu: {fileID: 1473131846}
+  selectTargetText: {fileID: 1882819453}
+  selectSkillText: {fileID: 411037998}
+  Backdrop: {fileID: 156448288}
 --- !u!1 &1346793074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,13 +1234,14 @@ GameObject:
   - component: {fileID: 1467566892}
   - component: {fileID: 1467566891}
   - component: {fileID: 1467566890}
+  - component: {fileID: 1467566893}
   m_Layer: 5
   m_Name: Action Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1467566890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1238,7 +1255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1286,6 +1303,21 @@ RectTransform:
   m_AnchoredPosition: {x: 6.5, y: -115.399994}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1467566893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467566889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 0
 --- !u!1 &1473131846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,7 +1631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 275.1, y: -215.9}
+  m_AnchoredPosition: {x: 393, y: -215.9}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1602421390
@@ -1727,7 +1759,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionText: {fileID: 1467566890}
-  dummySkill: {fileID: 21300000, guid: 9775c7b8985792b43aa50a5e4694a4a3, type: 3}
 --- !u!114 &1662004681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1740,6 +1771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ae11751be5185488d18d3a36dc37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandList: []
   diedThisTurn: []
 --- !u!4 &1662004682
 Transform:
@@ -1839,6 +1871,7 @@ GameObject:
   - component: {fileID: 1882819452}
   - component: {fileID: 1882819454}
   - component: {fileID: 1882819453}
+  - component: {fileID: 1882819455}
   m_Layer: 5
   m_Name: Select Target Text
   m_TagString: Untagged
@@ -1907,6 +1940,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882819451}
   m_CullTransparentMesh: 1
+--- !u!114 &1882819455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882819451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1943614276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2475,6 +2523,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1176351911}
     m_Modifications:
+    - target: {fileID: 4007638101401414238, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206461712158947944, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7173921338258702979, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
       propertyPath: m_Name
       value: Skill Menu
@@ -2562,6 +2618,10 @@ PrefabInstance:
     - target: {fileID: 7173921338258702980, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173921339466247962, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
+      propertyPath: m_Interactable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
