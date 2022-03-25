@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleScene;
 
-[RequireComponent(typeof(CharacterManager))]
 public class Spawner : MonoBehaviour
 {
 
