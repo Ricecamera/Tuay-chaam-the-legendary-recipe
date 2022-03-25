@@ -14,6 +14,11 @@ public class SkillMenuUI : MonoBehaviour {
     
     public SkillUI[] skills;
 
+    private void Start() {
+        for (int i = 0; i < skills.Length; i++) {
+            skills[i].SetSelect(false);
+        }
+    }
     public void ToggleMenu(bool isShow)
     {
         if (isShow)
