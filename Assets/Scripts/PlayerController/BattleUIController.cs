@@ -23,32 +23,38 @@ public class BattleUIController : MonoBehaviour {
         selectSkillText.gameObject.SetActive(false);
     }
 
-    public void UpdateUI(PakSelectionV3.GameState nextState) {
+    public void UpdateUI(PakSelection.GameState nextState) {
         switch (nextState) {
-            case PakSelectionV3.GameState.CHOOSE_SKILL:
+            case PakSelection.GameState.CHOOSE_SKILL:
                 selectSkillText.gameObject.SetActive(true);
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
-                Backdrop.SetActive(true);
                 break;
-            case PakSelectionV3.GameState.CHOOSE_TARGET:
+            case PakSelection.GameState.CHOOSE_TARGET:
                 selectSkillText.gameObject.SetActive(false);
+                selectTargetText.gameObject.SetActive(true);
                 backButton.gameObject.SetActive(true);
                 okButton.gameObject.SetActive(false);
                 Backdrop.SetActive(true);
                 break;
-            case PakSelectionV3.GameState.WAIT_FOR_CONFIRM:
-                selectTargetText.gameObject.SetActive(false);
+            case PakSelection.GameState.WAIT_FOR_CONFIRM:
+                okButton.gameObject.SetActive(true);
                 break;
-            case PakSelectionV3.GameState.END_TURN:
+            case PakSelection.GameState.END_TURN:
+                selectTargetText.gameObject.SetActive(false);
                 endTurnButton.gameObject.SetActive(false);
                 okButton.gameObject.SetActive(false);
                 backButton.gameObject.SetActive(false);
                 break;
-            case PakSelectionV3.GameState.DISPLAY_SKILL:
+            case PakSelection.GameState.DISPLAY_SKILL:
+                skillMenu.ToggleMenu(true);
+                backButton.gameObject.SetActive(true);
+                endTurnButton.gameObject.SetActive(false);
+                cancelButton.gameObject.SetActive(true);
+                Backdrop.SetActive(true);
                 break;
-            default:
+            default: // GameState.CHOOSE_CHARACTER
                 skillMenu.ToggleMenu(false);
                 backButton.gameObject.SetActive(false);
                 okButton.gameObject.SetActive(false);

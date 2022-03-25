@@ -51,7 +51,6 @@ public class BattleManager : MonoBehaviour {
     public void RunCommand() {
         Debug.Log("Battle Start!!");
 
-        CharacterSelecter.instance?.ResetCharacter();
 
         //---------------------------------New AI ---------------------------------------------//
 
@@ -89,6 +88,10 @@ public class BattleManager : MonoBehaviour {
         actionCommandHandler.RunCommands();
 
         //****
+    }
+    
+    public void AddCommand(ActionCommand command) {
+        actionCommandHandler.AddCommand(command);
     }
 
     // Go to next turn this method call when OnComplete event is triggered
