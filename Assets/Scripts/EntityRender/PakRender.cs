@@ -22,6 +22,7 @@ public class PakRender : MonoBehaviour, IComparable
 
 
     public List<Skill> skill;
+    public int setSkill = -1;
 
     public ParticleSystem defBuffVfx, atkBuffVfx;
 
@@ -50,7 +51,14 @@ public class PakRender : MonoBehaviour, IComparable
     private Action onSlideComplete;
 
     public Entity Entity { get { return enitityData;} }
-    public State currentState { get; set;}
+    public State currentState { 
+        get {
+            return state;
+        }
+        set {
+            state = value;
+        }
+    }
     public bool Selected {
         get {
             return selected;
@@ -92,10 +100,6 @@ public class PakRender : MonoBehaviour, IComparable
     protected virtual void Update()
     {
         switch (state) {
-            case State.Idle:
-                break;
-            case State.Busy:
-                break;
             case State.Sliding:
                 transform.position += (targetPos - GetPosition()) * slideSpeed * Time.deltaTime;
 
@@ -105,6 +109,8 @@ public class PakRender : MonoBehaviour, IComparable
                     //transform.position = slideTargetPosition;
                     onSlideComplete();
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -120,7 +126,7 @@ public class PakRender : MonoBehaviour, IComparable
         }
     }
 
-    public void DisplayInAction(bool value, int skillIndex=0)
+    public void DisplayInAction(bool value, int skillIndex)
     {
         // Prevent index out of bound error
         if(skillIndex < 0 || skillIndex > skill.Count){
@@ -135,9 +141,16 @@ public class PakRender : MonoBehaviour, IComparable
         }
         else {
             // Hide InAction indicator
-            actionIcon.sprite = null;
+            if (setSkill == skillIndex)
+                actionIcon.sprite = null;
         }
 
+        actionIcon.gameObject.SetActive(value);
+        spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
+    }
+
+    public void DisplayInAction(bool value) {
+        SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
         actionIcon.gameObject.SetActive(value);
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
     }
@@ -241,7 +254,7 @@ public class PakRender : MonoBehaviour, IComparable
     private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete) {
         this.targetPos = slideTargetPosition;
         this.onSlideComplete = onSlideComplete;
-        state = State.Sliding;
+        currentState = State.Sliding;
     }
 
 
