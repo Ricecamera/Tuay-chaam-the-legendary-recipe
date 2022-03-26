@@ -9,6 +9,7 @@ namespace BattleScene.BattleLogic
     {
 
         public static event Action OnComplete;          // this event invoke when `DoActionOverTIme` is called and completed
+        public static event Action<bool> OnUpdateCommands;
 
         [SerializeField]
         private List<ActionCommand> commandList = new List<ActionCommand>();    // temporary list that store all of actions to be executed
@@ -49,12 +50,14 @@ namespace BattleScene.BattleLogic
             // Clear commandList
             commandList.Clear();
             OnComplete?.Invoke();
+            OnUpdateCommands?.Invoke(isEmpty());
         }
 
         // Add a new command to `commandList`
         public void AddCommand(ICommand command)
         {
             commandList.Add(command as ActionCommand);
+            OnUpdateCommands?.Invoke(isEmpty());
         }
 
         // Execute all commands order by command's speed;
@@ -102,6 +105,7 @@ namespace BattleScene.BattleLogic
                 if (action.caller.CompareTag(gameTag))
                 {
                     commandList.RemoveAt(i);
+                    OnUpdateCommands?.Invoke(isEmpty());
                     return action;
                 }
             }
@@ -117,10 +121,15 @@ namespace BattleScene.BattleLogic
                 if (action.caller.CompareTag(gameTag) && action.selectedSkill == skillIndex)
                 {
                     commandList.RemoveAt(i);
+                    OnUpdateCommands?.Invoke(isEmpty());
                     return action;
                 }
             }
             return null;
+        }
+
+        public bool isEmpty() {
+            return this.commandList.Count == 0;
         }
     }
 }

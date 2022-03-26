@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using BattleScene.BattleLogic;
 
 public class BattleUIController : MonoBehaviour {
 
@@ -17,10 +18,18 @@ public class BattleUIController : MonoBehaviour {
     [SerializeField]
     private GameObject Backdrop;
 
+    private void OnEnable() {
+        ActionCommandHandler.OnUpdateCommands += UpdateEndturnButton;        
+    }
+
+    private void OnDisable() {
+        ActionCommandHandler.OnUpdateCommands -= UpdateEndturnButton;
+    }
     void Start() {
         //Set text during pak selection to not active
         selectTargetText.gameObject.SetActive(false);
         selectSkillText.gameObject.SetActive(false);
+        endTurnButton.interactable = false;
     }
 
     public void UpdateUI(PakSelection.GameState nextState) {
@@ -77,4 +86,7 @@ public class BattleUIController : MonoBehaviour {
         }
     }
 
+    private void UpdateEndturnButton(bool isEmpty) {
+        endTurnButton.interactable = !isEmpty;
+    }
 }

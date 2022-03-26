@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BattleScene.BattleLogic
 
 {
-
+    [Serializable]
     public class ActionCommand : IComparable, ICommand
     {
         private float speed;                // field that determine the execution order of skills
