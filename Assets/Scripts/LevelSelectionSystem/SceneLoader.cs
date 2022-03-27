@@ -12,9 +12,12 @@ public class SceneLoader : MonoBehaviour
     private Animator transition;
     // Update is called once per frame
 
-    public static SceneLoader Instance{
-        get{
-            if(instance == null){
+    public static SceneLoader Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
                 GameObject go = new GameObject("SceneLoader");
                 go.AddComponent<SceneLoader>();
                 go.GetComponent<SceneLoader>().transition = go.AddComponent<Animator>();
@@ -41,7 +44,7 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(LoadLevelByIndex(SceneManager.GetActiveScene().buildIndex - 1));
     }
 
-    IEnumerator LoadLevelByIndex(int levelIndex)
+    public IEnumerator LoadLevelByIndex(int levelIndex)
     {
         //* 3 Steps 
         //* Play Animation 
@@ -52,7 +55,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
     }
 
-    IEnumerator LoadLevelByName(string sceneName)
+    public IEnumerator LoadLevelByName(string sceneName)
     {
         //* 3 Steps 
         //* Play Animation 

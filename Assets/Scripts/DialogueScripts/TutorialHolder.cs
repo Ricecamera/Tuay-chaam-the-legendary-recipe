@@ -28,7 +28,7 @@ namespace DialogueSystem
         {
             Deactivate();
             yield return new WaitForSeconds(1.55f);
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 Deactivate();
                 Debug.Log(i);
@@ -96,11 +96,12 @@ namespace DialogueSystem
                 {
                     yield return new WaitUntil(() => transform.GetChild(3).GetComponent<TutorialLine>().isFinish);
                 }
-
+                else if (i == 7)
+                {
+                    SceneLoader.Instance.LoadNextScene();
+                }
             }
             gameObject.SetActive(false);
-            //TODO: change paramter to "Scene1-2"
-            LevelLoader.instance.LoadSpecificScene("CutScene_2");
         }
 
         public void Deactivate()
