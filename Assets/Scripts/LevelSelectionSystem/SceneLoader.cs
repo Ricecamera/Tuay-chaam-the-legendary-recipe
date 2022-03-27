@@ -9,7 +9,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField]
     private float transitionTime;
     [SerializeField]
-    private Animator transition;
+    public Animator transition;
     // Update is called once per frame
 
     public static SceneLoader Instance
@@ -44,7 +44,17 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(LoadLevelByIndex(SceneManager.GetActiveScene().buildIndex - 1));
     }
 
-    public IEnumerator LoadLevelByIndex(int levelIndex)
+    public void LoadSceneByIndex(int index)
+    {
+        StartCoroutine(LoadLevelByIndex(index));
+    }
+
+    public void LoadSceneByName(string name)
+    {
+        StartCoroutine(LoadLevelByName(name));
+    }
+
+    IEnumerator LoadLevelByIndex(int levelIndex)
     {
         //* 3 Steps 
         //* Play Animation 
@@ -55,7 +65,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
     }
 
-    public IEnumerator LoadLevelByName(string sceneName)
+    IEnumerator LoadLevelByName(string sceneName)
     {
         //* 3 Steps 
         //* Play Animation 

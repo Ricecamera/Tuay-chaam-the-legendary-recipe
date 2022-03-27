@@ -98,6 +98,7 @@ namespace DialogueSystem
                 }
                 else if (i == 7)
                 {
+                    Debug.Log("End");
                     SceneLoader.Instance.LoadNextScene();
                 }
             }
