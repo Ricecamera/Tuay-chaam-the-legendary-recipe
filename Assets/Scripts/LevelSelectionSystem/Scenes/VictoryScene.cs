@@ -13,15 +13,15 @@ public class VictoryScene : MonoBehaviour
         stars = GameObject.FindGameObjectsWithTag("Star");
         foreach (GameObject star in stars)
         {
-            if (star.contains("L"))
+            if (star.name.contains("L"))
             {
                 starL = star;
             }
-            else if (starL.contains("R"))
+            else if (star.name.contains("R"))
             {
                 starR = star;
             }
-            else if (starR.contains("M"))
+            else if (star.name.contains("M"))
             {
                 starM = star;
             }
