@@ -1,15 +1,24 @@
 using UnityEngine;
+using TasteSystem;
 
 // Pak is the playable character
 [CreateAssetMenu(fileName = "New Pak", menuName = "Assets/Entity/Pak")]
-public class Pak : Character {
+public class Pak : Entity {
     //fields
-    protected int sp;
+    [SerializeField]
+    protected int maxSp;
+
+    [SerializeField]
+    protected Taste taste;
+
     // Getter Setter
-    public int Sp {
-        get { return this.sp; }
-        set { this.sp = value; }
+    public int MaxSp {
+        get { return this.maxSp; }
+        set { this.maxSp = value; }
     }
 
-    // TODO: Add Pak related logic and functionality
+    public Taste Taste {
+        get { return this.taste; }
+        set { this.taste = value; }
+    }
 }

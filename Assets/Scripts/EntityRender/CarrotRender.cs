@@ -13,9 +13,5 @@ public class CarrotRender : PakRender
         skill.Add(new VanillaAttackAll("VAA", "AttackAllEnemy", "Attack all enemies at once.", 3, skillIcon2));
         skill.Add(new VanillaHealOne("VH1", "HealOneAlliance", "Target one alliance and heal it.", 2, skillIcon3));
         skill.Add(new VanillaHealAll("VHA", "HealAllAlliance", "Heal all alliances at once.", 4, skillIconUnti));
-
-        // Debug.Log(base.skill[0]);
-        // Debug.Log(base.skill[1]);
-        // Debug.Log(base.skill[2]);
     }
 }

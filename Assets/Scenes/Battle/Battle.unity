@@ -770,7 +770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a9a768e4893fc45831b457c1aefd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characters: {fileID: 110392428}
   plants: []
   enemies:
   - {fileID: 1676348087460524731, guid: c087df6303e007f44aebdc2c7d366f58, type: 3}
@@ -790,7 +789,6 @@ MonoBehaviour:
   chaamSpawnPos: {fileID: 1943614277}
   boss: {fileID: 5526432194195436290, guid: 2cd829a40a75d2a4fbebd2aaca1effab, type: 3}
   bossSpawnPos: {fileID: 565492851}
-  pakSelection: {fileID: 0}
 --- !u!114 &539540505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,17 +806,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7173921338258702980, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
   m_PrefabInstance: {fileID: 7173921337728200752}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &543371959 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7173921338258702983, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
-  m_PrefabInstance: {fileID: 7173921337728200752}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82d6caacbf6b4c744a2e19e8e13343b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &554195602
 GameObject:
   m_ObjectHideFlags: 0
@@ -2101,27 +2088,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1339217661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ae5799a06f1fd14ba170b929a6e96c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 99279dbe83372f6489b9e89d3dd0e3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillMenu: {fileID: 543371959}
-  okButton: {fileID: 1503610348}
-  backButton: {fileID: 708669005}
-  endTurnButton: {fileID: 1966035253}
-  cancelButton: {fileID: 1591717853}
-  supportMenu: {fileID: 1473131846}
-  Backdrop: {fileID: 156448288}
-  cookButton: {fileID: 1763923602}
-  support1: {fileID: 2143315699}
-  support2: {fileID: 2145970003}
-  support3: {fileID: 1875543341}
-  tickCook1: {fileID: 1924131800}
-  tickCook2: {fileID: 1171738266}
-  tickCook3: {fileID: 1068350435}
-  comboPanel: {fileID: 554195602}
-  cookStartButton: {fileID: 1344425281}
-  selectTargetText: {fileID: 1882819453}
-  selectSkillText: {fileID: 411037998}
+  selectedTargets: []
+  battleManger: {fileID: 1662004680}
 --- !u!4 &1339217663
 Transform:
   m_ObjectHideFlags: 0
@@ -2570,7 +2541,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 656ddf76e103f53469b18573c8f42a31, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 45bee5d7ee19d1e4f92c6ca59cc24b38, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3184,7 +3155,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionText: {fileID: 1467566890}
-  dummySkill: {fileID: 21300000, guid: 9775c7b8985792b43aa50a5e4694a4a3, type: 3}
 --- !u!114 &1662004681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3197,6 +3167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ae11751be5185488d18d3a36dc37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandList: []
   diedThisTurn: []
 --- !u!4 &1662004682
 Transform:

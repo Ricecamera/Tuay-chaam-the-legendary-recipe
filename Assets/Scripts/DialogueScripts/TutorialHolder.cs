@@ -99,8 +99,7 @@ namespace DialogueSystem
 
             }
             gameObject.SetActive(false);
-            //TODO: change paramter to "Scene1-2"
-            LevelLoader.instance.LoadSpecificScene("CutScene_2");
+            LevelLoader.instance.LoadSpecificScene("VictoryScene");
         }
 
         public void Deactivate()

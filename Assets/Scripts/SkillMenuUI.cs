@@ -14,23 +14,11 @@ public class SkillMenuUI : MonoBehaviour {
     
     public SkillUI[] skills;
 
-    public void UpdateCharacterUI(Sprite sprite) {
-        if (sprite) {
-            characterImage.color  = Color.white;
-            characterImage.sprite = sprite;
-
-            /**TODO: Set icon for each skill*/
-
+    private void Start() {
+        for (int i = 0; i < skills.Length; i++) {
+            skills[i].SetSelect(false);
         }
-        else
-        {
-            characterImage.sprite = null;
-            characterImage.color = Color.clear;
-        }
-
-
     }
-
     public void ToggleMenu(bool isShow)
     {
         if (isShow)
@@ -44,7 +32,7 @@ public class SkillMenuUI : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    public void ToggleSkillUI(int index)
+    public void ToggleSkill(int index)
     {
         if (index < 0 || index > skills.Length)
         {
@@ -66,13 +54,22 @@ public class SkillMenuUI : MonoBehaviour {
         }
     }
 
-    public void UpdateSkillUI(PakRender pak)
+    public void UpdateImage(Sprite sprite, List<Skill> charaterSkills)
     {
+        if (sprite) {
+            characterImage.color = Color.white;
+            characterImage.sprite = sprite;
+        }
+        else {
+            characterImage.sprite = null;
+            characterImage.color = Color.clear;
+        }
+
         int i = 0;
 
         // Set skills for each skill button
-        for (; i < pak.skill.Count && i < skills.Length; ++i) {
-            skills[i].SetSkill(pak.skill[i]);
+        for (; i < charaterSkills.Count && i < skills.Length; ++i) {
+            skills[i].SetSkill(charaterSkills[i]);
         }
 
         // hide all skill button that doesn't set skill

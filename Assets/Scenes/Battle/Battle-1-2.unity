@@ -578,7 +578,6 @@ GameObject:
   m_Component:
   - component: {fileID: 539540503}
   - component: {fileID: 539540504}
-  - component: {fileID: 539540505}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Spawner
@@ -612,7 +611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a9a768e4893fc45831b457c1aefd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characters: {fileID: 110392428}
   plants:
   - {fileID: 2477663559980264429, guid: e4684865e6712b94292efae38a901ce5, type: 3}
   enemies:
@@ -631,19 +629,6 @@ MonoBehaviour:
   chaamSpawnPos: {fileID: 1943614277}
   boss: {fileID: 0}
   bossSpawnPos: {fileID: 565492851}
-  pakSelection: {fileID: 0}
---- !u!114 &539540505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539540502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6404a7daf12a1f4b903044f656c9994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &543371956 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7173921338258702980, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
@@ -1727,7 +1712,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionText: {fileID: 1467566890}
-  dummySkill: {fileID: 0}
 --- !u!114 &1662004681
 MonoBehaviour:
   m_ObjectHideFlags: 0

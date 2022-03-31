@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3678362646462264683}
   - component: {fileID: 3678362646462264681}
   - component: {fileID: 3678362646462264694}
-  - component: {fileID: 283163427195173093}
   - component: {fileID: -8052853780411737744}
+  - component: {fileID: 283163427195173093}
   m_Layer: 0
   m_Name: Chaam3
   m_TagString: chaam
@@ -127,6 +127,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.3093643, y: 4.336005}
   m_EdgeRadius: 0
+--- !u!114 &-8052853780411737744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678362646462264695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3a0f58d9cbb384993ddeb44b1fe08c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defBuffVfx: {fileID: 8173584785705913775}
+  atkBuffVfx: {fileID: 2923931976305378683}
+  actionIcon: {fileID: 307761513235482401}
+  selectedIcon: {fileID: 6397013942603376587}
+  enitityData: {fileID: 11400000, guid: 6c2f111287864c946b81516e3f556617, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!114 &283163427195173093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,25 +161,6 @@ MonoBehaviour:
   healthBar: {fileID: 7313032710665027488}
   healVfx: {fileID: 8334575934225527055}
   damagedVfx: {fileID: 585187849751733162}
---- !u!114 &-8052853780411737744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3678362646462264695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a53f634998ea64b9b92fde30d0c0ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionIcon: {fileID: 307761513235482401}
-  selectedIcon: {fileID: 6397013942603376587}
-  slideSpeed: 6
-  attackDistance: 1.75
-  pak: {fileID: 11400000, guid: 6c2f111287864c946b81516e3f556617, type: 2}
-  defBuffVfx: {fileID: 8173584785705913775}
-  atkBuffVfx: {fileID: 2923931976305378683}
 --- !u!1001 &193916780056086655
 PrefabInstance:
   m_ObjectHideFlags: 0

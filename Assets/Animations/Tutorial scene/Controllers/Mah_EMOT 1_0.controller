@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dog_charge
-  m_Speed: 1
+  m_Speed: 0.8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3180145913007445681}
@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 35b8177be602afb408a634177e5b92b9, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9a97c29f1d225164ea4483cb8325f303, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

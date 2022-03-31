@@ -9,6 +9,7 @@ namespace BattleScene.BattleLogic
     {
 
         public static event Action OnComplete;          // this event invoke when `DoActionOverTIme` is called and completed
+        public static event Action<bool> OnUpdateCommands;
 
         [SerializeField]
         private List<ActionCommand> commandList = new List<ActionCommand>();    // temporary list that store all of actions to be executed
@@ -24,15 +25,6 @@ namespace BattleScene.BattleLogic
 
             foreach (var action in commandList)
             {
-                Debug.Log(action.caller);
-                Debug.Log(action.caller.healthSystem);
-                Debug.Log(action.caller.healthSystem.CurrentHp);
-                //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
-                // PakRender temp = action.caller.GetComponent<PakRender>();
-                // Debug.Log(temp.pak);
-                // Debug.Log(temp.healthSystem.GetHealth());
-                Debug.Log("Yes");
-
                 //If the caller is alive, the skill is casted.
                 if (action.caller.healthSystem.IsAlive)
                 {
@@ -50,7 +42,7 @@ namespace BattleScene.BattleLogic
                 else
                 {
                     // the target is dead
-                    string callerName = action.caller.Pak.EntityName;
+                    string callerName = action.caller.Entity.EntityName;
                     Debug.Log("The " + callerName + " is already dead.");
                 }
                 yield return null; // wait for the next frame
@@ -59,12 +51,14 @@ namespace BattleScene.BattleLogic
             // Clear commandList
             commandList.Clear();
             OnComplete?.Invoke();
+            OnUpdateCommands?.Invoke(isEmpty());
         }
 
         // Add a new command to `commandList`
         public void AddCommand(ICommand command)
         {
             commandList.Add(command as ActionCommand);
+            OnUpdateCommands?.Invoke(isEmpty());
         }
 
         // Execute all commands order by command's speed;
@@ -90,12 +84,12 @@ namespace BattleScene.BattleLogic
         }
 
         // Get the first selected action by specific character's tag and skill's name
-        public ActionCommand GetAction(string gameTag, string skillName)
+        public ActionCommand GetAction(string gameTag, int skillIndex)
         {
             foreach (ActionCommand action in commandList)
             {
                 if (action.caller.CompareTag(gameTag)
-                    && action.selectedSkill.Equals(skillName))
+                    && action.selectedSkill == skillIndex)
                 {
                     return action;
                 }
@@ -112,6 +106,7 @@ namespace BattleScene.BattleLogic
                 if (action.caller.CompareTag(gameTag))
                 {
                     commandList.RemoveAt(i);
+                    OnUpdateCommands?.Invoke(isEmpty());
                     return action;
                 }
             }
@@ -119,18 +114,23 @@ namespace BattleScene.BattleLogic
         }
 
         // Remove the specific skill that is called by the character with provided gameTag.
-        public ActionCommand RemoveAction(string gameTag, string skillName)
+        public ActionCommand RemoveAction(string gameTag, int skillIndex)
         {
             for (int i = 0; i < commandList.Count; i++)
             {
                 ActionCommand action = commandList[i];
-                if (action.caller.CompareTag(gameTag))
+                if (action.caller.CompareTag(gameTag) && action.selectedSkill == skillIndex)
                 {
                     commandList.RemoveAt(i);
+                    OnUpdateCommands?.Invoke(isEmpty());
                     return action;
                 }
             }
             return null;
+        }
+
+        public bool isEmpty() {
+            return this.commandList.Count == 0;
         }
     }
 }

@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleScene.BattleLogic;
-using Random = UnityEngine.Random;
 
 namespace BattleScene {
 /*
@@ -12,28 +12,16 @@ namespace BattleScene {
 */
 [RequireComponent(typeof(ActionCommandHandler))]
 public class BattleManager : MonoBehaviour {
-    public static BattleManager instance;                   // singleton instance of this class
-    
+
     public int currentTurn { get; private set; }            // keep track how many turn have pass
 
     public Text actionText;                                 // text that show when in battle
 
     public AIController AI;                                 // reference to AI controller class
 
-    public Sprite dummySkill;
-
-    private CharacterManager characters;
     public ActionCommandHandler actionCommandHandler {get; private set; }       // reference to ActionCommandHandler
-
-
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
-        else {
-            Destroy(gameObject);
-        }
-    }
+    
+    private Action onChangeTurn;
 
     // Subscribe OnComplete event
     // the event invokes went actionCommandHandler finish execute all of characters' actions.
@@ -41,7 +29,8 @@ public class BattleManager : MonoBehaviour {
         ActionCommandHandler.OnComplete += NextTurn;
     }
 
-    // Unsubscribe OnComplete event when this object disable from game.
+    // Unsubscribe OnComplete event
+    // the event when this object disable from game.
     private void OnDisable() {
         ActionCommandHandler.OnComplete -= NextTurn;
     }
@@ -50,7 +39,6 @@ public class BattleManager : MonoBehaviour {
     void Start() {
         currentTurn = 0;
 
-        characters = GameObject.Find("Chracter Manager").GetComponent<CharacterManager>();
         actionCommandHandler = GetComponent<ActionCommandHandler>();
         actionText.gameObject.SetActive(false);
 
@@ -63,36 +51,34 @@ public class BattleManager : MonoBehaviour {
     public void RunCommand() {
         Debug.Log("Battle Start!!");
 
-        CharacterSelecter.instance?.ResetCharacter();
 
         //---------------------------------New AI ---------------------------------------------//
 
         // Get list of pakTeam and enemy Team
-        List<CharacterHolder> pakHolders = characters.getTeamHolders(0);
-        List<CharacterHolder> enemyHolders = characters.getTeamHolders(1);
+        List<PakRender> pakHolders = new List<PakRender>();
+        List<PakRender> enemyHolders = new List<PakRender>();
+
+
         
-        List<GameObject> pakTeamObject = new List<GameObject>();
-        List<GameObject> enemyTeamObject = new List<GameObject>();
-
-
-        foreach (var e in pakHolders)
+        // Remove dead characters from player team and enemy team
+        foreach (var e in CharacterManager.instance.getTeamHolders(0))
         {
-            if (e.character.activeSelf)
+            if (e.gameObject.activeSelf)
             {
-                pakTeamObject.Add(e.character);
+                pakHolders.Add(e);
             }
         }
 
-        foreach (var f in enemyHolders)
+        foreach (var f in CharacterManager.instance.getTeamHolders(1))
         {
-            if (f.character.activeSelf)
+            if (f.gameObject.activeSelf)
             {
-                enemyTeamObject.Add(f.character);
+                enemyHolders.Add(f);
             }
         }
 
         // Let AI controller selection its actions
-        List<ActionCommand> temp = AI.selectAction(pakTeamObject, enemyTeamObject);
+        List<ActionCommand> temp = AI.selectAction(pakHolders, enemyHolders);
         foreach (ActionCommand e in temp)
         {
             actionCommandHandler.AddCommand(e);
@@ -103,6 +89,10 @@ public class BattleManager : MonoBehaviour {
 
         //****
     }
+    
+    public void AddCommand(ActionCommand command) {
+        actionCommandHandler.AddCommand(command);
+    }
 
     // Go to next turn this method call when OnComplete event is triggered
     public void NextTurn()
@@ -111,46 +101,18 @@ public class BattleManager : MonoBehaviour {
 
         currentTurn++;
         actionText.gameObject.SetActive(false);
-        List<CharacterHolder> holders = characters.getHolders();
-        foreach (var holder in holders) {
-            PakRender pak = holder.character.GetComponent<PakRender>();
+        List<PakRender> holders = CharacterManager.instance.getHolders();
+        foreach (var pak in holders)
             pak.UpdateTurn();
-        }
-    }
-
-    public void AddNewCommand(GameObject caller, int skillIndex, GameObject[] targets)
-    {
-        PakRender pakCaller = caller.GetComponent<PakRender>();
-
-        // Get PakRender component of each game oject in `targets`
-        // and push it into pakTargets list.
-        List<PakRender> pakTargets = new List<PakRender>();
-        foreach (var target in targets)
-        {
-            PakRender tmp = target.GetComponent<PakRender>();
-            if (tmp != null) pakTargets.Add(tmp);
-        }
-
-        // Log error when the caller does not exist or there are not available target.
-        if (pakCaller == null || pakTargets.Count == 0)
-        {
-            Debug.LogError("The caller or targets do not contain PakRender");
-            return;
-        }
-
-        // Set random speed for each action and initialize it.
-        float speed = pakCaller.currentSpeed;
-        ActionCommand newCommand = new ActionCommand(pakCaller, skillIndex, pakTargets, speed);
-        actionCommandHandler.AddCommand(newCommand);
+            onChangeTurn();
     }
 
     public bool IsPlayerLose()
     {
-        Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
-        List<CharacterHolder> pakInBattle = characters.getTeamHolders(0);
-        foreach (CharacterHolder e in pakInBattle)
+        List<PakRender> pakInBattle = CharacterManager.instance.getTeamHolders(0);
+        foreach (var e in pakInBattle)
         {
-            if (e.character.activeSelf)
+            if (e.gameObject.activeSelf)
             {
                 return false;
             }
@@ -160,16 +122,19 @@ public class BattleManager : MonoBehaviour {
 
     public bool IsPlayerWin()
     {
-        Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
-        List<CharacterHolder> enemyInBattle = characters.getTeamHolders(1);
-        foreach (CharacterHolder e in enemyInBattle)
+        List<PakRender> enemyInBattle = CharacterManager.instance.getTeamHolders(1);
+        foreach (PakRender e in enemyInBattle)
         {
-            if (e.character.activeSelf)
+            if (e.gameObject.activeSelf)
             {
                 return false;
             }
         }
         return true;
+    }
+
+    public void SetChangeTurn(Action ToExecute) {
+        onChangeTurn = ToExecute;
     }
 }
 }

@@ -3,52 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace BattleScene {
-    public class CharacterManager : MonoBehaviour {
-    
+public class CharacterManager : MonoBehaviour {
+    public static CharacterManager instance;     
     enum Team {PLAYER_TEAM, ENEMY_TEAM };
-    private SortedList<string, Team> lookupTable;
-    private Dictionary<string, CharacterHolder> holders;         // dictionary contains character holder
+    private Dictionary<string, PakRender> holders = new Dictionary<string, PakRender>();         // dictionary contains character holder
 
-    // Initialize character dictonarys
-    public void Intialize() {
-        lookupTable = new SortedList<string, Team>();
-        holders = new Dictionary<string, CharacterHolder>();
+    // Check team of tag object
+    public static bool IsPlayerTeam(string tag) {
+        return (tag.CompareTo("Plant1") == 0 || tag.CompareTo("Plant2") == 0
+                    || tag.CompareTo("Plant3") == 0|| tag.CompareTo("Chaam") == 0);
     }
 
-    // Add a new character
-    public void AddCharacter(string tag, GameObject character, int teamKey) {
-        try {
-            // find the team of added character
-            Debug.Log(character);
-            Team team;
-            if (teamKey == 0)
-                team= Team.PLAYER_TEAM;
-            else if (teamKey == 1)
-                team= Team.ENEMY_TEAM;
-            else
-                throw new Exception("team key is not valid");
-
-
-            holders.Add(tag, new CharacterHolder(character));
-            lookupTable.Add(tag, team);
-        }
-        catch (Exception e) {
-            if (e is ArgumentException) {
-                Destroy(character); 
-            }
-            Debug.LogError(e.Message);
-        }
+    public static bool IsEnemyTeam(string tag) {
+        return (tag.CompareTo("Enemy1") == 0 || tag.CompareTo("Enemy2") == 0 || tag.CompareTo("Enemy3") == 0
+            || tag.CompareTo("Enemy4") == 0 || tag.CompareTo("Boss") == 0);
     }
 
-    // Remove a specific chacracter by tag and team flag
-    public void RemoveCharacter(string tag) {
-        lookupTable.Remove(tag);
-        holders.Remove(tag);
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
     }
 
     // Get a specific character by tag and team flag
-    public CharacterHolder GetCharacter(string tag) {
-        CharacterHolder output = null;
+    public PakRender GetCharacter(string tag) {
+        PakRender output = null;
         try {
             output = holders[tag];
         } 
@@ -65,69 +48,54 @@ namespace BattleScene {
         return holders.ContainsKey(tag);
     }
 
-    // Set selected state of enemy character
-    public void SetSelect(string tag, bool value) {
+    // Add a new character
+    public void AddCharacter(string tag, GameObject character) {
         try {
-            CharacterHolder found = holders[tag];
-            found.Select(value);
+            // find the team of added character
+            Debug.Log(character);
+            holders.Add(tag, character.GetComponent<PakRender>());
         }
-        catch {
-            Debug.LogError("the character isn't exist!!");
+        catch (Exception e) {
+            if (e is ArgumentException) {
+                Destroy(character);
+            }
+            Debug.LogError(e.Message);
         }
     }
 
-    public void SetAction(string tag, bool value, int index=0)
-    {
-        try
-        {
-            CharacterHolder found = holders[tag];
-            found.Action(value,index);
-        }
-        catch
-        {
-            Debug.LogError("the character isn't exist!!");
-        }
-    }
-
-    public string GetCharacterTeam(string tag) {
-        try {
-            Team team = lookupTable[tag];
-
-            if (team == Team.PLAYER_TEAM)
-                return "Player team";
-            return "Enemy team";
-        }
-        catch {
-            return "No team";
-        }
+    // Remove a specific chacracter by tag and team flag
+    public void RemoveCharacter(string tag) {
+        holders.Remove(tag);
     }
 
     // Get a list of CharacterHolder of pakTeam
-    public List<CharacterHolder> getHolders(){
-        List<CharacterHolder> temp = new List<CharacterHolder>();
-        foreach (CharacterHolder e in holders.Values){
-            temp.Add(e);
+    public List<PakRender> getHolders(){
+        List<PakRender> temp = new List<PakRender>();
+        foreach (PakRender p in holders.Values){
+            temp.Add(p);
         }
         return temp;
     }
 
     // 0 is PLAYER_TEAM
     // 1 is ENEMY_TEAM
-    public List<CharacterHolder> getTeamHolders(int teamKey) {
-        List<CharacterHolder> temp = new List<CharacterHolder>();
+    public List<PakRender> getTeamHolders(int teamKey) {
+        List<PakRender> temp = new List<PakRender>();
         if (teamKey < 0 || teamKey > 1) {
             return temp;
         }
 
-        Team team;
-        if (teamKey == 0)
-            team = Team.PLAYER_TEAM;
-        else
-            team = Team.ENEMY_TEAM;
 
-        foreach (var kv in lookupTable) {
-            if (kv.Value == team)
-                temp.Add(holders[kv.Key]);
+        foreach (var kv in holders) {
+            if (teamKey == 0) {
+                if (IsPlayerTeam(kv.Value.tag))
+                    temp.Add(kv.Value);
+                }
+            else {
+                if (IsEnemyTeam(kv.Value.tag)) {
+                    temp.Add(kv.Value);
+                }
+            }     
         }
         return temp;
     }
@@ -137,32 +105,65 @@ namespace BattleScene {
         foreach (var k_v in holders) {
             // if the llst contain a key then highlight the character
             if (tags.Contains(k_v.Key)) {
-                k_v.Value.HighLightLayer(true);
+                k_v.Value.GoToFrontLayer(true);
             }
             else {
-                k_v.Value.HighLightLayer(false);
+                k_v.Value.GoToFrontLayer(false);
             }
         }
     }
 
-    public void ResetHighLight() {
+    public void LockAllCharacters(bool value, int teamKey) {
+        if (teamKey < 0 || teamKey > 2) {
+            throw new Exception("Invalid team key");
+        }
+
+        foreach (var k_v in holders) { 
+            if (teamKey == 2) {
+                k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
+            }
+            else {
+                if (teamKey == 0) {
+                    if (IsPlayerTeam(k_v.Value.tag))
+                        k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
+                    }
+                else {
+                    if (IsEnemyTeam(k_v.Value.tag)) {
+                        k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
+                    }
+                }
+            }
+        }
+    }
+
+    /** Reset state of all characters
+        * 0.Reset all state
+        * 1.Reset Action
+        * 2.Reset Select
+        * 3.Reset HighLight
+        */
+    public void ResetState(int options) {
         foreach (var k_v in holders) {
-             k_v.Value.HighLightLayer(false);
-        }
-    }
-
-    // Set select state of ally character
-    public void ResetSelect() {
-        foreach (var p in holders) {
-            CharacterHolder holder = p.Value;
-            holder.Select(false);
-        }
-    }
-
-    public void ResetAction() {
-        foreach (var p in holders) {
-            CharacterHolder holder = p.Value;
-            holder.Action(false, 0);
+            switch(options) {
+                case 0:
+                    k_v.Value.GoToFrontLayer(false);
+                    k_v.Value.currentState = PakRender.State.Idle;
+                    k_v.Value.DisplayInAction(false);
+                    k_v.Value.Selected = false;
+                    break;
+                case 1:
+                    k_v.Value.currentState = PakRender.State.Idle;
+                    k_v.Value.DisplayInAction(false);
+                    break;
+                case 2:
+                    k_v.Value.Selected = false;
+                    break;
+                case 3:
+                    k_v.Value.GoToFrontLayer(false);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

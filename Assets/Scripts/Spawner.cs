@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleScene;
 
-[RequireComponent(typeof(CharacterManager))]
 public class Spawner : MonoBehaviour
 {
-
-    public CharacterManager characters;
 
     public List<GameObject> plants = new List<GameObject>();         // contains prefabs of all in-play plants
     public List<GameObject> enemies = new List<GameObject>();       // contains prefabs of all in-play enemies
@@ -27,13 +24,9 @@ public class Spawner : MonoBehaviour
     [Header("Boss")]
     public GameObject boss;                 // contains the prefab of an in-play boss
     public Transform bossSpawnPos;          // reference of boss' spawn position
-
-    [Header("Other scripts")]
-    public PakSelection pakSelection;     // reference of pakSelection object in scene
-
     void OnEnable()
     {
-        characters.Intialize();
+        // characters.Intialize();
         ConvertPlantToGameObject(CharacterSelecter.instance?.GetCharacters());
         ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
         //ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
@@ -46,12 +39,12 @@ public class Spawner : MonoBehaviour
             {
                 GameObject p = Instantiate(plants[i], allySpawnPos[i].position, Quaternion.identity, allySpawnPos[i]);
                 p.tag = allySpawnPos[i].gameObject.tag;
-                characters.AddCharacter(p.tag, p, 0);
+                CharacterManager.instance.AddCharacter(p.tag, p);
             }
 
             GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
             chaamObject.tag = chaamSpawnPos.gameObject.tag;
-            characters.AddCharacter(chaamObject.tag, chaamObject, 0);
+            CharacterManager.instance.AddCharacter(chaamObject.tag, chaamObject);
 
         }
         catch (Exception e)
@@ -64,14 +57,14 @@ public class Spawner : MonoBehaviour
             {
                 GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
                 e.tag = enemySpawnPos[i].gameObject.tag;
-                characters.AddCharacter(e.tag, e, 1);
+                CharacterManager.instance.AddCharacter(e.tag, e);
             }
 
             if (boss != null)
             {
                 GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
                 bossObject.tag = bossSpawnPos.gameObject.tag;
-                characters.AddCharacter(bossObject.tag, bossObject, 1);
+                CharacterManager.instance.AddCharacter(bossObject.tag, bossObject);
             }
         }
     }
@@ -104,11 +97,13 @@ public class Spawner : MonoBehaviour
 
     public void ConvertChaamToGameObject(ItemObject itemObject)
     {
-        if (itemObject != null) {
+        if (itemObject != null)
+        {
             Debug.Log(itemObject.prefab.name);
             chaam = itemObject.prefab;
         }
-        else {
+        else
+        {
             Debug.Log("Chaam not found");
         }
     }
