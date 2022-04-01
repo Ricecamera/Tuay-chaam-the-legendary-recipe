@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
 
     public List<bool> unlockStatus { get; set; }
 
-    public int thislevel { get; set; }
+    public int thislevel { get; set; } 
 
     //number of time map was open;
     public int mapArrived;

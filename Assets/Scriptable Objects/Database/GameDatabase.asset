@@ -9,16 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a0609b0715d3a34b8daeecafb0a31ed, type: 3}
-  m_Name: ItemDatabase
+  m_Script: {fileID: 11500000, guid: c677170e21277c844a06bbab74450b1c, type: 3}
+  m_Name: GameDatabase
   m_EditorClassIdentifier: 
-  pakItems:
+  items:
   - {fileID: 11400000, guid: b3383da1661ca6f4398d46d4a32eb0d4, type: 2}
   - {fileID: 11400000, guid: 955de58001dee6c4ea0af224452e93c7, type: 2}
-  - {fileID: 11400000, guid: b6e9115d3d2f6af4fa72e081f7590fc1, type: 2}
-  chaamItems:
   - {fileID: 11400000, guid: b0f96acdc7b19704894614b96ccb85e2, type: 2}
-  supportItems:
+  - {fileID: 11400000, guid: dbfa0d563950dc54894d73891212ec9a, type: 2}
+  - {fileID: 11400000, guid: e8ae1b1d4c238e543b63fbd5a7f96fdb, type: 2}
+  - {fileID: 11400000, guid: b6e9115d3d2f6af4fa72e081f7590fc1, type: 2}
+  - {fileID: 11400000, guid: 35bb89127ffc019469a2429b077c7b23, type: 2}
   - {fileID: 11400000, guid: 8cf7c672e3143d4408bc9f0424eb0162, type: 2}
   - {fileID: 11400000, guid: d0b24af2931ae3a4b8c1e52ecbca31c0, type: 2}
-  - {fileID: 11400000, guid: 35bb89127ffc019469a2429b077c7b23, type: 2}
+  - {fileID: 11400000, guid: 084fed5952ce49740806c960627732ca, type: 2}
+  - {fileID: 11400000, guid: b9252a75a79c0194a9728834d3c7fa5b, type: 2}

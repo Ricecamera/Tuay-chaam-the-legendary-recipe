@@ -131,5 +131,9 @@ namespace BattleScene.BattleLogic
             }
             return null;
         }
+
+        public int GetDieCount(){
+            return diedThisTurn.Count;
+        }
     }
 }
