@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Skill
 {
+    //Performable
+    protected Performable performAct;
     //fields
     protected string skillId;
 
@@ -23,8 +25,13 @@ public class Skill
 
     public event Action OnFinishExecute;
 
+    protected string animationType;
+    
+    //delegates
+    public Action<List<PakRender>, PakRender> doTheSkill;
+
     //Constructortor
-    public Skill(string skillId, string skillName, string description, int cooldown, Sprite icon, string actionType)
+    public Skill(string skillId, string skillName, string description, int cooldown, Sprite icon, string actionType, Performable performAct, string animationType)
     {
         this.skillId = skillId;
         this.skillName = skillName;
@@ -33,97 +40,86 @@ public class Skill
         this.cooldown = 0;
         this.icon = icon;
         this.actionType = actionType;
+        this.performAct = performAct;
+        this.animationType = animationType;
+        this.doTheSkill+=performAct.performSkill;
     }
 
     //functions
-    public void performSkill( PakRender caller, List<PakRender> target)
-    {
-        switch (this.skillId)
-        {
-            case "VA1":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackOneEnemy is called");
-                VanillaAttackOne vskill = (VanillaAttackOne) this;
-                Attack(caller, target, vskill.AttackOneEnemy);
-                break;
-
-            case "VAA":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackAllEnemy is called");
-                VanillaAttackAll vskill2 = (VanillaAttackAll) this;
-                Attack(caller, target, vskill2.AttackAllEnemy);
-                break;
-
-            case "VBA1":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkOneAlliance is called");
-                VanillaBuffAtkOne vskill3 = (VanillaBuffAtkOne) this;
-                Buff(caller, target, vskill3.BuffAtkOneAlliance);
-                break;
-
-            case "VBD1":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefOneAlliance is called");
-                VanillaBuffDefOne vskill4 = (VanillaBuffDefOne) this;
-                Buff(caller, target, vskill4.BuffDefOneAlliance);
-                break;
-
-            case "VGSP1":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GainSPOneAlliance is called");
-                VanillaGainSPOne vskill5 = (VanillaGainSPOne) this;
-                Buff(caller, target, vskill5.GainSPOneAlliance);
-                break;
-
-            case "VH1":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealOneAlliance is called");
-                VanillaHealOne vskill6 = (VanillaHealOne) this;
-                Buff(caller, target, vskill6.HealOneAlliance);
-                break;
-
-            case "VBAA":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkAllAlliance is called");
-                VanillaBuffAtkAll vskill7 = (VanillaBuffAtkAll) this;
-                Buff(caller, target, vskill7.BuffAtkAllAlliance);
-                break;
-
-            case "VBDA":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefAllAlliance is called");
-                VanillaBuffDefAll vskill8 = (VanillaBuffDefAll) this;
-                Buff(caller, target, vskill8.BuffDefAllAlliance);
-                break;
-
-            case "VGSPA":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GainSPAllAlliance is called");
-                VanillaGainSPAll vskill9 = (VanillaGainSPAll) this;
-                Buff(caller, target, vskill9.GainSPAllAlliance);
-                break;
-
-            case "VHA":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealAllAlliance is called");
-                VanillaHealAll vskill10 = (VanillaHealAll) this;
-                Buff(caller, target, vskill10.HealAllAlliance);
-                break;
-
-            case "B:)":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ActionBuum is called");
-                Buum vskill11 = (Buum) this;
-                Buff(caller, target, vskill11.AttackWholeField);
-                break;
-
-            case "HPTO1":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ SetOneEnemyHPTo1 is called");
-                SetOneEnemyHPTo10 vskill12 = (SetOneEnemyHPTo10) this;
-                Attack(caller, target, vskill12.SetOneEnemyHealthTo10);
-                break;
-
-            case "HAHP":
-                Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HalfEnemiesHealth is called");
-                HalfEnemiesHealth vskill13 = (HalfEnemiesHealth) this;
-                Attack(caller, target, vskill13.HalfAllEnemiesHealth);
-                break;
-
-            default:
-                Debug.Log("Skill ID not matched");
-                Debug.LogError("Skill not being call.");
-                break;
+    public void performSkill( PakRender caller, List<PakRender> target){
+        if(string.Equals(this.animationType, "buffOneAlliance") || string.Equals(this.animationType, "buffAllAlliances") || string.Equals(this.animationType, "attackWholeField")){
+            Buff(caller, target, this.doTheSkill);
+        }else if (string.Equals(this.animationType, "attackOneEnemy") || string.Equals(this.animationType, "attackAllEnemies")){
+            Attack(caller, target, this.doTheSkill);
+        }else{
+            Debug.Log("Wrong animation type of skill");
         }
     }
+
+    // public void performSkill( PakRender caller, List<PakRender> target)
+    // {
+    //     switch (this.skillId)
+    //     {
+    //         case "VA1":
+    //             // Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackOneEnemy is called");
+    //             // VanillaAttackOne vskill = (VanillaAttackOne) this;
+    //             Attack(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "VAA":
+    //             Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ AttackAllEnemy is called");
+    //             VanillaAttackAll vskill2 = (VanillaAttackAll) this;
+    //             Attack(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "VBA1":
+    //             Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkOneAlliance is called");
+    //             VanillaBuffAtkOne vskill3 = (VanillaBuffAtkOne) this;
+    //             Buff(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "VBD1":
+    //             Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefOneAlliance is called");
+    //             VanillaBuffDefOne vskill4 = (VanillaBuffDefOne) this;
+    //             Buff(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "VH1":
+    //             Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealOneAlliance is called");
+    //             VanillaHealOne vskill6 = (VanillaHealOne) this;
+    //             Buff(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "VBAA":
+    //             Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffAtkAllAlliance is called");
+    //             VanillaBuffAtkAll vskill7 = (VanillaBuffAtkAll) this;
+    //             Buff(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "VBDA":
+    //             Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BuffDefAllAlliance is called");
+    //             VanillaBuffDefAll vskill8 = (VanillaBuffDefAll) this;
+    //             Buff(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "VHA":
+    //             Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HealAllAlliance is called");
+    //             VanillaHealAll vskill10 = (VanillaHealAll) this;
+    //             Buff(caller, target, this.doTheSkill);
+    //             break;
+
+    //         case "B:)":
+    //             // Debug.Log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ActionBuum is called");
+    //             // Buum vskill11 = (Buum) this;
+    //             Buff(caller, target, this.doTheSkill);
+    //             break;
+
+    //         default:
+    //             Debug.Log("Skill ID not matched");
+    //             Debug.LogError("Skill not being call.");
+    //             break;
+    //     }
+    // }
 
     private void Attack(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall) {
         Vector3 targetPos = target[0].GetPosition();

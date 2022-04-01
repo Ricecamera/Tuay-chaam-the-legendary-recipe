@@ -18,7 +18,7 @@ public class Chaamrender_temp : PakRender
             skill.Add(new VanillaAttackOne("VA1", "AttackOneEnemy", "This do damage to one enemy.", 1, skillIcon2));
             skill.Add(new VanillaBuffAtkAll("VBAA", "BuffAtkAllAlliance", "Buff all alliance to increase their strength for the duration of this battle.", 3, skillIcon3));
             skill.Add(new VanillaHealAll("VHA", "HealAllAlliance", "Heal all alliances.", 4, skillIcon1));
-            skill.Add(new SetOneEnemyHPTo10("HPTO1", "SetOneEnemyHealthTo10", "Target one enemy, its HP become 10.", 1, skillIconUnti));
+            // skill.Add(new SetOneEnemyHPTo10("HPTO1", "SetOneEnemyHealthTo10", "Target one enemy, its HP become 10.", 1, skillIconUnti));
             // skill.Add(new HalfEnemiesHealth("HAHP", "HalfAllEnemiesHealth", "Half HP of all enemies.", 1, skillIconUnti));
             // skill.Add(new VanillaAttackOne("VA1", "AttackOneEnemy", "This do damage to one enemy.", 1, skillIcon2));
         }
