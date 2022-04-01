@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b63acad6eb5b345954f27ee95f3f19, type: 3}
   m_Name: Chaam1Item
   m_EditorClassIdentifier: 
-  id: 4
+  _name: chaam1
   uiDisplay: {fileID: -6784271102495391019, guid: ad3fe121ffb18f442a3fd14e55e62995, type: 3}
   type: 1
   prefab: {fileID: 3678362646462264695, guid: ae49261d00e4a814c9d425c93447cf9b, type: 3}

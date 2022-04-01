@@ -5,13 +5,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour, IComparable
-{   
+{
     static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
     static string LAYER_CHARACTER = "Character";
     static string LAYER_OVERLAY = "Overlay";
     static string LAYER_FRONT = "Front";
 
-    public enum State {
+    public enum State
+    {
         Idle,
         Sliding,
         Busy,
@@ -50,21 +51,27 @@ public class PakRender : MonoBehaviour, IComparable
     private Coroutine flashcheck;
     private Action onSlideComplete;
 
-    public Entity Entity { get { return enitityData;} }
-    public State currentState { 
-        get {
+    public Entity Entity { get { return enitityData; } }
+    public State currentState
+    {
+        get
+        {
             return state;
         }
-        set {
+        set
+        {
             state = value;
         }
     }
-    public bool Selected {
-        get {
+    public bool Selected
+    {
+        get
+        {
             return selected;
         }
 
-        set {
+        set
+        {
             selected = value;
             selectedIcon.SetActive(value);
         }
@@ -80,7 +87,7 @@ public class PakRender : MonoBehaviour, IComparable
         currentSpeed = enitityData.BaseSpeed;
         state = State.Idle;
         Selected = false;
-//!
+        //!
         actionIcon.gameObject.SetActive(false);
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spirteRenderer.color = Color.white;
@@ -99,12 +106,14 @@ public class PakRender : MonoBehaviour, IComparable
 
     protected virtual void Update()
     {
-        switch (state) {
+        switch (state)
+        {
             case State.Sliding:
                 transform.position += (targetPos - GetPosition()) * slideSpeed * Time.deltaTime;
 
                 float reachedDistance = 0.2f;
-                if (Vector3.Distance(GetPosition(), targetPos) < reachedDistance) {
+                if (Vector3.Distance(GetPosition(), targetPos) < reachedDistance)
+                {
                     // Arrived at Slide Target Position
                     //transform.position = slideTargetPosition;
                     onSlideComplete();
@@ -115,13 +124,16 @@ public class PakRender : MonoBehaviour, IComparable
         }
     }
 
-    public int CompareTo(object obj) {
+    public int CompareTo(object obj)
+    {
         if (obj == null) return 1;
         PakRender nextEvent = obj as PakRender;
-        if (nextEvent != null) {
+        if (nextEvent != null)
+        {
             return this.GetInstanceID().CompareTo(nextEvent.GetInstanceID());
         }
-        else {
+        else
+        {
             throw new ArgumentException("Object doesn't have a property speed");
         }
     }
@@ -129,17 +141,20 @@ public class PakRender : MonoBehaviour, IComparable
     public void DisplayInAction(bool value, int skillIndex)
     {
         // Prevent index out of bound error
-        if(skillIndex < 0 || skillIndex > skill.Count){
+        if (skillIndex < 0 || skillIndex > skill.Count)
+        {
             Debug.LogError("Skill index out of range and couldn't load skill icon.");
         }
-        
+
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        if (value) {
+        if (value)
+        {
             // Display inAction indicator
             actionIcon.sprite = skill[skillIndex].Icon;
         }
-        else {
+        else
+        {
             // Hide InAction indicator
             if (setSkill == skillIndex)
                 actionIcon.sprite = null;
@@ -149,7 +164,8 @@ public class PakRender : MonoBehaviour, IComparable
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
     }
 
-    public void DisplayInAction(bool value) {
+    public void DisplayInAction(bool value)
+    {
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
         actionIcon.gameObject.SetActive(value);
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
@@ -163,7 +179,7 @@ public class PakRender : MonoBehaviour, IComparable
             SpriteRenderer enitityDataSprite = gameObject.GetComponent<SpriteRenderer>();
             Canvas healthbar = healthSystem.healthBar.GetComponent<Canvas>();
 
-            enitityDataSprite.sortingLayerName = value ? LAYER_FRONT: LAYER_CHARACTER;
+            enitityDataSprite.sortingLayerName = value ? LAYER_FRONT : LAYER_CHARACTER;
             healthbar.sortingLayerName = value ? LAYER_FRONT : LAYER_OVERLAY;
 
         }
@@ -185,7 +201,8 @@ public class PakRender : MonoBehaviour, IComparable
         StartCoroutine(DamageEffect());
     }
 
-    public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete) {
+    public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete)
+    {
         Vector3 slideTargetPostion = targetPosition + (GetPosition() - targetPosition).normalized * attackDistance;
         Vector3 startingPostion = GetPosition();
 
@@ -194,13 +211,15 @@ public class PakRender : MonoBehaviour, IComparable
 
         sp.sortingLayerName = "Front";
         // Slide to the target
-        SlideToPosition(slideTargetPostion, () => {
+        SlideToPosition(slideTargetPostion, () =>
+        {
             state = State.Busy;
 
             // TO DO: add attack animation here
             /* insert sound here! */
             onReachTarget();
-            SlideToPosition(startingPostion, () => {
+            SlideToPosition(startingPostion, () =>
+            {
                 state = State.Idle;
                 sp.sortingLayerName = "Character";
                 onComplete();
@@ -208,14 +227,16 @@ public class PakRender : MonoBehaviour, IComparable
         });
     }
 
-    public void RangedBuff(string skillId, Action buffEffect, Action onComplete) {
+    public void RangedBuff(string skillId, Action buffEffect, Action onComplete)
+    {
         state = State.Busy;
         SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
         sp.sortingLayerName = "Front";
         StartCoroutine(SpellAnimation(
             skillId,
             buffEffect,
-            () => {
+            () =>
+            {
                 onComplete();
                 state = State.Idle;
                 sp.sortingLayerName = "Character";
@@ -223,26 +244,31 @@ public class PakRender : MonoBehaviour, IComparable
         );
     }
 
-    public void UpdateTurn() {
+    public void UpdateTurn()
+    {
         // Update skill cooldown
-        for (int i = 0; i < skill.Count; ++i) {
+        for (int i = 0; i < skill.Count; ++i)
+        {
             skill[i].Cooldown--;
         }
 
         // Do something about this character when end turn ex. buff effect, burn damage, etc
     }
 
-    public Vector3 GetPosition() {
+    public Vector3 GetPosition()
+    {
         return transform.position;
     }
 
-    public bool InAction() {
+    public bool InAction()
+    {
         return state == State.InAction;
     }
 
-    private IEnumerator DamageEffect() {
+    private IEnumerator DamageEffect()
+    {
         SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
-        Material whiteMat = (Material) Resources.Load<Material>("FlashMaterial");
+        Material whiteMat = (Material)Resources.Load<Material>("FlashMaterial");
         Material originalMat = GetComponent<SpriteRenderer>().material;
         sp.material = whiteMat;
         yield return new WaitForSeconds(0.5f);
@@ -251,19 +277,46 @@ public class PakRender : MonoBehaviour, IComparable
     }
 
 
-    private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete) {
+    private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete)
+    {
         this.targetPos = slideTargetPosition;
         this.onSlideComplete = onSlideComplete;
         currentState = State.Sliding;
     }
 
 
-    private IEnumerator SpellAnimation(string skillId, Action onEffect, Action onComplete) {
+    private IEnumerator SpellAnimation(string skillId, Action onEffect, Action onComplete)
+    {
         /* insert spell animation here */
         yield return new WaitForSeconds(0.2f);
         onEffect();
         /* insert sound here! */
         yield return new WaitForSeconds(1.5f);
         onComplete();
+    }
+
+    //damage and heal function
+    public void takeDamage(PakRender attacker, float divideFactor)
+    {
+        int damage;
+        int atkValue = attacker.currentAtk;
+        damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))) / divideFactor);
+        this.healthSystem.TakeDamage(damage);
+        this.switchMat();
+    }
+
+    public void takeDamageBypassDEF(PakRender attacker, float divideFactor)
+    {
+        int damage;
+        int atkValue = attacker.currentAtk;
+        damage = (int)((atkValue / divideFactor));
+        switchMat();
+    }
+
+    public void gainHealing(int divideFactor)
+    {
+        int healValue = this.healthSystem.MaxHp / divideFactor;
+        this.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+        this.healthSystem.Heal(healValue);
     }
 }

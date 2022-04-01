@@ -23,6 +23,7 @@ TagManager:
   - inventory
   - slot
   - SoundBank
+  - comboPanel
   layers:
   - Default
   - TransparentFX
