@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
         // characters.Intialize();
         ConvertPlantToGameObject(CharacterSelecter.instance?.GetCharacters());
         ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
-        //ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
+        ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
         //Debug.Log(CharacterSelecter.instance?.GetSupports()[0]);
 
         try

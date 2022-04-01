@@ -2072,6 +2072,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1339217663}
   - component: {fileID: 1339217662}
+  - component: {fileID: 1339217664}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: GameController
@@ -2107,6 +2108,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1339217664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339217661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8883911939d95e240ba9fad11e7532df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillMenu: {fileID: 7173921337728200753}
+  okButton: {fileID: 1503610348}
+  backButton: {fileID: 708669005}
+  endTurnButton: {fileID: 1966035253}
+  cancelButton: {fileID: 1591717853}
+  cookButton: {fileID: 1763923602}
+  supportMenu: {fileID: 1473131846}
+  tickCook1: {fileID: 1924131800}
+  tickCook2: {fileID: 1171738266}
+  tickCook3: {fileID: 1068350435}
+  comboPanel: {fileID: 554195602}
+  selectTargetText: {fileID: 1882819453}
+  selectSkillText: {fileID: 411037998}
+  Backdrop: {fileID: 156448288}
 --- !u!1 &1344425279
 GameObject:
   m_ObjectHideFlags: 0
@@ -5114,3 +5141,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
+--- !u!114 &7173921337728200753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7173921338258702983, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
+  m_PrefabInstance: {fileID: 7173921337728200752}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d6caacbf6b4c744a2e19e8e13343b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

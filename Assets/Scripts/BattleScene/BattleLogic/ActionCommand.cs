@@ -36,27 +36,32 @@ namespace BattleScene.BattleLogic
         }
 
         // Check if targets and the caller dies in the action
-        public void CheckDead(List<PakRender> diedThisTurn) {
+        public void CheckDead(List<PakRender> diedThisTurn)
+        {
             //get CharManager to get array of char.
-            Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
+            //Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
 
             //Check death. If dead, the dead animation should be play
-            if (!caller.healthSystem.IsAlive && !diedThisTurn.Contains(caller)) {
+            if (!caller.healthSystem.IsAlive && !diedThisTurn.Contains(caller))
+            {
                 diedThisTurn.Add(caller);
                 Debug.Log(caller.Entity.EntityName + " is killed.");
                 /* TODO: Insert some death animation here. */
 
 
                 //set disable is better
-                if (!caller.healthSystem.IsAlive) {
+                if (!caller.healthSystem.IsAlive)
+                {
                     GameObject callerGameObject = caller.gameObject;
                     callerGameObject.SetActive(false);
                 }
             }
 
-            foreach (PakRender e in targets) {
+            foreach (PakRender e in targets)
+            {
                 Debug.Log(e.Entity.EntityName);
-                if (!e.healthSystem.IsAlive && !diedThisTurn.Contains(e)) { //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
+                if (!e.healthSystem.IsAlive && !diedThisTurn.Contains(e))
+                { //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
                     diedThisTurn.Add(e);
                     Debug.Log(e.Entity.EntityName + " is killed.");
                     /* TODO: Insert some death animation here. */
@@ -82,8 +87,10 @@ namespace BattleScene.BattleLogic
                 pass = true;
             else
                 // if not check if some targets are alive
-                foreach (var target in targets) {
-                    if (target.healthSystem.IsAlive) {
+                foreach (var target in targets)
+                {
+                    if (target.healthSystem.IsAlive)
+                    {
                         pass = true;
                         break;
                     }
@@ -92,7 +99,8 @@ namespace BattleScene.BattleLogic
             if (pass)
             {
                 // Invoke Oncomplete and unsubscribe FinishExecute event
-                Action finishCallback = () => {
+                Action finishCallback = () =>
+                {
                     onComplete();
                     callerskill.OnFinishExecute -= onComplete;
                 };
@@ -103,7 +111,9 @@ namespace BattleScene.BattleLogic
                 //dynamic skill call
                 callerskill.performSkill(caller2, targets);
 
-            }else{
+            }
+            else
+            {
                 Debug.Log("The target is already died.");
                 onComplete();
             }

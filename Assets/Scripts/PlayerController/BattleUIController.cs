@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using BattleScene.BattleLogic;
 
-public class BattleUIController : MonoBehaviour {
+public class BattleUIController : MonoBehaviour
+{
 
     public SkillMenuUI skillMenu;
 
-    public Button okButton, backButton, endTurnButton, cancelButton;
+    public Button okButton, backButton, endTurnButton, cancelButton, cookButton;
 
-    public GameObject supportMenu;
+    public GameObject supportMenu, tickCook1, tickCook2, tickCook3, comboPanel;
 
     //Text
     public Text selectTargetText;
@@ -18,22 +19,27 @@ public class BattleUIController : MonoBehaviour {
     [SerializeField]
     private GameObject Backdrop;
 
-    private void OnEnable() {
-        ActionCommandHandler.OnUpdateCommands += UpdateEndturnButton;        
+    private void OnEnable()
+    {
+        ActionCommandHandler.OnUpdateCommands += UpdateEndturnButton;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         ActionCommandHandler.OnUpdateCommands -= UpdateEndturnButton;
     }
-    void Start() {
+    void Start()
+    {
         //Set text during pak selection to not active
         selectTargetText.gameObject.SetActive(false);
         selectSkillText.gameObject.SetActive(false);
         endTurnButton.interactable = false;
     }
 
-    public void UpdateUI(PakSelection.GameState nextState) {
-        switch (nextState) {
+    public void UpdateUI(PakSelection.GameState nextState)
+    {
+        switch (nextState)
+        {
             case PakSelection.GameState.CHOOSE_SKILL:
                 selectSkillText.gameObject.SetActive(true);
                 skillMenu.ToggleMenu(true);
@@ -73,20 +79,29 @@ public class BattleUIController : MonoBehaviour {
                 Backdrop.SetActive(false);
                 selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
                 selectTargetText.gameObject.SetActive(false); //set select target text to not actives
+                cookButton.gameObject.SetActive(false);
+                tickCook1.SetActive(false);
+                tickCook2.SetActive(false);
+                tickCook3.SetActive(false);
+                comboPanel.SetActive(false);
                 break;
         }
     }
 
-    public void UpdateSkillMenuImage(PakRender ally) {
-        try {
+    public void UpdateSkillMenuImage(PakRender ally)
+    {
+        try
+        {
             skillMenu.UpdateImage(ally.Entity.Image, ally.skill);
         }
-        catch {
+        catch
+        {
             Debug.LogError("the target character does not have PakRender component");
         }
     }
 
-    private void UpdateEndturnButton(bool isEmpty) {
+    private void UpdateEndturnButton(bool isEmpty)
+    {
         endTurnButton.interactable = !isEmpty;
     }
 }
