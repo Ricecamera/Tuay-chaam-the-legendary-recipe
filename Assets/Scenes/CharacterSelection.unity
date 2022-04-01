@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11cbb2bcadb4f7643a2bad1d6fa9c18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: a036d15f1c7d96441993a510b87c2085, type: 2}
+  playerDatabase: {fileID: 11400000, guid: 5071beb07613f8d409e2fcabda862a48, type: 2}
   teamSlot: {fileID: 11400000, guid: 9c6da7d511b809049bbcc1693742bdf5, type: 2}
   InventoryPrefab1: {fileID: 2655922831437640780, guid: 32a72b0600d8bf6408345d29d5698ad9, type: 3}
   InventoryPrefab2: {fileID: 4211437540672256885, guid: 02ba1ec07546c65468923bb92613667d, type: 3}
@@ -826,7 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11cbb2bcadb4f7643a2bad1d6fa9c18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
+  playerDatabase: {fileID: 0}
   teamSlot: {fileID: 0}
   InventoryPrefab1: {fileID: 0}
   InventoryPrefab2: {fileID: 0}
@@ -3028,6 +3028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a44a334bb27b746b332b1a7dff6d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popup: {fileID: 0}
 --- !u!4 &1321554287
 Transform:
   m_ObjectHideFlags: 0

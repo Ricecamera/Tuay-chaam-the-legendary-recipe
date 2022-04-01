@@ -33,8 +33,17 @@ public class LevelLoader : MonoBehaviour
                 Button quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
                 playButton.onClick.AddListener(LoadNextScene);
                 quitButton.onClick.AddListener(ExitGame);
+
+                // Test
+
+                Button newGameButton = GameObject.Find("New Game").GetComponent<Button>();
+                Button loadGameButton = GameObject.Find("Load Game").GetComponent<Button>();
+                newGameButton.onClick.AddListener(LoadNextScene);
+                loadGameButton.onClick.AddListener(LoadNextScene);
+
+                //
             }
-            if (SceneManager.GetActiveScene().buildIndex == 9) //* Character Select
+            if (SceneManager.GetActiveScene().buildIndex == 3) //* Character Select
             {
                 Button startButton = GameObject.Find("Start Button").GetComponent<Button>();
                 Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
@@ -42,6 +51,7 @@ public class LevelLoader : MonoBehaviour
                 startButton.onClick.AddListener(LoadNextScene);
                 backButton.onClick.AddListener(LoadPrevScene);
                 helpButton.onClick.AddListener(Help);
+
             }
         }
     }

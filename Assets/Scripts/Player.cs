@@ -28,13 +28,13 @@ public class Player : MonoBehaviour
         // }
     }
 
-    public void SaveItem()
-    {
-        inventory.Save();
-    }
+    //public void SaveItem()
+    //{
+    //    inventory.Save();
+    //}
 
-    public void LoadItem()
-    {
-        // inventory.Load();
-    }
+    //public void LoadItem()
+    //{
+    //    // inventory.Load();
+    //}
 }

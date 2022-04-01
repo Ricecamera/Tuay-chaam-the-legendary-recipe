@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa098361363914746ba90fafd10589ea, type: 3}
-  m_Name: StorItem
+  m_Script: {fileID: 11500000, guid: 7132be646ff1c25489b8eceba18a51cf, type: 3}
+  m_Name: TestPlayerDatabase
   m_EditorClassIdentifier: 
-  _name: stor
-  uiDisplay: {fileID: 0}
-  type: 0
-  prefab: {fileID: 0}
-  description: 
+  mapUnlock: 1
+  inventoryObject: {fileID: 11400000, guid: 5cbb30db947412f45aaa1ace3d6ecff1, type: 2}

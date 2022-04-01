@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9da229d83d7f5404392bf91ee9cc9c7d, type: 3}
-  m_Name: Inventory
+  m_Name: DefaultInventory
   m_EditorClassIdentifier: 
   Container:
     MainItems:
-    - Name: 
+    - Name: eggplant
       item: {fileID: 11400000, guid: 955de58001dee6c4ea0af224452e93c7, type: 2}
-      amount: 0
-    - Name: 
+      amount: 1
+    - Name: carrot
       item: {fileID: 11400000, guid: b3383da1661ca6f4398d46d4a32eb0d4, type: 2}
-      amount: 0
+      amount: 1
     - Name: 
       item: {fileID: 0}
       amount: 0
@@ -33,15 +33,15 @@ MonoBehaviour:
       item: {fileID: 0}
       amount: 0
     ChaamItems:
-    - Name: 
-      item: {fileID: 11400000, guid: 040c2c55a8a5b6a4fa700fff184177ba, type: 2}
-      amount: 0
-    - Name: 
+    - Name: chaam1
+      item: {fileID: 11400000, guid: b0f96acdc7b19704894614b96ccb85e2, type: 2}
+      amount: 1
+    - Name: chaam2
       item: {fileID: 11400000, guid: dbfa0d563950dc54894d73891212ec9a, type: 2}
-      amount: 0
-    - Name: 
+      amount: 1
+    - Name: chaam3
       item: {fileID: 11400000, guid: e8ae1b1d4c238e543b63fbd5a7f96fdb, type: 2}
-      amount: 0
+      amount: 1
     - Name: 
       item: {fileID: 0}
       amount: 0
@@ -52,15 +52,15 @@ MonoBehaviour:
       item: {fileID: 0}
       amount: 0
     SupportItems:
-    - Name: 
-      item: {fileID: 11400000, guid: d0b24af2931ae3a4b8c1e52ecbca31c0, type: 2}
-      amount: 0
-    - Name: 
-      item: {fileID: 11400000, guid: 35bb89127ffc019469a2429b077c7b23, type: 2}
-      amount: 0
-    - Name: 
+    - Name: lime
       item: {fileID: 11400000, guid: 8cf7c672e3143d4408bc9f0424eb0162, type: 2}
-      amount: 0
+      amount: 1
+    - Name: honey
+      item: {fileID: 11400000, guid: 35bb89127ffc019469a2429b077c7b23, type: 2}
+      amount: 1
+    - Name: salt
+      item: {fileID: 11400000, guid: d0b24af2931ae3a4b8c1e52ecbca31c0, type: 2}
+      amount: 1
     - Name: 
       item: {fileID: 0}
       amount: 0
@@ -70,4 +70,3 @@ MonoBehaviour:
     - Name: 
       item: {fileID: 0}
       amount: 0
-  database: {fileID: 0}

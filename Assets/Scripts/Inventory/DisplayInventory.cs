@@ -7,7 +7,8 @@ using System;
 
 public class DisplayInventory : MonoBehaviour
 {
-    public InventoryObject inventory;
+    private InventoryObject inventory;
+    public PlayerDatabase playerDatabase;
     public InventoryObject teamSlot;
     public GameObject InventoryPrefab1;
     public GameObject InventoryPrefab2;
@@ -22,8 +23,10 @@ public class DisplayInventory : MonoBehaviour
     static Dictionary<GameObject, InventorySlot> SupportItems = new Dictionary<GameObject, InventorySlot>();
     void Start()
     {
+        inventory = playerDatabase.GetInventory();
         CreateSlots();
     }
+
 
     public void CreateSlots()
     {
