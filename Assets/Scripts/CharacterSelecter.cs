@@ -82,5 +82,10 @@ public class CharacterSelecter : MonoBehaviour
     public void ShowPopup()
     {
         popup.SetActive(true);
+        // Animator popupAnim = popup.GetComponent<Animator>();
+        // Debug.Log(popupAnim.name);
+        // popupAnim.SetTrigger("Show");
     }
+
 }
+
