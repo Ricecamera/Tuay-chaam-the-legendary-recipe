@@ -9,7 +9,7 @@ public class PakSelection : MonoBehaviour
 {
     public enum GameState
     {
-        CHOOSE_CHARACTER, CHOOSE_SKILL, CHOOSE_TARGET,
+        CHOOSE_CHARACTER, CHOOSE_SKILL, CHOOSE_CHAAM_SKILL, CHOOSE_COOK_SKILL, CHOOSE_TARGET,
         WAIT_FOR_CONFIRM, DISPLAY_SKILL, END_TURN
     };
 
@@ -37,6 +37,7 @@ public class PakSelection : MonoBehaviour
         _UIcontroller.backButton.onClick.AddListener(HandleBack);
         _UIcontroller.endTurnButton.onClick.AddListener(HandleEndturn);
         _UIcontroller.cancelButton.onClick.AddListener(HandleCancelAction);
+        _UIcontroller.cookButton.onClick.AddListener(HandleCookAction);
 
         battleManger.SetChangeTurn(() => UpdateGameState(GameState.CHOOSE_CHARACTER));
     }
@@ -185,7 +186,15 @@ public class PakSelection : MonoBehaviour
                 else
                 {
                     CharacterManager.instance.LockAllCharacters(true, 1);
-                    UpdateGameState(GameState.CHOOSE_SKILL);
+                    if (selectedPak.gameObject.CompareTag("Chaam"))
+                    {
+                        UpdateGameState(GameState.CHOOSE_CHAAM_SKILL);
+                    }
+                    else
+                    {
+                        UpdateGameState(GameState.CHOOSE_SKILL);
+                    }
+
                 }
                 break;
             case GameState.CHOOSE_SKILL: // select new character
@@ -430,17 +439,19 @@ public class PakSelection : MonoBehaviour
         selectedSkill = -1;
     }
 
-    // private void cookSystem()
-    // {
-    //     if (!supportMenu.activeSelf) supportMenu.SetActive(true);
-    //     if (tickCook1.activeSelf && tickCook2.activeSelf && tickCook3.activeSelf)
-    //     {
-    //         comboPanel.SetActive(true);
-    //     }
-    //     else
-    //     {
-    //         comboPanel.SetActive(false);
-    //     }
-    // }
+    private void HandleCookAction()
+    {
+        ChaamRender chaam = (ChaamRender)selectedPak;
+
+        if (chaam.getGuage() == 100)
+        {
+            UpdateGameState(GameState.CHOOSE_COOK_SKILL);
+        }
+        else
+        {
+            Debug.Log("Guage not full");
+        }
+
+    }
 
 }

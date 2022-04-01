@@ -46,6 +46,13 @@ public class BattleUIController : MonoBehaviour
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
                 break;
+            case PakSelection.GameState.CHOOSE_CHAAM_SKILL:
+                selectSkillText.gameObject.SetActive(true);
+                skillMenu.ToggleMenu(true);
+                backButton.gameObject.SetActive(true);
+                endTurnButton.gameObject.SetActive(false);
+                cookButton.gameObject.SetActive(true);
+                break;
             case PakSelection.GameState.CHOOSE_TARGET:
                 selectSkillText.gameObject.SetActive(false);
                 selectTargetText.gameObject.SetActive(true);
