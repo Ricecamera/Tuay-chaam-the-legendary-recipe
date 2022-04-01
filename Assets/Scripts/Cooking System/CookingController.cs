@@ -18,19 +18,18 @@ public class CookingController : MonoBehaviour
 
     void OnIngredientClick(List<string> selectedIngredient){
         if(recepies.ContainsKey(selectedIngredient)){
+            // set description of food
             GameObject describeText = GameObject.Find("describeText");
             Text description = describeText.GetComponent<Text>();
             description.text="Honey Lemon: It will deal great damage to one enemy.";
-            // set name of food
-            // recepies[selectedIngredient].SkillNamed;
-
-            // set description of food
-            // recepies[selectedIngredient].Description;
-
+            
             //enable the cook window
+            describeText.SetActive(true);
+
         }else{
             //disable the cook window
-
+            GameObject describeText = GameObject.Find("describeText");
+            describeText.SetActive(false);
         }
     }
 
