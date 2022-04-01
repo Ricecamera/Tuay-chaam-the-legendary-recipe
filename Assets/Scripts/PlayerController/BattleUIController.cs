@@ -10,7 +10,7 @@ public class BattleUIController : MonoBehaviour
 
     public Button okButton, backButton, endTurnButton, cancelButton, cookButton;
 
-    public GameObject supportMenu, tickCook1, tickCook2, tickCook3, comboPanel;
+    public GameObject supportMenu, tickCook1, tickCook2, tickCook3, comboPanel, support1, support2, support3;
 
     //Text
     public Text selectTargetText;
@@ -53,6 +53,17 @@ public class BattleUIController : MonoBehaviour
                 endTurnButton.gameObject.SetActive(false);
                 cookButton.gameObject.SetActive(true);
                 break;
+            case PakSelection.GameState.CHOOSE_COOK_SKILL:
+                selectSkillText.gameObject.SetActive(true);
+                skillMenu.ToggleMenu(true);
+                backButton.gameObject.SetActive(true);
+                endTurnButton.gameObject.SetActive(false);
+                support1.gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[0].uiDisplay;
+                support2.gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[1].uiDisplay;
+                support3.gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[2].uiDisplay;
+                supportMenu.gameObject.SetActive(true);
+                break;
+
             case PakSelection.GameState.CHOOSE_TARGET:
                 selectSkillText.gameObject.SetActive(false);
                 selectTargetText.gameObject.SetActive(true);

@@ -2131,6 +2131,9 @@ MonoBehaviour:
   tickCook2: {fileID: 1171738266}
   tickCook3: {fileID: 1068350435}
   comboPanel: {fileID: 554195602}
+  support1: {fileID: 2143315695}
+  support2: {fileID: 2145969999}
+  support3: {fileID: 1875543337}
   selectTargetText: {fileID: 1882819453}
   selectSkillText: {fileID: 411037998}
   Backdrop: {fileID: 156448288}
