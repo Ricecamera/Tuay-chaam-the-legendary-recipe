@@ -94,6 +94,9 @@ public class BattleUIController : MonoBehaviour
             case PakSelection.GameState.WAIT_FOR_CONFIRM:
                 okButton.gameObject.SetActive(true);
                 break;
+            case PakSelection.GameState.CHAAM_WAIT_FOR_CONFIRM:
+                okButton.gameObject.SetActive(true);
+                break;
             case PakSelection.GameState.END_TURN:
                 selectTargetText.gameObject.SetActive(false);
                 endTurnButton.gameObject.SetActive(false);

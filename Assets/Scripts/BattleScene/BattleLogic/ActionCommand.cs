@@ -11,12 +11,12 @@ namespace BattleScene.BattleLogic
         private float speed;                // field that determine the execution order of skills
 
         public PakRender caller;            // a index of the character calling this action
-        public int selectedSkill;        // a index of the skill to be execute
+        public Skill selectedSkill;        // a index of the skill to be execute
         public List<PakRender> targets;     // indice of the allied targets
 
         // Constructor
 
-        public ActionCommand(PakRender caller, int selectedSkill, List<PakRender> targets, float speed)
+        public ActionCommand(PakRender caller, Skill selectedSkill, List<PakRender> targets, float speed)
         {
             this.caller = caller;
             this.selectedSkill = selectedSkill;
@@ -79,11 +79,12 @@ namespace BattleScene.BattleLogic
 
             PakRender caller2 = caller.GetComponent<PakRender>();
 
-            Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
+            // Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
+            Skill callerskill = selectedSkill;
 
             bool pass = false;
             // if the selected skill is attackWholefield, do it !!
-            if (caller.skill[selectedSkill].SkillId.CompareTo("B:)") == 0)
+            if (selectedSkill.SkillId.CompareTo("B:)") == 0)
                 pass = true;
             else
                 // if not check if some targets are alive
@@ -131,6 +132,18 @@ namespace BattleScene.BattleLogic
             {
                 throw new ArgumentException("Object doesn't have a property speed");
             }
+        }
+
+        public int convertSelectedSkillToIndex()
+        {
+            for (int i = 0; i < caller.skill.Capacity; i++)
+            {
+                if (caller.skill[i].SkillId == selectedSkill.SkillId)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }

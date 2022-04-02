@@ -82,6 +82,10 @@ public class PakSelection : MonoBehaviour
     {
         if (currentState == GameState.CHOOSE_CHARACTER)
         {
+            if (ingredient.Capacity != 0)
+            {
+                ingredient.Clear();
+            }
             //Is adding check win condition here is fine?
             bool isPlayerWin = battleManger.IsPlayerWin();
             bool isPlayerLose = battleManger.IsPlayerLose();
@@ -103,11 +107,18 @@ public class PakSelection : MonoBehaviour
             }
         }
 
-        if (currentState == GameState.CHOOSE_TARGET || currentState == GameState.CHAAM_CHOOSE_TARGET)
+        if (currentState == GameState.CHOOSE_TARGET)
         {
             // Check skill target condition
             if (selectedTargets.Count > 0)
                 UpdateGameState(GameState.WAIT_FOR_CONFIRM); // Show ok button
+        }
+
+        if (currentState == GameState.CHAAM_CHOOSE_TARGET)
+        {
+            // Check skill target condition
+            if (selectedTargets.Count > 0)
+                UpdateGameState(GameState.CHAAM_WAIT_FOR_CONFIRM); // Show ok button
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -127,7 +138,7 @@ public class PakSelection : MonoBehaviour
                     return;
                 }
 
-                if (currentState == GameState.CHAAM_CHOOSE_TARGET)
+                if (currentState == GameState.CHAAM_CHOOSE_TARGET || currentState == GameState.CHAAM_WAIT_FOR_CONFIRM)
                 {
                     controlSkill(cookSkill, character);
                 }
@@ -200,7 +211,7 @@ public class PakSelection : MonoBehaviour
                     ActionCommand action = battleManger.actionCommandHandler.GetAction(selectedPak.tag);
 
                     // get index of the called skill in the caller pak
-                    selectedSkill = action.selectedSkill;
+                    selectedSkill = action.convertSelectedSkillToIndex();
                     _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
 
                     // get game tag of the target
@@ -391,9 +402,10 @@ public class PakSelection : MonoBehaviour
         {
 
             float speed = selectedPak.currentSpeed;
+            Skill skill = selectedPak.skill[selectedSkill];
             // Deep copy
             List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
-            ActionCommand newCommand = new ActionCommand(selectedPak, selectedSkill, skillTargets, speed);
+            ActionCommand newCommand = new ActionCommand(selectedPak, skill, skillTargets, speed);
             battleManger.AddCommand(newCommand);
 
             selectedPak.currentState = PakRender.State.InAction;
@@ -401,6 +413,22 @@ public class PakSelection : MonoBehaviour
 
             UpdateGameState(GameState.CHOOSE_CHARACTER);
         }
+
+        if (selectedPak != null && currentState == GameState.CHAAM_WAIT_FOR_CONFIRM)
+        {
+            float speed = selectedPak.currentSpeed;
+            Skill skill = cookSkill;
+            // Deep copy
+            List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
+            ActionCommand newCommand = new ActionCommand(selectedPak, skill, skillTargets, speed);
+            battleManger.AddCommand(newCommand);
+
+            selectedPak.currentState = PakRender.State.InAction;
+
+            UpdateGameState(GameState.CHOOSE_CHARACTER);
+        }
+
+
     }
 
     public void HandleBack()
