@@ -18,6 +18,8 @@ public class VictoryScene : MonoBehaviour
 
     private List<ItemObject> itemList;
 
+    [SerializeField]
+    private RuntimeAnimatorController animator;
     //* Tester
     private int dieCount;
 
@@ -59,20 +61,19 @@ public class VictoryScene : MonoBehaviour
         //TODO drop item  
         // Debug.Log(LevelManager.instance.thislevel);
         // itemList = MaptoItem.Instance.GetItemList(LevelManager.instance.thislevel);
-        itemList = MaptoItem.Instance.GetItemList(3);
+        itemList = MaptoItem.Instance.GetItemList(2);
         Debug.Log(itemList);
         foreach (ItemObject item in itemList)
         {
+            Debug.Log(item._name);
             GameObject imageItem = new GameObject("ImageItem");
             imageItem.AddComponent<Image>();
+            imageItem.AddComponent<Animator>();
+            imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
             imageItem.GetComponent<Image>().sprite = item.uiDisplay;
             imageItem.transform.SetParent(canvas.transform);
             imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(0, -120, 0);
             DatabaseManager.instance.AddItemToInventoryByName(item._name);
-            //GameObject itemInstance = Instantiate(imageItem) as GameObject;
-            // itemInstance.AddComponent<Image>();
-            // itemInstance.GetComponent<image>().sprite = item.uiDisplay;
-            //itemInstance.transform.position = new Vector3(0, 0, 0);
         }
     }
 }
