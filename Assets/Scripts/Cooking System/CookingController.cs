@@ -67,6 +67,7 @@ public class CookingController
         return recepies[key];
     }
 
+    //Turn's out to not being used
     public void OnStartCookingAndEndTurn(List<string> selectedIngredient, PakRender caller, List<PakRender> target)
     {
         string key = string.Join("", selectedIngredient);
@@ -84,6 +85,5 @@ public class CookingController
                 break;
             }
         }
-        //write reset everything in pakSelection
     }
 }

@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleScene.BattleLogic;
+using BattleScene;
 
 public class BattleUIController : MonoBehaviour
 {
@@ -23,6 +25,8 @@ public class BattleUIController : MonoBehaviour
     [SerializeField]
     private GameObject Backdrop;
 
+    public Image cookImageDark;
+
     private void OnEnable()
     {
         ActionCommandHandler.OnUpdateCommands += UpdateEndturnButton;
@@ -38,6 +42,8 @@ public class BattleUIController : MonoBehaviour
         selectTargetText.gameObject.SetActive(false);
         selectSkillText.gameObject.SetActive(false);
         endTurnButton.interactable = false;
+        cookImageDark.color=UnityEngine.Color.gray;
+        cookImageDark.fillAmount=0f;
     }
 
     public void UpdateUI(PakSelection.GameState nextState)
@@ -59,6 +65,22 @@ public class BattleUIController : MonoBehaviour
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
                 cookButton.gameObject.SetActive(true);
+                List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
+                foreach (PakRender x in pakTeam)
+                {
+                    if (x.CompareTag("Chaam")){
+                        ChaamRender nongChaam = (ChaamRender)x;
+                        if(nongChaam.getGuage()==100){
+                            cookImageDark.gameObject.SetActive(false);
+                            cookButton.enabled=true;
+                        }else{
+                            cookImageDark.fillAmount= 1f - (float)nongChaam.getGuage()/100f;
+                            cookImageDark.gameObject.SetActive(true);
+                            cookButton.enabled=false;
+                        }
+                        break;
+                    }
+                }
                 break;
             case PakSelection.GameState.CHOOSE_COOK_SKILL:
                 skillMenu.skills[0].getMyButton().GetComponent<Image>().color = UnityEngine.Color.gray;
