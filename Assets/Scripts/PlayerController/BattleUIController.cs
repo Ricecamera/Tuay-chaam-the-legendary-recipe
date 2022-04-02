@@ -8,9 +8,13 @@ public class BattleUIController : MonoBehaviour
 
     public SkillMenuUI skillMenu;
 
-    public Button okButton, backButton, endTurnButton, cancelButton, cookButton;
+    public Button okButton, backButton, endTurnButton, cancelButton, cookButton, startCookButton;
 
-    public GameObject supportMenu, tickCook1, tickCook2, tickCook3, comboPanel, support1, support2, support3;
+    public Button[] supportButton;
+
+    public GameObject[] tickCook;
+
+    public GameObject supportMenu, comboPanel;
 
     //Text
     public Text selectTargetText;
@@ -41,12 +45,15 @@ public class BattleUIController : MonoBehaviour
         switch (nextState)
         {
             case PakSelection.GameState.CHOOSE_SKILL:
+                Debug.Log("CHOOSE_SKILL");
                 selectSkillText.gameObject.SetActive(true);
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
+                cookButton.gameObject.SetActive(false);
                 break;
             case PakSelection.GameState.CHOOSE_CHAAM_SKILL:
+                Debug.Log("CHOOSE_CHAAM_SKILL");
                 selectSkillText.gameObject.SetActive(true);
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
@@ -54,13 +61,17 @@ public class BattleUIController : MonoBehaviour
                 cookButton.gameObject.SetActive(true);
                 break;
             case PakSelection.GameState.CHOOSE_COOK_SKILL:
+                skillMenu.skills[0].getMyButton().GetComponent<Image>().color = UnityEngine.Color.gray;
+                skillMenu.skills[1].getMyButton().GetComponent<Image>().color = UnityEngine.Color.gray;
+                skillMenu.skills[2].getMyButton().GetComponent<Image>().color = UnityEngine.Color.gray;
                 selectSkillText.gameObject.SetActive(true);
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
-                support1.gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[0].uiDisplay;
-                support2.gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[1].uiDisplay;
-                support3.gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[2].uiDisplay;
+                for (int i = 0; i < supportButton.Length; i++)
+                {
+                    supportButton[i].gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[i].uiDisplay;
+                }
                 supportMenu.gameObject.SetActive(true);
                 break;
 
@@ -70,8 +81,20 @@ public class BattleUIController : MonoBehaviour
                 backButton.gameObject.SetActive(true);
                 okButton.gameObject.SetActive(false);
                 Backdrop.SetActive(true);
+                cookButton.gameObject.SetActive(false);
+                break;
+            case PakSelection.GameState.CHAAM_CHOOSE_TARGET:
+                selectSkillText.gameObject.SetActive(false);
+                selectTargetText.gameObject.SetActive(true);
+                backButton.gameObject.SetActive(true);
+                okButton.gameObject.SetActive(false);
+                Backdrop.SetActive(true);
+                cookButton.gameObject.SetActive(false);
                 break;
             case PakSelection.GameState.WAIT_FOR_CONFIRM:
+                okButton.gameObject.SetActive(true);
+                break;
+            case PakSelection.GameState.CHAAM_WAIT_FOR_CONFIRM:
                 okButton.gameObject.SetActive(true);
                 break;
             case PakSelection.GameState.END_TURN:
@@ -98,10 +121,16 @@ public class BattleUIController : MonoBehaviour
                 selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
                 selectTargetText.gameObject.SetActive(false); //set select target text to not actives
                 cookButton.gameObject.SetActive(false);
-                tickCook1.SetActive(false);
-                tickCook2.SetActive(false);
-                tickCook3.SetActive(false);
+                foreach (GameObject tick in tickCook)
+                {
+                    tick.SetActive(false);
+                }
+
                 comboPanel.SetActive(false);
+                TooltipScreenSpaceUI.hideTooltip_Static();
+                skillMenu.skills[0].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
+                skillMenu.skills[1].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
+                skillMenu.skills[2].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 break;
         }
     }

@@ -19,7 +19,7 @@ public class SkillUI : MonoBehaviour
     private Image myImage;
     private Button myButton;
 
-    public bool Selected {get; private set; }
+    public bool Selected { get; private set; }
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,27 +31,33 @@ public class SkillUI : MonoBehaviour
 
     // Update is called once per frame
 
-    public void SetSelect(bool value) {
-        if (value) {
+    public void SetSelect(bool value)
+    {
+        if (value)
+        {
             transform.localScale = Vector3.one * SIZE_MULTIPLER;
             effect.SetActive(true);
         }
-        else {
+        else
+        {
             transform.localScale = Vector3.one;
             effect.SetActive(false);
         }
-        
+
         Selected = value;
     }
 
-    public void SetSkill(Skill skill) {
-        if (skill == null) {
+    public void SetSkill(Skill skill)
+    {
+        if (skill == null)
+        {
             myImage.sprite = null;
             gameObject.SetActive(false);
             myButton.interactable = false;
         }
-        else {
-            myImage.sprite = skill.Icon;        
+        else
+        {
+            myImage.sprite = skill.Icon;
             gameObject.SetActive(true);
             bool show = skill.Cooldown == 0;
             myButton.interactable = show;
@@ -60,8 +66,14 @@ public class SkillUI : MonoBehaviour
         }
     }
 
-    public void AddListener(UnityAction callback) {
+    public void AddListener(UnityAction callback)
+    {
         myButton.onClick.AddListener(callback);
+    }
+
+    public Button getMyButton()
+    {
+        return myButton;
     }
 
 }

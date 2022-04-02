@@ -2,13 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BattleScene;
 
 public class Skill
 {
+    //Skill Type
+    public enum SkillNation{
+        NORMAL,COOKED
+    }
     //Performable
     protected Performable performAct;
     //fields
     protected string skillId;
+
+    protected SkillNation skillNation;
 
     protected string skillName;
 
@@ -31,7 +38,7 @@ public class Skill
     public Action<List<PakRender>, PakRender> doTheSkill;
 
     //Constructortor
-    public Skill(string skillId, string skillName, string description, int cooldown, Sprite icon, string actionType, Performable performAct, string animationType)
+    public Skill(string skillId, string skillName, string description, int cooldown, Sprite icon, string actionType, Performable performAct, string animationType, SkillNation skillNation=SkillNation.NORMAL)
     {
         this.skillId = skillId;
         this.skillName = skillName;
@@ -43,6 +50,7 @@ public class Skill
         this.performAct = performAct;
         this.animationType = animationType;
         this.doTheSkill+=performAct.performSkill;
+        this.skillNation = skillNation;
     }
 
     //functions
@@ -53,6 +61,21 @@ public class Skill
             Attack(caller, target, this.doTheSkill);
         }else{
             Debug.Log("Wrong animation type of skill");
+        }
+        if(skillNation==SkillNation.COOKED){
+            List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
+            foreach (PakRender x in pakTeam)
+            {
+                if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp>0){
+                    ChaamRender nongChaam = (ChaamRender)x;
+                    Debug.Log("b/f");
+                    Debug.Log(nongChaam.getGuage());
+                    nongChaam.setGuage(0);
+                    Debug.Log(nongChaam.getGuage());
+                    Debug.Log("a/f");
+                    break;
+                }
+            }
         }
     }
 

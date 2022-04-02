@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3678362646462264683}
   - component: {fileID: 3678362646462264681}
   - component: {fileID: 3678362646462264694}
-  - component: {fileID: -8507518989725252198}
   - component: {fileID: 3246793316793962671}
+  - component: {fileID: 6279436182993300329}
   m_Layer: 0
   m_Name: Chaam2
   m_TagString: chaam
@@ -127,26 +127,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.3093643, y: 4.336005}
   m_EdgeRadius: 0
---- !u!114 &-8507518989725252198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3678362646462264695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a53f634998ea64b9b92fde30d0c0ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  setSkill: -1
-  defBuffVfx: {fileID: 3321399129092016794}
-  atkBuffVfx: {fileID: 1632400571838659093}
-  actionIcon: {fileID: 8324893053176995767}
-  selectedIcon: {fileID: 5513673626026838053}
-  enitityData: {fileID: 11400000, guid: 1c944deac3623cb428fbcc287a3a9cb6, type: 2}
-  slideSpeed: 6
-  attackDistance: 1.75
 --- !u!114 &3246793316793962671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +142,26 @@ MonoBehaviour:
   healthBar: {fileID: 7313032710665027488}
   healVfx: {fileID: 6611951582133883941}
   damagedVfx: {fileID: 8822841287921573809}
+--- !u!114 &6279436182993300329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678362646462264695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3a0f58d9cbb384993ddeb44b1fe08c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setSkill: -1
+  defBuffVfx: {fileID: 3321399129092016794}
+  atkBuffVfx: {fileID: 1632400571838659093}
+  actionIcon: {fileID: 8324893053176995767}
+  selectedIcon: {fileID: 5513673626026838053}
+  enitityData: {fileID: 11400000, guid: 1c944deac3623cb428fbcc287a3a9cb6, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!1001 &2375577500910046865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -532,6 +532,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3446496969687332869, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 25cafe66f2655274c9024c2b4746f6be, type: 3}
+    - target: {fileID: 4621418323819578162, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 21.3166
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621418323819578162, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.0946
+      objectReference: {fileID: 0}
     - target: {fileID: 5822007782164566723, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -539,6 +551,10 @@ PrefabInstance:
     - target: {fileID: 5822007782164566723, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822007782164566723, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.10999966
       objectReference: {fileID: 0}
     - target: {fileID: 8098668150518746894, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
       propertyPath: m_Pivot.x

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HalfEnemiesHealth : Skill
 {
-    public HalfEnemiesHealth(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies", new HalfEnemiesHealthPerforming(), "attackAllEnemies")
+    public HalfEnemiesHealth(string skillId, string skillName, string description, int cooldown, Sprite icon) : base(skillId, skillName, description, cooldown, icon, "TargetAllEnemies", new HalfEnemiesHealthPerforming(), "attackAllEnemies", SkillNation.COOKED)
     {
         // BuffAtkAllAlliance += ActionVanillaBuffAtkAll;
         this.icon = icon;
