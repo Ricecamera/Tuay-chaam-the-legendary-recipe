@@ -21,7 +21,7 @@ public class VictoryScene : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController animator;
     //* Tester
-    private int dieCount;
+    //* private int dieCount;
 
     private void Start()
     {
@@ -31,29 +31,30 @@ public class VictoryScene : MonoBehaviour
         //* die = 2 -> 1 star -> starR and starM are not trigger
         //* die = 3 -> 0 stars -> no star is trigger
 
+        if (BattleScene.BattleManager.instance.GetDieCount() == 0)
         //* Tester
-        // MaptoItem.instance.Awake();
-
-        // if (BattleScene.BattleManager.instance.GetDieCount() == 0)
-        if (dieCount == 0)
+        //* if (dieCount == 0)
         {
             starR.SetActive(true);
             starL.SetActive(true);
             starM.SetActive(true);
         }
-        // else if (BattleScene.BattleManager.instance.GetDieCount() == 1)
-        else if (dieCount == 1)
+        else if (BattleScene.BattleManager.instance.GetDieCount() == 1)
+        //* Tester
+        //* else if (dieCount == 1)
         {
             starL.SetActive(true);
             starM.SetActive(true);
         }
-        // else if (BattleScene.BattleManager.instance.GetDieCount() == 2)
-        else if (dieCount == 2)
+        else if (BattleScene.BattleManager.instance.GetDieCount() == 2)
+        //* Tester
+        //* else if (dieCount == 2)
         {
             starL.SetActive(true);
         }
-        // else if (BattleScene.BattleManager.instance.GetDieCount() == 3)
-        else if (dieCount == 3)
+        else if (BattleScene.BattleManager.instance.GetDieCount() == 3)
+        //* Tester
+        //* else if (dieCount == 3)
         {
 
         }
