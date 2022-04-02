@@ -73,7 +73,10 @@ public class VictoryScene : MonoBehaviour
             imageItem.GetComponent<Image>().sprite = item.uiDisplay;
             imageItem.transform.SetParent(canvas.transform);
             imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(0, -120, 0);
-            DatabaseManager.instance.AddItemToInventoryByName(item._name);
+            if (DatabaseManager.instance.GetItemFromGameDB(item._name) == null)
+            {
+                DatabaseManager.instance.AddItemToInventoryByName(item._name);
+            }
         }
     }
 }
