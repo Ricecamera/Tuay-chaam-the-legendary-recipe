@@ -5,9 +5,6 @@ using System.Linq;
 
 public class DatabaseManager : MonoBehaviour
 {
-    // Store player's items
-    //public ItemDatabaseObject itemDatabase;
-
     // Store all items
     public GameDatabase gameDatabase;
 
