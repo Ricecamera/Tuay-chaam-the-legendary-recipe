@@ -9,7 +9,8 @@ public class PakRender : MonoBehaviour
     private enum State {
         Idle,
         Sliding,
-        Busy
+        Busy, 
+        Dead
     }
 
     private static Color DARK_COLOR = new Color(160 / 255f, 160 / 255f, 160 / 255f, 1);
@@ -214,6 +215,10 @@ public class PakRender : MonoBehaviour
                 sp.sortingLayerName = "Character";
             })
         );
+    }
+
+    public bool IsAlive(){
+        return healthSystem.IsAlive;
     }
 
     /*public void moveToEnemy(PakRender caller, List<PakRender> targets)

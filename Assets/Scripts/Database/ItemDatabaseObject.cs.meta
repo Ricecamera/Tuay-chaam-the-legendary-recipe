@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Database/ItemDatabaseObject.cs.meta
 guid: 3c9bd3a6bcaea6146b41aba0b3d02bfe
+========
+guid: c677170e21277c844a06bbab74450b1c
+>>>>>>>> New-Scene-Loader:Assets/Scripts/Database/GameDatabase.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

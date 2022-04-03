@@ -1,4 +1,5 @@
 using UnityEngine;
+using BattleScene;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -44,7 +45,7 @@ public class HealthSystem : MonoBehaviour
         set
         {
             if (value)
-                currentHp = (int) Mathf.Round(maxHp * 0.5f);
+                currentHp = (int)Mathf.Round(maxHp * 0.5f);
             else
                 currentHp = 0;
         }
