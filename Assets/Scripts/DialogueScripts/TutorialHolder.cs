@@ -84,18 +84,6 @@ namespace DialogueSystem
                     yield return new WaitForSeconds(0.5f);
                     transform.GetChild(3).gameObject.SetActive(true);
                 }
-                if (i < 2)
-                {
-                    yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
-                }
-                else if (i == 4)
-                {
-                    yield return new WaitUntil(() => transform.GetChild(2).GetComponent<TutorialLine>().isFinish);
-                }
-                else if (i == 6)
-                {
-                    yield return new WaitUntil(() => transform.GetChild(3).GetComponent<TutorialLine>().isFinish);
-                }
                 else if (i == 7)
                 {
                     Debug.Log("End");
