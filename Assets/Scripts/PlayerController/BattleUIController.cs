@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using BattleScene.BattleLogic;
 using BattleScene;
+using UnityEngine.SceneManagement;
 
 public class BattleUIController : MonoBehaviour
 {
@@ -75,7 +76,14 @@ public class BattleUIController : MonoBehaviour
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
-                cookButton.gameObject.SetActive(true);
+                if (SceneManager.GetActiveScene().name == "Battle1-2V2")
+                {
+                    cookButton.gameObject.SetActive(false);
+                }
+                else
+                {
+                    cookButton.gameObject.SetActive(true);
+                }
                 List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
                 foreach (PakRender x in pakTeam)
                 {

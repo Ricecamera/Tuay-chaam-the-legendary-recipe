@@ -19,7 +19,7 @@ MonoBehaviour:
   baseDef: 30
   maxHp: 180
   baseSpeed: 24
-  image: {fileID: -2658520230801257717, guid: 6b2fb54480ca318408469bbc2fd82bba, type: 3}
+  image: {fileID: 21300000, guid: 0b068c094a5e81b4a8009d0bfffc4f06, type: 3}
   bonusStatsPerLvl:
     addHp: 0
     addAtk: 0
