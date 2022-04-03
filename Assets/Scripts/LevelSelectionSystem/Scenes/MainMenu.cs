@@ -19,7 +19,6 @@ public class MainMenu : MonoBehaviour
         loadGameButton = GameObject.Find("Load Game").GetComponent<Button>();
         playButton = GameObject.Find("Play").GetComponent<Button>();
         quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
-        MaptoItem.instance.Awake();
     }
 
     private void Update()
