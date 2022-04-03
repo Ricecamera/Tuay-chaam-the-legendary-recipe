@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3653526620412322703}
   - component: {fileID: 3653526620412322700}
   - component: {fileID: 3653526620412322701}
-  - component: {fileID: -5873725277610175437}
   - component: {fileID: 779690488039474830}
+  - component: {fileID: 4481248688506277439}
   m_Layer: 0
   m_Name: Yuak
   m_TagString: enemy3
@@ -127,26 +127,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.7551756, y: 9.23609}
   m_EdgeRadius: 0
---- !u!114 &-5873725277610175437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3653526620412322698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d8cb8d12f4038141b11a9485c0773ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  setSkill: -1
-  defBuffVfx: {fileID: 4364319413798939322}
-  atkBuffVfx: {fileID: 4549543882811960939}
-  actionIcon: {fileID: 2561421350525620039}
-  selectedIcon: {fileID: 8652223419636800662}
-  enitityData: {fileID: 11400000, guid: fba1534796db228459c4d77c974080a8, type: 2}
-  slideSpeed: 6
-  attackDistance: 1.75
 --- !u!114 &779690488039474830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +142,28 @@ MonoBehaviour:
   healthBar: {fileID: 7102632461219454304}
   healVfx: {fileID: 6095223587601586116}
   damagedVfx: {fileID: 8849604090447351386}
+--- !u!114 &4481248688506277439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3653526620412322698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a9d51ae10a1464db427de83df956a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill:
+  - skill: {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
+  setSkill: -1
+  defBuffVfx: {fileID: 4364319413798939322}
+  atkBuffVfx: {fileID: 4549543882811960939}
+  actionIcon: {fileID: 2561421350525620039}
+  selectedIcon: {fileID: 8652223419636800662}
+  enitityData: {fileID: 11400000, guid: fba1534796db228459c4d77c974080a8, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!1001 &608808356970298918
 PrefabInstance:
   m_ObjectHideFlags: 0

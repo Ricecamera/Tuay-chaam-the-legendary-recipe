@@ -79,7 +79,7 @@ namespace BattleScene.BattleLogic
 
             PakRender caller2 = caller.GetComponent<PakRender>();
 
-            Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
+            SkillExecutor callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
 
             bool pass = false;
             // if the selected skill is attackWholefield, do it !!
@@ -109,7 +109,7 @@ namespace BattleScene.BattleLogic
                 callerskill.OnFinishExecute += finishCallback;
 
                 //dynamic skill call
-                callerskill.performSkill(caller2, targets);
+                callerskill.performSkill(targets, caller2);
 
             }
             else

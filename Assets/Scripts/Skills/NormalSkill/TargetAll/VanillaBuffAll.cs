@@ -1,19 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BuffSystem;
 
-public class VanillaBuffAll : ScriptableObject, Performable {
-    public void Execute(List<PakRender> target, PakRender self) {
-        int buffValue = (self.currentDef) / 6;
-        foreach (PakRender e in target) {
-            //TODO List
-            /*
-                TODO1: Add buff element to pak with expried date
-                TODO2: delete the direct add buff value
-                TODO3: may change buffValue formula.
-            */
-            e.currentDef += buffValue;
-            e.defBuffVfx.Play();
+
+[CreateAssetMenu(fileName = "Buff all", menuName = "Assets/skill/Buff all")]
+public class VanillaBuffAll : RangeSkill {
+    
+    [SerializeField]
+    private StatusBuff buff;
+    public override void Execute(List<PakRender> targets, PakRender self) {
+        foreach (PakRender e in targets) {
+            e.AddBuff(buff);
         }
 
         //add sound effect

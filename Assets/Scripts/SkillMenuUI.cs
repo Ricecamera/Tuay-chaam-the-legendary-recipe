@@ -54,7 +54,7 @@ public class SkillMenuUI : MonoBehaviour {
         }
     }
 
-    public void UpdateImage(Sprite sprite, List<Skill> charaterSkills)
+    public void UpdateImage(Sprite sprite, List<SkillExecutor> charaterSkills)
     {
         if (sprite) {
             characterImage.color = Color.white;

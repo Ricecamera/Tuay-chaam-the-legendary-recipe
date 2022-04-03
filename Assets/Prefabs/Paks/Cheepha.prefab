@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5526432194195436295}
   - component: {fileID: 5526432194195436288}
   - component: {fileID: 5526432194195436289}
-  - component: {fileID: -9117477524257498528}
   - component: {fileID: 158471561366091084}
+  - component: {fileID: 8433337804921025488}
   m_Layer: 0
   m_Name: Cheepha
   m_TagString: boss
@@ -127,26 +127,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.658188, y: 11.0076885}
   m_EdgeRadius: 0
---- !u!114 &-9117477524257498528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5526432194195436290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f793d6eb58343f40a998521eb45bc47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  setSkill: -1
-  defBuffVfx: {fileID: 8053813272182694919}
-  atkBuffVfx: {fileID: 5669385475494685011}
-  actionIcon: {fileID: 1651321965726324652}
-  selectedIcon: {fileID: 6716876284416023942}
-  enitityData: {fileID: 11400000, guid: 8bb766d10606b6f48b06569bf90dacd0, type: 2}
-  slideSpeed: 6
-  attackDistance: 1.75
 --- !u!114 &158471561366091084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +142,28 @@ MonoBehaviour:
   healthBar: {fileID: 9154063286770064438}
   healVfx: {fileID: 3648970310086647471}
   damagedVfx: {fileID: 4448495569562040712}
+--- !u!114 &8433337804921025488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5526432194195436290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f793d6eb58343f40a998521eb45bc47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill:
+  - skill: {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
+  setSkill: -1
+  defBuffVfx: {fileID: 8053813272182694919}
+  atkBuffVfx: {fileID: 5669385475494685011}
+  actionIcon: {fileID: 1651321965726324652}
+  selectedIcon: {fileID: 6716876284416023942}
+  enitityData: {fileID: 11400000, guid: 8bb766d10606b6f48b06569bf90dacd0, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!1001 &2025039585762107863
 PrefabInstance:
   m_ObjectHideFlags: 0

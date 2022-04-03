@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6471561221526187992}
   - component: {fileID: 7342385776136649428}
   - component: {fileID: -524019547052751169}
-  - component: {fileID: 3009701433667653758}
   - component: {fileID: 5612463010369358368}
+  - component: {fileID: 3388671583476714264}
   m_Layer: 0
   m_Name: potato
   m_TagString: Untagged
@@ -107,26 +107,6 @@ MonoBehaviour:
   healthBar: {fileID: 8306637099365351608}
   healVfx: {fileID: 3961237479889642458}
   damagedVfx: {fileID: 7102601356983006747}
---- !u!114 &3009701433667653758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7112338558754160059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c0c0651d0b732b489f05589e3f2bbe8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  setSkill: -1
-  defBuffVfx: {fileID: 316064225841480584}
-  atkBuffVfx: {fileID: 4101011238058045641}
-  actionIcon: {fileID: 661912455323670702}
-  selectedIcon: {fileID: 2281051864434653779}
-  enitityData: {fileID: 11400000, guid: 77a1521fc046a4546a0717bef5ca995a, type: 2}
-  slideSpeed: 6
-  attackDistance: 1.75
 --- !u!61 &5612463010369358368
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -153,6 +133,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16.978384, y: 19.783579}
   m_EdgeRadius: 0
+--- !u!114 &3388671583476714264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112338558754160059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a9d51ae10a1464db427de83df956a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill:
+  - skill: {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
+  setSkill: -1
+  defBuffVfx: {fileID: 316064225841480584}
+  atkBuffVfx: {fileID: 4101011238058045641}
+  actionIcon: {fileID: 661912455323670702}
+  selectedIcon: {fileID: 2281051864434653779}
+  enitityData: {fileID: 11400000, guid: 77a1521fc046a4546a0717bef5ca995a, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!1001 &1132767496145444996
 PrefabInstance:
   m_ObjectHideFlags: 0

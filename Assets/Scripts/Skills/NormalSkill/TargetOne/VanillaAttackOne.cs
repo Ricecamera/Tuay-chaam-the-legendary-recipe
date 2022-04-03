@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class VanillaAttackOne : ScriptableObject, Performable {
 
-    public void Execute(List<PakRender> target, PakRender caller) {
+[CreateAssetMenu(fileName = "Attack one", menuName = "Assets/skill/attack one")]
+public class VanillaAttackOne : MeleeSkill {
+
+    public float damageRatio = 1f;
+
+    public override void Execute(List<PakRender> target, PakRender caller) {
         int damage;
-        int atkValue = caller.currentAtk;
-        damage = (int) (atkValue * (decimal) (100f / (100f + target[0].currentDef)));
+        float atkValue = caller.currentAtk * damageRatio;
+        damage = (int) (atkValue * (float) (100f / (100f + target[0].currentDef)));
 
         target[0].healthSystem.TakeDamage(damage);
         target[0].switchMat();

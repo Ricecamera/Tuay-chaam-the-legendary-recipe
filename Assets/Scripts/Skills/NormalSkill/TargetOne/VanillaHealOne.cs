@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VanillaHealOne : ScriptableObject, Performable {
-    public void Execute(List<PakRender> target, PakRender self)
+
+[CreateAssetMenu(fileName = "Heal one", menuName = "Assets/skill/Heal one")]
+public class VanillaHealOne :RangeSkill {
+    public float healRatio = .25f;
+    public override void Execute(List<PakRender> target, PakRender self)
     {
-        int healValue = self.healthSystem.MaxHp / 4;
+        int healValue = (int) ((float) self.healthSystem.MaxHp * healRatio);
         target[0].healthSystem.Heal(healValue);
 
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
         SoundManager.Instance.PlaySound("Heal", soundBank[0].GetComponent<BattleSound>().clips);
-        return; 
     }
 }

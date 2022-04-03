@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce1060b059a5944397dd03accdb4e34, type: 3}
+  m_Name: Buff one ally defense
+  m_EditorClassIdentifier: 
+  skillId: VBD1
+  skillName: BuffDefOneAlliance
+  skillNation: 0
+  icon: {fileID: 21300000, guid: 458320f2b047ba148b98fe1a5ca3a7ce, type: 3}
+  description: Slightly Increase defense of one ally for 2 turns
+  actionType: TargetOneAlliance
+  maxCooldown: 2
+  buff: {fileID: 11400000, guid: 11fb06abf4be982478dbe4a319e92915, type: 2}

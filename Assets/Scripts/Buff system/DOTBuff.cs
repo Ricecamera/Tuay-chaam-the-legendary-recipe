@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using BuffSystem.Behaviour;
 
-namespace BuffSystem.Behaviour {
+namespace BuffSystem {
 
     [CreateAssetMenu(fileName = "New DOT Buff", menuName = "Assets/Buff/DOT buff")]
     public class DOTBuff : BaseBuff, IOvertimeBehaviour {

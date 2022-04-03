@@ -52,7 +52,6 @@ public class CharacterManager : MonoBehaviour {
     public void AddCharacter(string tag, GameObject character) {
         try {
             // find the team of added character
-            Debug.Log(character);
             holders.Add(tag, character.GetComponent<PakRender>());
         }
         catch (Exception e) {

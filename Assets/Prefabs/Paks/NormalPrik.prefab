@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4698015606216624919}
   - component: {fileID: 4698015606216624918}
   - component: {fileID: 4698015606216624905}
-  - component: {fileID: 7509579859460655710}
+  - component: {fileID: 889347891597038135}
   - component: {fileID: 4163644326407520105}
   m_Layer: 0
   m_Name: NormalPrik
@@ -127,7 +127,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.9454904, y: 9.523346}
   m_EdgeRadius: 0
---- !u!114 &7509579859460655710
+--- !u!114 &889347891597038135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,9 +136,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4698015606216624904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884b4132343da414b9571fe40fe3c91e, type: 3}
+  m_Script: {fileID: 11500000, guid: f3a9d51ae10a1464db427de83df956a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill:
+  - skill: {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
   setSkill: -1
   defBuffVfx: {fileID: 6202878291005704237}
   atkBuffVfx: {fileID: 805288662216213467}

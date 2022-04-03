@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207c4226d03f2c2439ed5c64d8031b6d, type: 3}
   m_Name: Burn Buff
   m_EditorClassIdentifier: 
-  buffName: 
-  description: 
-  duration: 0
+  buffName: Burn Buff
+  duration: 3
   buffIcon: {fileID: 0}
-  damageRatio: 0
+  damageRatio: 0.1

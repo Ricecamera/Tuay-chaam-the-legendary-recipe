@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VanillaHealAll : ScriptableObject, Performable
+
+[CreateAssetMenu(fileName = "Heal all", menuName = "Assets/skill/Heal all")]
+public class VanillaHealAll : RangeSkill
 {
-    public void Execute(List<PakRender> target, PakRender self)
+    public float healRatio = 0.15f;
+
+    public override void Execute(List<PakRender> target, PakRender self)
     {
-        int healValue = self.healthSystem.MaxHp / 8;
+        int healValue = (int) ((float) self.healthSystem.MaxHp * healRatio);
         foreach (PakRender e in target)
         {
             e.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.

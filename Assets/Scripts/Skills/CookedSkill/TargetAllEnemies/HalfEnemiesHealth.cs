@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HalfEnemiesHealthPerforming : ScriptableObject, Performable
+public class HalfEnemiesHealthPerforming : MeleeSkill
 {
-    public void Execute(List<PakRender> target, PakRender self)
+    public override void Execute(List<PakRender> target, PakRender self)
     {
         foreach (PakRender e in target)
         {

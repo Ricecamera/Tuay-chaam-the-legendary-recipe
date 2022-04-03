@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using BuffSystem.Behaviour;
 
-namespace BuffSystem.Behaviour {
+namespace BuffSystem {
 
     [CreateAssetMenu(fileName = "New Status Buff", menuName = "Assets/Buff/status buff")]
     public class StatusBuff : BaseBuff, ILastingBehaviour {
@@ -30,10 +31,6 @@ namespace BuffSystem.Behaviour {
                 // Remove status buff from character by subtract the current value by the add amount
                 UpdateStatus(statusArray[i].statusName, -1 * statusArray[i].ratio, character);
             }
-        }
-
-        public void OnDisable() {
-            Debug.Log("Destroy");
         }
 
         public void UpdateStatus(string status, float ratio, PakRender character) {

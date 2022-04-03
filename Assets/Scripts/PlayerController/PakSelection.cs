@@ -108,7 +108,7 @@ public class PakSelection : MonoBehaviour
                 if (currentState == GameState.CHOOSE_TARGET || currentState == GameState.WAIT_FOR_CONFIRM)
                 {
                     // Check the selected skill is all targets type
-                    Skill pakSkill = selectedPak.skill[selectedSkill];
+                    SkillExecutor pakSkill = selectedPak.skill[selectedSkill];
 
                     if (pakSkill.ActionType == "TargetAllAlliances" ||
                         pakSkill.ActionType == "TargetAllEnemies" ||
@@ -250,7 +250,7 @@ public class PakSelection : MonoBehaviour
             selectedTargets.Clear();
         }
 
-        Skill pakSkill = null;
+        SkillExecutor pakSkill = null;
         try
         {
             _UIcontroller.skillMenu.ToggleSkill(skillIndex);

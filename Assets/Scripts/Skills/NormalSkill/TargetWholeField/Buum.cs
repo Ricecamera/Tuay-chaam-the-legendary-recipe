@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class Buum : ScriptableObject, Performable
+
+[CreateAssetMenu(fileName = "Buum", menuName = "Assets/skill/Buum")]
+public class Buum : RangeSkill
 {
-    public void Execute(List<PakRender> target, PakRender self) { //target can be the list of all Pakrender in the fighting scene.
-        int damage = (int) (self.healthSystem.MaxHp * 0.6);
+    public float damageRatio = 0.6f;
+    public override void Execute(List<PakRender> target, PakRender self) { //target can be the list of all Pakrender in the fighting scene.
+        int damage = (int) ((float) self.healthSystem.MaxHp * damageRatio);
         target.Remove(self);
         foreach (PakRender e in target) {
             if (damage - e.currentDef <= 0) damage = 0;
@@ -14,7 +17,7 @@ public class Buum : ScriptableObject, Performable
                 e.healthSystem.TakeDamage(damage);
             }
         }
-        self.healthSystem.TakeDamage((int) (self.healthSystem.CurrentHp / 1.5));
+        self.healthSystem.TakeDamage(damage);
 
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");

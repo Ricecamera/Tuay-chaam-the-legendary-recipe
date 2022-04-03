@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6133672455091789995}
   - component: {fileID: 6133672455091789999}
   - component: {fileID: 6133672455091789996}
-  - component: {fileID: -4802644363251137625}
   - component: {fileID: 5140027003103578455}
+  - component: {fileID: 8502420443389430835}
   m_Layer: 0
   m_Name: Eggplant
   m_TagString: Untagged
@@ -127,26 +127,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.1417646, y: 9.866825}
   m_EdgeRadius: 0
---- !u!114 &-4802644363251137625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6133672455091789994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e73f7e42cba3247a214c1f24ceec0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  setSkill: -1
-  defBuffVfx: {fileID: 2246186123840612263}
-  atkBuffVfx: {fileID: 8670913593264202018}
-  actionIcon: {fileID: 3677977293078899627}
-  selectedIcon: {fileID: 3423446083752308146}
-  enitityData: {fileID: 11400000, guid: 60ac1a85496730b478610f68ccc92f8e, type: 2}
-  slideSpeed: 6
-  attackDistance: 1.75
 --- !u!114 &5140027003103578455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +142,30 @@ MonoBehaviour:
   healthBar: {fileID: 8582398757930051070}
   healVfx: {fileID: 601309790990268673}
   damagedVfx: {fileID: 9092541142810619047}
+--- !u!114 &8502420443389430835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6133672455091789994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a9d51ae10a1464db427de83df956a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill:
+  - skill: {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
+  - skill: {fileID: 11400000, guid: c03add7024ddda640bc6fbc684f3f3f4, type: 2}
+  - skill: {fileID: 11400000, guid: 1069085ed92f1da48900768785c0bb30, type: 2}
+  setSkill: -1
+  defBuffVfx: {fileID: 2246186123840612263}
+  atkBuffVfx: {fileID: 8670913593264202018}
+  actionIcon: {fileID: 3677977293078899627}
+  selectedIcon: {fileID: 3423446083752308146}
+  enitityData: {fileID: 11400000, guid: 60ac1a85496730b478610f68ccc92f8e, type: 2}
+  slideSpeed: 6
+  attackDistance: 1.75
 --- !u!1001 &457790943748755821
 PrefabInstance:
   m_ObjectHideFlags: 0
