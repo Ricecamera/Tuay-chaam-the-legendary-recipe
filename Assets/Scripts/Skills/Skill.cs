@@ -7,8 +7,9 @@ using BattleScene;
 public class Skill
 {
     //Skill Type
-    public enum SkillNation{
-        NORMAL,COOKED
+    public enum SkillNation
+    {
+        NORMAL, COOKED
     }
     //Performable
     protected Performable performAct;
@@ -33,12 +34,12 @@ public class Skill
     public event Action OnFinishExecute;
 
     protected string animationType;
-    
+
     //delegates
     public Action<List<PakRender>, PakRender> doTheSkill;
 
     //Constructortor
-    public Skill(string skillId, string skillName, string description, int cooldown, Sprite icon, string actionType, Performable performAct, string animationType, SkillNation skillNation=SkillNation.NORMAL)
+    public Skill(string skillId, string skillName, string description, int cooldown, Sprite icon, string actionType, Performable performAct, string animationType, SkillNation skillNation = SkillNation.NORMAL)
     {
         this.skillId = skillId;
         this.skillName = skillName;
@@ -49,24 +50,32 @@ public class Skill
         this.actionType = actionType;
         this.performAct = performAct;
         this.animationType = animationType;
-        this.doTheSkill+=performAct.performSkill;
+        this.doTheSkill += performAct.performSkill;
         this.skillNation = skillNation;
     }
 
     //functions
-    public void performSkill( PakRender caller, List<PakRender> target){
-        if(string.Equals(this.animationType, "buffOneAlliance") || string.Equals(this.animationType, "buffAllAlliances") || string.Equals(this.animationType, "attackWholeField")){
+    public void performSkill(PakRender caller, List<PakRender> target)
+    {
+        if (string.Equals(this.animationType, "buffOneAlliance") || string.Equals(this.animationType, "buffAllAlliances") || string.Equals(this.animationType, "attackWholeField"))
+        {
             Buff(caller, target, this.doTheSkill);
-        }else if (string.Equals(this.animationType, "attackOneEnemy") || string.Equals(this.animationType, "attackAllEnemies")){
+        }
+        else if (string.Equals(this.animationType, "attackOneEnemy") || string.Equals(this.animationType, "attackAllEnemies"))
+        {
             Attack(caller, target, this.doTheSkill);
-        }else{
+        }
+        else
+        {
             Debug.Log("Wrong animation type of skill");
         }
-        if(skillNation==SkillNation.COOKED){
+        if (skillNation == SkillNation.COOKED)
+        {
             List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
             foreach (PakRender x in pakTeam)
             {
-                if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp>0){
+                if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp > 0)
+                {
                     ChaamRender nongChaam = (ChaamRender)x;
                     Debug.Log("b/f");
                     Debug.Log(nongChaam.getGuage());
@@ -144,25 +153,31 @@ public class Skill
     //     }
     // }
 
-    private void Attack(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall) {
+    private void Attack(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall)
+    {
         Vector3 targetPos = target[0].GetPosition();
-        caller.Attack(targetPos, () => {
+        caller.Attack(targetPos, () =>
+        {
             // Callback of attack effect
             toBeCall(target, caller);
         },
-        () => {
+        () =>
+        {
             // Complete callback
             OnFinishExecute.Invoke();
             cooldown = maxCooldown;
         });
     }
 
-    private void Buff(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall) {
+    private void Buff(PakRender caller, List<PakRender> target, Action<List<PakRender>, PakRender> toBeCall)
+    {
         caller.RangedBuff(this.skillId,
-            () => {
+            () =>
+            {
                 toBeCall(target, caller);
             },
-            () => {
+            () =>
+            {
                 // Complete callback
                 OnFinishExecute.Invoke();
                 cooldown = maxCooldown;
@@ -189,18 +204,20 @@ public class Skill
     public int Cooldown
     {
         get { return this.cooldown; }
-        set { 
+        set
+        {
             if (value < 0)
                 cooldown = 0;
             else if (value > maxCooldown)
                 cooldown = maxCooldown;
             else
                 cooldown = value;
-                }
+        }
     }
 
-    public int MaxCooldown {
-        get { return maxCooldown;}
+    public int MaxCooldown
+    {
+        get { return maxCooldown; }
     }
     public Sprite Icon
     {
@@ -211,5 +228,10 @@ public class Skill
     public string ActionType
     {
         get { return this.actionType; }
+    }
+
+    public SkillNation getSkillNation
+    {
+        get { return this.skillNation; }
     }
 }

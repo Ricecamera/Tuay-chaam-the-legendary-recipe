@@ -211,8 +211,18 @@ public class PakSelection : MonoBehaviour
                     ActionCommand action = battleManger.actionCommandHandler.GetAction(selectedPak.tag);
 
                     // get index of the called skill in the caller pak
-                    selectedSkill = action.convertSelectedSkillToIndex();
-                    _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
+                    if (action.selectedSkill.getSkillNation == Skill.SkillNation.NORMAL)
+                    {
+                        selectedSkill = action.convertSelectedSkillToIndex();
+                        _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
+                    }
+                    else if (action.selectedSkill.getSkillNation == Skill.SkillNation.COOKED)
+                    {
+                        Debug.Log("Skill UI For Cook skill work");
+                        // selectedSkill = 3;
+                        // _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
+                    }
+
 
                     // get game tag of the target
                     selectedTargets.AddRange(action.targets);
@@ -422,7 +432,7 @@ public class PakSelection : MonoBehaviour
             List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
             ActionCommand newCommand = new ActionCommand(selectedPak, skill, skillTargets, speed);
             battleManger.AddCommand(newCommand);
-
+            selectedPak.DisplayCookInAction(true, cookSkill);
             selectedPak.currentState = PakRender.State.InAction;
 
             UpdateGameState(GameState.CHOOSE_CHARACTER);
@@ -463,7 +473,8 @@ public class PakSelection : MonoBehaviour
         List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
         foreach (PakRender x in pakTeam)
         {
-            if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp>0){
+            if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp > 0)
+            {
                 ChaamRender nongChaam = (ChaamRender)x;
                 nongChaam.addGuage(20);
                 break;
@@ -586,6 +597,11 @@ public class PakSelection : MonoBehaviour
         UpdateGameState(GameState.CHAAM_CHOOSE_TARGET);
 
         // _cookingController.OnStartCooking(ingredient, selectedPak, selectedTargets);
+    }
+
+    public PakRender SelectedPak
+    {
+        get { return this.selectedPak; }
     }
 
 }

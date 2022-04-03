@@ -143,6 +143,7 @@ namespace BattleScene.BattleLogic
                     return i;
                 }
             }
+            Debug.Log("False index in skill");
             return -1;
         }
     }

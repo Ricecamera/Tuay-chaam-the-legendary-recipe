@@ -16,8 +16,8 @@ public class CookingController
     {
         recepies = new Dictionary<string, Skill>();
         //init all special skill and map it in the dict
-        recepies.Add("honeylimesalt", new SetOneEnemyHPTo10("HTo10", "SetOneEnemyHPTo10", "Deal very great amount of damage to one enemy.", 1, Resources.Load("SkillIcons/sk3", typeof(Sprite)) as Sprite));
-        recepies.Add("carrotgarlichoneylimesalt", new HalfEnemiesHealth("HAEH", "HalfEnemiesHealth", "Half all enemies HP in half.", 3, Resources.Load("SkillIcons/sk3", typeof(Sprite)) as Sprite));
+        recepies.Add("honeylimesalt", new SetOneEnemyHPTo10("HTo10", "SetOneEnemyHPTo10", "Deal very great amount of damage to one enemy.", 1, Resources.Load("SkillIcons/skCook", typeof(Sprite)) as Sprite));
+        recepies.Add("carrotgarlichoneylimesalt", new HalfEnemiesHealth("HAEH", "HalfEnemiesHealth", "Half all enemies HP in half.", 3, Resources.Load("SkillIcons/skCook", typeof(Sprite)) as Sprite));
         Debug.Log("*********************************************************************************************************************************************************************************************************************************************");
         foreach (KeyValuePair<string, Skill> kvp in recepies)
         {
@@ -75,7 +75,8 @@ public class CookingController
         List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
         foreach (PakRender x in pakTeam)
         {
-            if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp>0){
+            if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp > 0)
+            {
                 ChaamRender nongChaam = (ChaamRender)x;
                 Debug.Log("b/f");
                 Debug.Log(nongChaam.getGuage());

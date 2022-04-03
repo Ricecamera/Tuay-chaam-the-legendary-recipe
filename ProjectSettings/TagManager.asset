@@ -24,6 +24,7 @@ TagManager:
   - slot
   - SoundBank
   - comboPanel
+  - battleManager
   layers:
   - Default
   - TransparentFX

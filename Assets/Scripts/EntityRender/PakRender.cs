@@ -164,6 +164,26 @@ public class PakRender : MonoBehaviour, IComparable
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
     }
 
+    public void DisplayCookInAction(bool value, Skill skill)
+    {
+
+        SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        if (value)
+        {
+            // Display inAction indicator
+            actionIcon.sprite = skill.Icon;
+        }
+        else
+        {
+            // Hide InAction indicator
+            actionIcon.sprite = null;
+        }
+
+        actionIcon.gameObject.SetActive(value);
+        spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
+    }
+
     public void DisplayInAction(bool value)
     {
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();

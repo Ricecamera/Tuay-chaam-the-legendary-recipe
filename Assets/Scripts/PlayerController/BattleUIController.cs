@@ -27,14 +27,24 @@ public class BattleUIController : MonoBehaviour
 
     public Image cookImageDark;
 
+    private PakSelection _pakSelection;
+
+
+
+
+    [SerializeField]
+    private BattleManager battleManager;
+
     private void OnEnable()
     {
         ActionCommandHandler.OnUpdateCommands += UpdateEndturnButton;
+
     }
 
     private void OnDisable()
     {
         ActionCommandHandler.OnUpdateCommands -= UpdateEndturnButton;
+
     }
     void Start()
     {
@@ -44,6 +54,7 @@ public class BattleUIController : MonoBehaviour
         endTurnButton.interactable = false;
         cookImageDark.color = UnityEngine.Color.gray;
         cookImageDark.fillAmount = 0f;
+        _pakSelection = GetComponent<PakSelection>();
     }
 
     public void UpdateUI(PakSelection.GameState nextState)
@@ -148,6 +159,28 @@ public class BattleUIController : MonoBehaviour
                 endTurnButton.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(true);
                 Backdrop.SetActive(true);
+                if (_pakSelection.SelectedPak.CompareTag("Chaam"))
+                {
+                    if (battleManager.actionCommandHandler == null)
+                    {
+                        Debug.Log("actionCommandHandler null");
+                    }
+                    else if (battleManager.actionCommandHandler.isChaamThisTurnUseCookSkill())
+                    {
+                        cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.green;
+                        cookButton.enabled = false;
+                    }
+                    else
+                    {
+                        cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.white;
+                    }
+                    cookButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    cookButton.gameObject.SetActive(false);
+                }
+
                 break;
             default: // GameState.CHOOSE_CHARACTER
                 skillMenu.ToggleMenu(false);
@@ -170,6 +203,7 @@ public class BattleUIController : MonoBehaviour
                 skillMenu.skills[0].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 skillMenu.skills[1].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 skillMenu.skills[2].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
+                cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.white;
                 break;
         }
     }

@@ -2143,6 +2143,7 @@ MonoBehaviour:
   selectSkillText: {fileID: 411037998}
   Backdrop: {fileID: 156448288}
   cookImageDark: {fileID: 1476672260}
+  battleManager: {fileID: 1662004680}
 --- !u!1 &1344425279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3248,7 +3249,7 @@ GameObject:
   - component: {fileID: 1662004680}
   m_Layer: 0
   m_Name: Battle Manger
-  m_TagString: Untagged
+  m_TagString: battleManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
