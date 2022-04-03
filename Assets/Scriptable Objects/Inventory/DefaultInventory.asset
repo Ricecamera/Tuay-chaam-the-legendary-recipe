@@ -20,9 +20,9 @@ MonoBehaviour:
     - Name: carrot
       item: {fileID: 11400000, guid: b3383da1661ca6f4398d46d4a32eb0d4, type: 2}
       amount: 1
-    - Name: garlic
-      item: {fileID: 11400000, guid: b6e9115d3d2f6af4fa72e081f7590fc1, type: 2}
-      amount: 1
+    - Name: 0
+      item: {fileID: 0}
+      amount: 0
     - Name: 
       item: {fileID: 0}
       amount: 0
