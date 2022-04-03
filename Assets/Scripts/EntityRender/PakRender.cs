@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BuffSystem;
+using BuffSystem.Behaviour;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour, IComparable
@@ -21,7 +23,7 @@ public class PakRender : MonoBehaviour, IComparable
     public HealthSystem healthSystem { get; private set; }
 
 
-    public List<Skill> skill;
+    public List<SkillExecutor> skill;
     public int setSkill = -1;
 
     public ParticleSystem defBuffVfx, atkBuffVfx;
@@ -49,6 +51,9 @@ public class PakRender : MonoBehaviour, IComparable
 
     private Coroutine flashcheck;
     private Action onSlideComplete;
+
+    private List<BaseBuff> attachedBuffs;
+    private List<int> buffRemainingTurns;
 
     public Entity Entity { get { return enitityData;} }
     public State currentState { 
@@ -85,16 +90,8 @@ public class PakRender : MonoBehaviour, IComparable
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spirteRenderer.color = Color.white;
 
-        skill = new List<Skill>();
-
-        if (this.skill == null)
-        {
-            Debug.Log("Skill in PakRender is null");
-        }
-        else
-        {
-            Debug.Log("Skill in PakRender is not null");
-        }
+        attachedBuffs = new List<BaseBuff>();
+        buffRemainingTurns = new List<int>();
     }
 
     protected virtual void Update()
@@ -223,13 +220,57 @@ public class PakRender : MonoBehaviour, IComparable
         );
     }
 
+    // Add buff to this object
+    public void AddBuff(BaseBuff buff) {
+        
+        // attach buff to the character
+        attachedBuffs.Add(buff);
+        buffRemainingTurns.Add(buff.duration);
+
+        // Do on-buff-added effect
+        if (buff is ILastingBehaviour) {
+            ILastingBehaviour toExecute = (ILastingBehaviour) buff;
+            toExecute.Initialize(this);
+        }
+    }
+
     public void UpdateTurn() {
         // Update skill cooldown
         for (int i = 0; i < skill.Count; ++i) {
             skill[i].Cooldown--;
         }
 
+        List<BaseBuff> buffBuffer = new List<BaseBuff>();
+        List<int> turnBuffer = new List<int>();
+
         // Do something about this character when end turn ex. buff effect, burn damage, etc
+        for (int i = 0; i < buffRemainingTurns.Count; i++) {
+            if (buffRemainingTurns[i] > 0) {
+                // check if the buff have overtime effect
+                if (attachedBuffs[i] is IOvertimeBehaviour) {
+                    var toRunBuff = attachedBuffs[i] as IOvertimeBehaviour;
+                    toRunBuff.OnChangeTurn(this);
+                }
+                
+                // Reduce effect turn
+                buffRemainingTurns[i]--;
+
+                buffBuffer.Add(attachedBuffs[i]);
+                turnBuffer.Add(buffRemainingTurns[i]);
+            }
+            else {
+                // Do on-buff-removed effect
+                if (attachedBuffs[i] is ILastingBehaviour) {
+                    ILastingBehaviour toExecute = (ILastingBehaviour) attachedBuffs[i];
+                    toExecute.Deactivate(this);
+                }
+            }
+
+        }
+
+        // Replace buff with buffer
+        attachedBuffs = buffBuffer;
+        buffRemainingTurns = turnBuffer;
     }
 
     public Vector3 GetPosition() {
