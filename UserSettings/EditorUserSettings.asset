@@ -6,7 +6,11 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedScenePath-0:
+<<<<<<< HEAD
       value: 22424703114646680e0b0227036c7c1817051929382d34032e2c1336d5e92030c6ee37e5e83d2a397717e1351027
+=======
+      value: 22424703114646680e0b0227036c761e0012163e233a3f032e2c1336acf53a31f6fe
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
       flags: 0
     RecentlyUsedScenePath-1:
       value: 22424703114646680e0b0227036c7b1510160d2638172a353b2c110cb3ad6576f7e93ffdfe
@@ -15,6 +19,7 @@ EditorUserSettings:
       value: 22424703114646680e0b0227036c761e0012163e233a3f032e2c1336acf53a31f6fe
       flags: 0
     RecentlyUsedScenePath-3:
+<<<<<<< HEAD
       value: 22424703114646680e0b0227036c731f05122b292926237e38271427fb
       flags: 0
     RecentlyUsedScenePath-4:
@@ -31,6 +36,24 @@ EditorUserSettings:
       flags: 0
     RecentlyUsedScenePath-8:
       value: 22424703114646680e0b0227036c6b0502180a232d2415332827187df7ee3d2cfb
+=======
+      value: 22424703114646680e0b0227036c7c1817051929382d340328251830f6e93b36b0a923e7ee2e26
+      flags: 0
+    RecentlyUsedScenePath-4:
+      value: 22424703114646680e0b0227036c731f05122b292926237e38271427fb
+      flags: 0
+    RecentlyUsedScenePath-5:
+      value: 22424703114646680e0b0227036c7c1817051929382d340328251830f6e93b36acf238e0f323
+      flags: 0
+    RecentlyUsedScenePath-6:
+      value: 22424703114646680e0b0227036c721f12122b2f202d252424261361acf53a31f6fe
+      flags: 0
+    RecentlyUsedScenePath-7:
+      value: 22424703114646680e0b0227036c7d110203142f630a27243925187df7ee3d2cfb
+      flags: 0
+    RecentlyUsedScenePath-8:
+      value: 22424703114646680e0b0227036c721f12122b2f202d25242426137df7ee3d2cfb
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
       flags: 0
     RecentlyUsedScenePath-9:
       value: 22424703114646680e0b0227036c500013191d2e61252720633c133af6f9

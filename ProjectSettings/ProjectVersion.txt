@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 m_EditorVersion: 2020.3.27f1
 m_EditorVersionWithRevision: 2020.3.27f1 (e759542391ea)
 
+=======
+m_EditorVersion: 2020.3.25f1
+m_EditorVersionWithRevision: 2020.3.25f1 (9b9180224418)
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)

@@ -3028,6 +3028,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a44a334bb27b746b332b1a7dff6d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+=======
+  popup: {fileID: 1537085656}
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
 --- !u!4 &1321554287
 Transform:
   m_ObjectHideFlags: 0

@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
         // }
     }
 
+<<<<<<< HEAD
     public void SaveItem()
     {
         inventory.Save();
@@ -37,4 +38,15 @@ public class Player : MonoBehaviour
     {
         // inventory.Load();
     }
+=======
+    //public void SaveItem()
+    //{
+    //    inventory.Save();
+    //}
+
+    //public void LoadItem()
+    //{
+    //    // inventory.Load();
+    //}
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
 }

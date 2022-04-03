@@ -339,6 +339,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1574264062}
+<<<<<<< HEAD
+=======
+  - {fileID: 1899019217}
+  - {fileID: 175664121}
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
   m_Father: {fileID: 1277803093}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scriptable Objects/Database/ItemDatabase.asset.meta
 guid: f2d693dbcb914034f8799dfbf93be25c
+=======
+guid: 4f5a47d1daf04f6488257273e5443a96
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1):Assets/Scriptable Objects/Database/PlayerDatabase.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

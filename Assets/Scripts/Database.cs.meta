@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts/Database.cs.meta
 guid: 609232c06f1169c41b1c4c0a78457164
+=======
+guid: 6cca079ef37b3184489f588c71413ca7
+>>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1):Assets/Scripts/LevelLoader.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
