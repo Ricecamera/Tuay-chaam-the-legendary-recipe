@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BuffSystem {
     
-    public class BaseBuff : ScriptableObject
+    public abstract class BaseBuff : ScriptableObject
     {
         public string buffName;     // unique name of this buff, can use as a key
 

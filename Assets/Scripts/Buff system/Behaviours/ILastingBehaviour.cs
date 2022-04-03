@@ -1,12 +1,12 @@
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BuffSystem.Behaviour {
-    public interface ILastingBehaviour {
-        public void OnAddBuff(PakRender character);
-
-        public void OnRemoveBuff(PakRender character);
+    interface ILastingBehaviour {
+        public void Initialize(PakRender character);
+        public void Deactivate(PakRender character);
     }
 }
-
