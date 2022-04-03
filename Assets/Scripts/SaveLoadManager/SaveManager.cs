@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class SaveManager : MonoBehaviour
 
     public InventoryObject defaultInventory;
 
+    private int dieCount;
 
     void Awake()
     {
@@ -101,7 +103,8 @@ public class SaveManager : MonoBehaviour
     public void LoadGame()
     {
         Load();
-        //ConvertDatabasetoInventory(inventoryObject, playerDatabase);
+        SceneManager.LoadScene("ModeSelection");
+        //SceneLoader.Instance.LoadSceneByName("ModeSelection");
     }
 
     public void ConvertToSaveDatabase(PlayerDatabase playerDatabase, PlayerDatabase savedDatabase)
@@ -164,6 +167,21 @@ public class SaveManager : MonoBehaviour
             }
         }
         playerDatabase.SetMapUnlock(savedDatabase.GetMapUnlock());
+    }
+
+    public int GetDieCount()
+    {
+        return dieCount;
+    }
+
+    public void AddDieCount()
+    {
+        dieCount++;
+    }
+
+    public void SetZeroDieCount()
+    {
+        this.dieCount = 0;
     }
 
     // public void ConvertInventorytoDatabase(InventoryObject inv, PlayerDatabase db)

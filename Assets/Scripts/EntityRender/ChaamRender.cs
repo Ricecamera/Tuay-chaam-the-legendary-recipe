@@ -5,7 +5,7 @@ public class ChaamRender : PakRender
     protected override void Start()
     {
         base.Start();
-        this.guage = 100;
+        this.guage = 0;
         Sprite skillIcon2 = Resources.Load("SkillIcons/sk3", typeof(Sprite)) as Sprite;
         Sprite skillIcon1 = Resources.Load("SkillIcons/sk4", typeof(Sprite)) as Sprite;
         Sprite skillIcon3 = Resources.Load("SkillIcons/sk1", typeof(Sprite)) as Sprite;

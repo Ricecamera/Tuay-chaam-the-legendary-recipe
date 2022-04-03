@@ -11,28 +11,34 @@ public class LevelManager : MonoBehaviour
     public int thislevel { get; set; }
 
     //number of time map was open;
-    public int mapArrived; 
+    public int mapArrived;
     public int winTime = 0;
 
-    void Start() { 
+    void Start()
+    {
         unlockStatus = new List<bool>() { true, false, false, false };
         mapArrived = 2;
     }
 
-    void Awake() {
-        if (instance == null) {
+    void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(instance);
         }
-        else {
+        else
+        {
             Destroy(instance);
         }
 
     }
 
-    // private void Update() {
+    // private void Update()
+    // {
     //     if (mapArrived < unlockStatus.Count
-    //         && !unlockStatus[mapArrived]) {
+    //         && !unlockStatus[mapArrived])
+    //     {
     //         unlockStatus[mapArrived] = true;
     //     }
     // }

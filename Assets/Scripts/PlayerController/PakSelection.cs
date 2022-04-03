@@ -96,7 +96,14 @@ public class PakSelection : MonoBehaviour
                 {
                     //do victory stuff
                     LevelManager.instance.winTime += 1;
-                    SceneManager.LoadScene("VictoryScene");
+                    if (SceneManager.GetActiveScene().name == "Battle1-2V2")
+                    {
+                        SceneManager.LoadScene("VictorySceneForTutorial");
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("VictoryScene");
+                    }
                     LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
                 }
                 else

@@ -28,7 +28,7 @@ namespace DialogueSystem
         {
             Deactivate();
             yield return new WaitForSeconds(1.55f);
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 9; i++)
             {
                 Deactivate();
                 Debug.Log(i);
@@ -76,14 +76,6 @@ namespace DialogueSystem
                     pointer2.gameObject.SetActive(false);
                     tonhom.SetTrigger("Attack");
                 }
-                else if (i == 6)
-                { //* หมาหนี
-
-                    yield return new WaitForSeconds(1.5f);
-                    textBox.SetActive(true);
-                    yield return new WaitForSeconds(0.5f);
-                    transform.GetChild(3).gameObject.SetActive(true);
-                }
                 if (i < 2)
                 {
                     yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
@@ -93,13 +85,25 @@ namespace DialogueSystem
                     yield return new WaitUntil(() => transform.GetChild(2).GetComponent<TutorialLine>().isFinish);
                 }
                 else if (i == 6)
-                {
-                    yield return new WaitUntil(() => transform.GetChild(3).GetComponent<TutorialLine>().isFinish);
-                }
+                { //* หมาหนี
 
+                    yield return new WaitForSeconds(1.5f);
+                    textBox.SetActive(true);
+                    yield return new WaitForSeconds(0.5f);
+                    transform.GetChild(3).gameObject.SetActive(true);
+                }
+                else if (i == 7)
+                {
+                    transform.GetChild(3).gameObject.SetActive(true);
+                    yield return new WaitUntil(() => transform.GetChild(3).GetComponent<DialogueLine>().isFinish);
+                }
+                else if (i == 8)
+                {
+                    Debug.Log("End");
+                    SceneLoader.Instance.LoadNextScene();
+                }
             }
             gameObject.SetActive(false);
-            LevelLoader.instance.LoadSpecificScene("VictoryScene");
         }
 
         public void Deactivate()

@@ -175,14 +175,23 @@ public class BattleUIController : MonoBehaviour
                     }
                     else if (battleManager.actionCommandHandler.isChaamThisTurnUseCookSkill())
                     {
-                        cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.green;
+                        cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.gray;
                         cookButton.enabled = false;
                     }
                     else
                     {
                         cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.white;
                     }
-                    cookButton.gameObject.SetActive(true);
+
+                    if (SceneManager.GetActiveScene().name == "Battle1-2V2")
+                    {
+                        cookButton.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        cookButton.gameObject.SetActive(true);
+                    }
+                    // cookButton.gameObject.SetActive(true);
                 }
                 else
                 {

@@ -24,13 +24,13 @@ public class LevelSelection : MonoBehaviour
     void Start()
     {
 
+        padLock.enabled = true;
+        unlocked = LevelManager.instance.unlockStatus[levelname - 1];
+
         if (unlocked)
         {
             padLock.enabled = false;
             padLock.GetComponent<BoxCollider2D>().enabled = false;
-        }else{
-            padLock.enabled = true;
-            unlocked = LevelManager.instance.unlockStatus[levelname - 1];
         }
     }
 
