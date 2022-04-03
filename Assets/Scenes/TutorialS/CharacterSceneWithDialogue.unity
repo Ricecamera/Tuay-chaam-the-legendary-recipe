@@ -741,7 +741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66dd46ce02ea569489674114174b66c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: a036d15f1c7d96441993a510b87c2085, type: 2}
 --- !u!1 &180104677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66dd46ce02ea569489674114174b66c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: 8145ac5c0a41aab4ba461ccd3d6894b9, type: 2}
 --- !u!114 &285490261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5309,6 +5307,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447299440}
   m_CullTransparentMesh: 1
+--- !u!95 &1448304685 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 993729460563280799, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
+  m_PrefabInstance: {fileID: 1927073442}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1471570509
 GameObject:
   m_ObjectHideFlags: 0
@@ -7084,6 +7087,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1693237277
       objectReference: {fileID: 0}
+    - target: {fileID: 4298286411039747723, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 1448304685}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
 --- !u!1 &1942131470
@@ -7165,7 +7172,7 @@ SpriteRenderer:
   m_Size: {x: 20.004423, y: 25.51}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1969632363
