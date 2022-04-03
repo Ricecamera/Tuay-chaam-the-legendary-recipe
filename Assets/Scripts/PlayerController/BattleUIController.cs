@@ -42,8 +42,8 @@ public class BattleUIController : MonoBehaviour
         selectTargetText.gameObject.SetActive(false);
         selectSkillText.gameObject.SetActive(false);
         endTurnButton.interactable = false;
-        cookImageDark.color=UnityEngine.Color.gray;
-        cookImageDark.fillAmount=0f;
+        cookImageDark.color = UnityEngine.Color.gray;
+        cookImageDark.fillAmount = 0f;
     }
 
     public void UpdateUI(PakSelection.GameState nextState)
@@ -68,15 +68,19 @@ public class BattleUIController : MonoBehaviour
                 List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
                 foreach (PakRender x in pakTeam)
                 {
-                    if (x.CompareTag("Chaam")){
+                    if (x.CompareTag("Chaam"))
+                    {
                         ChaamRender nongChaam = (ChaamRender)x;
-                        if(nongChaam.getGuage()==100){
+                        if (nongChaam.getGuage() == 100)
+                        {
                             cookImageDark.gameObject.SetActive(false);
-                            cookButton.enabled=true;
-                        }else{
-                            cookImageDark.fillAmount= 1f - (float)nongChaam.getGuage()/100f;
+                            cookButton.enabled = true;
+                        }
+                        else
+                        {
+                            cookImageDark.fillAmount = 1f - (float)nongChaam.getGuage() / 100f;
                             cookImageDark.gameObject.SetActive(true);
-                            cookButton.enabled=false;
+                            cookButton.enabled = false;
                         }
                         break;
                     }
@@ -90,10 +94,23 @@ public class BattleUIController : MonoBehaviour
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
+                // for (int i = 0; i < supportButton.Length; i++)
+                // {
+                //     supportButton[i].gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[i].uiDisplay;
+                // }
                 for (int i = 0; i < supportButton.Length; i++)
                 {
-                    supportButton[i].gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[i].uiDisplay;
+                    if (i < CharacterSelecter.instance.GetSupports().Count)
+                    {
+                        supportButton[i].gameObject.GetComponent<Image>().sprite = CharacterSelecter.instance.GetSupports()[i].uiDisplay;
+                    }
+                    else
+                    {
+                        supportButton[i].gameObject.SetActive(false);
+                    }
+
                 }
+
                 supportMenu.gameObject.SetActive(true);
                 break;
 
