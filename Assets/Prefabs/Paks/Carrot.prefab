@@ -139,18 +139,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a9d51ae10a1464db427de83df956a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill:
-  - skill: {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
-  - skill: {fileID: 11400000, guid: 1069085ed92f1da48900768785c0bb30, type: 2}
-  - skill: {fileID: 11400000, guid: be8d1d19f798e6a47a09c9ae5a542ed8, type: 2}
-  setSkill: -1
+  skills:
+  - {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
+  - {fileID: 11400000, guid: 1069085ed92f1da48900768785c0bb30, type: 2}
+  - {fileID: 11400000, guid: be8d1d19f798e6a47a09c9ae5a542ed8, type: 2}
   defBuffVfx: {fileID: 367340631951846465}
   atkBuffVfx: {fileID: 1779880884803008443}
   actionIcon: {fileID: 1677122984628089534}
   selectedIcon: {fileID: 5974708055019866289}
   enitityData: {fileID: 11400000, guid: a189162f4599fa544aeea5bb05ba0974, type: 2}
-  slideSpeed: 6
-  attackDistance: 1.75
 --- !u!114 &4384133806673908758
 MonoBehaviour:
   m_ObjectHideFlags: 0
