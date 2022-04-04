@@ -5,8 +5,7 @@ using UnityEngine;
 [Serializable]
 public class SkillExecutor
 {
-    //Performable
-    [SerializeField]
+
     private SkillObj skill;
 
     private int cooldown;
@@ -16,8 +15,15 @@ public class SkillExecutor
     public event Action OnFinishExecute;
 
     //Constructortor
-    public SkillExecutor(Action onFinishExecute) {
+    public SkillExecutor(SkillObj skill) {
         this.cooldown = 0;
+        this.skill = skill;
+        this.maxCooldown = skill.maxCooldown;
+        this.OnFinishExecute = null;
+    }
+    public SkillExecutor(SkillObj skill, Action onFinishExecute) {
+        this.cooldown = 0;
+        this.skill = skill;
         this.maxCooldown = skill.maxCooldown;
         this.OnFinishExecute += onFinishExecute;
     }
@@ -25,13 +31,15 @@ public class SkillExecutor
     public void performSkill(List<PakRender> target, PakRender self) {
         skill.performSkill(target, self, () => {
             // Complete callback
-            OnFinishExecute.Invoke();
             cooldown = maxCooldown;
+            OnFinishExecute?.Invoke();
         });
     }
 
     public void SetSkill(SkillObj newSkill) {
+        this.cooldown = 0;
         this.skill = newSkill;
+        this.maxCooldown = newSkill.maxCooldown;
     }
 
     //Getters, Setters

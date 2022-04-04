@@ -110,7 +110,7 @@ public class BattleUIController : MonoBehaviour
     {
         try
         {
-            skillMenu.UpdateImage(ally.Entity.Image, ally.skill);
+            skillMenu.UpdateImage(ally.Entity.Image, ally.GetSkills());
         }
         catch
         {

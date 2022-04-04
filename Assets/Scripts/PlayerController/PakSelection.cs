@@ -108,7 +108,7 @@ public class PakSelection : MonoBehaviour
                 if (currentState == GameState.CHOOSE_TARGET || currentState == GameState.WAIT_FOR_CONFIRM)
                 {
                     // Check the selected skill is all targets type
-                    SkillExecutor pakSkill = selectedPak.skill[selectedSkill];
+                    SkillExecutor pakSkill = selectedPak.GetSkill(selectedSkill);
 
                     if (pakSkill.ActionType == "TargetAllAlliances" ||
                         pakSkill.ActionType == "TargetAllEnemies" ||
@@ -158,7 +158,7 @@ public class PakSelection : MonoBehaviour
                 for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; i++)
                 {
                     Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
-                    tooltip.setContent(selectedPak.skill[i].Description);
+                    tooltip.setContent(selectedPak.GetSkill(i).Description);
                 }
 
                 if (ally.InAction())
@@ -217,7 +217,7 @@ public class PakSelection : MonoBehaviour
                     for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; i++)
                     {
                         Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
-                        tooltip.setContent(selectedPak.skill[i].Description);
+                        tooltip.setContent(selectedPak.GetSkill(i).Description);
                     }
                 }
                 else
@@ -254,7 +254,7 @@ public class PakSelection : MonoBehaviour
         try
         {
             _UIcontroller.skillMenu.ToggleSkill(skillIndex);
-            pakSkill = selectedPak.skill[skillIndex];
+            pakSkill = selectedPak.GetSkill(skillIndex);
         }
         catch (IndexOutOfRangeException e)
         {
@@ -373,7 +373,7 @@ public class PakSelection : MonoBehaviour
             var commandHandler = battleManger.actionCommandHandler;
             commandHandler.RemoveAction(selectedPak.tag, selectedSkill);
             selectedPak.currentState = PakRender.State.Idle;
-            selectedPak.DisplayInAction(false, selectedPak.setSkill);
+            selectedPak.DisplayInAction(false);
             UpdateGameState(GameState.CHOOSE_CHARACTER);
         }
     }
