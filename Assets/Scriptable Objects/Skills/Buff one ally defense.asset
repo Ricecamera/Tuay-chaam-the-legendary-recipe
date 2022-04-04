@@ -19,4 +19,5 @@ MonoBehaviour:
   description: Slightly Increase defense of one ally for 2 turns
   actionType: TargetOneAlliance
   maxCooldown: 2
+  particles: {fileID: 8349258395113670096, guid: 11e6eeadf3536394f91ff0a8e737dde0, type: 3}
   buff: {fileID: 11400000, guid: 11fb06abf4be982478dbe4a319e92915, type: 2}

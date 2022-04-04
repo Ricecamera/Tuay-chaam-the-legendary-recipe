@@ -17,6 +17,6 @@ MonoBehaviour:
   skillNation: 0
   icon: {fileID: 21300000, guid: 9775c7b8985792b43aa50a5e4694a4a3, type: 3}
   description: Heal all allies by 15% of my max health
-  actionType: TargetAllAlliance
+  actionType: TargetAllAlliances
   maxCooldown: 5
   healRatio: 0.15

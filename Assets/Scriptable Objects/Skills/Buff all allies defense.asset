@@ -17,6 +17,7 @@ MonoBehaviour:
   skillNation: 0
   icon: {fileID: 21300000, guid: 458320f2b047ba148b98fe1a5ca3a7ce, type: 3}
   description: Slightly Increase defense of all allies for 2 turns
-  actionType: TargetAllAlliance
+  actionType: TargetAllAlliances
   maxCooldown: 4
+  particles: {fileID: 8349258395113670096, guid: 11e6eeadf3536394f91ff0a8e737dde0, type: 3}
   buff: {fileID: 11400000, guid: 11fb06abf4be982478dbe4a319e92915, type: 2}
