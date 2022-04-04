@@ -8,10 +8,14 @@ using BuffSystem;
 public class VanillaBuffAll : RangeSkill {
     
     [SerializeField]
+    ParticleSystem particles;
+
+    [SerializeField]
     private StatusBuff buff;
     public override void Execute(List<PakRender> targets, PakRender self) {
         foreach (PakRender e in targets) {
             e.AddBuff(buff);
+            Instantiate(particles, e.GetPosition(), Quaternion.identity);
         }
 
         //add sound effect
