@@ -245,6 +245,13 @@ public class PakRender : MonoBehaviour, IComparable
         }
         
         // Check if buff added to the character alreadly reach Maximum number
+        if (attachedBuffs.Count == 10) {
+            // Deactivate and remove the first buff
+            if (attachedBuffs[0] is ILastingBehaviour)
+                ((ILastingBehaviour) attachedBuffs[0]).Deactivate(this);
+            attachedBuffs.RemoveAt(0);
+        }
+        // Add new buff
         attachedBuffs.Add(buff);
         buffRemainingTurns.Add(buff.duration);
         buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
