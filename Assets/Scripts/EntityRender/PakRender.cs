@@ -228,20 +228,28 @@ public class PakRender : MonoBehaviour, IComparable
 
     // Add buff to this object
     public void AddBuff(BaseBuff buff) {
-        bool duplicate = false;
+        // Check for duplicate buff
         for (int i = 0; i < attachedBuffs.Count; i++) {
             if (buff.name == attachedBuffs[i].name) {
-                duplicate = true;
+                if (buff is ILastingBehaviour) {
+                    ILastingBehaviour lastingEffect = (ILastingBehaviour) buff;
+
+                    // Execute OnDeactivate effect and add new OnInitialize effect
+                    lastingEffect.Deactivate(this);
+                    lastingEffect.Initialize(this);
+                }
+                // Reset duration
+                buffRemainingTurns[i] = buff.duration;
                 break;
             }
         }
         
-        // attach buff to the character if not duplicate
-        if (!duplicate) {
-            attachedBuffs.Add(buff);
-            buffRemainingTurns.Add(buff.duration);
-            buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
-        }
+        // Check if buff added to the character alreadly reach Maximum number
+        attachedBuffs.Add(buff);
+        buffRemainingTurns.Add(buff.duration);
+        buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
+
+
 
         // Do on-buff-added effect
         if (buff is ILastingBehaviour) {
