@@ -79,11 +79,11 @@ namespace BattleScene.BattleLogic
 
             PakRender caller2 = caller.GetComponent<PakRender>();
 
-            SkillExecutor callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
+            SkillExecutor callerskill = caller2.GetSkill(selectedSkill); //used to be Skill callerskill = caller2.skill[0];
 
             bool pass = false;
             // if the selected skill is attackWholefield, do it !!
-            if (caller.skill[selectedSkill].SkillId.CompareTo("B:)") == 0)
+            if (caller.GetSkill(selectedSkill).SkillId.CompareTo("B") == 0)
                 pass = true;
             else
                 // if not check if some targets are alive
