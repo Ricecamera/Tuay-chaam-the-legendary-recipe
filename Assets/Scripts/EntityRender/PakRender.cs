@@ -22,9 +22,7 @@ public class PakRender : MonoBehaviour, IComparable
 
     public HealthSystem healthSystem { get; private set; }
 
-
-    public List<SkillExecutor> skill;
-    public int setSkill = -1;
+    public SkillObj[] skills;
 
     public ParticleSystem defBuffVfx, atkBuffVfx;
 
@@ -32,6 +30,7 @@ public class PakRender : MonoBehaviour, IComparable
     public int currentDef { get; set; }
     public int currentSpeed { get; set; }
 
+    private int setSkill = -1;
 
     [SerializeField]
     private SpriteRenderer actionIcon;
@@ -42,7 +41,6 @@ public class PakRender : MonoBehaviour, IComparable
     [SerializeField]
     private Entity enitityData;
 
-    [SerializeField]
     private float slideSpeed = 6f, attackDistance = 1.75f;
 
     private Vector3 targetPos;
@@ -52,9 +50,9 @@ public class PakRender : MonoBehaviour, IComparable
     private Coroutine flashcheck;
     private Action onSlideComplete;
 
+    private List<SkillExecutor> skillExecutors;
     private List<BaseBuff> attachedBuffs;
     private List<int> buffRemainingTurns;
-
     public Entity Entity { get { return enitityData;} }
     public State currentState { 
         get {
@@ -89,6 +87,11 @@ public class PakRender : MonoBehaviour, IComparable
         actionIcon.gameObject.SetActive(false);
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spirteRenderer.color = Color.white;
+
+        skillExecutors = new List<SkillExecutor>();
+        for (int i = 0; i < skills.Length; i++) {
+            skillExecutors.Add(new SkillExecutor(skills[i]));
+        }
 
         attachedBuffs = new List<BaseBuff>();
         buffRemainingTurns = new List<int>();
@@ -126,7 +129,7 @@ public class PakRender : MonoBehaviour, IComparable
     public void DisplayInAction(bool value, int skillIndex)
     {
         // Prevent index out of bound error
-        if(skillIndex < 0 || skillIndex > skill.Count){
+        if(skillIndex < 0 || skillIndex > skillExecutors.Count){
             Debug.LogError("Skill index out of range and couldn't load skill icon.");
         }
         
@@ -134,7 +137,7 @@ public class PakRender : MonoBehaviour, IComparable
 
         if (value) {
             // Display inAction indicator
-            actionIcon.sprite = skill[skillIndex].Icon;
+            actionIcon.sprite = skillExecutors[skillIndex].Icon;
         }
         else {
             // Hide InAction indicator
@@ -236,8 +239,8 @@ public class PakRender : MonoBehaviour, IComparable
 
     public void UpdateTurn() {
         // Update skill cooldown
-        for (int i = 0; i < skill.Count; ++i) {
-            skill[i].Cooldown--;
+        for (int i = 0; i < skillExecutors.Count; ++i) {
+            skillExecutors[i].Cooldown--;
         }
 
         List<BaseBuff> buffBuffer = new List<BaseBuff>();
@@ -306,5 +309,15 @@ public class PakRender : MonoBehaviour, IComparable
         /* insert sound here! */
         yield return new WaitForSeconds(1.5f);
         onComplete();
+    }
+
+    public List<SkillExecutor> GetSkills() {
+        return skillExecutors;
+    }
+
+    public SkillExecutor GetSkill(int index) {
+        if (index < 0 || index >= skillExecutors.Count)
+            return null;
+        return skillExecutors[index];
     }
 }
