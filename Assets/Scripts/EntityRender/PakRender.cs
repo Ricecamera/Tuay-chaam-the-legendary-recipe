@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BuffSystem;
 using BuffSystem.Behaviour;
+using System.Linq;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour, IComparable
@@ -24,8 +25,6 @@ public class PakRender : MonoBehaviour, IComparable
 
     public SkillObj[] skills;
 
-    public ParticleSystem defBuffVfx, atkBuffVfx;
-
     public int currentAtk { get; set; }
     public int currentDef { get; set; }
     public int currentSpeed { get; set; }
@@ -37,6 +36,9 @@ public class PakRender : MonoBehaviour, IComparable
 
     [SerializeField]
     private GameObject selectedIcon;
+
+    [SerializeField]
+    private BuffDisplayer buffDisplayer;
 
     [SerializeField]
     private Entity enitityData;
@@ -95,6 +97,7 @@ public class PakRender : MonoBehaviour, IComparable
 
         attachedBuffs = new List<BaseBuff>();
         buffRemainingTurns = new List<int>();
+        buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
     }
 
     protected virtual void Update()
@@ -225,10 +228,20 @@ public class PakRender : MonoBehaviour, IComparable
 
     // Add buff to this object
     public void AddBuff(BaseBuff buff) {
+        bool duplicate = false;
+        for (int i = 0; i < attachedBuffs.Count; i++) {
+            if (buff.name == attachedBuffs[i].name) {
+                duplicate = true;
+                break;
+            }
+        }
         
-        // attach buff to the character
-        attachedBuffs.Add(buff);
-        buffRemainingTurns.Add(buff.duration);
+        // attach buff to the character if not duplicate
+        if (!duplicate) {
+            attachedBuffs.Add(buff);
+            buffRemainingTurns.Add(buff.duration);
+            buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
+        }
 
         // Do on-buff-added effect
         if (buff is ILastingBehaviour) {
@@ -274,6 +287,7 @@ public class PakRender : MonoBehaviour, IComparable
         // Replace buff with buffer
         attachedBuffs = buffBuffer;
         buffRemainingTurns = turnBuffer;
+        buffDisplayer.UpdateBuffImage(new List<Sprite>(from buff in attachedBuffs select buff.buffIcon));
     }
 
     public Vector3 GetPosition() {
