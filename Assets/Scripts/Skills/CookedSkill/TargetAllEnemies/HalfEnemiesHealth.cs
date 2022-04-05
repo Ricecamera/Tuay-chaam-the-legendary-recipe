@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HalfEnemiesHealthPerforming : MeleeSkill
+[CreateAssetMenu(fileName = "HalfEnemiesHealth", menuName = "Assets/Cook skill/HalfEnemiesHealth")]
+public class HalfEnemiesHealth : MeleeSkill
 {
     public override void Execute(List<PakRender> target, PakRender self)
     {
