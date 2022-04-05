@@ -25,11 +25,12 @@ public class PakRender : MonoBehaviour, IComparable
 
     public SkillObj[] skills;
 
-    public int currentAtk { get; set; }
-    public int currentDef { get; set; }
-    public int currentSpeed { get; set; }
+    public int baseAtk { get; private set;}
+    public int baseDef { get; private set; }
+    public int baseSpeed { get; private set; }
 
-    private int setSkill = -1;
+    [SerializeField]
+    private int bonusAttack, bonusDef, bonusSpeed, setSkill = -1;
 
     [SerializeField]
     private SpriteRenderer actionIcon;
@@ -56,33 +57,18 @@ public class PakRender : MonoBehaviour, IComparable
     private List<BaseBuff> attachedBuffs;
     private List<int> buffRemainingTurns;
     public Entity Entity { get { return enitityData;} }
-    public State currentState { 
-        get {
-            return state;
-        }
-        set {
-            state = value;
-        }
-    }
-    public bool Selected {
-        get {
-            return selected;
-        }
-
-        set {
-            selected = value;
-            selectedIcon.SetActive(value);
-        }
-    }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.Initialize(enitityData.MaxHp);
-        currentAtk = enitityData.BaseAtk;
-        currentDef = enitityData.BaseDef;
-        currentSpeed = enitityData.BaseSpeed;
+        baseAtk = enitityData.BaseAtk;
+        baseDef = enitityData.BaseDef;
+        baseSpeed = enitityData.BaseSpeed;
+        bonusAttack = 0;
+        bonusDef = 0;
+        bonusSpeed = 0;
         state = State.Idle;
         Selected = false;
 //!
@@ -243,13 +229,14 @@ public class PakRender : MonoBehaviour, IComparable
                 return;
             }
         }
-        
+
         // Check if buff added to the character alreadly reach Maximum number
         if (attachedBuffs.Count == 10) {
             // Deactivate and remove the first buff
             if (attachedBuffs[0] is ILastingBehaviour)
                 ((ILastingBehaviour) attachedBuffs[0]).Deactivate(this);
             attachedBuffs.RemoveAt(0);
+            buffRemainingTurns.RemoveAt(0);
         }
         // Add new buff
         attachedBuffs.Add(buff);
@@ -272,7 +259,7 @@ public class PakRender : MonoBehaviour, IComparable
         List<BaseBuff> buffBuffer = new List<BaseBuff>();
         List<int> turnBuffer = new List<int>();
 
-        // Do something about this character when end turn ex. buff effect, burn damage, etc
+        // Update buff effect
         for (int i = 0; i < buffRemainingTurns.Count; i++) {
             if (buffRemainingTurns[i] > 0) {
                 // check if the buff have overtime effect
@@ -338,6 +325,7 @@ public class PakRender : MonoBehaviour, IComparable
         onComplete();
     }
 
+    // Getter, Setter
     public List<SkillExecutor> GetSkills() {
         return skillExecutors;
     }
@@ -347,4 +335,78 @@ public class PakRender : MonoBehaviour, IComparable
             return null;
         return skillExecutors[index];
     }
+
+    public State currentState {
+        get {
+            return state;
+        }
+        set {
+            state = value;
+        }
+    }
+    public bool Selected {
+        get {
+            return selected;
+        }
+
+        set {
+            selected = value;
+            selectedIcon.SetActive(value);
+        }
+    }
+
+    public int currentAtk {
+        get {
+            return baseAtk + bonusAttack;
+        }
+    }
+
+    public int currentDef {
+        get {
+            return baseDef + bonusDef;
+        }
+    }
+
+    public int currentSpeed {
+        get {
+            return baseSpeed + bonusSpeed;
+        }
+    }
+
+    public int BonusAtk {
+        get {
+            return bonusAttack;
+        }
+        set {
+            if (value < 0)
+                bonusAttack = 0;
+            else
+                bonusAttack = value;
+        }
+    }
+
+    public int BonusDef {
+        get {
+            return bonusDef;
+        }
+        set {
+            if (value < 0)
+                bonusDef = 0;
+            else
+                bonusDef = value;
+        }
+    }
+
+    public int BonusSpeed {
+        get {
+            return bonusSpeed;
+        }
+        set {
+            if (value < 0)
+                BonusSpeed = 0;
+            else
+                BonusSpeed = value;
+        }
+    }
+
 }
