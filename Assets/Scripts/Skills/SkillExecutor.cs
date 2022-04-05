@@ -49,7 +49,7 @@ public class SkillExecutor
         }
  
     }
-    public string SkillNamed {
+    public string SkillName {
         get { 
             return this.skill.skillName; 
         }
@@ -70,6 +70,12 @@ public class SkillExecutor
                 cooldown = maxCooldown;
             else
                 cooldown = value;
+        }
+    }
+
+    public SkillObj.SkillNation skillNation {
+        get {
+            return skill.skillNation;
         }
     }
 
