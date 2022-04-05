@@ -2073,6 +2073,7 @@ GameObject:
   - component: {fileID: 1339217663}
   - component: {fileID: 1339217662}
   - component: {fileID: 1339217664}
+  - component: {fileID: 1339217665}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: GameController
@@ -2144,6 +2145,23 @@ MonoBehaviour:
   Backdrop: {fileID: 156448288}
   cookImageDark: {fileID: 1476672260}
   battleManager: {fileID: 1662004680}
+--- !u!114 &1339217665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339217661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce9bec8c269902479180cabe1577792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipesPair:
+  - key: honeylimesalt
+    recipe: {fileID: 11400000, guid: 7701898e5124a1a4e9cdab83e5dd7204, type: 2}
+  - key: carrotgarlichoneylimesalt
+    recipe: {fileID: 11400000, guid: d3264d7edd8a06d4eb639ce7a72e42d2, type: 2}
 --- !u!1 &1344425279
 GameObject:
   m_ObjectHideFlags: 0
