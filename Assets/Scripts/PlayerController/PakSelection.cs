@@ -31,7 +31,7 @@ public class PakSelection : MonoBehaviour
 
     public GameObject comboPanel;
 
-    private Skill cookSkill;
+    private SkillObj cookSkill;
 
     private void OnEnable()
     {
@@ -152,7 +152,7 @@ public class PakSelection : MonoBehaviour
                 else if (currentState == GameState.CHOOSE_TARGET || currentState == GameState.WAIT_FOR_CONFIRM)
                 {
                     // Check the selected skill is all targets type
-                    SkillExecutor pakSkill = selectedPak.GetSkill(selectedSkill);
+                    SkillObj pakSkill = selectedPak.skills[selectedSkill];
                     controlSkill(pakSkill, character);
                 }
                 else if (CharacterManager.IsPlayerTeam(hit.collider.tag))
@@ -165,13 +165,13 @@ public class PakSelection : MonoBehaviour
         }
     }
 
-    public void controlSkill(Skill pakSkill, PakRender character)
+    public void controlSkill(SkillObj skill, PakRender character)
     {
 
 
-        if (pakSkill.ActionType == "TargetAllAlliances" ||
-            pakSkill.ActionType == "TargetAllEnemies" ||
-            pakSkill.ActionType == "TargetWholeField")
+        if (skill.actionType == "TargetAllAlliances" ||
+            skill.actionType == "TargetAllEnemies" ||
+            skill.actionType == "TargetWholeField")
             return;
 
         // Check if the character is already selected
@@ -211,7 +211,7 @@ public class PakSelection : MonoBehaviour
                 for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; i++)
                 {
                     Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
-                    tooltip.setContent(selectedPak.GetSkill(i).Description);
+                    tooltip.setContent(selectedPak.skills[i].description);
                 }
 
                 if (ally.InAction())
@@ -220,12 +220,12 @@ public class PakSelection : MonoBehaviour
                     ActionCommand action = battleManger.actionCommandHandler.GetAction(selectedPak.tag);
 
                     // get index of the called skill in the caller pak
-                    if (action.selectedSkill.getSkillNation == Skill.SkillNation.NORMAL)
+                    if (action.selectedSkill.skillNation == SkillObj.SkillNation.NORMAL)
                     {
                         selectedSkill = action.convertSelectedSkillToIndex();
                         _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
                     }
-                    else if (action.selectedSkill.getSkillNation == Skill.SkillNation.COOKED)
+                    else if (action.selectedSkill.skillNation == SkillObj.SkillNation.COOKED)
                     {
                         Debug.Log("Skill UI For Cook skill work");
                         // selectedSkill = 3;
@@ -290,7 +290,7 @@ public class PakSelection : MonoBehaviour
             for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; i++)
             {
                 Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
-                tooltip.setContent(selectedPak.skill[i].Description);
+                tooltip.setContent(selectedPak.skills[i].description);
             }
 
             if (currentState == GameState.CHOOSE_CHAAM_SKILL)
@@ -335,11 +335,11 @@ public class PakSelection : MonoBehaviour
             selectedTargets.Clear();
         }
 
-        SkillExecutor pakSkill = null;
+        SkillObj pakSkill = null;
         try
         {
             _UIcontroller.skillMenu.ToggleSkill(skillIndex);
-            pakSkill = selectedPak.GetSkill(skillIndex);
+            pakSkill = selectedPak.skills[skillIndex];
         }
         catch (IndexOutOfRangeException e)
         {
@@ -357,7 +357,7 @@ public class PakSelection : MonoBehaviour
                 return;
             }
 
-            characterSelectMode(pakSkill.ActionType);
+            characterSelectMode(pakSkill.actionType);
 
             selectedSkill = skillIndex;
             UpdateGameState(GameState.CHOOSE_TARGET);
@@ -369,7 +369,7 @@ public class PakSelection : MonoBehaviour
         switch (Type)
         {
             case "TargetAllAlliances":
-                var allys = CharacterManager.instance.getTeamHolders(0);
+                var allys = CharacterManager.instance.GetAliveCharacters(0);
                 // Lock enemy team
                 CharacterManager.instance.LockAllCharacters(true, 1);
                 UpdateCharacterLayer(allys, true);
@@ -378,13 +378,13 @@ public class PakSelection : MonoBehaviour
                 SelectMultipleTargets(allys);
                 break;
             case "TargetOneAlliance":
-                var allys2 = CharacterManager.instance.getTeamHolders(0);
+                var allys2 = CharacterManager.instance.GetAliveCharacters(0);
                 // Lock enemy team
                 CharacterManager.instance.LockAllCharacters(true, 1);
                 UpdateCharacterLayer(allys2, true);
                 break;
             case "TargetAllEnemies":
-                var enemies2 = CharacterManager.instance.getTeamHolders(1);
+                var enemies2 = CharacterManager.instance.GetAliveCharacters(1);
 
                 // Lock ally team
                 CharacterManager.instance.LockAllCharacters(true, 0);
@@ -394,13 +394,13 @@ public class PakSelection : MonoBehaviour
                 SelectMultipleTargets(enemies2);
                 break;
             case "TargetOneEnemy":
-                var enemies = CharacterManager.instance.getTeamHolders(1);
+                var enemies = CharacterManager.instance.GetAliveCharacters(1);
                 CharacterManager.instance.LockAllCharacters(true, 0);
                 UpdateCharacterLayer(enemies, true);
                 break;
             case "TargetWholeField":
                 // get character of both team
-                var characters = CharacterManager.instance.getHolders();
+                var characters = CharacterManager.instance.GetAliveCharacters(2);
                 UpdateCharacterLayer(characters, true);
 
                 // Remove caller from ally list
@@ -421,10 +421,10 @@ public class PakSelection : MonoBehaviour
         {
 
             float speed = selectedPak.currentSpeed;
-            Skill skill = selectedPak.skill[selectedSkill];
+            SkillExecutor skillExecutor = selectedPak.GetSkillExecutor(selectedSkill);
             // Deep copy
             List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
-            ActionCommand newCommand = new ActionCommand(selectedPak, skill, skillTargets, speed);
+            ActionCommand newCommand = new ActionCommand(selectedPak, skillExecutor, skillTargets, speed);
             battleManger.AddCommand(newCommand);
 
             selectedPak.currentState = PakRender.State.InAction;
@@ -436,10 +436,10 @@ public class PakSelection : MonoBehaviour
         if (selectedPak != null && currentState == GameState.CHAAM_WAIT_FOR_CONFIRM)
         {
             float speed = selectedPak.currentSpeed;
-            Skill skill = cookSkill;
+            SkillExecutor skillExecutor = new SkillExecutor(cookSkill);
             // Deep copy
             List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
-            ActionCommand newCommand = new ActionCommand(selectedPak, skill, skillTargets, speed);
+            ActionCommand newCommand = new ActionCommand(selectedPak, skillExecutor, skillTargets, speed);
             battleManger.AddCommand(newCommand);
             selectedPak.DisplayCookInAction(true, cookSkill);
             selectedPak.currentState = PakRender.State.InAction;
@@ -479,10 +479,10 @@ public class PakSelection : MonoBehaviour
         // {
         //     Debug.Log("Chaam is already tai ha.");
         // }
-        List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
+        List<PakRender> pakTeam = CharacterManager.instance.GetAliveCharacters(0);
         foreach (PakRender x in pakTeam)
         {
-            if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp > 0)
+            if (x.CompareTag("Chaam"))
             {
                 ChaamRender nongChaam = (ChaamRender)x;
                 nongChaam.addGuage(20);
@@ -510,7 +510,7 @@ public class PakSelection : MonoBehaviour
     {
         if (state == GameState.CHOOSE_CHARACTER)
         {
-            var allys = CharacterManager.instance.getTeamHolders(0);
+            var allys = CharacterManager.instance.GetAliveCharacters(0);
             foreach (var ally in allys)
             {
                 if (ally.InAction())
@@ -520,7 +520,7 @@ public class PakSelection : MonoBehaviour
         }
         else if (state == GameState.CHOOSE_SKILL || state == GameState.DISPLAY_SKILL)
         {
-            var allys = CharacterManager.instance.getTeamHolders(0);
+            var allys = CharacterManager.instance.GetAliveCharacters(0);
             foreach (var ally in allys)
             {
                 ally.DisplayInAction(false);
@@ -602,7 +602,7 @@ public class PakSelection : MonoBehaviour
 
     private void HandleStartCookButton()
     {
-        characterSelectMode(cookSkill.ActionType);
+        characterSelectMode(cookSkill.actionType);
         UpdateGameState(GameState.CHAAM_CHOOSE_TARGET);
 
         // _cookingController.OnStartCooking(ingredient, selectedPak, selectedTargets);

@@ -84,7 +84,7 @@ public class BattleUIController : MonoBehaviour
                 {
                     cookButton.gameObject.SetActive(true);
                 }
-                List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
+                List<PakRender> pakTeam = CharacterManager.instance.GetAliveCharacters(0);
                 foreach (PakRender x in pakTeam)
                 {
                     if (x.CompareTag("Chaam"))
@@ -229,7 +229,7 @@ public class BattleUIController : MonoBehaviour
     {
         try
         {
-            skillMenu.UpdateImage(ally.Entity.Image, ally.GetSkills());
+            skillMenu.UpdateImage(ally.Entity.Image, ally.GetSkillExecutors());
         }
         catch
         {

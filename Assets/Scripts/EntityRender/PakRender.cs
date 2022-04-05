@@ -30,7 +30,6 @@ public class PakRender : MonoBehaviour, IComparable
     public int baseDef { get; private set; }
     public int baseSpeed { get; private set; }
 
-    [SerializeField]
     private int bonusAttack, bonusDef, bonusSpeed, setSkill = -1;
 
     [SerializeField]
@@ -145,7 +144,7 @@ public class PakRender : MonoBehaviour, IComparable
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
     }
 
-    public void DisplayCookInAction(bool value, Skill skill)
+    public void DisplayCookInAction(bool value, SkillObj skill)
     {
 
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -153,7 +152,7 @@ public class PakRender : MonoBehaviour, IComparable
         if (value)
         {
             // Display inAction indicator
-            actionIcon.sprite = skill.Icon;
+            actionIcon.sprite = skill.icon;
         }
         else
         {
@@ -198,8 +197,8 @@ public class PakRender : MonoBehaviour, IComparable
             Debug.LogError("Coroutine call multiple time");
             StopCoroutine(flashcheck);
         }
-
-        StartCoroutine(DamageEffect());
+        if (this.gameObject.activeSelf)
+            StartCoroutine(DamageEffect());
     }
 
     public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete)
@@ -324,27 +323,23 @@ public class PakRender : MonoBehaviour, IComparable
     }
 
     //damage and heal function
-    public void takeDamage(PakRender attacker, float atkRatio)
+    public void takeDamage(int atkValue)
     {
-        int damage;
-        int atkValue = (int) Math.Ceiling(attacker.currentAtk * atkRatio);
-        damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))));
+        int damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))));
         this.healthSystem.TakeDamage(damage);
         this.switchMat();
     }
 
-    public void takeDamageBypassDEF(PakRender attacker, float atkRatio)
+    public void takeDamageBypassDEF(int atkValue)
     {
-        int damage;
-        int atkValue = (int) Math.Ceiling(attacker.currentAtk * atkRatio);
-        damage = (int)((atkValue));
+        healthSystem.TakeDamage(atkValue);
         switchMat();
     }
 
     // Healing by percent
     public void gainRegen(int ratio)
     {
-        int healValue = (int) this.healthSystem.MaxHp * raito;
+        int healValue = (int) this.healthSystem.MaxHp * ratio;
         this.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
         this.healthSystem.Heal(healValue);
     }
@@ -380,11 +375,11 @@ public class PakRender : MonoBehaviour, IComparable
     }
 
     // Getter, Setter
-    public List<SkillExecutor> GetSkills() {
+    public List<SkillExecutor> GetSkillExecutors() {
         return skillExecutors;
     }
 
-    public SkillExecutor GetSkill(int index) {
+    public SkillExecutor GetSkillExecutor(int index) {
         if (index < 0 || index >= skillExecutors.Count)
             return null;
         return skillExecutors[index];
