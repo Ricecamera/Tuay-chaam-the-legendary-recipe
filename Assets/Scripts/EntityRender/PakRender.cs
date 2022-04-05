@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BuffSystem;
+using BuffSystem.Behaviour;
+using System.Linq;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour, IComparable
@@ -21,16 +24,13 @@ public class PakRender : MonoBehaviour, IComparable
 
     public HealthSystem healthSystem { get; private set; }
 
+    public SkillObj[] skills;
 
-    public List<Skill> skill;
-    public int setSkill = -1;
+    public int baseAtk { get; private set;}
+    public int baseDef { get; private set; }
+    public int baseSpeed { get; private set; }
 
-    public ParticleSystem defBuffVfx, atkBuffVfx;
-
-    public int currentAtk { get; set; }
-    public int currentDef { get; set; }
-    public int currentSpeed { get; set; }
-
+    private int bonusAttack, bonusDef, bonusSpeed, setSkill = -1;
 
     [SerializeField]
     private SpriteRenderer actionIcon;
@@ -39,9 +39,11 @@ public class PakRender : MonoBehaviour, IComparable
     private GameObject selectedIcon;
 
     [SerializeField]
-    private Entity enitityData;
+    private BuffDisplayer buffDisplayer;
 
     [SerializeField]
+    private Entity enitityData;
+
     private float slideSpeed = 6f, attackDistance = 1.75f;
 
     private Vector3 targetPos;
@@ -51,40 +53,21 @@ public class PakRender : MonoBehaviour, IComparable
     private Coroutine flashcheck;
     private Action onSlideComplete;
 
-    public Entity Entity { get { return enitityData; } }
-    public State currentState
-    {
-        get
-        {
-            return state;
-        }
-        set
-        {
-            state = value;
-        }
-    }
-    public bool Selected
-    {
-        get
-        {
-            return selected;
-        }
-
-        set
-        {
-            selected = value;
-            selectedIcon.SetActive(value);
-        }
-    }
+    private List<SkillExecutor> skillExecutors;
+    private List<BaseBuff> attachedBuffs;
+    private List<int> buffRemainingTurns;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.Initialize(enitityData.MaxHp);
-        currentAtk = enitityData.BaseAtk;
-        currentDef = enitityData.BaseDef;
-        currentSpeed = enitityData.BaseSpeed;
+        baseAtk = enitityData.BaseAtk;
+        baseDef = enitityData.BaseDef;
+        baseSpeed = enitityData.BaseSpeed;
+        bonusAttack = 0;
+        bonusDef = 0;
+        bonusSpeed = 0;
         state = State.Idle;
         Selected = false;
         //!
@@ -92,16 +75,14 @@ public class PakRender : MonoBehaviour, IComparable
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spirteRenderer.color = Color.white;
 
-        skill = new List<Skill>();
+        skillExecutors = new List<SkillExecutor>();
+        for (int i = 0; i < skills.Length; i++) {
+            skillExecutors.Add(new SkillExecutor(skills[i]));
+        }
 
-        if (this.skill == null)
-        {
-            Debug.Log("Skill in PakRender is null");
-        }
-        else
-        {
-            Debug.Log("Skill in PakRender is not null");
-        }
+        attachedBuffs = new List<BaseBuff>();
+        buffRemainingTurns = new List<int>();
+        buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
     }
 
     protected virtual void Update()
@@ -141,8 +122,7 @@ public class PakRender : MonoBehaviour, IComparable
     public void DisplayInAction(bool value, int skillIndex)
     {
         // Prevent index out of bound error
-        if (skillIndex < 0 || skillIndex > skill.Count)
-        {
+        if(skillIndex < 0 || skillIndex > skillExecutors.Count){
             Debug.LogError("Skill index out of range and couldn't load skill icon.");
         }
 
@@ -151,7 +131,7 @@ public class PakRender : MonoBehaviour, IComparable
         if (value)
         {
             // Display inAction indicator
-            actionIcon.sprite = skill[skillIndex].Icon;
+            actionIcon.sprite = skillExecutors[skillIndex].Icon;
         }
         else
         {
@@ -164,7 +144,7 @@ public class PakRender : MonoBehaviour, IComparable
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
     }
 
-    public void DisplayCookInAction(bool value, Skill skill)
+    public void DisplayCookInAction(bool value, SkillObj skill)
     {
 
         SpriteRenderer spirteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -172,7 +152,7 @@ public class PakRender : MonoBehaviour, IComparable
         if (value)
         {
             // Display inAction indicator
-            actionIcon.sprite = skill.Icon;
+            actionIcon.sprite = skill.icon;
         }
         else
         {
@@ -217,8 +197,8 @@ public class PakRender : MonoBehaviour, IComparable
             Debug.LogError("Coroutine call multiple time");
             StopCoroutine(flashcheck);
         }
-
-        StartCoroutine(DamageEffect());
+        if (this.gameObject.activeSelf)
+            StartCoroutine(DamageEffect());
     }
 
     public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete)
@@ -264,25 +244,104 @@ public class PakRender : MonoBehaviour, IComparable
         );
     }
 
-    public void UpdateTurn()
-    {
-        // Update skill cooldown
-        for (int i = 0; i < skill.Count; ++i)
-        {
-            skill[i].Cooldown--;
+    // Add buff to this object
+    public void AddBuff(BaseBuff buff) {
+        // Check for duplicate buff
+        for (int i = 0; i < attachedBuffs.Count; i++) {
+            if (buff.name == attachedBuffs[i].name) {
+                if (buff is ILastingBehaviour) {
+                    ILastingBehaviour lastingEffect = (ILastingBehaviour) buff;
+
+                    // Execute OnDeactivate effect and add new OnInitialize effect
+                    lastingEffect.Deactivate(this);
+                    lastingEffect.Initialize(this);
+                }
+                // Reset duration
+                buffRemainingTurns[i] = buff.duration;
+                return;
+            }
         }
 
-        // Do something about this character when end turn ex. buff effect, burn damage, etc
+        // Check if buff added to the character alreadly reach Maximum number
+        if (attachedBuffs.Count == 10) {
+            // Deactivate and remove the first buff
+            if (attachedBuffs[0] is ILastingBehaviour)
+                ((ILastingBehaviour) attachedBuffs[0]).Deactivate(this);
+            attachedBuffs.RemoveAt(0);
+            buffRemainingTurns.RemoveAt(0);
+        }
+        // Add new buff
+        attachedBuffs.Add(buff);
+        buffRemainingTurns.Add(buff.duration);
+        buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
+
+        // Do on-buff-added effect
+        if (buff is ILastingBehaviour) {
+            ILastingBehaviour toExecute = (ILastingBehaviour) buff;
+            toExecute.Initialize(this);
+        }
     }
 
-    public Vector3 GetPosition()
-    {
-        return transform.position;
+    public void UpdateTurn() {
+        // Update skill cooldown
+        for (int i = 0; i < skillExecutors.Count; ++i) {
+            skillExecutors[i].Cooldown--;
+        }
+
+        List<BaseBuff> buffBuffer = new List<BaseBuff>();
+        List<int> turnBuffer = new List<int>();
+
+        // Update buff effect
+        for (int i = 0; i < buffRemainingTurns.Count; i++) {
+            if (buffRemainingTurns[i] > 0) {
+                // check if the buff have overtime effect
+                if (attachedBuffs[i] is IOvertimeBehaviour) {
+                    var toRunBuff = attachedBuffs[i] as IOvertimeBehaviour;
+                    toRunBuff.OnChangeTurn(this);
+                }
+                
+                // Reduce effect turn
+                buffRemainingTurns[i]--;
+
+                buffBuffer.Add(attachedBuffs[i]);
+                turnBuffer.Add(buffRemainingTurns[i]);
+            }
+            else {
+                // Do on-buff-removed effect
+                if (attachedBuffs[i] is ILastingBehaviour) {
+                    ILastingBehaviour toExecute = (ILastingBehaviour) attachedBuffs[i];
+                    toExecute.Deactivate(this);
+                }
+            }
+
+        }
+
+        // Replace buff with buffer
+        attachedBuffs = buffBuffer;
+        buffRemainingTurns = turnBuffer;
+        buffDisplayer.UpdateBuffImage(new List<Sprite>(from buff in attachedBuffs select buff.buffIcon));
     }
 
-    public bool InAction()
+    //damage and heal function
+    public void takeDamage(int atkValue)
     {
-        return state == State.InAction;
+        int damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))));
+        this.healthSystem.TakeDamage(damage);
+        this.switchMat();
+    }
+
+    public void takeDamageBypassDEF(int atkValue)
+    {
+        healthSystem.TakeDamage(atkValue);
+        switchMat();
+    }
+
+    // Healing by percent
+    public void gainRegen(int ratio)
+    {
+        int healValue = (int) this.healthSystem.MaxHp * ratio;
+        this.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
+        this.healthSystem.Heal(healValue);
     }
 
     private IEnumerator DamageEffect()
@@ -315,28 +374,100 @@ public class PakRender : MonoBehaviour, IComparable
         onComplete();
     }
 
-    //damage and heal function
-    public void takeDamage(PakRender attacker, float divideFactor)
-    {
-        int damage;
-        int atkValue = attacker.currentAtk;
-        damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))) / divideFactor);
-        this.healthSystem.TakeDamage(damage);
-        this.switchMat();
+    // Getter, Setter
+    public List<SkillExecutor> GetSkillExecutors() {
+        return skillExecutors;
     }
 
-    public void takeDamageBypassDEF(PakRender attacker, float divideFactor)
-    {
-        int damage;
-        int atkValue = attacker.currentAtk;
-        damage = (int)((atkValue / divideFactor));
-        switchMat();
+    public SkillExecutor GetSkillExecutor(int index) {
+        if (index < 0 || index >= skillExecutors.Count)
+            return null;
+        return skillExecutors[index];
     }
 
-    public void gainHealing(int divideFactor)
-    {
-        int healValue = this.healthSystem.MaxHp / divideFactor;
-        this.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-        this.healthSystem.Heal(healValue);
+    public State currentState {
+        get {
+            return state;
+        }
+        set {
+            state = value;
+        }
     }
+    public bool Selected {
+        get {
+            return selected;
+        }
+
+        set {
+            selected = value;
+            selectedIcon.SetActive(value);
+        }
+    }
+
+    public int currentAtk {
+        get {
+            return baseAtk + bonusAttack;
+        }
+    }
+
+    public int currentDef {
+        get {
+            return baseDef + bonusDef;
+        }
+    }
+
+    public int currentSpeed {
+        get {
+            return baseSpeed + bonusSpeed;
+        }
+    }
+
+    public int BonusAtk {
+        get {
+            return bonusAttack;
+        }
+        set {
+            if (value < 0)
+                bonusAttack = 0;
+            else
+                bonusAttack = value;
+        }
+    }
+
+    public int BonusDef {
+        get {
+            return bonusDef;
+        }
+        set {
+            if (value < 0)
+                bonusDef = 0;
+            else
+                bonusDef = value;
+        }
+    }
+
+    public int BonusSpeed {
+        get {
+            return bonusSpeed;
+        }
+        set {
+            if (value < 0)
+                BonusSpeed = 0;
+            else
+                BonusSpeed = value;
+        }
+    }
+
+    public Entity Entity { get { return enitityData;} }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public bool InAction()
+    {
+        return state == State.InAction;
+    }
+
 }

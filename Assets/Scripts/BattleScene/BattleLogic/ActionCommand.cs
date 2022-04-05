@@ -11,12 +11,12 @@ namespace BattleScene.BattleLogic
         private float speed;                // field that determine the execution order of skills
 
         public PakRender caller;            // a index of the character calling this action
-        public Skill selectedSkill;        // a index of the skill to be execute
+        public SkillExecutor selectedSkill;        // a index of the skill to be execute
         public List<PakRender> targets;     // indice of the allied targets
 
         // Constructor
 
-        public ActionCommand(PakRender caller, Skill selectedSkill, List<PakRender> targets, float speed)
+        public ActionCommand(PakRender caller, SkillExecutor selectedSkill, List<PakRender> targets, float speed)
         {
             this.caller = caller;
             this.selectedSkill = selectedSkill;
@@ -79,9 +79,6 @@ namespace BattleScene.BattleLogic
 
             PakRender caller2 = caller.GetComponent<PakRender>();
 
-            // Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
-            Skill callerskill = selectedSkill;
-
             bool pass = false;
             // if the selected skill is attackWholefield, do it !!
             if (selectedSkill.SkillId.CompareTo("B:)") == 0)
@@ -103,14 +100,14 @@ namespace BattleScene.BattleLogic
                 Action finishCallback = () =>
                 {
                     onComplete();
-                    callerskill.OnFinishExecute -= onComplete;
+                    selectedSkill.OnFinishExecute -= onComplete;
                 };
 
                 // Subscribe to skill event
-                callerskill.OnFinishExecute += finishCallback;
+                selectedSkill.OnFinishExecute += finishCallback;
 
                 //dynamic skill call
-                callerskill.performSkill(caller2, targets);
+                selectedSkill?.performSkill(targets, caller2);
 
             }
             else
@@ -136,9 +133,9 @@ namespace BattleScene.BattleLogic
 
         public int convertSelectedSkillToIndex()
         {
-            for (int i = 0; i < caller.skill.Capacity; i++)
+            for (int i = 0; i < caller.skills.Length; i++)
             {
-                if (caller.skill[i].SkillId == selectedSkill.SkillId)
+                if (caller.skills[i].skillId == selectedSkill.SkillId)
                 {
                     return i;
                 }

@@ -47,10 +47,8 @@ public class SkillUI : MonoBehaviour
         Selected = value;
     }
 
-    public void SetSkill(Skill skill)
-    {
-        if (skill == null)
-        {
+    public void SetSkill(SkillExecutor skill) {
+        if (skill == null) {
             myImage.sprite = null;
             gameObject.SetActive(false);
             myButton.interactable = false;

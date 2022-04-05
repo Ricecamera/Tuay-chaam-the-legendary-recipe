@@ -52,7 +52,6 @@ public class CharacterManager : MonoBehaviour {
     public void AddCharacter(string tag, GameObject character) {
         try {
             // find the team of added character
-            Debug.Log(character);
             holders.Add(tag, character.GetComponent<PakRender>());
         }
         catch (Exception e) {
@@ -80,25 +79,39 @@ public class CharacterManager : MonoBehaviour {
     // 0 is PLAYER_TEAM
     // 1 is ENEMY_TEAM
     public List<PakRender> getTeamHolders(int teamKey) {
-        List<PakRender> temp = new List<PakRender>();
         if (teamKey < 0 || teamKey > 1) {
-            return temp;
+            throw new Exception("Invalid team key");
         }
 
+        List<PakRender> temp = new List<PakRender>();
 
         foreach (var kv in holders) {
-            if (teamKey == 0) {
-                if (IsPlayerTeam(kv.Value.tag))
-                    temp.Add(kv.Value);
-                }
-            else {
-                if (IsEnemyTeam(kv.Value.tag)) {
-                    temp.Add(kv.Value);
-                }
-            }     
+            PakRender pak = kv.Value;
+
+            if (CheckTeamKey(teamKey, pak)) {
+                temp.Add(pak);
+            }    
         }
         return temp;
     }
+
+    public List<PakRender> GetAliveCharacters(int teamKey) {
+        if (teamKey < 0 || teamKey > 2) {
+            throw new Exception("Invalid team key");
+        }
+
+        List<PakRender> temp = new List<PakRender>();
+
+        foreach (var kv in holders) {
+            var pak = kv.Value;
+            if (pak.healthSystem.IsAlive) {
+                if (CheckTeamKey(teamKey, pak)) {
+                    temp.Add(pak);
+                }
+            }
+        }
+        return temp;
+    } 
 
     
     public void HighLightCharacters(List<string> tags) {
@@ -118,21 +131,11 @@ public class CharacterManager : MonoBehaviour {
             throw new Exception("Invalid team key");
         }
 
-        foreach (var k_v in holders) { 
-            if (teamKey == 2) {
-                k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
-            }
-            else {
-                if (teamKey == 0) {
-                    if (IsPlayerTeam(k_v.Value.tag))
-                        k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
-                    }
-                else {
-                    if (IsEnemyTeam(k_v.Value.tag)) {
-                        k_v.Value.GetComponent<BoxCollider2D>().enabled = !value;
-                    }
-                }
-            }
+        foreach (var kv in holders) {
+            var pak = kv.Value;
+            if (CheckTeamKey(teamKey, pak)) {
+                pak.GetComponent<BoxCollider2D>().enabled = !value;
+            }   
         }
     }
 
@@ -170,6 +173,13 @@ public class CharacterManager : MonoBehaviour {
     // Clear dictionarys
     public void Clear() {
         holders?.Clear();
+    }
+
+    private bool CheckTeamKey(int key, PakRender pak) {
+        if (key < 0 || key > 2) {
+            throw new Exception("Invalid team key");
+        }
+        return (key == 2) || (key == 0 && IsPlayerTeam(pak.tag)) || (key == 1 && IsEnemyTeam(pak.tag));
     }
 }
 }

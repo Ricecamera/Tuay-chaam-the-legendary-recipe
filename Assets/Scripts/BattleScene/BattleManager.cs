@@ -61,30 +61,15 @@ namespace BattleScene
             //---------------------------------New AI ---------------------------------------------//
 
             // Get list of pakTeam and enemy Team
-            List<PakRender> pakHolders = new List<PakRender>();
-            List<PakRender> enemyHolders = new List<PakRender>();
+            List<PakRender> alivePak = CharacterManager.instance.GetAliveCharacters(0);
+            List<PakRender> aliveEnemies = CharacterManager.instance.GetAliveCharacters(1);
 
 
 
-            // Remove dead characters from player team and enemy team
-            foreach (var e in CharacterManager.instance.getTeamHolders(0))
-            {
-                if (e.gameObject.activeSelf)
-                {
-                    pakHolders.Add(e);
-                }
-            }
-
-            foreach (var f in CharacterManager.instance.getTeamHolders(1))
-            {
-                if (f.gameObject.activeSelf)
-                {
-                    enemyHolders.Add(f);
-                }
-            }
+ 
 
             // Let AI controller selection its actions
-            List<ActionCommand> temp = AI.selectAction(pakHolders, enemyHolders);
+            List<ActionCommand> temp = AI.selectAction(alivePak, aliveEnemies);
             foreach (ActionCommand e in temp)
             {
                 actionCommandHandler.AddCommand(e);
@@ -108,7 +93,7 @@ namespace BattleScene
 
             currentTurn++;
             actionText.gameObject.SetActive(false);
-            List<PakRender> holders = CharacterManager.instance.getHolders();
+            List<PakRender> holders = CharacterManager.instance.GetAliveCharacters(2);
             foreach (var pak in holders)
                 pak.UpdateTurn();
             onChangeTurn();
@@ -116,20 +101,13 @@ namespace BattleScene
 
         public bool IsPlayerLose()
         {
-            List<PakRender> pakInBattle = CharacterManager.instance.getTeamHolders(0);
-            foreach (var e in pakInBattle)
-            {
-                if (e.gameObject.activeSelf)
-                {
-                    return false;
-                }
-            }
-            return true;
+            List<PakRender> pakInBattle = CharacterManager.instance.GetAliveCharacters(0);
+            return pakInBattle.Count == 0;
         }
 
         public bool IsPlayerWin()
         {
-            List<PakRender> enemyInBattle = CharacterManager.instance.getTeamHolders(1);
+            List<PakRender> enemyInBattle = CharacterManager.instance.GetAliveCharacters(1);
             List<PakRender> pakInBattle = CharacterManager.instance.getTeamHolders(0);
             SaveManager.instance.SetZeroDieCount();  //* reset dieCount
 
@@ -140,14 +118,7 @@ namespace BattleScene
                     SaveManager.instance.AddDieCount();
                 }
             }
-            foreach (PakRender e in enemyInBattle)
-            {
-                if (e.gameObject.activeSelf)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return enemyInBattle.Count == 0;
         }
 
         public void SetChangeTurn(Action ToExecute)

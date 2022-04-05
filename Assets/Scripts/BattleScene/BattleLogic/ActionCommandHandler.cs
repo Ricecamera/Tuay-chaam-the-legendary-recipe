@@ -142,7 +142,7 @@ namespace BattleScene.BattleLogic
             {
                 ActionCommand action = commandList[i];
                 // if (action.caller.CompareTag(gameTag) && action.convertSelectedSkillToIndex() == skillIndex)
-                if (action.caller.CompareTag("Chaam") && action.selectedSkill.getSkillNation == Skill.SkillNation.COOKED)
+                if (action.caller.CompareTag("Chaam") && action.selectedSkill.skillNation == SkillObj.SkillNation.COOKED)
                 {
                     return true;
                 }
