@@ -16,5 +16,5 @@ MonoBehaviour:
   duration: 2
   buffIcon: {fileID: 21300000, guid: c536f1bfaad22eb4b883004254d810c8, type: 3}
   statusArray:
-  - statusName: ATK
+  - statusLabel: 0
     ratio: 0.2

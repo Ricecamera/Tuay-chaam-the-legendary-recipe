@@ -18,6 +18,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 458320f2b047ba148b98fe1a5ca3a7ce, type: 3}
   description: Slightly Increase strength of one ally for 2 turns
   actionType: TargetOneAlliance
-  maxCooldown: 2
+  maxCooldown: 3
   particles: {fileID: 3986198004197363789, guid: ccfff728f13d5664c81f4a0218cef2dd, type: 3}
   buff: {fileID: 11400000, guid: 949f050dc179b79478130570ed8bb118, type: 2}
