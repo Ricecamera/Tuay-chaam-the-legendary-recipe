@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3678362646462264694}
   - component: {fileID: -8052853780411737744}
   - component: {fileID: 283163427195173093}
+  - component: {fileID: 663089984773571233}
   m_Layer: 0
   m_Name: Chaam3
   m_TagString: chaam

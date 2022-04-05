@@ -177,6 +177,7 @@ public class DisplayInventory : MonoBehaviour
             obj.SetActive(false);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
             // Debug.Log(inventory.Container.ChaamItems[i].item);
+            Debug.Log("#" + i + ": " + inventory.Container.MainItems[i].item);
             if (inventory.Container.MainItems[i].item != null)
             {
                 obj.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = inventory.Container.MainItems[i].item.uiDisplay;

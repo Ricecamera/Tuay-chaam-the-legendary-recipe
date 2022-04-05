@@ -13,8 +13,7 @@ public class VanillaHealAll : RangeSkill
         int healValue = (int) ((float) self.healthSystem.MaxHp * healRatio);
         foreach (PakRender e in target)
         {
-            e.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
-            e.healthSystem.Heal(healValue);
+            e.healthSystem.heal(healValue);
         }
 
         //add sound effect

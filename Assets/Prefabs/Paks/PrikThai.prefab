@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1676348087460524732}
   - component: {fileID: 1668139455620336782}
   - component: {fileID: 3327731702397835633}
+  - component: {fileID: -253153224551253002}
   m_Layer: 0
   m_Name: PrikThai
   m_TagString: enemy1

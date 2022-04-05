@@ -5,7 +5,7 @@ public class ChaamRender : PakRender
     protected override void Start()
     {
         base.Start();
-        this.guage = 100;
+        this.guage = 0;
     }
 
     public void addGuage(int plus)

@@ -89,7 +89,7 @@ namespace BattleScene.BattleLogic
             foreach (ActionCommand action in commandList)
             {
                 if (action.caller.CompareTag(gameTag)
-                    && action.selectedSkill == skillIndex)
+                    && action.convertSelectedSkillToIndex() == skillIndex)
                 {
                     return action;
                 }
@@ -119,7 +119,8 @@ namespace BattleScene.BattleLogic
             for (int i = 0; i < commandList.Count; i++)
             {
                 ActionCommand action = commandList[i];
-                if (action.caller.CompareTag(gameTag) && action.selectedSkill == skillIndex)
+                // if (action.caller.CompareTag(gameTag) && action.convertSelectedSkillToIndex() == skillIndex)
+                if (action.caller.CompareTag(gameTag))
                 {
                     commandList.RemoveAt(i);
                     OnUpdateCommands?.Invoke(isEmpty());
@@ -129,8 +130,24 @@ namespace BattleScene.BattleLogic
             return null;
         }
 
-        public bool isEmpty() {
+        public bool isEmpty()
+        {
             return this.commandList.Count == 0;
+        }
+
+        public bool isChaamThisTurnUseCookSkill()
+        {
+            Debug.Log("Get into func in ActionCommandHandler already");
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                ActionCommand action = commandList[i];
+                // if (action.caller.CompareTag(gameTag) && action.convertSelectedSkillToIndex() == skillIndex)
+                if (action.caller.CompareTag("Chaam") && action.selectedSkill.getSkillNation == Skill.SkillNation.COOKED)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

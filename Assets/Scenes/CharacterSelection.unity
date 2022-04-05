@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11cbb2bcadb4f7643a2bad1d6fa9c18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: a036d15f1c7d96441993a510b87c2085, type: 2}
+  inventory: {fileID: 11400000, guid: 007f32850fc0bc44aba7323359363f21, type: 2}
   teamSlot: {fileID: 11400000, guid: 9c6da7d511b809049bbcc1693742bdf5, type: 2}
   InventoryPrefab1: {fileID: 2655922831437640780, guid: 32a72b0600d8bf6408345d29d5698ad9, type: 3}
   InventoryPrefab2: {fileID: 4211437540672256885, guid: 02ba1ec07546c65468923bb92613667d, type: 3}
@@ -5291,6 +5291,23 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 993729460563280799, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
   m_PrefabInstance: {fileID: 1927073442}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1927073444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 993729459355217117, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
+  m_PrefabInstance: {fileID: 1927073442}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1927073445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927073444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b405b4ec25effe40998cfa76b6ec6cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1977038856
 GameObject:
   m_ObjectHideFlags: 0

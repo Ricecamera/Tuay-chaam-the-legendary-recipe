@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4698015606216624905}
   - component: {fileID: 889347891597038135}
   - component: {fileID: 4163644326407520105}
+  - component: {fileID: 4735327645124563657}
   m_Layer: 0
   m_Name: NormalPrik
   m_TagString: enemy2
@@ -158,6 +159,19 @@ MonoBehaviour:
   healthBar: {fileID: 5123908543378583709}
   healVfx: {fileID: 8516100630161357302}
   damagedVfx: {fileID: 8213748462642323683}
+--- !u!114 &4735327645124563657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698015606216624904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatParams: 0.005
 --- !u!1001 &700668905599296380
 PrefabInstance:
   m_ObjectHideFlags: 0
