@@ -17,13 +17,12 @@ public class CookingController : MonoBehaviour
     private RecipePair[] recipesPair;
 
     // recipes map
-    private Dictionary<string, SkillObj> recipes;
+    private Dictionary<string, SkillObj> recipes = new Dictionary<string, SkillObj>();
 
-    private Text describe;
+    public Text describe;
 
     // Start is called before the first frame update
     public void Start() {
-        describe = GameObject.Find("describeText").GetComponent<Text>();
         foreach (RecipePair x in recipesPair) {
             recipes.Add(x.key, x.recipe);
         }
