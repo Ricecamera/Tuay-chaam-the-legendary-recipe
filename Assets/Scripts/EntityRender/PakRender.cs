@@ -342,7 +342,7 @@ public class PakRender : MonoBehaviour, IComparable
     }
 
     // Healing by percent
-    public void gainHealing(int ratio)
+    public void gainRegen(int ratio)
     {
         int healValue = (int) this.healthSystem.MaxHp * raito;
         this.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
