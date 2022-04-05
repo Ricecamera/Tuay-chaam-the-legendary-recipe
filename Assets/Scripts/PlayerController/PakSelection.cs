@@ -60,7 +60,7 @@ public class PakSelection : MonoBehaviour
         }
 
         battleManger.SetChangeTurn(() => UpdateGameState(GameState.CHOOSE_CHARACTER));
-        _cookingController = new CookingController();
+        _cookingController = GetComponent<CookingController>();
     }
 
     private void OnDisable()

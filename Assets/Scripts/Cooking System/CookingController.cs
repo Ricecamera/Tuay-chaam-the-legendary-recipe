@@ -1,44 +1,43 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleScene;
 
-public class CookingController
+public class CookingController : MonoBehaviour
 {
-    //Food recipies DB.
-    private Dictionary<string, Skill> recepies;
+    [Serializable]
+    private class RecipePair {
+        public string key;
+        public SkillObj recipe;
+    }
+
+    //Refrence to recipes DB
+    [SerializeField]
+    private RecipePair[] recipesPair;
+
+    // recipes map
+    private Dictionary<string, SkillObj> recipes;
 
     private Text describe;
 
     // Start is called before the first frame update
-    public CookingController()
-    {
-        recepies = new Dictionary<string, Skill>();
-        //init all special skill and map it in the dict
-        recepies.Add("honeylimesalt", new SetOneEnemyHPTo10("HTo10", "SetOneEnemyHPTo10", "Deal very great amount of damage to one enemy.", 1, Resources.Load("SkillIcons/skCook", typeof(Sprite)) as Sprite));
-        recepies.Add("carrotgarlichoneylimesalt", new HalfEnemiesHealth("HAEH", "HalfEnemiesHealth", "Half all enemies HP in half.", 3, Resources.Load("SkillIcons/skCook", typeof(Sprite)) as Sprite));
-        Debug.Log("*********************************************************************************************************************************************************************************************************************************************");
-        foreach (KeyValuePair<string, Skill> kvp in recepies)
-        {
-            Debug.Log(kvp.Key);
-            Debug.Log(kvp.Value);
-        }
+    public void Start() {
         describe = GameObject.Find("describeText").GetComponent<Text>();
-
-
-
+        foreach (RecipePair x in recipesPair) {
+            recipes.Add(x.key, x.recipe);
+        }
     }
 
-    public Skill OnIngredientClick(List<string> selectedIngredient, GameObject comboPanel)
+    public SkillObj OnIngredientClick(List<string> selectedIngredient, GameObject comboPanel)
     {
         string key = string.Join("", selectedIngredient);
         Debug.Log(key);
-        Debug.Log(recepies.ContainsKey(key));
-        Debug.Log(recepies["honeylimesalt"]);
-        Debug.Log(recepies.Count);
+        Debug.Log(recipes.ContainsKey(key));
+        Debug.Log(recipes["honeylimesalt"]);
+        Debug.Log(recipes.Count);
         // GameObject comboPanel = GameObject.Find("comboPanel2");
-        if (recepies.ContainsKey(key))
+        if (recipes.ContainsKey(key))
         {
             // set description of food
 
@@ -64,27 +63,6 @@ public class CookingController
             Debug.LogError("Noo:(");
         }
 
-        return recepies[key];
-    }
-
-    //Turn's out to not being used
-    public void OnStartCookingAndEndTurn(List<string> selectedIngredient, PakRender caller, List<PakRender> target)
-    {
-        string key = string.Join("", selectedIngredient);
-        recepies[key].performSkill(caller, target);
-        List<PakRender> pakTeam = CharacterManager.instance.getTeamHolders(0);
-        foreach (PakRender x in pakTeam)
-        {
-            if (x.CompareTag("Chaam") && x.healthSystem.CurrentHp > 0)
-            {
-                ChaamRender nongChaam = (ChaamRender)x;
-                Debug.Log("b/f");
-                Debug.Log(nongChaam.getGuage());
-                nongChaam.setGuage(0);
-                Debug.Log(nongChaam.getGuage());
-                Debug.Log("a/f");
-                break;
-            }
-        }
+        return recipes[key];
     }
 }
