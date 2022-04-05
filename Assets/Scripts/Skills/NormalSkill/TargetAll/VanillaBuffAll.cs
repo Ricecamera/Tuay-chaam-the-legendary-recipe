@@ -15,7 +15,8 @@ public class VanillaBuffAll : RangeSkill {
     public override void Execute(List<PakRender> targets, PakRender self) {
         foreach (PakRender e in targets) {
             e.AddBuff(buff);
-            Instantiate(particles, e.GetPosition(), Quaternion.identity);
+            ParticleSystem vfx = Instantiate(particles, e.GetPosition(), Quaternion.identity);
+            Destroy(vfx.gameObject, vfx.main.duration);
         }
 
         //add sound effect
