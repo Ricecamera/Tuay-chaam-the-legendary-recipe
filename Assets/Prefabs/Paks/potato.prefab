@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -524019547052751169}
   - component: {fileID: 3009701433667653758}
   - component: {fileID: 5612463010369358368}
+  - component: {fileID: 3599666206286486242}
   m_Layer: 0
   m_Name: potato
   m_TagString: Untagged
@@ -119,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0c0651d0b732b489f05589e3f2bbe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setSkill: -1
   defBuffVfx: {fileID: 316064225841480584}
   atkBuffVfx: {fileID: 4101011238058045641}
   actionIcon: {fileID: 661912455323670702}
@@ -152,6 +154,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16.978384, y: 19.783579}
   m_EdgeRadius: 0
+--- !u!114 &3599666206286486242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112338558754160059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatParams: 0.002
 --- !u!1001 &1132767496145444996
 PrefabInstance:
   m_ObjectHideFlags: 0

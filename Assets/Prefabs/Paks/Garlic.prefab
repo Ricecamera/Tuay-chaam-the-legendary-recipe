@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8542214097770956032}
   - component: {fileID: 7905884391616854821}
   - component: {fileID: 1040477540738595652}
+  - component: {fileID: 6095066805213921320}
   m_Layer: 0
   m_Name: Garlic
   m_TagString: enemy2
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a71bb68786ef440acceba4d3271ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setSkill: -1
   defBuffVfx: {fileID: 3960325667640450341}
   atkBuffVfx: {fileID: 1705888659770161933}
   actionIcon: {fileID: 1479333231503970669}
@@ -161,6 +163,19 @@ MonoBehaviour:
   healthBar: {fileID: 2557812411155455439}
   healVfx: {fileID: 3286849919675837719}
   damagedVfx: {fileID: 9014072436410267412}
+--- !u!114 &6095066805213921320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542214097770956033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatParams: 0
 --- !u!1001 &2377154334085983040
 PrefabInstance:
   m_ObjectHideFlags: 0

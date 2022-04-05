@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5526432194195436289}
   - component: {fileID: -9117477524257498528}
   - component: {fileID: 158471561366091084}
+  - component: {fileID: -3026196534757930866}
   m_Layer: 0
   m_Name: Cheepha
   m_TagString: boss
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f793d6eb58343f40a998521eb45bc47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setSkill: -1
   defBuffVfx: {fileID: 8053813272182694919}
   atkBuffVfx: {fileID: 5669385475494685011}
   actionIcon: {fileID: 1651321965726324652}
@@ -161,6 +163,19 @@ MonoBehaviour:
   healthBar: {fileID: 9154063286770064438}
   healVfx: {fileID: 3648970310086647471}
   damagedVfx: {fileID: 4448495569562040712}
+--- !u!114 &-3026196534757930866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5526432194195436290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatParams: 0.005
 --- !u!1001 &2025039585762107863
 PrefabInstance:
   m_ObjectHideFlags: 0

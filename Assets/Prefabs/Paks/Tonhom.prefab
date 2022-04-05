@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2500631127275958809}
   - component: {fileID: 4384133806673908758}
   - component: {fileID: 1366148798724544949}
+  - component: {fileID: 367884754228416489}
   m_Layer: 0
   m_Name: Tonhom
   m_TagString: plant2
@@ -162,6 +163,19 @@ MonoBehaviour:
   enitityData: {fileID: 11400000, guid: 58d862d5d2ea05140995f70217889707, type: 2}
   slideSpeed: 6
   attackDistance: 1.75
+--- !u!114 &367884754228416489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2500631127275958802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatParams: 0.002
 --- !u!1001 &3437614214024471421
 PrefabInstance:
   m_ObjectHideFlags: 0

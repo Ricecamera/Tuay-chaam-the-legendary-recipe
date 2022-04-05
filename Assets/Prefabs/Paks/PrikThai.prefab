@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1676348087460524732}
   - component: {fileID: -1497038562685513592}
   - component: {fileID: 3327731702397835633}
+  - component: {fileID: -253153224551253002}
   m_Layer: 0
   m_Name: PrikThai
   m_TagString: enemy1
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a26dddd10d0d064896bc42c2a651754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setSkill: -1
   defBuffVfx: {fileID: 328197886257559962}
   atkBuffVfx: {fileID: 6835709274220174288}
   actionIcon: {fileID: 1753595673039798862}
@@ -161,6 +163,19 @@ MonoBehaviour:
   healthBar: {fileID: 6914174652879532932}
   healVfx: {fileID: 8631807633972617743}
   damagedVfx: {fileID: 2290392201783698660}
+--- !u!114 &-253153224551253002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676348087460524731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatParams: 0.007
 --- !u!1001 &3655315868367934700
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3678362646462264694}
   - component: {fileID: 3246793316793962671}
   - component: {fileID: 6279436182993300329}
+  - component: {fileID: 8020313499986447452}
   m_Layer: 0
   m_Name: Chaam2
   m_TagString: chaam
@@ -162,6 +163,19 @@ MonoBehaviour:
   enitityData: {fileID: 11400000, guid: 1c944deac3623cb428fbcc287a3a9cb6, type: 2}
   slideSpeed: 6
   attackDistance: 1.75
+--- !u!114 &8020313499986447452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678362646462264695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heightParams: 0.005
 --- !u!1001 &2375577500910046865
 PrefabInstance:
   m_ObjectHideFlags: 0

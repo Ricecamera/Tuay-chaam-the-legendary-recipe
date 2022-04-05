@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3678362646462264694}
   - component: {fileID: -8052853780411737744}
   - component: {fileID: 283163427195173093}
+  - component: {fileID: 663089984773571233}
   m_Layer: 0
   m_Name: Chaam3
   m_TagString: chaam
@@ -162,6 +163,19 @@ MonoBehaviour:
   healthBar: {fileID: 7313032710665027488}
   healVfx: {fileID: 8334575934225527055}
   damagedVfx: {fileID: 585187849751733162}
+--- !u!114 &663089984773571233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3678362646462264695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heightParams: 0.005
 --- !u!1001 &193916780056086655
 PrefabInstance:
   m_ObjectHideFlags: 0

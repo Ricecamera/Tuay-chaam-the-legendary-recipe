@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3653526620412322701}
   - component: {fileID: -5873725277610175437}
   - component: {fileID: 779690488039474830}
+  - component: {fileID: 5805363705835170294}
   m_Layer: 0
   m_Name: Yuak
   m_TagString: enemy3
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8cb8d12f4038141b11a9485c0773ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setSkill: -1
   defBuffVfx: {fileID: 4364319413798939322}
   atkBuffVfx: {fileID: 4549543882811960939}
   actionIcon: {fileID: 2561421350525620039}
@@ -161,6 +163,19 @@ MonoBehaviour:
   healthBar: {fileID: 7102632461219454304}
   healVfx: {fileID: 6095223587601586116}
   damagedVfx: {fileID: 8849604090447351386}
+--- !u!114 &5805363705835170294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3653526620412322698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatParams: 0.001
 --- !u!1001 &608808356970298918
 PrefabInstance:
   m_ObjectHideFlags: 0
