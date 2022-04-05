@@ -771,10 +771,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plants: []
-  enemies:
-  - {fileID: 1676348087460524731, guid: c087df6303e007f44aebdc2c7d366f58, type: 3}
-  - {fileID: 4698015606216624904, guid: cf4a5c950cd6aba4688d6d4fbc001b49, type: 3}
-  - {fileID: 3653526620412322698, guid: 26210c319f116cb49ba5d35b17926f2f, type: 3}
   supports: []
   allySpawnPos:
   - {fileID: 1825844921}
@@ -784,10 +780,10 @@ MonoBehaviour:
   - {fileID: 395011080}
   - {fileID: 481780095}
   - {fileID: 1602421391}
+  - {fileID: 565492851}
   healthBar: []
   chaam: {fileID: 3678362646462264695, guid: ae49261d00e4a814c9d425c93447cf9b, type: 3}
   chaamSpawnPos: {fileID: 1943614277}
-  boss: {fileID: 5526432194195436290, guid: 2cd829a40a75d2a4fbebd2aaca1effab, type: 3}
   bossSpawnPos: {fileID: 565492851}
 --- !u!114 &539540505
 MonoBehaviour:
@@ -927,7 +923,7 @@ GameObject:
   - component: {fileID: 605886403}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: battleBG
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -30,6 +30,10 @@ public class DatabaseManager : MonoBehaviour
         return gameDatabase.items.FirstOrDefault(item => item._name == name);
     }
 
+    public PlayerDatabase GetPlayerDatabase() {
+        return playerDatabase;
+    }
+
     // Add item to databases when victory
     public void AddItemToInventory(ItemObject item)
     {

@@ -11,6 +11,7 @@ public class MapButton : MonoBehaviour
     public void pressMap(string level)
     {
         SaveManager.instance.SetZeroDieCount();
+        SaveManager.instance.Save();
         if (LevelManager.instance.winTime == 2 && isInVictoryScene)
         {
             SceneManager.LoadScene("CutScene_4");

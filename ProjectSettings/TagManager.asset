@@ -25,6 +25,8 @@ TagManager:
   - SoundBank
   - comboPanel
   - battleManager
+  - battleBG
+  - Star
   layers:
   - Default
   - TransparentFX
@@ -33,7 +35,7 @@ TagManager:
   - Water
   - UI
   - Tooltip
-  - 
+  - Confiner
   - 
   - 
   - 

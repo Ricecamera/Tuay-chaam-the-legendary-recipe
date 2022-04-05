@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e73f7e42cba3247a214c1f24ceec0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setSkill: -1
   defBuffVfx: {fileID: 2246186123840612263}
   atkBuffVfx: {fileID: 8670913593264202018}
   actionIcon: {fileID: 3677977293078899627}
@@ -507,6 +508,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 564420780134647816, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+      propertyPath: guage
+      value: 
+      objectReference: {fileID: 5105528711400867572}
     - target: {fileID: 1104277533132985389, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
       propertyPath: m_Name
       value: Health Bar
@@ -675,6 +680,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c632f0b1c28cbbe419f48b435176f133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5105528711400867572 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3897175909508164354, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+  m_PrefabInstance: {fileID: 8128988013245689334}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8459235747589295854

@@ -102,9 +102,11 @@ public class SaveManager : MonoBehaviour
 
     public void LoadGame()
     {
-        Load();
-        SceneManager.LoadScene("ModeSelection");
-        //SceneLoader.Instance.LoadSceneByName("ModeSelection");
+        if (Directory.Exists(Application.persistentDataPath + "/game_save/player_data"))
+        {
+            Load();
+            SceneManager.LoadScene("ModeSelection");
+        }
     }
 
     public void ConvertToSaveDatabase(PlayerDatabase playerDatabase, PlayerDatabase savedDatabase)
@@ -136,7 +138,10 @@ public class SaveManager : MonoBehaviour
                 if (slot != null) savedDatabase.GetInventory().Container.SupportItems[i].UpdateSlot(slot.item._name, slot.item, 1);
             }
         }
-        savedDatabase.SetMapUnlock(playerDatabase.GetMapUnlock());
+
+        savedDatabase.unlockStatus = playerDatabase.unlockStatus;
+        savedDatabase.playAniAlreadyMap = playerDatabase.playAniAlreadyMap;
+        //savedDatabase.SetMapUnlock(playerDatabase.GetMapUnlock());
     }
 
     public void ConvertToPlayerDatabase(PlayerDatabase playerDatabase, PlayerDatabase savedDatabase)
@@ -166,7 +171,8 @@ public class SaveManager : MonoBehaviour
                 playerDatabase.GetInventory().Container.SupportItems[i].UpdateSlot(slot.item._name, slot.item, 1);
             }
         }
-        playerDatabase.SetMapUnlock(savedDatabase.GetMapUnlock());
+        playerDatabase.unlockStatus = savedDatabase.unlockStatus;
+        playerDatabase.playAniAlreadyMap = savedDatabase.playAniAlreadyMap;
     }
 
     public int GetDieCount()

@@ -77,26 +77,29 @@ public class InventoryUI : MonoBehaviour
 
     public Vector3 GetMainPosition(int i)
     {
-        Vector3 v = new Vector3(0f, 0f, 0f); ;
+        Vector3 v = new Vector3(0f, 0f, 0f);
+        float yPos = 250f;
+        float spaceBetweenSlot = 180f;
+        float initPos = -655f;
         switch (i)
         {
             case 0:
-                v = new Vector3(-655f, 250f, 0f);
+                v = new Vector3(initPos, yPos, 0f);
                 break;
             case 1:
-                v = new Vector3(-475f, 250f, 0f);
+                v = new Vector3(initPos+spaceBetweenSlot, yPos, 0f);
                 break;
             case 2:
-                v = new Vector3(-295f, 250f, 0f);
+                v = new Vector3(initPos+spaceBetweenSlot*2, yPos, 0f);
                 break;
             case 3:
-                v = new Vector3(-115f, 250f, 0f);
+                v = new Vector3(initPos+spaceBetweenSlot*3, yPos, 0f);
                 break;
             case 4:
-                v = new Vector3(65f, 250f, 0f);
+                v = new Vector3(initPos+spaceBetweenSlot*4, yPos, 0f);
                 break;
             case 5:
-                v = new Vector3(245f, 250f, 0f);
+                v = new Vector3(initPos+spaceBetweenSlot*5, yPos, 0f);
                 break;
         }
 

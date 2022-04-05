@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
     {
         //! These buttons will be used in the future
         newGameButton = GameObject.Find("New Game").GetComponent<Button>();
-        //loadGameButton = GameObject.Find("Load Game").GetComponent<Button>();
+        loadGameButton = GameObject.Find("Load Game").GetComponent<Button>();
         settingsButton = GameObject.Find("Setting").GetComponent<Button>();
         quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
     }
@@ -25,8 +25,13 @@ public class MainMenu : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //! These buttons will be used in the future
-            newGameButton.onClick.AddListener(SceneLoader.Instance.LoadNextScene);
-            //loadGameButton.onClick.AddListener(SceneLoader.Instance.LoadNextScene);
+            newGameButton.onClick.AddListener(() => {
+                SaveManager.instance.NewGame();
+                SceneLoader.Instance.LoadNextScene(); 
+            });
+            loadGameButton.onClick.AddListener(() => {
+                SaveManager.instance.LoadGame();
+            });
             quitButton.onClick.AddListener(() =>
             {
                 Debug.Log("Quit");
