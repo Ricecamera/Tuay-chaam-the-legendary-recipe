@@ -13,7 +13,6 @@ public class Buum : RangeSkill
         foreach (PakRender e in target) {
             if (damage - e.currentDef <= 0) damage = 0;
             if (e.healthSystem.IsAlive) {
-                e.switchMat();
                 e.healthSystem.TakeDamage(damage);
             }
         }

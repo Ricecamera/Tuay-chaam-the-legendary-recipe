@@ -13,7 +13,7 @@ public class VanillaHealAll : RangeSkill
         int healValue = (int) ((float) self.healthSystem.MaxHp * healRatio);
         foreach (PakRender e in target)
         {
-            e.healthSystem.heal(healValue);
+            e.healthSystem.Heal(healValue);
         }
 
         //add sound effect

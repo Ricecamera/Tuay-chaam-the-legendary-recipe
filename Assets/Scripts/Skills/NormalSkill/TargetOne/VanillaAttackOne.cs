@@ -10,12 +10,9 @@ public class VanillaAttackOne : MeleeSkill {
     public float damageRatio = 1f;
 
     public override void Execute(List<PakRender> target, PakRender caller) {
-        int damage;
-        float atkValue = caller.currentAtk * damageRatio;
-        damage = (int) (atkValue * (float) (100f / (100f + target[0].currentDef)));
+        int atkValue = (int) (caller.currentAtk * damageRatio);
 
-        target[0].healthSystem.TakeDamage(damage);
-        target[0].switchMat();
+        target[0].takeDamage(atkValue);
 
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");

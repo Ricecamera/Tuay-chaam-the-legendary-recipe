@@ -10,18 +10,10 @@ public class VanillaAttackAll : MeleeSkill {
 
     public override void Execute(List<PakRender> target, PakRender self)
     {
-        int damage;
-        int atkValue = self.currentAtk;
+        int atkValue = (int) (self.currentAtk * damageRatio);
         foreach (PakRender e in target)
         {
-            damage = (int) (atkValue * damageRatio * (100f / (100f + e.currentDef)));
-            if (damage <= 0)
-            {
-                damage = 1;
-            }
-    
-            e.healthSystem.TakeDamage(damage);
-            e.switchMat();
+            e.takeDamage(atkValue);
         }
 
         //add sound effect
