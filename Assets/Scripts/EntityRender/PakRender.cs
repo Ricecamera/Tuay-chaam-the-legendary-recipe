@@ -240,7 +240,7 @@ public class PakRender : MonoBehaviour, IComparable
                 }
                 // Reset duration
                 buffRemainingTurns[i] = buff.duration;
-                break;
+                return;
             }
         }
         
@@ -255,8 +255,6 @@ public class PakRender : MonoBehaviour, IComparable
         attachedBuffs.Add(buff);
         buffRemainingTurns.Add(buff.duration);
         buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
-
-
 
         // Do on-buff-added effect
         if (buff is ILastingBehaviour) {
