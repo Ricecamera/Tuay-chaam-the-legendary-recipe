@@ -435,11 +435,17 @@ public class PakSelection : MonoBehaviour
 
         if (selectedPak != null && currentState == GameState.CHAAM_WAIT_FOR_CONFIRM)
         {
+            ChaamRender chaam = (ChaamRender) selectedPak;
+
+            if (chaam == null) return;
+
             float speed = selectedPak.currentSpeed;
-            SkillExecutor skillExecutor = new SkillExecutor(cookSkill);
+            SkillExecutor skillExecutor = new SkillExecutor(cookSkill, () => chaam.setGuage(0));
             // Deep copy
             List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
             ActionCommand newCommand = new ActionCommand(selectedPak, skillExecutor, skillTargets, speed);
+
+
             battleManger.AddCommand(newCommand);
             selectedPak.DisplayCookInAction(true, cookSkill);
             selectedPak.currentState = PakRender.State.InAction;
