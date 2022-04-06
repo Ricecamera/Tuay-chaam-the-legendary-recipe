@@ -15,5 +15,5 @@ MonoBehaviour:
   _name: chaam2
   uiDisplay: {fileID: 6860942991432606178, guid: ad3fe121ffb18f442a3fd14e55e62995, type: 3}
   type: 1
-  prefab: {fileID: 3678362646462264695, guid: cdc6c0eda0220fe41bd3e92f434c09b0, type: 3}
+  prefab: {fileID: 3678362646462264695, guid: 24baf5c42d1c4a543a728f7f88beba74, type: 3}
   description: 
