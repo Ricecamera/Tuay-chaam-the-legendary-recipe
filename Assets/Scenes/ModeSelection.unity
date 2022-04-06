@@ -1484,11 +1484,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Skill 1 : asdjwidjwda
+  m_text: 'Skills :
 
-    Skill 2 : asdhwuidhaw
+    - Attack one
 
-    Skill 3 : cjoiajdowdwd'
+    - Buff one ally defense'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77bb0bf5eab88d6479077ca07b535daf, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0dd0ea80f45f6904ba86d27ad966bd22, type: 2}
@@ -2693,7 +2693,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce8073b024df1ab4380edc9ea0b83c72, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 022e5d5e2c7dee84ca76a0038438e193, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2915,7 +2915,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Eggplant
+  m_text: TONHOM
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77bb0bf5eab88d6479077ca07b535daf, type: 2}
   m_sharedMaterial: {fileID: -4512316406701749268, guid: 77bb0bf5eab88d6479077ca07b535daf, type: 2}

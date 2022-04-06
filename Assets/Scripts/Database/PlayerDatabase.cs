@@ -6,9 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item Game Database", menuName = "Database/PlayerDatabase")]
 public class PlayerDatabase : ScriptableObject
 {
-    public List<bool> unlockStatus { get; set; }
-    public List<bool> playAniAlreadyMap { get; set; } 
+    public int unlockStatus;
     public InventoryObject inventoryObject;
+
+    // private void Start() {
+    //     unlockStatus = 1;
+    // }
 
     public InventoryObject GetInventory()
     {

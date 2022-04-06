@@ -44,10 +44,17 @@ public class MaptoItem : MonoBehaviour
         // Debug.Log(DatabaseManager.instance.GetItemFromGameDB("cheepha"));
         AddItem(0, DatabaseManager.instance.GetItemFromGameDB("tonhom"));
         AddItem(1, DatabaseManager.instance.GetItemFromGameDB("carrot"));
-        AddItem(1, DatabaseManager.instance.GetItemFromGameDB("salt"));
-        AddItem(1, DatabaseManager.instance.GetItemFromGameDB("honey"));
         AddItem(2, DatabaseManager.instance.GetItemFromGameDB("eggplant"));
+        AddItem(2, DatabaseManager.instance.GetItemFromGameDB("salt"));
         AddItem(3, DatabaseManager.instance.GetItemFromGameDB("garlic"));
+        AddItem(3, DatabaseManager.instance.GetItemFromGameDB("honey"));
+        AddItem(4, DatabaseManager.instance.GetItemFromGameDB("chaam2"));
+        AddItem(4, DatabaseManager.instance.GetItemFromGameDB("lime"));
+        AddItem(5, DatabaseManager.instance.GetItemFromGameDB("prikthai")); //support
+        AddItem(6, DatabaseManager.instance.GetItemFromGameDB("brogli"));
+        AddItem(7, DatabaseManager.instance.GetItemFromGameDB("normalprik")); //support
+        AddItem(7, DatabaseManager.instance.GetItemFromGameDB("chaam1"));
+        AddItem(8, DatabaseManager.instance.GetItemFromGameDB("cheepha"));
     }
 
     public List<ItemObject> GetItemList(int key)

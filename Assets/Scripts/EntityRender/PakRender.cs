@@ -470,4 +470,14 @@ public class PakRender : MonoBehaviour, IComparable
         return state == State.InAction;
     }
 
+    public List<SkillExecutor> getActiveSkill(){
+        List<SkillExecutor> result = new List<SkillExecutor>();
+        foreach (SkillExecutor skill in skillExecutors){
+            if(skill.Cooldown == 0){
+                result.Add(skill);
+            }
+        }
+        return result;
+    }
+
 }

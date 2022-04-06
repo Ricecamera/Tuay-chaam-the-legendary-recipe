@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
-    public List<bool> unlockStatus { get; set; }
+    public List<bool> unlockStatus { get; set; } = new List<bool>(){ false, false, false, false, false, false, false, false }; 
 
     public List<bool> playAniAlreadyMap { get; set; } 
 
@@ -18,8 +18,12 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        unlockStatus = new List<bool>() { true, false, false, false };
-        playAniAlreadyMap = new List<bool>() { false, false, false, false };
+        //unlockStatus = new List<bool>() { true, true, true, true, true, true, true, true };
+        for(int i = 0 ; i < SaveManager.instance.playerDatabase.unlockStatus ; i++){
+            unlockStatus[i] = true;
+        }
+        // unlockStatus.AddRange(SaveManager.instance.playerDatabase.unlockStatus);
+        playAniAlreadyMap = new List<bool>() { false, false, false, false, false, false, false, false };
         mapArrived = 2;
     }
 

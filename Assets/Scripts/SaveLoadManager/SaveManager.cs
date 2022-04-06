@@ -91,6 +91,7 @@ public class SaveManager : MonoBehaviour
     public void NewGame()
     {
         InitData();
+        SaveManager.instance.playerDatabase.unlockStatus = 1;
         if (File.Exists(Application.persistentDataPath + "/game_save/player_data/player.txt"))
         {
             Debug.Log("It's working");
@@ -133,8 +134,7 @@ public class SaveManager : MonoBehaviour
                 if (slot != null) savedDatabase.GetInventory().Container.SupportItems[i].UpdateSlot(slot.item._name, slot.item, 1);
             }
         }
-        // savedDatabase.unlockStatus = playerDatabase.unlockStatus;
-        // savedDatabase.playAniAlreadyMap = playerDatabase.playAniAlreadyMap;
+        savedDatabase.unlockStatus = playerDatabase.unlockStatus;
     }
 
     public void ConvertToPlayerDatabase(PlayerDatabase playerDatabase, PlayerDatabase savedDatabase)
@@ -164,6 +164,7 @@ public class SaveManager : MonoBehaviour
                 playerDatabase.GetInventory().Container.SupportItems[i].UpdateSlot(slot.item._name, slot.item, 1);
             }
         }
+        playerDatabase.unlockStatus = savedDatabase.unlockStatus;
     }
 
     public int GetDieCount()

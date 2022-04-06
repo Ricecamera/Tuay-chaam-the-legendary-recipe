@@ -13,19 +13,19 @@ public class settingMenu : MonoBehaviour
 
     public Slider masterVolumeSlider;
 
-    private float startVolValue;
+    private float startVolValue ;
 
     public Toggle toggleFullScreen;
 
+
     public void OnEnabled()
     {
-        audioMixer.GetFloat("volume", out startVolValue);
-        masterVolumeSlider.value = startVolValue;
+        masterVolumeSlider.value = SoundManager.Instance.startVolValue;
 
     }
     public void setVolume()
     {
-        audioMixer.SetFloat("volume", masterVolumeSlider.value);
+        SoundManager.Instance.startVolValue = masterVolumeSlider.value;
     }
 
     public void setFullScreen(bool isFullScreen)

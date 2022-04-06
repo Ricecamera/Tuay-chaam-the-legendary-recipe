@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
 
     //[SerializeField] private AudioSource soundSource;
 
+    public float startVolValue;
+
 
     private void Awake()
     {
@@ -22,6 +24,7 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        startVolValue = 0.5f;
     }
 
     // public void PlaySound(AudioClip clip)
@@ -31,6 +34,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(AudioSource source)
     {
+        source.volume = startVolValue;
         source.PlayOneShot(source.clip);
     }
 
@@ -42,7 +46,11 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(string name, Sound[] clips)
     {
         Sound temp = Array.Find(clips, clip => clip.name == name);
+        temp.source.volume = startVolValue;
         temp.source.PlayOneShot(temp.source.clip);
     }
+
+
+    
 
 }

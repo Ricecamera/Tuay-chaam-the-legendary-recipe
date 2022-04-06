@@ -16,6 +16,6 @@ MonoBehaviour:
   skillName: SetOneEnemyHPTo10
   skillNation: 1
   icon: {fileID: 21300000, guid: c2d12a714666aff4c8d87701eed0704e, type: 3}
-  description: Deal very great amount of damage to one enemy
+  description: 'Honey Lemon: Deal very great amount of damage to one enemy'
   actionType: TargetOneEnemy
   maxCooldown: 1

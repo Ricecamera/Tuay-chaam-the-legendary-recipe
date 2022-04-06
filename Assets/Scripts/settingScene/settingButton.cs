@@ -12,6 +12,11 @@ public class settingButton : MonoBehaviour
     }
     public void openSetting()
     {
-        settingCanvas.enabled = true;
+        if(!settingCanvas.enabled){
+            settingCanvas.enabled = true;
+        }else{
+            settingCanvas.enabled = false;
+        }
+        
     }
 }

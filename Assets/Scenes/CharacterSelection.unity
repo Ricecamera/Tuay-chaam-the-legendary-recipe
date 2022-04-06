@@ -1038,7 +1038,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd55e5b34d2a1fd4d9df5a5d49708db4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b8f2ed4c103de0499cbb6ef0a9fa2c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4903,6 +4903,14 @@ PrefabInstance:
     - target: {fileID: 993729460563280798, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
       propertyPath: m_SortingLayerID
       value: -1693237277
+      objectReference: {fileID: 0}
+    - target: {fileID: 993729460785144542, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -2.1809998
+      objectReference: {fileID: 0}
+    - target: {fileID: 993729460785144542, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.2268066
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 294eb47b7f19def4cab2ae73e726bae2, type: 3}

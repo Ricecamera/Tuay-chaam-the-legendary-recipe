@@ -12,39 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da229d83d7f5404392bf91ee9cc9c7d, type: 3}
   m_Name: TeamSlot
   m_EditorClassIdentifier: 
-  savePath: 
   Container:
     MainItems:
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
-    - ID: -1
-      item: {fileID: 0}
-      amount: 0
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
     ChaamItems:
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
     SupportItems:
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
-    - ID: -1
+    - Name: 
       item: {fileID: 0}
       amount: 0
-  database: {fileID: 0}

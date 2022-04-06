@@ -77,9 +77,12 @@ public class PakSelection : MonoBehaviour
                     }
                     else
                     {
+                        SaveManager.instance.playerDatabase.unlockStatus += 1;
+                        LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
                         SceneManager.LoadScene("VictoryScene");
                     }
-                    LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                    // LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                    
                 }
                 else
                 {
@@ -412,11 +415,12 @@ public class PakSelection : MonoBehaviour
 
             if (chaam == null) return;
 
-            float speed = selectedPak.currentSpeed;
             SkillExecutor skillExecutor = new SkillExecutor(cookSkill, () => chaam.setGuage(0));
             // Deep copy
             List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
-            ActionCommand newCommand = new ActionCommand(selectedPak, skillExecutor, skillTargets, speed);
+            
+            // Need Fix: Should implement skill hierarchy so we can also determine order of multiple cooking skills
+            ActionCommand newCommand = new ActionCommand(selectedPak, skillExecutor, skillTargets, 1); // Make cooking the fastest skill. quite hacking though.
 
 
             battleManger.AddCommand(newCommand);

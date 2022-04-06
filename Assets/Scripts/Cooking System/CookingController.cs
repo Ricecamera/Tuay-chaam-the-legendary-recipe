@@ -39,8 +39,8 @@ public class CookingController : MonoBehaviour
         if (recipes.ContainsKey(key))
         {
             // set description of food
-
-            describe.text = "Honey Lemon: It will deal great damage to one enemy.";
+            describe.text = recipes[key].description;
+            // describe.text = "Honey Lemon: It will deal great damage to one enemy.";
 
             //enable the cook window
             if (!comboPanel.activeSelf)

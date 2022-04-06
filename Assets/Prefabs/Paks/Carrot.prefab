@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6c6ee4f0845df4da0b9d7e423e5497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightParams: 0.003
+  heightParams: 0
 --- !u!1001 &3437614214024471421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -471,7 +471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4506502643640856629, guid: b894f55c00c6c854eab8e22512d5b703, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4506502643640856629, guid: b894f55c00c6c854eab8e22512d5b703, type: 3}
       propertyPath: m_AnchorMax.x

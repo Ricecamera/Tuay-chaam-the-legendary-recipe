@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler,
                             IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
@@ -59,8 +60,17 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //Debug.Log("Pointer Up");
-        CharacterDetail.ChangeDetail(itemObject._name.ToUpper(), "Skill 1 : asdjwidjwda Skill 2 : asdhwuidhaw Skill 3 : cjoiajdowdwd Skill 4 : cjoiajdowdwd", itemObject.uiDisplay);
+        string skillTxt = "Skills :\n";
+        foreach (SkillObj skillObj in itemObject.prefab.GetComponent<PakRender>().skills)
+        {
+            skillTxt += "- " + skillObj.name + "\n";
+        }
+
+        if (SceneManager.GetActiveScene().name == "ModeSelection")
+        {
+            Debug.Log("Change detail in ModeSelection");
+            CharacterDetail.ChangeDetail(itemObject._name.ToUpper(), skillTxt, itemObject.uiDisplay);
+        }
 
         // swap between item and item
         if (eventData.pointerCurrentRaycast.gameObject.name == "ItemImage" && eventData.pointerCurrentRaycast.gameObject.activeSelf &&

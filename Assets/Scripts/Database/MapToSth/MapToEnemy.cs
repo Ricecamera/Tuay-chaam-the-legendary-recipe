@@ -50,8 +50,8 @@ public class MapToEnemy : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Battle1-2V2")
         {
-            bg = GameObject.FindGameObjectWithTag("battleBG").GetComponent<Image>();
-            SetBG();
+            // bg = GameObject.FindGameObjectWithTag("battleBG").GetComponent<Image>();
+            // SetBG();
         }
         else
         {
@@ -81,29 +81,49 @@ public class MapToEnemy : MonoBehaviour
 
         SetEnemy(2, new Pair<List<GameObject>, Image>(new List<GameObject>(){
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("prikthai")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("yuak")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("eggplant"))
         }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
 
         SetEnemy(3, new Pair<List<GameObject>, Image>(new List<GameObject>(){
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("carrot")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("yuak")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("normalprik")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("garlic"))
         }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
 
         SetEnemy(4, new Pair<List<GameObject>, Image>(new List<GameObject>(){
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("prikthai")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("normalprik")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("yuak")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("cheepha"))
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("kanah"))
         }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
 
         SetEnemy(5, new Pair<List<GameObject>, Image>(new List<GameObject>(){
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("normalprik")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("yuak")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("mund"))
+        }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
+
+        SetEnemy(6, new Pair<List<GameObject>, Image>(new List<GameObject>(){
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("prikthai")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("mund"))
+        }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
+
+        SetEnemy(7, new Pair<List<GameObject>, Image>(new List<GameObject>(){
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("yuak")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("brogli"))
+        }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
+
+        SetEnemy(8, new Pair<List<GameObject>, Image>(new List<GameObject>(){
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("prikthai")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("yuak")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("normalprik")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("cheepha"))
         }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
     }

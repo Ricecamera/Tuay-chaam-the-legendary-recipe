@@ -134,7 +134,7 @@ public class DisplayInventory : MonoBehaviour
                 v = new Vector3(80f, 0f, 0f);
                 break;
             case 2:
-                v = new Vector3(0f, -90f, 0f);
+                v = new Vector3(40f, -90f, 0f);
                 break;
             case 3:
                 v = new Vector3(80f, -90f, 0f);
