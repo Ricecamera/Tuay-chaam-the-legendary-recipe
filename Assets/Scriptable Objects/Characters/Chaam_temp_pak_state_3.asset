@@ -15,9 +15,9 @@ MonoBehaviour:
   entityId: 
   entityName: Chaam na ja
   description: 
-  baseAtk: 28
+  baseAtk: 34
   baseDef: 30
-  maxHp: 190
+  maxHp: 230
   baseSpeed: 24
   image: {fileID: -6784271102495391019, guid: ad3fe121ffb18f442a3fd14e55e62995, type: 3}
   bonusStatsPerLvl:

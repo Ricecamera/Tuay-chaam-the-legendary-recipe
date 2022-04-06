@@ -13,20 +13,20 @@ public class PakObject : ItemObject
         // Debug.Log(prefab.AddComponent<EggplantRender>().healthSystem.CurrentHp);
     }
 
-    private void OnValidate()
-    {
-        if (prefab == null) return;
-        PakRender pak = prefab?.GetComponent<PakRender>();
-        if (pak != null)
-        {
-            _name = pak.name.ToLower();
-            uiDisplay = pak.Entity.image;
-            description = pak.Entity.Description;
+    // private void OnValidate()
+    // {
+    //     if (prefab == null) return;
+    //     PakRender pak = prefab?.GetComponent<PakRender>();
+    //     if (pak != null)
+    //     {
+    //         _name = pak.name.ToLower();
+    //         uiDisplay = pak.Entity.image;
+    //         description = pak.Entity.Description;
 
-            for (int i = 0; i < pak.skills.Length; i++)
-            {
-                skillName.Add(pak.skills[i].skillName);
-            }
-        }
-    }
+    //         for (int i = 0; i < pak.skills.Length; i++)
+    //         {
+    //             skillName.Add(pak.skills[i].skillName);
+    //         }
+    //     }
+    // }
 }

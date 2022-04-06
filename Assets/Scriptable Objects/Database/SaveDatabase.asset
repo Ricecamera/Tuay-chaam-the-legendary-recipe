@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7132be646ff1c25489b8eceba18a51cf, type: 3}
   m_Name: SaveDatabase
   m_EditorClassIdentifier: 
+  unlockStatus: 1
   inventoryObject: {fileID: 11400000, guid: a36ed44b8ac927e4994817c0c2a8b007, type: 2}
