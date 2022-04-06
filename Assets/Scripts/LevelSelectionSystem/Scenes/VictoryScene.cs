@@ -25,6 +25,8 @@ public class VictoryScene : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(LevelManager.instance.thislevel);
+        CharacterSelecter.instance.ResetCharacter();
         // TODO set stars to correct state 
         //* die = 0 -> 3 stars -> all star.GetComponent<Animator>().setTrigger("Start")
         //* die = 1 -> 2 stars -> starR is not trigger
@@ -75,11 +77,40 @@ public class VictoryScene : MonoBehaviour
             imageItem.transform.SetParent(canvas.transform);
             imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(0, -120, 0);
             Debug.Log("Test item" + item._name);
-            DatabaseManager.instance.AddItemToInventoryByName(item._name);
+            
+
+            bool addPak = false;
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.MainItems) {
+                    if (slot.item == item) {
+                        addPak = true; 
+                        break;
+                    }
+            }
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.ChaamItems) {
+                    if (addPak) break;
+                    if (slot.item == item) {
+                        addPak = true; 
+                        break;
+                    }
+            }
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.SupportItems) {
+                    if (addPak) break;
+                    if (slot.item == item) {
+                        addPak = true; 
+                        break;
+                    }
+            }
+
+            if (!addPak) DatabaseManager.instance.AddItemToInventoryByName(item._name);
+    
+
+
             // if (DatabaseManager.instance.GetItemFromGameDB(item._name) == null)
             // {
             //     DatabaseManager.instance.AddItemToInventoryByName(item._name);
             // }
         }
+
+        
     }
 }

@@ -21,31 +21,39 @@ public class LevelSelection : MonoBehaviour
     private Animator transition;
 
 
+
     void Start()
     {
+        // padLock.enabled = true;
+        // unlocked = LevelManager.instance.unlockStatus[levelname - 1];
 
-        padLock.enabled = true;
+        // if (unlocked)
+        // {
+        //     padLock.enabled = false;
+        //     padLock.GetComponent<BoxCollider2D>().enabled = false;
+        // }
         unlocked = LevelManager.instance.unlockStatus[levelname - 1];
-
         if (unlocked)
         {
-            padLock.enabled = false;
-            padLock.GetComponent<BoxCollider2D>().enabled = false;
-        }
-    }
-
-    void Update()
-    {
-        if (unlocked)
-        {
-            transition.SetTrigger("Unlock");
-            padLock.enabled = false;
-            padLock.GetComponent<BoxCollider2D>().enabled = false;
+            padLock.gameObject.SetActive(false);
+            //padLock.GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {
             padLock.enabled = true;
             padLock.GetComponent<BoxCollider2D>().enabled = true;
+        }
+    }
+
+    void Update()
+    {
+        if(unlocked){
+            if (!LevelManager.instance.playAniAlreadyMap[levelname - 1])
+            {
+                Debug.Log("Get into playAnimation clause ");
+                transition.SetTrigger("Unlock");
+                LevelManager.instance.playAniAlreadyMap[levelname - 1] = true;
+            }
         }
     }
 

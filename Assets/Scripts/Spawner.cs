@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
 {
 
     public List<GameObject> plants = new List<GameObject>();         // contains prefabs of all in-play plants
-    public List<GameObject> enemies = new List<GameObject>();       // contains prefabs of all in-play enemies
+    private List<GameObject> enemies = new List<GameObject>();       // contains prefabs of all in-play enemies
 
     // Add supports
     public List<GameObject> supports = new List<GameObject>();
@@ -21,9 +21,6 @@ public class Spawner : MonoBehaviour
     public GameObject chaam;                // contains the prefab of an in-play chaam
     public Transform chaamSpawnPos;         // reference of chaam's spawn positon
 
-    [Header("Boss")]
-    public GameObject boss;                 // contains the prefab of an in-play boss
-    public Transform bossSpawnPos;          // reference of boss' spawn position
     void OnEnable()
     {
         // characters.Intialize();
@@ -31,6 +28,8 @@ public class Spawner : MonoBehaviour
         ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
         ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
         //Debug.Log(CharacterSelecter.instance?.GetSupports()[0]);
+
+        enemies = MapToEnemy.Instance.GetEnemies(LevelManager.instance.thislevel);
 
         try
         {
@@ -58,13 +57,6 @@ public class Spawner : MonoBehaviour
                 GameObject e = Instantiate(enemies[i], enemySpawnPos[i].position, Quaternion.identity, enemySpawnPos[i]);
                 e.tag = enemySpawnPos[i].gameObject.tag;
                 CharacterManager.instance.AddCharacter(e.tag, e);
-            }
-
-            if (boss != null)
-            {
-                GameObject bossObject = Instantiate(boss, bossSpawnPos.position, Quaternion.identity, bossSpawnPos);
-                bossObject.tag = bossSpawnPos.gameObject.tag;
-                CharacterManager.instance.AddCharacter(bossObject.tag, bossObject);
             }
         }
     }
@@ -106,5 +98,9 @@ public class Spawner : MonoBehaviour
         {
             Debug.Log("Chaam not found");
         }
+    }
+
+    public void ClearCharacter(){
+
     }
 }

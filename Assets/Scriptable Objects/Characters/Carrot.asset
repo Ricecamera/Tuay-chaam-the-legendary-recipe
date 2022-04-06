@@ -15,7 +15,7 @@ MonoBehaviour:
   entityId: 
   entityName: Carrot
   description: 
-  baseAtk: 65
+  baseAtk: 50
   baseDef: 15
   maxHp: 140
   baseSpeed: 32

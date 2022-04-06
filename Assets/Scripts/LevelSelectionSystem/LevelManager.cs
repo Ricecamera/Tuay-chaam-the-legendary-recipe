@@ -8,7 +8,9 @@ public class LevelManager : MonoBehaviour
 
     public List<bool> unlockStatus { get; set; }
 
-    public int thislevel { get; set; }
+    public List<bool> playAniAlreadyMap { get; set; } 
+
+    public int thislevel ;
 
     //number of time map was open;
     public int mapArrived;
@@ -17,6 +19,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         unlockStatus = new List<bool>() { true, false, false, false };
+        playAniAlreadyMap = new List<bool>() { false, false, false, false };
         mapArrived = 2;
     }
 

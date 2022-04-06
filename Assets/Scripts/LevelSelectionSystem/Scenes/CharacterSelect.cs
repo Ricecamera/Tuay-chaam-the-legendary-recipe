@@ -20,7 +20,14 @@ public class CharacterSelect : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            startButton.onClick.AddListener(SceneLoader.Instance.LoadNextScene);
+            startButton.onClick.AddListener(() => {
+                if (CharacterSelecter.instance.GetChaam() == null || CharacterSelecter.instance.GetCharacters().Count < 1)  {
+                    CharacterSelecter.instance.ShowPopup();
+                }
+                else {
+                    SceneLoader.Instance.LoadNextScene();
+                }
+                });
             backButton.onClick.AddListener(SceneLoader.Instance.LoadPrevScene);
             // helpButton.onClick.AddListener(Help);
         }

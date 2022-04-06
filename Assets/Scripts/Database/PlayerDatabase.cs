@@ -6,7 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item Game Database", menuName = "Database/PlayerDatabase")]
 public class PlayerDatabase : ScriptableObject
 {
-    public int mapUnlock;
+    public List<bool> unlockStatus { get; set; }
+    public List<bool> playAniAlreadyMap { get; set; } 
     public InventoryObject inventoryObject;
 
     public InventoryObject GetInventory()
@@ -16,16 +17,6 @@ public class PlayerDatabase : ScriptableObject
     public void SetInventory(InventoryObject inventoryObject)
     {
         this.inventoryObject = inventoryObject;
-    }
-
-    public int GetMapUnlock()
-    {
-        return this.mapUnlock;
-    }
-
-    public void SetMapUnlock(int n)
-    {
-        this.mapUnlock = n;
     }
 
 }

@@ -7,7 +7,7 @@ public class CharacterSelecter : MonoBehaviour
 {
     public static CharacterSelecter instance;
 
-    public GameObject popup; 
+    //public GameObject popup; 
 
     public List<ItemObject> characters = new List<ItemObject>();
     public ItemObject chaam;
@@ -64,7 +64,7 @@ public class CharacterSelecter : MonoBehaviour
     {
         this.characters = new List<ItemObject>();
         this.supports = new List<ItemObject>();
-        this.chaam = null;
+        this.chaam = new ItemObject();
         Debug.Log("Reset all characters");
     }
 
@@ -99,13 +99,14 @@ public class CharacterSelecter : MonoBehaviour
     //     this.supports = supports;
     // }
 
-    public void SetPopup(GameObject popup)
-    {
-        this.popup = popup;
-    }
+    // public void SetPopup(GameObject popup)
+    // {
+    //     this.popup = popup;
+    // }
 
     public void ShowPopup()
     {
-        popup.SetActive(true);
+        GameObject popupUI = GameObject.Find("PopUpUI");
+        popupUI.transform.GetChild(0).gameObject.SetActive(true);
     }
 }
