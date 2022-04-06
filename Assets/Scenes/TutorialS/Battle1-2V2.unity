@@ -771,10 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plants:
-  - {fileID: 2500631127275958802, guid: 0ba9103614544564c8abd3b26ef05c58, type: 3}
-  enemies:
-  - {fileID: 7112338558754160059, guid: bc2967c7df9889445a333fdbcadf3887, type: 3}
-  - {fileID: 7112338558754160059, guid: bc2967c7df9889445a333fdbcadf3887, type: 3}
+  - {fileID: 2500631127275958802, guid: e4684865e6712b94292efae38a901ce5, type: 3}
   supports: []
   allySpawnPos:
   - {fileID: 1825844921}
@@ -787,8 +784,7 @@ MonoBehaviour:
   healthBar: []
   chaam: {fileID: 3678362646462264695, guid: e567f4a398e3e2c46adc29ceacd20c3b, type: 3}
   chaamSpawnPos: {fileID: 1943614277}
-  boss: {fileID: 0}
-  bossSpawnPos: {fileID: 565492851}
+  havePreset: 0
 --- !u!114 &539540505
 MonoBehaviour:
   m_ObjectHideFlags: 0

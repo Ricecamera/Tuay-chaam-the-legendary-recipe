@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa098361363914746ba90fafd10589ea, type: 3}
   m_Name: EggPlantItem
   m_EditorClassIdentifier: 
-  _name: eggplant
+  _name: Eggplant
   uiDisplay: {fileID: 21300000, guid: ce8073b024df1ab4380edc9ea0b83c72, type: 3}
   type: 0
   prefab: {fileID: 6133672455091789994, guid: 46ce9656f5b80374aaced8b7bcd80fad, type: 3}

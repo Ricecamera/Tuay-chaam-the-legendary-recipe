@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa098361363914746ba90fafd10589ea, type: 3}
   m_Name: PrikthaiItem
   m_EditorClassIdentifier: 
-  _name: prikthai
+  _name: PrikThai
   uiDisplay: {fileID: 21300000, guid: 20065a957b7d8614db704bc2c90e95dc, type: 3}
   type: 0
   prefab: {fileID: 1676348087460524731, guid: c087df6303e007f44aebdc2c7d366f58, type: 3}

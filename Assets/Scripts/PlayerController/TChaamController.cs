@@ -65,9 +65,10 @@ public class TChaamController : MonoBehaviour
 
         //     }
         // }
-
+        Debug.Log("Hit smth");
         if (collider.name.Contains("well"))
         {
+            Debug.Log("Hit well");
             collider.GetComponent<LevelSelection>().PressSelection("CharacterSelection");
             if (!collider.GetComponent<LevelSelection>().getUnlocked())
             {

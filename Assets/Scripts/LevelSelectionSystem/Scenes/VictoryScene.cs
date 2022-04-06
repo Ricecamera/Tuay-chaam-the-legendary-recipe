@@ -66,6 +66,9 @@ public class VictoryScene : MonoBehaviour
         itemList = MaptoItem.Instance.GetItemList(LevelManager.instance.thislevel);
         // itemList = MaptoItem.Instance.GetItemList(2);
         Debug.Log(itemList);
+        int x = 0;
+        int i = 0;
+        //* Vector3(75,-126,0)
         foreach (ItemObject item in itemList)
         {
             Debug.Log(item._name);
@@ -75,42 +78,43 @@ public class VictoryScene : MonoBehaviour
             imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
             imageItem.GetComponent<Image>().sprite = item.uiDisplay;
             imageItem.transform.SetParent(canvas.transform);
-            imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(0, -120, 0);
+            imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(x + 75 * i, -120, 0);
+            imageItem.transform.GetComponent<Image>().preserveAspect = true;
             Debug.Log("Test item" + item._name);
-            
+
 
             bool addPak = false;
-            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.MainItems) {
-                    if (slot.item == item) {
-                        addPak = true; 
-                        break;
-                    }
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.MainItems)
+            {
+                if (slot.item == item)
+                {
+                    addPak = true;
+                    break;
+                }
             }
-            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.ChaamItems) {
-                    if (addPak) break;
-                    if (slot.item == item) {
-                        addPak = true; 
-                        break;
-                    }
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.ChaamItems)
+            {
+                if (addPak) break;
+                if (slot.item == item)
+                {
+                    addPak = true;
+                    break;
+                }
             }
-            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.SupportItems) {
-                    if (addPak) break;
-                    if (slot.item == item) {
-                        addPak = true; 
-                        break;
-                    }
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.SupportItems)
+            {
+                if (addPak) break;
+                if (slot.item == item)
+                {
+                    addPak = true;
+                    break;
+                }
             }
 
             if (!addPak) DatabaseManager.instance.AddItemToInventoryByName(item._name);
-    
-
-
-            // if (DatabaseManager.instance.GetItemFromGameDB(item._name) == null)
-            // {
-            //     DatabaseManager.instance.AddItemToInventoryByName(item._name);
-            // }
+            i++;
         }
 
-        
+
     }
 }

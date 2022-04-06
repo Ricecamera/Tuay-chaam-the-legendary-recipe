@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plants:
-  - {fileID: 2477663559980264429, guid: e4684865e6712b94292efae38a901ce5, type: 3}
+  - {fileID: 2477663559980264429, guid: ab4f70b2370329744931c2f24c73ca62, type: 3}
   supports: []
   allySpawnPos:
   - {fileID: 1825844921}
@@ -625,8 +625,7 @@ MonoBehaviour:
   healthBar: []
   chaam: {fileID: 3678362646462264695, guid: e567f4a398e3e2c46adc29ceacd20c3b, type: 3}
   chaamSpawnPos: {fileID: 1943614277}
-  boss: {fileID: 0}
-  bossSpawnPos: {fileID: 565492851}
+  havePreset: 1
 --- !u!224 &543371956 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7173921338258702980, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}

@@ -50,7 +50,7 @@ public class SaveManager : MonoBehaviour
             Directory.CreateDirectory(Application.persistentDataPath + "/game_save");
         }
 
-        if (!Directory.Exists(Application.persistentDataPath + "/game_save/player"))
+        if (!Directory.Exists(Application.persistentDataPath + "/game_save/player_data"))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/game_save/player_data");
         }
@@ -70,43 +70,38 @@ public class SaveManager : MonoBehaviour
     public void Load()
     {
 
-        // PlayerDatabase obj = ScriptableObject.CreateInstance<PlayerDatabase>();
-        // InventoryObject obj2 = ScriptableObject.CreateInstance<InventoryObject>();
-        // obj.SetInventory(obj2);
-
         if (!Directory.Exists(Application.persistentDataPath + "/game_save/player_data"))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/game_save/player_data");
         }
 
-        BinaryFormatter bf = new BinaryFormatter();
-
         if (File.Exists(Application.persistentDataPath + "/game_save/player_data/player.txt"))
         {
+            BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/game_save/player_data/player.txt", FileMode.Open);
             JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), savedDatabase);
             file.Close();
+
+            ConvertToPlayerDatabase(playerDatabase, savedDatabase);
+
+            SceneManager.LoadScene("ModeSelection");
         }
-
-        ConvertToPlayerDatabase(playerDatabase, savedDatabase);
-
-        // Load => Database => Inventory
-        //ConvertDatabasetoInventory(inventoryObject, playerDatabase);
-        //playerDatabase = obj;
     }
 
     public void NewGame()
     {
         InitData();
+        if (File.Exists(Application.persistentDataPath + "/game_save/player_data/player.txt"))
+        {
+            Debug.Log("It's working");
+            File.Delete(Application.persistentDataPath + "/game_save/player_data/player.txt");
+        }
+
     }
 
     public void LoadGame()
     {
-        if (Directory.Exists(Application.persistentDataPath + "/game_save/player_data"))
-        {
-            Load();
-            SceneManager.LoadScene("ModeSelection");
-        }
+        Load();
     }
 
     public void ConvertToSaveDatabase(PlayerDatabase playerDatabase, PlayerDatabase savedDatabase)
@@ -138,10 +133,8 @@ public class SaveManager : MonoBehaviour
                 if (slot != null) savedDatabase.GetInventory().Container.SupportItems[i].UpdateSlot(slot.item._name, slot.item, 1);
             }
         }
-
-        savedDatabase.unlockStatus = playerDatabase.unlockStatus;
-        savedDatabase.playAniAlreadyMap = playerDatabase.playAniAlreadyMap;
-        //savedDatabase.SetMapUnlock(playerDatabase.GetMapUnlock());
+        // savedDatabase.unlockStatus = playerDatabase.unlockStatus;
+        // savedDatabase.playAniAlreadyMap = playerDatabase.playAniAlreadyMap;
     }
 
     public void ConvertToPlayerDatabase(PlayerDatabase playerDatabase, PlayerDatabase savedDatabase)
@@ -171,8 +164,6 @@ public class SaveManager : MonoBehaviour
                 playerDatabase.GetInventory().Container.SupportItems[i].UpdateSlot(slot.item._name, slot.item, 1);
             }
         }
-        playerDatabase.unlockStatus = savedDatabase.unlockStatus;
-        playerDatabase.playAniAlreadyMap = savedDatabase.playAniAlreadyMap;
     }
 
     public int GetDieCount()
@@ -189,36 +180,5 @@ public class SaveManager : MonoBehaviour
     {
         this.dieCount = 0;
     }
-
-    // public void ConvertInventorytoDatabase(InventoryObject inv, PlayerDatabase db)
-    // {
-    //     for (int i = 0; i < 3; i++)
-    //     {
-    //     db.GetInventory().pakItems[i] = (PakObject)inv.Container.MainItems[i].item;
-    //     db.GetInventory().chaamItems[i] = (ChaamObject)inv.Container.ChaamItems[i].item;
-    //     db.GetInventory().supportItems[i] = (SupportObject)inv.Container.SupportItems[i].item;
-    //     }
-    // }
-
-    // public void ConvertDatabasetoInventory(InventoryObject inv, PlayerDatabase db)
-    // {
-    //     for (int i = 0; i <db.GetInventory().pakItems.Length; i++)
-    //     {
-    //         if db.GetInventory().pakItems[i])
-    //         {
-    //             inv.Container.MainItems[i].UpdateSlotdb.GetInventory().pakItems[i]._name,db.GetInventory().pakItems[i], 1);
-    //         }
-    //         if db.GetInventory().chaamItems[i])
-    //         {
-    //             inv.Container.ChaamItems[i].UpdateSlotdb.GetInventory().chaamItems[i]._name,db.GetInventory().chaamItems[i], 1);
-    //         }
-    //         if db.GetInventory().supportItems[i])
-    //         {
-    //             inv.Container.SupportItems[i].UpdateSlotdb.GetInventory().supportItems[i]._name,db.GetInventory().supportItems[i], 1);
-    //         }
-
-
-    //     }
-    // }
 
 }

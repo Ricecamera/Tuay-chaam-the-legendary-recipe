@@ -19,15 +19,20 @@ public class Spawner : MonoBehaviour
 
     [Header("Chaam")]
     public GameObject chaam;                // contains the prefab of an in-play chaam
-    public Transform chaamSpawnPos;         // reference of chaam's spawn positon
+    public Transform chaamSpawnPos;
+
+    public bool havePreset;     // reference of chaam's spawn positon
 
     void OnEnable()
     {
-        // characters.Intialize();
-        ConvertPlantToGameObject(CharacterSelecter.instance?.GetCharacters());
-        ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
-        ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
-        //Debug.Log(CharacterSelecter.instance?.GetSupports()[0]);
+        if (!havePreset)
+        {
+            Debug.Log("*********************************************************1");
+            ConvertPlantToGameObject(CharacterSelecter.instance?.GetCharacters());
+            ConvertChaamToGameObject(CharacterSelecter.instance?.GetChaam());
+            ConvertSupportToGameObject(CharacterSelecter.instance?.GetSupports());
+        }
+
 
         enemies = MapToEnemy.Instance.GetEnemies(LevelManager.instance.thislevel);
 
@@ -100,7 +105,8 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void ClearCharacter(){
+    public void ClearCharacter()
+    {
 
     }
 }

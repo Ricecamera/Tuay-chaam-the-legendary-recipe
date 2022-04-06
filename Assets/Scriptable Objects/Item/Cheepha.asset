@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa098361363914746ba90fafd10589ea, type: 3}
   m_Name: Cheepha
   m_EditorClassIdentifier: 
-  _name: cheepha
+  _name: Cheepha
   uiDisplay: {fileID: 21300000, guid: 2eb74a48b5bd1344e87ae67d6cd99c8f, type: 3}
   type: 0
   prefab: {fileID: 5526432194195436290, guid: 2cd829a40a75d2a4fbebd2aaca1effab, type: 3}

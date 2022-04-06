@@ -19,7 +19,7 @@ public class PakObject : ItemObject
         PakRender pak = prefab?.GetComponent<PakRender>();
         if (pak != null)
         {
-            _name = pak.name;
+            _name = pak.name.ToLower();
             uiDisplay = pak.Entity.image;
             description = pak.Entity.Description;
 

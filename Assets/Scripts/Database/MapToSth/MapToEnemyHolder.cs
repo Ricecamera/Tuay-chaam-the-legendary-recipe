@@ -10,7 +10,9 @@ public class MapToEnemyHolder : MonoBehaviour
     {
         if (MapToEnemy.Instance == null)
         {
+            Debug.Log("MapToEnemy is awaked");
             MapToEnemy.Instance.Awake();
+
         }
     }
 }
