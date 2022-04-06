@@ -33,36 +33,9 @@ public class PakSelection : MonoBehaviour
 
     private SkillObj cookSkill;
 
-    private void OnEnable()
-    {
-        _UIcontroller = GetComponent<BattleUIController>();
-        // Set callback function for skill buttons
-        for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; ++i)
-        {
-            int k = i;
-            _UIcontroller.skillMenu.skills[i].AddListener(() =>
-            {
-                HandleSelectSkill(k);
-            });
-        }
-
-        // Set callback function for game button
-        _UIcontroller.okButton.onClick.AddListener(HandleConfirm);
-        _UIcontroller.backButton.onClick.AddListener(HandleBack);
-        _UIcontroller.endTurnButton.onClick.AddListener(HandleEndturn);
-        _UIcontroller.cancelButton.onClick.AddListener(HandleCancelAction);
-        _UIcontroller.cookButton.onClick.AddListener(HandleCookButton);
-        _UIcontroller.startCookButton.onClick.AddListener(HandleStartCookButton);
-        for (int i = 0; i < _UIcontroller.supportButton.Length; i++)
-        {
-            int k = i;
-            _UIcontroller.supportButton[i].onClick.AddListener(() => HandleSupportButton(k));
-        }
-
+    private void OnEnable() {
         battleManger.SetChangeTurn(() => UpdateGameState(GameState.CHOOSE_CHARACTER));
-        _cookingController = GetComponent<CookingController>();
     }
-
     private void OnDisable()
     {
         battleManger.SetChangeTurn(null);
@@ -71,6 +44,7 @@ public class PakSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AddListenerOfUI();
         selectedSkill = -1;
         Reset();
         _UIcontroller.UpdateUI(GameState.CHOOSE_CHARACTER);
@@ -452,8 +426,6 @@ public class PakSelection : MonoBehaviour
 
             UpdateGameState(GameState.CHOOSE_CHARACTER);
         }
-
-
     }
 
     public void HandleBack()
@@ -614,9 +586,32 @@ public class PakSelection : MonoBehaviour
         // _cookingController.OnStartCooking(ingredient, selectedPak, selectedTargets);
     }
 
-    public PakRender SelectedPak
-    {
-        get { return this.selectedPak; }
+    private void AddListenerOfUI() {
+        _UIcontroller = GetComponent<BattleUIController>();
+        // Set callback function for skill buttons
+        for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; ++i) {
+            int k = i;
+            _UIcontroller.skillMenu.skills[i].AddListener(() => {
+                HandleSelectSkill(k);
+            });
+        }
+
+        // Set callback function for game button
+        _UIcontroller.okButton.onClick.AddListener(HandleConfirm);
+        _UIcontroller.backButton.onClick.AddListener(HandleBack);
+        _UIcontroller.endTurnButton.onClick.AddListener(HandleEndturn);
+        _UIcontroller.cancelButton.onClick.AddListener(HandleCancelAction);
+        _UIcontroller.cookButton.onClick.AddListener(HandleCookButton);
+        _UIcontroller.startCookButton.onClick.AddListener(HandleStartCookButton);
+        for (int i = 0; i < _UIcontroller.supportButton.Length; i++) {
+            int k = i;
+            _UIcontroller.supportButton[i].onClick.AddListener(() => HandleSupportButton(k));
+        }
+        _cookingController = GetComponent<CookingController>();
     }
 
+    // Getters, Setters
+    public PakRender SelectedPak {
+        get { return this.selectedPak; }
+    }
 }
