@@ -133,8 +133,6 @@ public class PakSelection : MonoBehaviour
                 {
                     HandleChooseAlly(character);
                 }
-
-
             }
         }
     }
