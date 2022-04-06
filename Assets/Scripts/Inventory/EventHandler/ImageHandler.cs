@@ -48,10 +48,8 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // if (eventData.pointerDrag == null)
-        // {
         eventData.pointerEnter.GetComponent<RectTransform>().localScale = new Vector3(1.1f, 1.1f, 1.1f);
-        // }
+        //FetchSkillData();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -62,7 +60,7 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     public void OnPointerUp(PointerEventData eventData)
     {
         //Debug.Log("Pointer Up");
-
+        CharacterDetail.ChangeDetail(itemObject._name.ToUpper(), "Skill 1 : asdjwidjwda Skill 2 : asdhwuidhaw Skill 3 : cjoiajdowdwd Skill 4 : cjoiajdowdwd", itemObject.uiDisplay);
 
         // swap between item and item
         if (eventData.pointerCurrentRaycast.gameObject.name == "ItemImage" && eventData.pointerCurrentRaycast.gameObject.activeSelf &&
@@ -92,16 +90,23 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         {
             if (dragItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
 
-            if (currentItem.GetComponent<ImageHandler>().itemObject != null) {
+            if (currentItem.GetComponent<ImageHandler>().itemObject != null)
+            {
                 CharacterSelecter.instance.AddCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
-            } 
+            }
         }
         else if (currentItem.transform.parent.CompareTag("slot") && dragItem.transform.parent.CompareTag("inventory"))
         {
             if (currentItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
-            if (dragItem.GetComponent<ImageHandler>().itemObject != null) {
+            if (dragItem.GetComponent<ImageHandler>().itemObject != null)
+            {
                 CharacterSelecter.instance.AddCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
             }
         }
+    }
+
+    public void FetchSkillData()
+    {
+        //Debug.Log(this.itemObject.prefab.gameObject.GetComponent<CarrotRender>());
     }
 }

@@ -77,85 +77,28 @@ public class InventoryUI : MonoBehaviour
 
     public Vector3 GetMainPosition(int i)
     {
-        Vector3 v = new Vector3(0f, 0f, 0f); ;
-        switch (i)
-        {
-            case 0:
-                v = new Vector3(-655f, 250f, 0f);
-                break;
-            case 1:
-                v = new Vector3(-475f, 250f, 0f);
-                break;
-            case 2:
-                v = new Vector3(-295f, 250f, 0f);
-                break;
-            case 3:
-                v = new Vector3(-115f, 250f, 0f);
-                break;
-            case 4:
-                v = new Vector3(65f, 250f, 0f);
-                break;
-            case 5:
-                v = new Vector3(245f, 250f, 0f);
-                break;
-        }
-
-        return v;
+        Vector3 v = new Vector3(0f, 0f, 0f);
+        float yPos = 144f;
+        float spaceBetweenSlot = 150f;
+        float initPos = -637f;
+        return new Vector3(initPos + spaceBetweenSlot * i, yPos, 0f);
     }
 
     public Vector3 GetChaamPosition(int i)
     {
-        Vector3 v = new Vector3(0f, 0f, 0f); ;
-        switch (i)
-        {
-            case 0:
-                v = new Vector3(-655f, 80f, 0f);
-                break;
-            case 1:
-                v = new Vector3(-475f, 80f, 0f);
-                break;
-            case 2:
-                v = new Vector3(-295f, 80f, 0f);
-                break;
-            case 3:
-                v = new Vector3(-115f, 80f, 0f);
-                break;
-            case 4:
-                v = new Vector3(65f, 80f, 0f);
-                break;
-            case 5:
-                v = new Vector3(245f, 80f, 0f);
-                break;
-        }
-
-        return v;
+        Vector3 v = new Vector3(0f, 0f, 0f);
+        float yPos = -84.5f;
+        float spaceBetweenSlot = 150f;
+        float initPos = -637f;
+        return new Vector3(initPos + spaceBetweenSlot * i, yPos, 0f);
     }
 
     public Vector3 GetSupportPosition(int i)
     {
-        Vector3 v = new Vector3(0f, 0f, 0f); ;
-        switch (i)
-        {
-            case 0:
-                v = new Vector3(-655f, -90f, 0f);
-                break;
-            case 1:
-                v = new Vector3(-475f, -90f, 0f);
-                break;
-            case 2:
-                v = new Vector3(-295f, -90f, 0f);
-                break;
-            case 3:
-                v = new Vector3(-115f, -90f, 0f);
-                break;
-            case 4:
-                v = new Vector3(65f, -90f, 0f);
-                break;
-            case 5:
-                v = new Vector3(245f, -90f, 0f);
-                break;
-        }
-
-        return v;
+        Vector3 v = new Vector3(0f, 0f, 0f);
+        float yPos = -321f;
+        float spaceBetweenSlot = 150f;
+        float initPos = -637f;
+        return new Vector3(initPos + spaceBetweenSlot * i, yPos, 0f);
     }
 }
