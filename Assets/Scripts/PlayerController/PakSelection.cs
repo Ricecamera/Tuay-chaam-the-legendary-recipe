@@ -33,7 +33,8 @@ public class PakSelection : MonoBehaviour
 
     private SkillObj cookSkill;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         battleManger.SetChangeTurn(() => UpdateGameState(GameState.CHOOSE_CHARACTER));
     }
     private void OnDisable()
@@ -180,7 +181,7 @@ public class PakSelection : MonoBehaviour
                 _UIcontroller.UpdateSkillMenuImage(ally);
 
                 // Update tooltips
-                for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; i++)
+                for (int i = 0; i < selectedPak.skills.Length; i++)
                 {
                     Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
                     tooltip.setContent(selectedPak.skills[i].description);
@@ -407,7 +408,7 @@ public class PakSelection : MonoBehaviour
 
         if (selectedPak != null && currentState == GameState.CHAAM_WAIT_FOR_CONFIRM)
         {
-            ChaamRender chaam = (ChaamRender) selectedPak;
+            ChaamRender chaam = (ChaamRender)selectedPak;
 
             if (chaam == null) return;
 
@@ -584,12 +585,15 @@ public class PakSelection : MonoBehaviour
         // _cookingController.OnStartCooking(ingredient, selectedPak, selectedTargets);
     }
 
-    private void AddListenerOfUI() {
+    private void AddListenerOfUI()
+    {
         _UIcontroller = GetComponent<BattleUIController>();
         // Set callback function for skill buttons
-        for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; ++i) {
+        for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; ++i)
+        {
             int k = i;
-            _UIcontroller.skillMenu.skills[i].AddListener(() => {
+            _UIcontroller.skillMenu.skills[i].AddListener(() =>
+            {
                 HandleSelectSkill(k);
             });
         }
@@ -601,7 +605,8 @@ public class PakSelection : MonoBehaviour
         _UIcontroller.cancelButton.onClick.AddListener(HandleCancelAction);
         _UIcontroller.cookButton.onClick.AddListener(HandleCookButton);
         _UIcontroller.startCookButton.onClick.AddListener(HandleStartCookButton);
-        for (int i = 0; i < _UIcontroller.supportButton.Length; i++) {
+        for (int i = 0; i < _UIcontroller.supportButton.Length; i++)
+        {
             int k = i;
             _UIcontroller.supportButton[i].onClick.AddListener(() => HandleSupportButton(k));
         }
@@ -609,7 +614,8 @@ public class PakSelection : MonoBehaviour
     }
 
     // Getters, Setters
-    public PakRender SelectedPak {
+    public PakRender SelectedPak
+    {
         get { return this.selectedPak; }
     }
 }
