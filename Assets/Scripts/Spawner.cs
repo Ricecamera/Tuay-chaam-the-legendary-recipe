@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleScene;
+using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour
 {
@@ -45,10 +46,20 @@ public class Spawner : MonoBehaviour
                 p.tag = allySpawnPos[i].gameObject.tag;
                 CharacterManager.instance.AddCharacter(p.tag, p);
             }
+            if (SceneManager.GetActiveScene().name == "Battle1-2V2")
+            {
+                if (chaam == null)
+                {
+                    Debug.Log("It's working bro");
+                    Debug.Log(SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab);
+                    chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab;
+                }
+                GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
+                chaamObject.tag = chaamSpawnPos.gameObject.tag;
+                CharacterManager.instance.AddCharacter(chaamObject.tag, chaamObject);
 
-            GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
-            chaamObject.tag = chaamSpawnPos.gameObject.tag;
-            CharacterManager.instance.AddCharacter(chaamObject.tag, chaamObject);
+            }
+
 
         }
         catch (Exception e)
@@ -94,6 +105,7 @@ public class Spawner : MonoBehaviour
 
     public void ConvertChaamToGameObject(ItemObject itemObject)
     {
+        Debug.Log(itemObject);
         if (itemObject != null)
         {
             Debug.Log(itemObject.prefab.name);

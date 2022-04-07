@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SaveManager : MonoBehaviour
 {
@@ -26,6 +27,13 @@ public class SaveManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        if (!File.Exists(Application.persistentDataPath + "/game_save/player_data/player.txt"))
+        {
+            GameObject loadButton = GameObject.Find("Load Game");
+            Debug.Log(loadButton);
+            loadButton.GetComponent<Button>().interactable = false;
         }
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharacterSelecter : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class CharacterSelecter : MonoBehaviour
     public List<ItemObject> characters = new List<ItemObject>();
     public ItemObject chaam;
     public List<ItemObject> supports = new List<ItemObject>();
+
+
     public List<ItemObject> GetCharacters()
     {
         return characters;
@@ -33,7 +36,7 @@ public class CharacterSelecter : MonoBehaviour
             Debug.Log("Add Pak");
             this.characters.Add(itemObject);
         }
-        else if (itemObject.type == ItemType.Chaam) 
+        else if (itemObject.type == ItemType.Chaam)
         {
             Debug.Log("Add Chaam");
             chaam = itemObject;
@@ -57,6 +60,16 @@ public class CharacterSelecter : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+        Debug.Log(SceneManager.GetActiveScene().name);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            Debug.Log("assign chaam");
+            chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item;
+        }
+        else
+        {
+            Debug.Log("not working");
         }
     }
 
