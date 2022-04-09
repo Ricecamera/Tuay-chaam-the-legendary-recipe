@@ -466,7 +466,7 @@ public class PakSelection : MonoBehaviour
             if (x.CompareTag("Chaam"))
             {
                 ChaamRender nongChaam = (ChaamRender)x;
-                nongChaam.addGuage(20);
+                nongChaam.addGuage(34);
                 break;
             }
         }

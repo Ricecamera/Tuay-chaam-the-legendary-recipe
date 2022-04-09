@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleScene;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class VictoryScene : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class VictoryScene : MonoBehaviour
     {
         Debug.Log(LevelManager.instance.thislevel);
         CharacterSelecter.instance.ResetCharacter();
-        CharacterSelecter.instance.chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item;
+        if (SceneManager.GetActiveScene().name == "VictorySceneForTutorial") CharacterSelecter.instance.chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item;
         // TODO set stars to correct state 
         //* die = 0 -> 3 stars -> all star.GetComponent<Animator>().setTrigger("Start")
         //* die = 1 -> 2 stars -> starR is not trigger

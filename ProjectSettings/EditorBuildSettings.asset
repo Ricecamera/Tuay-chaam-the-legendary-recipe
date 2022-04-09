@@ -26,9 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ModeSelection.unity
     guid: da9484280738d524589d2b4cadd361d1
-  - enabled: 0
-    path: Assets/Scenes/ModeSelection3.unity
-    guid: 645be61aa6eacdb41aa7de8c300b3f0c
   - enabled: 1
     path: Assets/Scenes/opened-map.unity
     guid: 5f81b82477c653140859e82f171756c5

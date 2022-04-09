@@ -2626,7 +2626,7 @@ MonoBehaviour:
   recipesPair:
   - key: honeylimesalt
     recipe: {fileID: 11400000, guid: 7701898e5124a1a4e9cdab83e5dd7204, type: 2}
-  - key: honeylimenormalprikprikthaisalt
+  - key: honeylimenormalprik_supportprikthai_supportsalt
     recipe: {fileID: 11400000, guid: d3264d7edd8a06d4eb639ce7a72e42d2, type: 2}
   describe: {fileID: 1596370311}
 --- !u!1 &1344425279

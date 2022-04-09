@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Container:
     MainItems:
-    - Name: tonhom
-      item: {fileID: 11400000, guid: c9331e4792a31dd46973148b719e6c58, type: 2}
-      amount: 1
+    - Name: 
+      item: {fileID: 0}
+      amount: 0
     - Name: 
       item: {fileID: 0}
       amount: 0
@@ -52,21 +52,21 @@ MonoBehaviour:
       item: {fileID: 0}
       amount: 0
     SupportItems:
-    - Name: salt
+    - Name: 
       item: {fileID: 0}
-      amount: 1
-    - Name: lime
+      amount: 0
+    - Name: 
       item: {fileID: 0}
-      amount: 1
-    - Name: honey
+      amount: 0
+    - Name: 
       item: {fileID: 0}
-      amount: 1
-    - Name: normalprik
+      amount: 0
+    - Name: 
       item: {fileID: 0}
-      amount: 1
-    - Name: prikthai
+      amount: 0
+    - Name: 
       item: {fileID: 0}
-      amount: 1
+      amount: 0
     - Name: 
       item: {fileID: 0}
       amount: 0

@@ -8,6 +8,14 @@ public class CharacterSelecter : MonoBehaviour
 {
     public static CharacterSelecter instance;
 
+    private void OnEnable()
+    {
+        if (SceneManager.GetActiveScene().name == "CharacterSelection")
+        {
+            ResetCharacter();
+        }
+    }
+
     //public GameObject popup; 
 
     public List<ItemObject> characters = new List<ItemObject>();

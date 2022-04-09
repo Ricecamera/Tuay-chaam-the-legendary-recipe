@@ -48,17 +48,14 @@ public class Spawner : MonoBehaviour
             }
             if (SceneManager.GetActiveScene().name == "Battle1-2V2")
             {
-                if (chaam == null)
-                {
-                    Debug.Log("It's working bro");
-                    Debug.Log(SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab);
-                    chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab;
-                }
-                GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
-                chaamObject.tag = chaamSpawnPos.gameObject.tag;
-                CharacterManager.instance.AddCharacter(chaamObject.tag, chaamObject);
-
+                Debug.Log("It's working bro");
+                //Debug.Log(SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab);
+                chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab;
+                plants.Add(DatabaseManager.instance.GetItemFromGameDB("tonhom").prefab);
             }
+            GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
+            chaamObject.tag = chaamSpawnPos.gameObject.tag;
+            CharacterManager.instance.AddCharacter(chaamObject.tag, chaamObject);
 
 
         }

@@ -67,20 +67,4 @@ public class DatabaseManager : MonoBehaviour
     }
 
 
-
-    // public static PakObject GetPakByName(string _name)
-    // {
-    //     return instance.itemDatabase.pakItems.FirstOrDefault(x => x._name == _name);
-    // }
-    // public static ChaamObject GetChaamByName(string _name)
-    // {
-    //     return instance.itemDatabase.chaamItems.FirstOrDefault(x => x._name == _name);
-    // }
-
-    // public static SupportObject GetSupportByName(string _name)
-    // {
-    //     return instance.itemDatabase.supportItems.FirstOrDefault(x => x._name == _name);
-    // }
-
-
 }

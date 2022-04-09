@@ -98,8 +98,21 @@ public class SaveManager : MonoBehaviour
 
     public void NewGame()
     {
-        InitData();
+
         SaveManager.instance.playerDatabase.unlockStatus = 1;
+        SaveManager.instance.playerDatabase.GetInventory().ResetInventory();
+        InitData();
+        SaveManager.instance.savedDatabase.unlockStatus = 1;
+        SaveManager.instance.savedDatabase.GetInventory().ResetInventory();
+
+        //clear local storage on what levels are cleared.
+        LevelManager.instance.thislevel = 0;
+        LevelManager.instance.unlockStatus = new List<bool>() { false, false, false, false, false, false, false, false };
+        for (int i = 0; i < SaveManager.instance.playerDatabase.unlockStatus; i++)
+        {
+            LevelManager.instance.unlockStatus[i] = true;
+        }
+
         if (File.Exists(Application.persistentDataPath + "/game_save/player_data/player.txt"))
         {
             Debug.Log("It's working");

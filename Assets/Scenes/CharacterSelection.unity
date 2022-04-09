@@ -5300,6 +5300,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 104211731}
     m_Modifications:
+    - target: {fileID: 6114817077796240344, guid: 157fa58edcbc78b40bf9f8ffdfb35bc9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -142.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114817077796240344, guid: 157fa58edcbc78b40bf9f8ffdfb35bc9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6114817079193708688, guid: 157fa58edcbc78b40bf9f8ffdfb35bc9, type: 3}
       propertyPath: m_Name
       value: Popup
@@ -5391,6 +5399,14 @@ PrefabInstance:
     - target: {fileID: 6114817079193708689, guid: 157fa58edcbc78b40bf9f8ffdfb35bc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114817079263276799, guid: 157fa58edcbc78b40bf9f8ffdfb35bc9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 246.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114817079263276799, guid: 157fa58edcbc78b40bf9f8ffdfb35bc9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 60.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 157fa58edcbc78b40bf9f8ffdfb35bc9, type: 3}

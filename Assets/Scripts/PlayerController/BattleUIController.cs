@@ -76,7 +76,7 @@ public class BattleUIController : MonoBehaviour
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
-                List<int> noCookLevel = new List<int>(){1,2,3,4};
+                List<int> noCookLevel = new List<int>() { 1, 2 };
                 if (SceneManager.GetActiveScene().name == "Battle1-2V2" || noCookLevel.Contains(LevelManager.instance.thislevel))
                 {
                     cookButton.gameObject.SetActive(false);
@@ -91,7 +91,7 @@ public class BattleUIController : MonoBehaviour
                     if (x.CompareTag("Chaam"))
                     {
                         ChaamRender nongChaam = (ChaamRender)x;
-                        if (nongChaam.getGuage() == 100)
+                        if (nongChaam.getGuage() >= 100)
                         {
                             cookImageDark.gameObject.SetActive(false);
                             cookButton.enabled = true;

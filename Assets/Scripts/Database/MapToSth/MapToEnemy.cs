@@ -110,14 +110,14 @@ public class MapToEnemy : MonoBehaviour
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("prikthai")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("mund"))
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("brogli"))
         }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
 
         SetEnemy(7, new Pair<List<GameObject>, Image>(new List<GameObject>(){
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
             ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("yuak")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("potato")),
-            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("brogli"))
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("khaopod")),
+            ConvertToGameObject(DatabaseManager.instance.GetItemFromGameDB("gluay"))
         }, Resources.Load("BattleBG/default", typeof(Image)) as Image));
 
         SetEnemy(8, new Pair<List<GameObject>, Image>(new List<GameObject>(){
