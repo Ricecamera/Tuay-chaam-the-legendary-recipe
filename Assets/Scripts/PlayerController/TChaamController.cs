@@ -1,32 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class TChaamController : MonoBehaviour
 {
+    public static TChaamController instance;
     Rigidbody2D rigidbody2d;
-    float horizontal;
-    float vertical;
+    public float horizontal;
+    public float vertical;
 
     public float JumpForce = 1;
 
     private float counter;
     private float frequency;
 
-
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2d = GetComponent<Rigidbody2D>();
-        counter = 0;
-        frequency = 2;
+        if (instance == null)
+        {
+            instance = this;
+            rigidbody2d = GetComponent<Rigidbody2D>();
+            counter = 0;
+            frequency = 2;
+            horizontal = 0;
+            vertical = 0;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
-    {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+    {        
 
     }
 
@@ -34,14 +45,14 @@ public class TChaamController : MonoBehaviour
     {
         Vector2 position = rigidbody2d.position;
         counter = counter + Time.deltaTime;
-        if (vertical == 0)
-        {
-            position.y = position.y + (0.01f * Mathf.Sin(counter * frequency));
-        }
-        else
-        {
-            counter = 0;
-        }
+        // if (vertical == 0)
+        // {
+        //     position.y = position.y + (0.01f * Mathf.Sin(counter * frequency));
+        // }
+        // else
+        // {
+        //     counter = 0;
+        // }
 
 
         position.x = position.x + 6.0f * horizontal * Time.deltaTime;

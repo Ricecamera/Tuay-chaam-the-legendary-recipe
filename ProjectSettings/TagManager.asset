@@ -27,6 +27,8 @@ TagManager:
   - battleManager
   - battleBG
   - Star
+  - CamButtonUp
+  - CamButtonDown
   layers:
   - Default
   - TransparentFX
