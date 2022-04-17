@@ -15,13 +15,13 @@ MonoBehaviour:
   Container:
     MainItems:
     - Name: 
-      item: {fileID: 0}
+      item: {fileID: 11400000, guid: b3383da1661ca6f4398d46d4a32eb0d4, type: 2}
       amount: 0
     - Name: 
-      item: {fileID: 0}
+      item: {fileID: 11400000, guid: 955de58001dee6c4ea0af224452e93c7, type: 2}
       amount: 0
     - Name: 
-      item: {fileID: 0}
+      item: {fileID: 11400000, guid: b6e9115d3d2f6af4fa72e081f7590fc1, type: 2}
       amount: 0
     - Name: 
       item: {fileID: 0}
@@ -53,13 +53,13 @@ MonoBehaviour:
       amount: 0
     SupportItems:
     - Name: 
-      item: {fileID: 0}
+      item: {fileID: 11400000, guid: d0b24af2931ae3a4b8c1e52ecbca31c0, type: 2}
       amount: 0
     - Name: 
-      item: {fileID: 0}
+      item: {fileID: 11400000, guid: 35bb89127ffc019469a2429b077c7b23, type: 2}
       amount: 0
     - Name: 
-      item: {fileID: 0}
+      item: {fileID: 11400000, guid: 8cf7c672e3143d4408bc9f0424eb0162, type: 2}
       amount: 0
     - Name: 
       item: {fileID: 0}

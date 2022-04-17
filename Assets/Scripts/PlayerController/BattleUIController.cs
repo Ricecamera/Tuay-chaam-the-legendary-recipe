@@ -17,7 +17,9 @@ public class BattleUIController : MonoBehaviour
 
     public GameObject[] tickCook;
 
-    public GameObject supportMenu, comboPanel;
+    public GameObject supportMenu, comboPanel, speedPanel;
+
+    public Image[] speedImage;
 
     //Text
     public Text selectTargetText;
@@ -56,6 +58,7 @@ public class BattleUIController : MonoBehaviour
         cookImageDark.color = UnityEngine.Color.gray;
         cookImageDark.fillAmount = 0f;
         _pakSelection = GetComponent<PakSelection>();
+
     }
 
     public void UpdateUI(PakSelection.GameState nextState)
@@ -132,6 +135,7 @@ public class BattleUIController : MonoBehaviour
                 }
 
                 supportMenu.gameObject.SetActive(true);
+                speedPanel.gameObject.SetActive(false);
                 break;
 
             case PakSelection.GameState.CHOOSE_TARGET:
@@ -222,6 +226,8 @@ public class BattleUIController : MonoBehaviour
                 skillMenu.skills[1].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 skillMenu.skills[2].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.white;
+                speedPanel.gameObject.SetActive(true);
+                UpdateSpeedPanel();
                 break;
         }
     }
@@ -241,5 +247,21 @@ public class BattleUIController : MonoBehaviour
     private void UpdateEndturnButton(bool isEmpty)
     {
         endTurnButton.interactable = !isEmpty;
+    }
+
+    private void UpdateSpeedPanel()
+    {
+        List<PakRender> aliveCharacter = CharacterManager.instance.GetSpeedOfCharacters();
+        for (int i = 0; i < speedImage.Length; i++)
+        {
+            if (i < aliveCharacter.Count)
+            {
+                speedImage[i].sprite = aliveCharacter[i].Entity.image;
+            }
+            else
+            {
+                speedImage[i].gameObject.SetActive(false);
+            }
+        }
     }
 }

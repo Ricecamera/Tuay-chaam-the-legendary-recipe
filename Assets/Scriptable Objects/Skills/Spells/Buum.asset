@@ -20,4 +20,4 @@ MonoBehaviour:
     the Pak who use this action
   actionType: TargetWholeField
   maxCooldown: 5
-  damageRatio: 0.6
+  damageRatio: 0.3

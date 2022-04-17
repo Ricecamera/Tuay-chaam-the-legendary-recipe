@@ -139,6 +139,8 @@ public class PakSelection : MonoBehaviour
                 }
             }
         }
+
+
     }
 
     public void controlSkill(SkillObj skill, PakRender character)

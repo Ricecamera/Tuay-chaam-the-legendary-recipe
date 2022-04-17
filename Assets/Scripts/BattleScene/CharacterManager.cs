@@ -140,6 +140,13 @@ namespace BattleScene
             return temp;
         }
 
+        public List<PakRender> getAllAliveCharacters()
+        {
+            List<PakRender> alivePak = GetAliveCharacters(0);
+            alivePak.AddRange(GetAliveCharacters(1));
+            return alivePak;
+        }
+
 
         public void HighLightCharacters(List<string> tags)
         {
@@ -221,6 +228,19 @@ namespace BattleScene
                 throw new Exception("Invalid team key");
             }
             return (key == 2) || (key == 0 && IsPlayerTeam(pak.tag)) || (key == 1 && IsEnemyTeam(pak.tag));
+        }
+
+        public List<PakRender> GetSpeedOfCharacters()
+        {
+            List<PakRender> aliveCharacter = getAllAliveCharacters();
+            //sort max to min 
+            aliveCharacter.Sort(delegate (PakRender x, PakRender y)
+        {
+            //compareTo < 0 => x < y , compareTo = 0 => x = y , compareTo > 0 => x > y
+            return -1 * x.currentSpeed.CompareTo(y.currentSpeed);
+        });
+            Debug.Log(aliveCharacter.ToString());
+            return aliveCharacter;
         }
     }
 }

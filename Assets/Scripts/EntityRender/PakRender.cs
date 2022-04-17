@@ -5,6 +5,7 @@ using UnityEngine;
 using BuffSystem;
 using BuffSystem.Behaviour;
 using System.Linq;
+using TMPro;
 
 [RequireComponent(typeof(HealthSystem))]
 public class PakRender : MonoBehaviour, IComparable
@@ -26,7 +27,7 @@ public class PakRender : MonoBehaviour, IComparable
 
     public SkillObj[] skills;
 
-    public int baseAtk { get; private set;}
+    public int baseAtk { get; private set; }
     public int baseDef { get; private set; }
     public int baseSpeed { get; private set; }
 
@@ -43,6 +44,12 @@ public class PakRender : MonoBehaviour, IComparable
 
     [SerializeField]
     private Entity enitityData;
+
+    [SerializeField]
+    private GameObject damageNumber;
+
+    [SerializeField]
+    private TextMeshProUGUI damageNumberText;
 
     private float slideSpeed = 6f, attackDistance = 1.75f;
 
@@ -76,7 +83,8 @@ public class PakRender : MonoBehaviour, IComparable
         spirteRenderer.color = Color.white;
 
         skillExecutors = new List<SkillExecutor>();
-        for (int i = 0; i < skills.Length; i++) {
+        for (int i = 0; i < skills.Length; i++)
+        {
             skillExecutors.Add(new SkillExecutor(skills[i]));
         }
 
@@ -122,7 +130,8 @@ public class PakRender : MonoBehaviour, IComparable
     public void DisplayInAction(bool value, int skillIndex)
     {
         // Prevent index out of bound error
-        if(skillIndex < 0 || skillIndex > skillExecutors.Count){
+        if (skillIndex < 0 || skillIndex > skillExecutors.Count)
+        {
             Debug.LogError("Skill index out of range and couldn't load skill icon.");
         }
 
@@ -171,7 +180,7 @@ public class PakRender : MonoBehaviour, IComparable
         spirteRenderer.color = (value) ? DARK_COLOR : Color.white;
     }
 
-    // Set sorting layer of Pak's sprite and its health bar
+    // Set sorting layer of Pak's sprite and its health bar & damageNumber
     public void GoToFrontLayer(bool value)
     {
         try
@@ -181,6 +190,8 @@ public class PakRender : MonoBehaviour, IComparable
 
             enitityDataSprite.sortingLayerName = value ? LAYER_FRONT : LAYER_CHARACTER;
             healthbar.sortingLayerName = value ? LAYER_FRONT : LAYER_OVERLAY;
+            damageNumber.GetComponent<Canvas>().sortingLayerName = value ? LAYER_FRONT : LAYER_OVERLAY;
+
 
         }
         catch (NullReferenceException error)
@@ -190,7 +201,7 @@ public class PakRender : MonoBehaviour, IComparable
 
     }
 
-    public void switchMat()
+    public void switchMat(int damage)
     {
         if (flashcheck != null)
         {
@@ -198,7 +209,7 @@ public class PakRender : MonoBehaviour, IComparable
             StopCoroutine(flashcheck);
         }
         if (this.gameObject.activeSelf)
-            StartCoroutine(DamageEffect());
+            StartCoroutine(DamageEffect(damage));
     }
 
     public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete)
@@ -245,12 +256,16 @@ public class PakRender : MonoBehaviour, IComparable
     }
 
     // Add buff to this object
-    public void AddBuff(BaseBuff buff) {
+    public void AddBuff(BaseBuff buff)
+    {
         // Check for duplicate buff
-        for (int i = 0; i < attachedBuffs.Count; i++) {
-            if (buff.name == attachedBuffs[i].name) {
-                if (buff is ILastingBehaviour) {
-                    ILastingBehaviour lastingEffect = (ILastingBehaviour) buff;
+        for (int i = 0; i < attachedBuffs.Count; i++)
+        {
+            if (buff.name == attachedBuffs[i].name)
+            {
+                if (buff is ILastingBehaviour)
+                {
+                    ILastingBehaviour lastingEffect = (ILastingBehaviour)buff;
 
                     // Execute OnDeactivate effect and add new OnInitialize effect
                     lastingEffect.Deactivate(this);
@@ -263,10 +278,11 @@ public class PakRender : MonoBehaviour, IComparable
         }
 
         // Check if buff added to the character alreadly reach Maximum number
-        if (attachedBuffs.Count == 10) {
+        if (attachedBuffs.Count == 10)
+        {
             // Deactivate and remove the first buff
             if (attachedBuffs[0] is ILastingBehaviour)
-                ((ILastingBehaviour) attachedBuffs[0]).Deactivate(this);
+                ((ILastingBehaviour)attachedBuffs[0]).Deactivate(this);
             attachedBuffs.RemoveAt(0);
             buffRemainingTurns.RemoveAt(0);
         }
@@ -276,15 +292,18 @@ public class PakRender : MonoBehaviour, IComparable
         buffDisplayer.UpdateBuffImage(new List<Sprite>(from b in attachedBuffs select b.buffIcon));
 
         // Do on-buff-added effect
-        if (buff is ILastingBehaviour) {
-            ILastingBehaviour toExecute = (ILastingBehaviour) buff;
+        if (buff is ILastingBehaviour)
+        {
+            ILastingBehaviour toExecute = (ILastingBehaviour)buff;
             toExecute.Initialize(this);
         }
     }
 
-    public void UpdateTurn() {
+    public void UpdateTurn()
+    {
         // Update skill cooldown
-        for (int i = 0; i < skillExecutors.Count; ++i) {
+        for (int i = 0; i < skillExecutors.Count; ++i)
+        {
             skillExecutors[i].Cooldown--;
         }
 
@@ -292,24 +311,29 @@ public class PakRender : MonoBehaviour, IComparable
         List<int> turnBuffer = new List<int>();
 
         // Update buff effect
-        for (int i = 0; i < buffRemainingTurns.Count; i++) {
-            if (buffRemainingTurns[i] > 0) {
+        for (int i = 0; i < buffRemainingTurns.Count; i++)
+        {
+            if (buffRemainingTurns[i] > 0)
+            {
                 // check if the buff have overtime effect
-                if (attachedBuffs[i] is IOvertimeBehaviour) {
+                if (attachedBuffs[i] is IOvertimeBehaviour)
+                {
                     var toRunBuff = attachedBuffs[i] as IOvertimeBehaviour;
                     toRunBuff.OnChangeTurn(this);
                 }
-                
+
                 // Reduce effect turn
                 buffRemainingTurns[i]--;
 
                 buffBuffer.Add(attachedBuffs[i]);
                 turnBuffer.Add(buffRemainingTurns[i]);
             }
-            else {
+            else
+            {
                 // Do on-buff-removed effect
-                if (attachedBuffs[i] is ILastingBehaviour) {
-                    ILastingBehaviour toExecute = (ILastingBehaviour) attachedBuffs[i];
+                if (attachedBuffs[i] is ILastingBehaviour)
+                {
+                    ILastingBehaviour toExecute = (ILastingBehaviour)attachedBuffs[i];
                     toExecute.Deactivate(this);
                 }
             }
@@ -327,36 +351,40 @@ public class PakRender : MonoBehaviour, IComparable
     {
         int damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))));
         this.healthSystem.TakeDamage(damage);
-        this.switchMat();
+        this.switchMat(damage);
     }
 
-    public void takeDamageBypassDEF(int atkValue)
-    {
-        healthSystem.TakeDamage(atkValue);
-        switchMat();
-    }
+    //! Are you use this function or not ? not found where you use it
+    // public void takeDamageBypassDEF(int atkValue)
+    // {
+    //     healthSystem.TakeDamage(atkValue);
+    //     switchMat();
+    // }
 
     // Healing by percent
     public void gainRegen(int ratio)
     {
-        int healValue = (int) this.healthSystem.MaxHp * ratio;
+        int healValue = (int)this.healthSystem.MaxHp * ratio;
         this.healthSystem.CurrentHp += healValue;    //use this function if hp in Entity matter. If not, only use the heal and damage function from health system.
         this.healthSystem.Heal(healValue);
     }
 
-    private IEnumerator DamageEffect()
+    private IEnumerator DamageEffect(int damage)
     {
         SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
         Material whiteMat = (Material)Resources.Load<Material>("FlashMaterial");
         Material originalMat = GetComponent<SpriteRenderer>().material;
         sp.material = whiteMat;
+        this.damageNumberText.SetText(damage.ToString());
+        this.damageNumber.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         sp.material = originalMat;
+        this.damageNumber.SetActive(false);
         flashcheck = null;
     }
 
 
-    private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete)
+    public void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete)
     {
         this.targetPos = slideTargetPosition;
         this.onSlideComplete = onSlideComplete;
@@ -375,58 +403,75 @@ public class PakRender : MonoBehaviour, IComparable
     }
 
     // Getter, Setter
-    public List<SkillExecutor> GetSkillExecutors() {
+    public List<SkillExecutor> GetSkillExecutors()
+    {
         return skillExecutors;
     }
 
-    public SkillExecutor GetSkillExecutor(int index) {
+    public SkillExecutor GetSkillExecutor(int index)
+    {
         if (index < 0 || index >= skillExecutors.Count)
             return null;
         return skillExecutors[index];
     }
 
-    public State currentState {
-        get {
+    public State currentState
+    {
+        get
+        {
             return state;
         }
-        set {
+        set
+        {
             state = value;
         }
     }
-    public bool Selected {
-        get {
+    public bool Selected
+    {
+        get
+        {
             return selected;
         }
 
-        set {
+        set
+        {
             selected = value;
             selectedIcon.SetActive(value);
         }
     }
 
-    public int currentAtk {
-        get {
+    public int currentAtk
+    {
+        get
+        {
             return baseAtk + bonusAttack;
         }
     }
 
-    public int currentDef {
-        get {
+    public int currentDef
+    {
+        get
+        {
             return baseDef + bonusDef;
         }
     }
 
-    public int currentSpeed {
-        get {
+    public int currentSpeed
+    {
+        get
+        {
             return baseSpeed + bonusSpeed;
         }
     }
 
-    public int BonusAtk {
-        get {
+    public int BonusAtk
+    {
+        get
+        {
             return bonusAttack;
         }
-        set {
+        set
+        {
             if (value < 0)
                 bonusAttack = 0;
             else
@@ -434,11 +479,14 @@ public class PakRender : MonoBehaviour, IComparable
         }
     }
 
-    public int BonusDef {
-        get {
+    public int BonusDef
+    {
+        get
+        {
             return bonusDef;
         }
-        set {
+        set
+        {
             if (value < 0)
                 bonusDef = 0;
             else
@@ -446,11 +494,14 @@ public class PakRender : MonoBehaviour, IComparable
         }
     }
 
-    public int BonusSpeed {
-        get {
+    public int BonusSpeed
+    {
+        get
+        {
             return bonusSpeed;
         }
-        set {
+        set
+        {
             if (value < 0)
                 BonusSpeed = 0;
             else
@@ -458,7 +509,7 @@ public class PakRender : MonoBehaviour, IComparable
         }
     }
 
-    public Entity Entity { get { return enitityData;} }
+    public Entity Entity { get { return enitityData; } }
 
     public Vector3 GetPosition()
     {
@@ -470,10 +521,13 @@ public class PakRender : MonoBehaviour, IComparable
         return state == State.InAction;
     }
 
-    public List<SkillExecutor> getActiveSkill(){
+    public List<SkillExecutor> getActiveSkill()
+    {
         List<SkillExecutor> result = new List<SkillExecutor>();
-        foreach (SkillExecutor skill in skillExecutors){
-            if(skill.Cooldown == 0){
+        foreach (SkillExecutor skill in skillExecutors)
+        {
+            if (skill.Cooldown == 0)
+            {
                 result.Add(skill);
             }
         }
