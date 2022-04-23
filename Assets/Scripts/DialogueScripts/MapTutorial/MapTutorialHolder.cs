@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 namespace DialogueSystem
 {
@@ -13,12 +14,20 @@ namespace DialogueSystem
         // [SerializeField] private GameObject pointer;
         // [SerializeField] private GameObject pointer2;
         [SerializeField] private GameObject textBox;
+        [SerializeField] private GameObject Backdrop;
+        [SerializeField] private PlayerDatabase playerDB;
+        [SerializeField] private GameObject[] lockedWell;
+        [SerializeField] private GameObject unlockedWell;
+        [SerializeField] private GameObject arrowButtonsUp;
+        [SerializeField] private GameObject arrowButtonsDown;
+        [SerializeField] private GameObject settingButton;
         [SerializeField] private GameObject homeButton;
-        [SerializeField] private GameObject well1;
-        [SerializeField] private GameObject well2;
-        [SerializeField] private GameObject well3;
-        [SerializeField] private GameObject homeArrow;
-        [SerializeField] private GameObject well3Arrow;
+
+        // [SerializeField] private GameObject well1;
+        // [SerializeField] private GameObject well2;
+        // [SerializeField] private GameObject well3;
+        // [SerializeField] private GameObject homeArrow;
+        // [SerializeField] private GameObject well3Arrow;
         // [SerializeField] private GameObject background;
 
         private void Awake()
@@ -38,57 +47,99 @@ namespace DialogueSystem
         public IEnumerator tutorialSequence()
         {
             Deactivate();
-            yield return new WaitForSeconds(1.55f);
-            switch (LevelManager.instance.mapArrived)
+
+            // yield return new WaitForSeconds(1.55f);
+            
+            switch (playerDB.unlockStatus)
             {
-                case 0: //first time entered map
+                case 1: //first time entered map
                     Debug.Log("first time");
-                    LevelManager.instance.mapArrived+=1;
-                    for (int i = 0; i<6; i++){
+                    // LevelManager.instance.mapArrived+=1;
+                    for (int i = 0; i<8; i++){
                         Deactivate();
                         Debug.Log(i);
+                        // if(i>=7) i=7;
                         switch (i)
                         {
                             case 0:
+                                arrowButtonsUp.SetActive(false);
+                                arrowButtonsDown.SetActive(false);
+                                settingButton.SetActive(false);
+                                homeButton.SetActive(false);
+
                                 textBox.SetActive(true);
-                                homeButton.GetComponent<Button>().enabled = false;
-                                well1.GetComponent<BoxCollider2D>().isTrigger=false;
-                                well2.GetComponent<BoxCollider2D>().isTrigger=false;
-                                well3.GetComponent<BoxCollider2D>().isTrigger=false;
-                                homeArrow.SetActive(false);
-                                well3Arrow.SetActive(false);
-                                textBox.SetActive(true);
+                                unlockedWell.GetComponent<BoxCollider2D>().enabled=false;
                                 transform.GetChild(i).gameObject.SetActive(true);
                                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
                                 break;
 
                             case 1:
                                 transform.GetChild(i).gameObject.SetActive(true);
-                                homeArrow.SetActive(true);
                                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
                                 break;
                             
                             case 2:
-                                homeArrow.SetActive(false);
                                 transform.GetChild(i).gameObject.SetActive(true);
                                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
                                 break;
 
                             case 3:
+                                Backdrop.SetActive(true);
+                                bringNonUIToFront(unlockedWell,"VeryFront");
+                                // bringNonUIToFront(unlockedWell.transform.GetChild(1).);
+                                foreach (GameObject well in lockedWell)
+                                {
+                                    bringNonUIToFront(well,"VeryFront");
+                                    bringNonUIToFront(well.transform.GetChild(0).gameObject, "MoreThanVeryFront");
+                                    // bringNonUIToFront(well.transform.GetChild(1).);
+                                }
                                 transform.GetChild(i).gameObject.SetActive(true);
                                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
                                 break;
 
                             case 4:
-                                well3Arrow.SetActive(true);
+                                foreach (GameObject well in lockedWell)
+                                {
+                                    bringNonUIToBack(well,"Default");
+                                    bringNonUIToBack(well.transform.GetChild(0).gameObject,"Front");
+                                    // bringNonUIToBack(well.transform.GetChild(1).);
+                                }   
                                 transform.GetChild(i).gameObject.SetActive(true);
                                 yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
                                 break;
+
                             case 5:
-                                well3.GetComponent<BoxCollider2D>().isTrigger=true;
-                                textBox.SetActive(false);
+                                bringNonUIToBack(unlockedWell,"Default");
+                                // bringNonUIToBack(unlockedWell.transform.GetChild(1).);
+                                foreach (GameObject well in lockedWell)
+                                {
+                                    bringNonUIToFront(well,"VeryFront");
+                                    bringNonUIToFront(well.transform.GetChild(0).gameObject, "MoreThanVeryFront");
+                                    // bringNonUIToFront(well.transform.GetChild(1).);
+                                }
+                                transform.GetChild(i).gameObject.SetActive(true);
+                                yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
                                 break;
 
+                            case 6:
+                                bringNonUIToFront(unlockedWell,"VeryFront"); 
+                                // bringNonUIToFront(unlockedWell.transform.GetChild(1).);
+                                unlockedWell.GetComponent<BoxCollider2D>().enabled=true;
+                                foreach (GameObject well in lockedWell)
+                                {
+                                    bringNonUIToBack(well,"Default");
+                                    bringNonUIToBack(well.transform.GetChild(0).gameObject,"Front");
+                                    // bringNonUIToBack(well.transform.GetChild(1).);
+                                }
+                                transform.GetChild(i).gameObject.SetActive(true);
+                                yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
+                                break;
+
+                            case 7://stay at case 6
+                                unlockedWell.GetComponent<BoxCollider2D>().enabled=true;
+                                transform.GetChild(6).gameObject.SetActive(true);
+                                transform.GetChild(6).gameObject.GetComponent<Text>().text="Now let's begin your adventure! Click on the well to enter the well.";
+                                break;
                             default:
                                 Debug.LogError("wrong message index");
                                 break;
@@ -96,26 +147,58 @@ namespace DialogueSystem
                     }
                     break;
                 
-                case 1: //second time entered map
+                case 2: //second time entered map
                     Debug.Log("second time");
-                    LevelManager.instance.mapArrived+=1;
-                    for(int i=0; i<2; i++){
+                    // LevelManager.instance.mapArrived+=1;
+                    for(int i=0; i<6; i++){
+                        Deactivate();
+                        Debug.Log(i);
                         switch (i)
                         {
                             case 0:
-                                homeButton.GetComponent<Button>().enabled = false;
-                                well1.GetComponent<BoxCollider2D>().isTrigger=false;
-                                well2.GetComponent<BoxCollider2D>().isTrigger=false;
-                                well3.GetComponent<BoxCollider2D>().isTrigger=false;
+                                Backdrop.SetActive(true);
+                                arrowButtonsUp.SetActive(false);
+                                arrowButtonsDown.SetActive(false);
+                                settingButton.SetActive(false);
+                                homeButton.SetActive(false);
                                 textBox.SetActive(true);
-                                transform.GetChild(5).gameObject.SetActive(true);
-                                yield return new WaitUntil(() => transform.GetChild(5).GetComponent<TutorialLine>().isFinish);
+                                transform.GetChild(7).gameObject.SetActive(true);
+                                yield return new WaitUntil(() => transform.GetChild(7).GetComponent<TutorialLine>().isFinish);
                                 break;
                             case 1:
+                                arrowButtonsUp.SetActive(true);
+                                arrowButtonsDown.SetActive(true);
+                                arrowButtonsUp.GetComponent<Button>().enabled = false;
+                                arrowButtonsDown.GetComponent<Button>().enabled = false;
+                                transform.GetChild(8).gameObject.SetActive(true);
+                                yield return new WaitUntil(() => transform.GetChild(8).GetComponent<TutorialLine>().isFinish);
+                                break;
+
+                            case 2:
+                                homeButton.SetActive(true);
+                                homeButton.GetComponent<Button>().enabled = false;
+                                transform.GetChild(9).gameObject.SetActive(true);
+                                yield return new WaitUntil(() => transform.GetChild(9).GetComponent<TutorialLine>().isFinish);
+                                break;
+
+                            case 3:
+                                settingButton.SetActive(true);
+                                settingButton.GetComponent<Button>().enabled = false;  
+                                transform.GetChild(10).gameObject.SetActive(true);
+                                yield return new WaitUntil(() => transform.GetChild(10).GetComponent<TutorialLine>().isFinish);
+                                break;
+
+                            case 4: 
+                                transform.GetChild(11).gameObject.SetActive(true);
+                                yield return new WaitUntil(() => transform.GetChild(11).GetComponent<TutorialLine>().isFinish);
+                                break;
+
+                            case 5://disable tutorial UI
+                                arrowButtonsUp.GetComponent<Button>().enabled = true;
+                                arrowButtonsDown.GetComponent<Button>().enabled = true;
                                 homeButton.GetComponent<Button>().enabled = true;
-                                well1.GetComponent<BoxCollider2D>().isTrigger=true;
-                                well2.GetComponent<BoxCollider2D>().isTrigger=true;
-                                well3.GetComponent<BoxCollider2D>().isTrigger=true;
+                                settingButton.GetComponent<Button>().enabled = true;                                                                
+                                Backdrop.SetActive(false);
                                 textBox.SetActive(false);
                                 break;
 
@@ -127,7 +210,7 @@ namespace DialogueSystem
                     break;
 
                 default:
-                    Debug.Log("third time");
+                    Debug.Log("No more tuorial.");
                     break;
             }
             // for (int i = 0; i < 7; i++)
@@ -199,7 +282,7 @@ namespace DialogueSystem
             //     }
 
             // }
-            gameObject.SetActive(false);
+            // gameObject.SetActive(false);
             // LevelLoader.instance.LoadSpecificScene("VictoryScene");
         }
 
@@ -233,6 +316,16 @@ namespace DialogueSystem
         public bool AlwaysTrue()
         {
             return true;
+        }
+
+        private void bringNonUIToFront(GameObject theObject, string layer){
+            SpriteRenderer theObjectSprite = theObject.GetComponent<SpriteRenderer>();
+            theObjectSprite.sortingLayerName = layer;
+        }
+
+        private void bringNonUIToBack(GameObject theObject, string layer){
+            SpriteRenderer theObjectSprite = theObject.GetComponent<SpriteRenderer>();
+            theObjectSprite.sortingLayerName = layer;
         }
     }
 }

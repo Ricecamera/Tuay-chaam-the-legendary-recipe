@@ -75,12 +75,15 @@ TagManager:
   - name: Overlay
     uniqueID: 3882733785
     locked: 0
-  - name: Backdrop
-    uniqueID: 2147409085
-    locked: 0
   - name: Front
     uniqueID: 771028355
     locked: 0
+  - name: Backdrop
+    uniqueID: 2147409085
+    locked: 0
   - name: VeryFront
     uniqueID: 3015287721
+    locked: 0
+  - name: MoreThanVeryFront
+    uniqueID: 1734730739
     locked: 0

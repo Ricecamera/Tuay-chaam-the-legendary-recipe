@@ -23,29 +23,31 @@ public class ArrowButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if(chaam.GetComponent<Transform>().position.y >= 12.0){
                 // TChaamController.instance.vertical=0;
                 button.interactable=false;
-                Debug.Log("Up Disable");
+                // Debug.Log("Up Disable");
             }else{
                 button.interactable=true;
-                Debug.Log("Up Enable");
+                // Debug.Log("Up Enable");
             }
         }else{
             if(chaam.GetComponent<Transform>().position.y <= -5.2){
                 // TChaamController.instance.vertical=0;
                 button.interactable=false;
-                Debug.Log("Down Disable");
+                // Debug.Log("Down Disable");
             }else{
                 button.interactable=true;
-                Debug.Log("Down Enable");
+                // Debug.Log("Down Enable");
             }
         }
         
     }
 
     public void OnPointerDown(PointerEventData eventData){
+        Debug.Log("Hold Down");
         TChaamController.instance.vertical = (mode==1) ? 1:-1;
     }
 
     public void OnPointerUp(PointerEventData eventData){
+        Debug.Log("Hold Up");
         TChaamController.instance.vertical=0;
     }
 }
