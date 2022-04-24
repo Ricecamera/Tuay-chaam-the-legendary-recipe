@@ -452,7 +452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDatabase: {fileID: 11400000, guid: 7a26c6b001e03904b9c6c456b1f76679, type: 2}
-  savedDatabase: {fileID: 11400000, guid: e4cc5f299d376da40b1b71efe3a1af24, type: 2}
   defaultInventory: {fileID: 11400000, guid: f9bb5a5b972028c448c67913c4cf6386, type: 2}
 --- !u!4 &173671843
 Transform:

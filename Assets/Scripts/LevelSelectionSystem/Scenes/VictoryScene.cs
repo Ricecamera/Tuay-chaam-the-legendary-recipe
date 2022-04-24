@@ -37,7 +37,7 @@ public class VictoryScene : MonoBehaviour
     {
         Debug.Log(LevelManager.instance.thislevel);
         CharacterSelecter.instance.ResetCharacter();
-        if (SceneManager.GetActiveScene().name == "VictorySceneForTutorial") CharacterSelecter.instance.chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item;
+        if (SceneManager.GetActiveScene().name == "VictorySceneForTutorial") CharacterSelecter.instance.chaam = SaveManager.instance.playerDatabase.inventory.Container.ChaamItems[0].item;
         // TODO set stars to correct state 
         //* die = 0 -> 3 stars -> all star.GetComponent<Animator>().setTrigger("Start")
         //* die = 1 -> 2 stars -> starR is not trigger
@@ -95,7 +95,7 @@ public class VictoryScene : MonoBehaviour
 
 
             bool addPak = false;
-            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.MainItems)
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().inventory.Container.MainItems)
             {
                 if (slot.item == item)
                 {
@@ -103,7 +103,7 @@ public class VictoryScene : MonoBehaviour
                     break;
                 }
             }
-            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.ChaamItems)
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().inventory.Container.ChaamItems)
             {
                 if (addPak) break;
                 if (slot.item == item)
@@ -112,7 +112,7 @@ public class VictoryScene : MonoBehaviour
                     break;
                 }
             }
-            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().GetInventory().Container.SupportItems)
+            foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().inventory.Container.SupportItems)
             {
                 if (addPak) break;
                 if (slot.item == item)
@@ -129,6 +129,8 @@ public class VictoryScene : MonoBehaviour
         Debug.Log(theClickToContinue);
         theClickToContinue.faceColor = new Color32(255, 255, 255, 0);
         theClickToContinue.outlineColor = new Color32(0, 0, 0, 0);
+
+        SaveManager.instance.Save();
     }
 
     private bool updateTrigger = true;

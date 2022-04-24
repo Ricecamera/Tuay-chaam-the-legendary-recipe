@@ -44,7 +44,7 @@ public class Spawner : MonoBehaviour
             {
                 Debug.Log("It's working bro");
                 //Debug.Log(SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab);
-                chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab;
+                chaam = SaveManager.instance.playerDatabase.inventory.Container.ChaamItems[0].item.prefab;
                 plants.Add(DatabaseManager.instance.GetItemFromGameDB("tonhom").prefab);
             }
             GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);

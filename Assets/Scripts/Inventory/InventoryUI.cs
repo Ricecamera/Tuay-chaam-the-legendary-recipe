@@ -14,7 +14,7 @@ public class InventoryUI : MonoBehaviour
     static Dictionary<GameObject, InventorySlot> inventorySlots = new Dictionary<GameObject, InventorySlot>();
     void Start()
     {
-        inventory = playerDatabase.GetInventory();
+        inventory = playerDatabase.inventory;
         CreateSlots();
     }
 

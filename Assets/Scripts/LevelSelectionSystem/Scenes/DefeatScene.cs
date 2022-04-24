@@ -19,6 +19,8 @@ public class DefeatScene : MonoBehaviour
         Debug.Log(theClickToContinue);
         theClickToContinue.faceColor = new Color32(255, 255, 255, 0);
         theClickToContinue.outlineColor = new Color32(0, 0, 0, 0);
+
+        SaveManager.instance.Save();
     }
 
     private bool updateTrigger = true;

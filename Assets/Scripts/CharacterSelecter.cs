@@ -73,7 +73,7 @@ public class CharacterSelecter : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             Debug.Log("assign chaam");
-            chaam = SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item;
+            chaam = SaveManager.instance.playerDatabase.inventory.Container.ChaamItems[0].item;
         }
         else
         {

@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TooltipScreenSpaceUI : MonoBehaviour
 {
 
 
-    private RectTransform backgroundRectTransform;
+    //private RectTransform backgroundRectTransform;
     private TextMeshProUGUI textMeshPro;
 
     public static TooltipScreenSpaceUI instance { get; private set; }
@@ -17,12 +18,19 @@ public class TooltipScreenSpaceUI : MonoBehaviour
     [SerializeField]
     private RectTransform canvasRectTransform;
 
+    [SerializeField]
+    private int characterLimit;
+
+    private LayoutElement layoutElement;
+
     private void Awake()
     {
         instance = this;
-        backgroundRectTransform = transform.Find("backgroundTooltip").GetComponent<RectTransform>();
-        textMeshPro = transform.Find("textTooltip").GetComponent<TextMeshProUGUI>();
+        //backgroundRectTransform = transform.Find("backgroundTooltip").GetComponent<RectTransform>();
+        //textMeshPro = transform.Find("textTooltip").GetComponent<TextMeshProUGUI>();
+        textMeshPro = transform.Find("Text").GetComponent<TextMeshProUGUI>();
         rectTransform = transform.GetComponent<RectTransform>();
+        layoutElement = transform.GetComponent<LayoutElement>();
 
         hideTooltip();
 
@@ -30,22 +38,43 @@ public class TooltipScreenSpaceUI : MonoBehaviour
 
     private void Update()
     {
-        Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+        //Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
 
-        if (anchoredPosition.x + backgroundRectTransform.rect.width > canvasRectTransform.rect.width)
-        {
-            //Tooltip left screen on right side
-            anchoredPosition.x = canvasRectTransform.rect.width - backgroundRectTransform.rect.width;
+        // if (anchoredPosition.x + gameObject.GetComponent<Image>().sprite.rect.width > canvasRectTransform.rect.width)
+        // {
+        //     //Tooltip left screen on right side
+        //     anchoredPosition.x = canvasRectTransform.rect.width - gameObject.GetComponent<Image>().sprite.rect.width;
 
-        }
+        // }
 
-        if (anchoredPosition.y + backgroundRectTransform.rect.height > canvasRectTransform.rect.height)
-        {
-            //Tooltip left screen on top side
-            anchoredPosition.y = canvasRectTransform.rect.height - backgroundRectTransform.rect.height;
+        // if (anchoredPosition.y + gameObject.GetComponent<Image>().sprite.rect.height > canvasRectTransform.rect.height)
+        // {
+        //     //Tooltip left screen on top side
+        //     anchoredPosition.y = canvasRectTransform.rect.height - gameObject.GetComponent<Image>().sprite.rect.height;
 
-        }
-        rectTransform.anchoredPosition = anchoredPosition;
+        // }
+
+        // Debug.Log("Width : " + gameObject.GetComponent<Image>().sprite.rect.width + " Scale : " + rectTransform.localScale.x);
+        // Debug.Log("Height : " + gameObject.GetComponent<Image>().sprite.rect.width + " Scale : " + rectTransform.localScale.x);
+
+        // anchoredPosition.x = (canvasRectTransform.rect.width - gameObject.GetComponent<Image>().sprite.rect.width) * rectTransform.localScale.x;
+        // anchoredPosition.y = (canvasRectTransform.rect.height - gameObject.GetComponent<Image>().sprite.rect.height) * rectTransform.localScale.y;
+        // rectTransform.anchoredPosition = anchoredPosition;
+        // gameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
+
+        Vector2 position = Input.mousePosition;
+
+        transform.position = new Vector2(position.x + 50, position.y + 10);
+
+        float pivotX = position.x / Screen.width;
+        float pivotY = position.y / Screen.height;
+
+        rectTransform.pivot = new Vector2(pivotX, pivotY);
+
+        int textLength = textMeshPro.text.Length;
+
+        layoutElement.enabled = (textLength > characterLimit) ? true : false;
+
     }
 
     private void setText(string tooltipText)
@@ -56,9 +85,9 @@ public class TooltipScreenSpaceUI : MonoBehaviour
 
         textMeshPro.ForceMeshUpdate();
 
-        Vector2 textSize = textMeshPro.GetRenderedValues(false);
-        Vector2 paddingSize = new Vector2(20, 8);
-        backgroundRectTransform.sizeDelta = textSize + paddingSize;
+        // Vector2 textSize = textMeshPro.GetRenderedValues(false);
+        // Vector2 paddingSize = new Vector2(20, 8);
+        // backgroundRectTransform.sizeDelta = textSize + paddingSize;
     }
 
     private void showTooltip(string tooltipText)

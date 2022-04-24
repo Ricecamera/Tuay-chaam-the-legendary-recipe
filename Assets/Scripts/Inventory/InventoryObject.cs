@@ -18,10 +18,18 @@ public class InventoryObject : ScriptableObject
     //    Container.MainItems[idx].UpdateSlot(item._name, item, 1);
     //}
 
+    private Dictionary<ItemType, List<string>> defaultInventory;
+
     [ContextMenu("Clear")]
     public void Clear()
     {
         this.Container = new Inventory();
+    }
+
+    public void SetDefaultInventory()
+    {
+        defaultInventory = new Dictionary<ItemType, List<string>>();
+        defaultInventory.Add(ItemType.Chaam, new List<string>() { "Chaam1" });
     }
 
     public void ResetInventory()
