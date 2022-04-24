@@ -27,6 +27,8 @@ TagManager:
   - battleManager
   - battleBG
   - Star
+  - CamButtonUp
+  - CamButtonDown
   layers:
   - Default
   - TransparentFX
@@ -79,6 +81,12 @@ TagManager:
   - name: Front
     uniqueID: 771028355
     locked: 0
+  - name: Backdrop2
+    uniqueID: 2490866145
+    locked: 0
   - name: VeryFront
     uniqueID: 3015287721
+    locked: 0
+  - name: MoreThanVeryFront
+    uniqueID: 3031227729
     locked: 0

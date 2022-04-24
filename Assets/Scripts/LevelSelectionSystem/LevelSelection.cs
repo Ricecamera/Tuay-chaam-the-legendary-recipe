@@ -37,7 +37,7 @@ public class LevelSelection : MonoBehaviour
         else
         {
             padLock.enabled = true;
-            padLock.GetComponent<BoxCollider2D>().enabled = true;
+            // padLock.GetComponent<BoxCollider2D>().enabled = true;
         }
 
     }
