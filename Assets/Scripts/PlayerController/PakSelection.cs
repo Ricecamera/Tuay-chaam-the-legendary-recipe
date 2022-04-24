@@ -48,8 +48,14 @@ public class PakSelection : MonoBehaviour
         AddListenerOfUI();
         selectedSkill = -1;
         Reset();
+        Debug.Log("Come Start in PakSelection");
         _UIcontroller.UpdateUI(GameState.CHOOSE_CHARACTER);
         ingredient = new List<string>();
+
+        if (SceneManager.GetActiveScene().name == "Battle1-2V2")
+        {
+            GameObject.FindWithTag("GameController").GetComponent<PakSelection>().enabled = false;
+        }
     }
 
     // Update is called once per frame

@@ -40,12 +40,6 @@ public class Spawner : MonoBehaviour
         try
         {
 
-            for (int i = 0; i < plants.Count; i++)
-            {
-                GameObject p = Instantiate(plants[i], allySpawnPos[i].position, Quaternion.identity, allySpawnPos[i]);
-                p.tag = allySpawnPos[i].gameObject.tag;
-                CharacterManager.instance.AddCharacter(p.tag, p);
-            }
             if (SceneManager.GetActiveScene().name == "Battle1-2V2")
             {
                 Debug.Log("It's working bro");
@@ -56,6 +50,13 @@ public class Spawner : MonoBehaviour
             GameObject chaamObject = Instantiate(chaam, chaamSpawnPos.position, Quaternion.identity, chaamSpawnPos);
             chaamObject.tag = chaamSpawnPos.gameObject.tag;
             CharacterManager.instance.AddCharacter(chaamObject.tag, chaamObject);
+
+            for (int i = 0; i < plants.Count; i++)
+            {
+                GameObject p = Instantiate(plants[i], allySpawnPos[i].position, Quaternion.identity, allySpawnPos[i]);
+                p.tag = allySpawnPos[i].gameObject.tag;
+                CharacterManager.instance.AddCharacter(p.tag, p);
+            }
 
 
         }

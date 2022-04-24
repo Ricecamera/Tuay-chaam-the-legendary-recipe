@@ -133,6 +133,7 @@ MonoBehaviour:
   healthBar: {fileID: 8080673580067509697}
   healVfx: {fileID: 3139294328987919999}
   damagedVfx: {fileID: 7973207270286446645}
+  healthNumber: {fileID: 5487647298004365096}
 --- !u!114 &3074474972646902305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +153,8 @@ MonoBehaviour:
   selectedIcon: {fileID: 2346406793200870394}
   buffDisplayer: {fileID: 0}
   enitityData: {fileID: 11400000, guid: 58d862d5d2ea05140995f70217889707, type: 2}
+  damageNumber: {fileID: 0}
+  damageNumberText: {fileID: 0}
 --- !u!1001 &669062621399752485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -754,5 +757,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5487647298004365096 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4312586281569104609, guid: 462953d9705bd264a9ce9a3df2c8693d, type: 3}
+  m_PrefabInstance: {fileID: 8642804038633037257}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

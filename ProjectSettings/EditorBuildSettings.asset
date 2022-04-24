@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/CutScene/CutScene_3.unity
     guid: 8653ae2e2d1e5824e8367d3f8db72227
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TutorialS/BattleTutorialCookSystem.unity
     guid: 44bcd71d5be329b418969add7abe0471
   - enabled: 1
@@ -44,7 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoseScene.unity
     guid: 99f8c9567b660944da9d37e010150137
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TutorialS/VictorySceneForTutorial.unity
     guid: c3fed7d6902e67844ba48a71442fb8b0
   m_configObjects: {}

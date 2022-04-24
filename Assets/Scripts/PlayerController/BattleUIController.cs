@@ -19,7 +19,7 @@ public class BattleUIController : MonoBehaviour
 
     public GameObject supportMenu, comboPanel, speedPanel;
 
-    public Image[] speedImage;
+    public GameObject[] speed;
 
     //Text
     public Text selectTargetText;
@@ -226,8 +226,13 @@ public class BattleUIController : MonoBehaviour
                 skillMenu.skills[1].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 skillMenu.skills[2].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.white;
-                speedPanel.gameObject.SetActive(true);
-                UpdateSpeedPanel();
+                Debug.Log("BEFORE UPDATE SPEED");
+
+                if (SceneManager.GetActiveScene().name != "Battle1-2V2")
+                {
+                    UpdateSpeedPanel();
+                    speedPanel.gameObject.SetActive(true);
+                }
                 break;
         }
     }
@@ -251,16 +256,32 @@ public class BattleUIController : MonoBehaviour
 
     private void UpdateSpeedPanel()
     {
+        Debug.Log("Come Inside Speed");
         List<PakRender> aliveCharacter = CharacterManager.instance.GetSpeedOfCharacters();
-        for (int i = 0; i < speedImage.Length; i++)
+        Debug.Log("---------------------" + aliveCharacter.Capacity.ToString());
+        for (int i = 0; i < speed.Length; i++)
         {
             if (i < aliveCharacter.Count)
             {
-                speedImage[i].sprite = aliveCharacter[i].Entity.image;
+                speed[i].GetComponent<Image>().sprite = aliveCharacter[i].Entity.image;
+                if (CharacterManager.IsEnemyTeam(aliveCharacter[i].tag))
+                {
+                    speed[i].transform.GetChild(0).gameObject.SetActive(true);
+                    speed[i].transform.GetChild(1).gameObject.SetActive(false);
+                }
+                else if (CharacterManager.IsPlayerTeam(aliveCharacter[i].tag))
+                {
+                    speed[i].transform.GetChild(0).gameObject.SetActive(false);
+                    speed[i].transform.GetChild(1).gameObject.SetActive(true);
+                }
+                else
+                {
+                    Debug.Log("Error");
+                }
             }
             else
             {
-                speedImage[i].gameObject.SetActive(false);
+                speed[i].SetActive(false);
             }
         }
     }
