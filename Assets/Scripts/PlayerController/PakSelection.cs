@@ -195,7 +195,7 @@ public class PakSelection : MonoBehaviour
                 for (int i = 0; i < selectedPak.skills.Length; i++)
                 {
                     Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
-                    tooltip.setContent(selectedPak.skills[i].description);
+                    tooltip.setContent(selectedPak.skills[i].name, selectedPak.skills[i].description);
                 }
 
                 if (ally.InAction())
@@ -274,7 +274,7 @@ public class PakSelection : MonoBehaviour
             for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; i++)
             {
                 Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
-                tooltip.setContent(selectedPak.skills[i].description);
+                tooltip.setContent(selectedPak.skills[i].name, selectedPak.skills[i].description);
             }
 
             if (currentState == GameState.CHOOSE_CHAAM_SKILL)

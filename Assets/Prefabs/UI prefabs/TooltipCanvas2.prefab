@@ -226,8 +226,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 300
-  m_fontSizeBase: 300
+  m_fontSize: 250
+  m_fontSizeBase: 250
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -507,6 +507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce51fdf7e3f9d14f8d6a29c46518166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  header: {fileID: 3435784275727427681}
+  description: {fileID: 3435784274292644614}
   canvasRectTransform: {fileID: 3435784276023990815}
   characterLimit: 30
 --- !u!114 &3435784276094262458

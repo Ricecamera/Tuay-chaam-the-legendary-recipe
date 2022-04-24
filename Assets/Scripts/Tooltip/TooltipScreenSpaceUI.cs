@@ -7,9 +7,12 @@ using TMPro;
 public class TooltipScreenSpaceUI : MonoBehaviour
 {
 
-
+    [SerializeField]
+    private TextMeshProUGUI header;
     //private RectTransform backgroundRectTransform;
-    private TextMeshProUGUI textMeshPro;
+
+    [SerializeField]
+    private TextMeshProUGUI description;
 
     public static TooltipScreenSpaceUI instance { get; private set; }
 
@@ -28,7 +31,7 @@ public class TooltipScreenSpaceUI : MonoBehaviour
         instance = this;
         //backgroundRectTransform = transform.Find("backgroundTooltip").GetComponent<RectTransform>();
         //textMeshPro = transform.Find("textTooltip").GetComponent<TextMeshProUGUI>();
-        textMeshPro = transform.Find("Text").GetComponent<TextMeshProUGUI>();
+        // description = transform.Find("Text").GetComponent<TextMeshProUGUI>();
         rectTransform = transform.GetComponent<RectTransform>();
         layoutElement = transform.GetComponent<LayoutElement>();
 
@@ -71,29 +74,30 @@ public class TooltipScreenSpaceUI : MonoBehaviour
 
         rectTransform.pivot = new Vector2(pivotX, pivotY);
 
-        int textLength = textMeshPro.text.Length;
+        int textLength = description.text.Length;
 
         layoutElement.enabled = (textLength > characterLimit) ? true : false;
 
     }
 
-    private void setText(string tooltipText)
+    private void setText(string headerText, string describeText)
     {
 
+        header.SetText(headerText);
+        header.ForceMeshUpdate();
 
-        textMeshPro.SetText(tooltipText);
-
-        textMeshPro.ForceMeshUpdate();
+        description.SetText(describeText);
+        description.ForceMeshUpdate();
 
         // Vector2 textSize = textMeshPro.GetRenderedValues(false);
         // Vector2 paddingSize = new Vector2(20, 8);
         // backgroundRectTransform.sizeDelta = textSize + paddingSize;
     }
 
-    private void showTooltip(string tooltipText)
+    private void showTooltip(string headerText, string describeText)
     {
         gameObject.SetActive(true);
-        setText(tooltipText);
+        setText(headerText, describeText);
     }
 
     private void hideTooltip()
@@ -101,9 +105,9 @@ public class TooltipScreenSpaceUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public static void showTooltip_Static(string tooltipString)
+    public static void showTooltip_Static(string headerText, string describeText)
     {
-        instance.showTooltip(tooltipString);
+        instance.showTooltip(headerText, describeText);
     }
 
     public static void hideTooltip_Static()
