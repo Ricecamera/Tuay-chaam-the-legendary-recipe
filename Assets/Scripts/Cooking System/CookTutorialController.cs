@@ -40,7 +40,7 @@ public class CookTutorialController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "BattleTutorialCookSystem")
         {
-            GameObject.FindGameObjectsWithTag("Chaam")[1].GetComponent<ChaamRender>().setGuage(100);
+            GameObject.FindGameObjectWithTag("Chaam").GetComponent<ChaamRender>().setGuage(100);
         }
 
         for (int i = 0; i < popUps.Length; i++)
@@ -164,8 +164,6 @@ public class CookTutorialController : MonoBehaviour
                 {
                     popUpIndex++;
                 });
-                //chaam.GetComponent<PakRender>().SlideToPosition(enemy.GetComponent<PakRender>().GetPosition(),)
-
             }
 
         }

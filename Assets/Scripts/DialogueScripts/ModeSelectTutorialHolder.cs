@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DialogueSystem;
 using UnityEngine.UI;
@@ -56,28 +55,5 @@ public class ModeSelectTutorialHolder : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
-    }
-
-    public bool WaitTrigger(string name)
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-            if (hit.collider != null)
-            {
-                if (hit.collider.gameObject.name == name)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public bool AlwaysTrue()
-    {
-        return true;
     }
 }
