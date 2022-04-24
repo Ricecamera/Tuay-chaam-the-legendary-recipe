@@ -11,6 +11,3 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7132be646ff1c25489b8eceba18a51cf, type: 3}
   m_Name: PlayerDataBase
-  m_EditorClassIdentifier: 
-  unlockStatus: 1
-  inventory: {fileID: 11400000, guid: 007f32850fc0bc44aba7323359363f21, type: 2}

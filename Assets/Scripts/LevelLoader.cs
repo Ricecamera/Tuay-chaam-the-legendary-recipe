@@ -50,15 +50,8 @@ public class LevelLoader : MonoBehaviour
                         LoadNextScene();
                     }
                 }); ;
-                backButton.onClick.AddListener(LoadPrevScene);
-                // helpButton.onClick.AddListener(Help);
             }
         }
-    }
-
-    public void Help()
-    {
-        Debug.Log("Help");
     }
 
     public void ExitGame()
@@ -69,13 +62,11 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadNextScene()
     {
-        Debug.Log("click");
         StartCoroutine(LoadLevelByIndex(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
     public void LoadPrevScene()
     {
-        Debug.Log("back");
         StartCoroutine(LoadLevelByIndex(SceneManager.GetActiveScene().buildIndex - 1));
     }
 
