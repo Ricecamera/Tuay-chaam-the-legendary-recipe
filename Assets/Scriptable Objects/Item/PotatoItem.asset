@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa098361363914746ba90fafd10589ea, type: 3}
+  m_Name: PotatoItem
+  m_EditorClassIdentifier: 
+  _name: potato
+  uiDisplay: {fileID: 21300000, guid: c85ca147c51324647ad962d10613dfac, type: 3}
+  type: 0
+  prefab: {fileID: 7112338558754160059, guid: bc2967c7df9889445a333fdbcadf3887, type: 3}
+  description: 

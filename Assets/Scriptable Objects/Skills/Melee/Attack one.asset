@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b10eff096be6a94ba0879ebb33a7392, type: 3}
+  m_Name: Attack one
+  m_EditorClassIdentifier: 
+  skillId: VA1
+  skillName: AttackOneEnemy
+  skillNation: 0
+  icon: {fileID: 21300000, guid: 9d94a1e039025e449a567efc5899d57c, type: 3}
+  description: Deal 100% of attack to one target
+  actionType: TargetOneEnemy
+  maxCooldown: 1
+  damageRatio: 1

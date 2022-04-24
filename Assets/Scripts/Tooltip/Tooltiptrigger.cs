@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 public class Tooltiptrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
-    public string content;
+    public string headerText;
+
+    public string describeText;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        TooltipScreenSpaceUI.showTooltip_Static(content);
+        TooltipScreenSpaceUI.showTooltip_Static(headerText, describeText);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -18,9 +20,10 @@ public class Tooltiptrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         TooltipScreenSpaceUI.hideTooltip_Static();
     }
 
-    public void setContent(string contentString)
+    public void setContent(string headerText, string describeText)
     {
-        this.content = contentString;
+        this.headerText = headerText;
+        this.describeText = describeText;
     }
 
 

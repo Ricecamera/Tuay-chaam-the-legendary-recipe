@@ -5,18 +5,18 @@ using UnityEngine;
 namespace BattleScene.BattleLogic
 
 {
-
+    [Serializable]
     public class ActionCommand : IComparable, ICommand
     {
         private float speed;                // field that determine the execution order of skills
 
         public PakRender caller;            // a index of the character calling this action
-        public int selectedSkill;        // a index of the skill to be execute
+        public SkillExecutor selectedSkill;        // a index of the skill to be execute
         public List<PakRender> targets;     // indice of the allied targets
 
         // Constructor
 
-        public ActionCommand(PakRender caller, int selectedSkill, List<PakRender> targets, float speed)
+        public ActionCommand(PakRender caller, SkillExecutor selectedSkill, List<PakRender> targets, float speed)
         {
             this.caller = caller;
             this.selectedSkill = selectedSkill;
@@ -36,29 +36,34 @@ namespace BattleScene.BattleLogic
         }
 
         // Check if targets and the caller dies in the action
-        public void CheckDead(List<PakRender> diedThisTurn) {
+        public void CheckDead(List<PakRender> diedThisTurn)
+        {
             //get CharManager to get array of char.
-            Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
+            //Spawner spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
 
             //Check death. If dead, the dead animation should be play
-            if (!caller.healthSystem.IsAlive && !diedThisTurn.Contains(caller)) {
+            if (!caller.healthSystem.IsAlive && !diedThisTurn.Contains(caller))
+            {
                 diedThisTurn.Add(caller);
-                Debug.Log(caller.Pak.EntityName + " is killed.");
+                Debug.Log(caller.Entity.EntityName + " is killed.");
                 /* TODO: Insert some death animation here. */
 
 
                 //set disable is better
-                if (!caller.healthSystem.IsAlive) {
+                if (!caller.healthSystem.IsAlive)
+                {
                     GameObject callerGameObject = caller.gameObject;
                     callerGameObject.SetActive(false);
                 }
             }
 
-            foreach (PakRender e in targets) {
-                Debug.Log(e.Pak.EntityName);
-                if (!e.healthSystem.IsAlive && !diedThisTurn.Contains(e)) { //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
+            foreach (PakRender e in targets)
+            {
+                Debug.Log(e.Entity.EntityName);
+                if (!e.healthSystem.IsAlive && !diedThisTurn.Contains(e))
+                { //ตัว clone Pak ไม่มี health system. แต่ ตัว clone Chaam มีเฉย
                     diedThisTurn.Add(e);
-                    Debug.Log(e.Pak.EntityName + " is killed.");
+                    Debug.Log(e.Entity.EntityName + " is killed.");
                     /* TODO: Insert some death animation here. */
 
                     //set disable is better
@@ -74,16 +79,16 @@ namespace BattleScene.BattleLogic
 
             PakRender caller2 = caller.GetComponent<PakRender>();
 
-            Skill callerskill = caller2.skill[selectedSkill]; //used to be Skill callerskill = caller2.skill[0];
-
             bool pass = false;
             // if the selected skill is attackWholefield, do it !!
-            if (caller.skill[selectedSkill].SkillId.CompareTo("B:)") == 0)
+            if (selectedSkill.SkillId.CompareTo("B:)") == 0)
                 pass = true;
             else
                 // if not check if some targets are alive
-                foreach (var target in targets) {
-                    if (target.healthSystem.IsAlive) {
+                foreach (var target in targets)
+                {
+                    if (target.healthSystem.IsAlive)
+                    {
                         pass = true;
                         break;
                     }
@@ -92,18 +97,21 @@ namespace BattleScene.BattleLogic
             if (pass)
             {
                 // Invoke Oncomplete and unsubscribe FinishExecute event
-                Action finishCallback = () => {
+                Action finishCallback = () =>
+                {
                     onComplete();
-                    callerskill.OnFinishExecute -= onComplete;
+                    selectedSkill.OnFinishExecute -= onComplete;
                 };
 
                 // Subscribe to skill event
-                callerskill.OnFinishExecute += finishCallback;
+                selectedSkill.OnFinishExecute += finishCallback;
 
                 //dynamic skill call
-                callerskill.performSkill(caller2, targets);
+                selectedSkill?.performSkill(targets, caller2);
 
-            }else{
+            }
+            else
+            {
                 Debug.Log("The target is already died.");
                 onComplete();
             }
@@ -121,6 +129,19 @@ namespace BattleScene.BattleLogic
             {
                 throw new ArgumentException("Object doesn't have a property speed");
             }
+        }
+
+        public int convertSelectedSkillToIndex()
+        {
+            for (int i = 0; i < caller.skills.Length; i++)
+            {
+                if (caller.skills[i].skillId == selectedSkill.SkillId)
+                {
+                    return i;
+                }
+            }
+            Debug.Log("False index in skill");
+            return -1;
         }
     }
 }

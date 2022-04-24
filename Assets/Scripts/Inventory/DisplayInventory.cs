@@ -134,7 +134,7 @@ public class DisplayInventory : MonoBehaviour
                 v = new Vector3(80f, 0f, 0f);
                 break;
             case 2:
-                v = new Vector3(0f, -90f, 0f);
+                v = new Vector3(40f, -90f, 0f);
                 break;
             case 3:
                 v = new Vector3(80f, -90f, 0f);
@@ -177,6 +177,7 @@ public class DisplayInventory : MonoBehaviour
             obj.SetActive(false);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
             // Debug.Log(inventory.Container.ChaamItems[i].item);
+            Debug.Log("#" + i + ": " + inventory.Container.MainItems[i].item);
             if (inventory.Container.MainItems[i].item != null)
             {
                 obj.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = inventory.Container.MainItems[i].item.uiDisplay;

@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+
 
 public class HealthSystem : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class HealthSystem : MonoBehaviour
 
     public ParticleSystem healVfx;
     public ParticleSystem damagedVfx;
+
+    [SerializeField]
+    private TextMeshProUGUI healthNumber;
 
     public int CurrentHp
     {
@@ -44,7 +49,7 @@ public class HealthSystem : MonoBehaviour
         set
         {
             if (value)
-                currentHp = (int) Mathf.Round(maxHp * 0.5f);
+                currentHp = (int)Mathf.Round(maxHp * 0.5f);
             else
                 currentHp = 0;
         }
@@ -52,10 +57,10 @@ public class HealthSystem : MonoBehaviour
 
     public void Initialize(int maxHp)
     {
-        Debug.Log("Health system work");
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         healthBar.Reset();
+        healthNumber.SetText(maxHp.ToString());
     }
 
     public void TakeDamage(int damage)
@@ -69,7 +74,7 @@ public class HealthSystem : MonoBehaviour
 
         float fill = currentHp / (float)maxHp;
         healthBar.SetFill(fill);
-
+        healthNumber.SetText(currentHp.ToString());
 
     }
 
@@ -84,6 +89,7 @@ public class HealthSystem : MonoBehaviour
 
         float fill = currentHp / (float)maxHp;
         healthBar.SetFill(fill);
+        healthNumber.SetText(currentHp.ToString());
     }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -20,33 +21,37 @@ public class LevelSelection : MonoBehaviour
     [SerializeField]
     private Animator transition;
 
+    [SerializeField]
+    private GameObject label;
+
 
     void Start()
     {
-
-        padLock.enabled = true;
+        label.GetComponent<TextMeshProUGUI>().text = "1-" + levelname.ToString();
         unlocked = LevelManager.instance.unlockStatus[levelname - 1];
-
         if (unlocked)
         {
-            padLock.enabled = false;
-            padLock.GetComponent<BoxCollider2D>().enabled = false;
-        }
-    }
-
-    void Update()
-    {
-        if (unlocked)
-        {
-            transition.SetTrigger("Unlock");
-            padLock.enabled = false;
-            padLock.GetComponent<BoxCollider2D>().enabled = false;
+            padLock.gameObject.SetActive(false);
+            //padLock.GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {
             padLock.enabled = true;
-            padLock.GetComponent<BoxCollider2D>().enabled = true;
+            // padLock.GetComponent<BoxCollider2D>().enabled = true;
         }
+
+    }
+
+    void Update()
+    {
+        // if(unlocked){
+        //     if (!LevelManager.instance.playAniAlreadyMap[levelname - 1])
+        //     {
+        //         Debug.Log("Get into playAnimation clause ");
+        //         transition.SetTrigger("Unlock");
+        //         LevelManager.instance.playAniAlreadyMap[levelname - 1] = true;
+        //     }
+        // }
     }
 
     public void PressSelection(string level)

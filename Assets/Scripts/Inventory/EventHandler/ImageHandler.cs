@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler,
                             IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
@@ -48,10 +49,8 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // if (eventData.pointerDrag == null)
-        // {
         eventData.pointerEnter.GetComponent<RectTransform>().localScale = new Vector3(1.1f, 1.1f, 1.1f);
-        // }
+        //FetchSkillData();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -61,8 +60,17 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("Pointer Up");
+        string skillTxt = "Skills :\n";
+        foreach (SkillObj skillObj in itemObject.prefab.GetComponent<PakRender>().skills)
+        {
+            skillTxt += "- " + skillObj.name + "\n";
+        }
 
+        if (SceneManager.GetActiveScene().name == "ModeSelection")
+        {
+            Debug.Log("Change detail in ModeSelection");
+            CharacterDetail.ChangeDetail(itemObject._name.ToUpper(), skillTxt, itemObject.uiDisplay);
+        }
 
         // swap between item and item
         if (eventData.pointerCurrentRaycast.gameObject.name == "ItemImage" && eventData.pointerCurrentRaycast.gameObject.activeSelf &&
@@ -92,12 +100,23 @@ public class ImageHandler : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         {
             if (dragItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
 
-            if (currentItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.AddCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
+            if (currentItem.GetComponent<ImageHandler>().itemObject != null)
+            {
+                CharacterSelecter.instance.AddCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
+            }
         }
         else if (currentItem.transform.parent.CompareTag("slot") && dragItem.transform.parent.CompareTag("inventory"))
         {
             if (currentItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.RemoveCharacter(currentItem.GetComponent<ImageHandler>().itemObject);
-            if (dragItem.GetComponent<ImageHandler>().itemObject != null) CharacterSelecter.instance.AddCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
+            if (dragItem.GetComponent<ImageHandler>().itemObject != null)
+            {
+                CharacterSelecter.instance.AddCharacter(dragItem.GetComponent<ImageHandler>().itemObject);
+            }
         }
+    }
+
+    public void FetchSkillData()
+    {
+        //Debug.Log(this.itemObject.prefab.gameObject.GetComponent<CarrotRender>());
     }
 }

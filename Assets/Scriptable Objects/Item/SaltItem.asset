@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ffbd3a15d2b87341a7b5dea783aaa92, type: 3}
   m_Name: SaltItem
   m_EditorClassIdentifier: 
-  id: 0
+  _name: salt
   uiDisplay: {fileID: 21300000, guid: b51f89b4981927048855c360b343c389, type: 3}
   type: 2
+  prefab: {fileID: 0}
   description: 

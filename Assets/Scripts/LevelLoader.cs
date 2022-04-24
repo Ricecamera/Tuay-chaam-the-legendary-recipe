@@ -31,33 +31,14 @@ public class LevelLoader : MonoBehaviour
             {
                 Button playButton = GameObject.Find("Play").GetComponent<Button>();
                 Button quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
-                playButton.onClick.AddListener(LoadNextScene);
+                playButton.onClick.AddListener(() => SceneManager.LoadScene("ModeSelection"));
                 quitButton.onClick.AddListener(ExitGame);
-<<<<<<< HEAD
-            }
-            if (SceneManager.GetActiveScene().buildIndex == 9) //* Character Select
-=======
-
-                // Test
-
-                Button newGameButton = GameObject.Find("New Game").GetComponent<Button>();
-                Button loadGameButton = GameObject.Find("Load Game").GetComponent<Button>();
-                newGameButton.onClick.AddListener(LoadNextScene);
-                loadGameButton.onClick.AddListener(LoadNextScene);
-
-                //
             }
             if (SceneManager.GetActiveScene().buildIndex == 3) //* Character Select
->>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
             {
                 Button startButton = GameObject.Find("Start Button").GetComponent<Button>();
                 Button backButton = GameObject.Find("BackButton").GetComponent<Button>();
-                Button helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
-<<<<<<< HEAD
-                startButton.onClick.AddListener(LoadNextScene);
-                backButton.onClick.AddListener(LoadPrevScene);
-                helpButton.onClick.AddListener(Help);
-=======
+                // Button helpButton = GameObject.Find("HelpButton").GetComponent<Button>();
                 startButton.onClick.AddListener(() =>
                 {
                     if (CharacterSelecter.instance.GetCharacters().Count < 1 || CharacterSelecter.instance.GetChaam() == null)
@@ -68,18 +49,9 @@ public class LevelLoader : MonoBehaviour
                     {
                         LoadNextScene();
                     }
-                });
-                backButton.onClick.AddListener(LoadPrevScene);
-                helpButton.onClick.AddListener(Help);
-
->>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
+                }); ;
             }
         }
-    }
-
-    public void Help()
-    {
-        Debug.Log("Help");
     }
 
     public void ExitGame()
@@ -90,21 +62,11 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadNextScene()
     {
-<<<<<<< HEAD
-        Debug.Log("click");
-=======
-        //Debug.Log("click");
->>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
         StartCoroutine(LoadLevelByIndex(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
     public void LoadPrevScene()
     {
-<<<<<<< HEAD
-        Debug.Log("back");
-=======
-        //Debug.Log("back");
->>>>>>> parent of 95d7c80 (Merge branch 'New-Scene-Loader' into Database-+-Save/Load-V1)
         StartCoroutine(LoadLevelByIndex(SceneManager.GetActiveScene().buildIndex - 1));
     }
 
@@ -116,7 +78,7 @@ public class LevelLoader : MonoBehaviour
 
     public void StartGame()
     {
-        LoadNextScene();
+        StartCoroutine(LoadLevelByIndex(10));
     }
 
     IEnumerator LoadLevelByIndex(int levelIndex)

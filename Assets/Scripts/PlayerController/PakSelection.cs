@@ -1,1164 +1,633 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using BattleScene;
 using BattleScene.BattleLogic;
-///Yod term
-using UnityEngine.SceneManagement;
-/*
-    *** Overview of this class ***
-    
-    Initial
-    -ให้ Object ทุกตัวใน Class มี BoxCollider2D Component (เช่น Eggplant , Carrot , Garlik , all skills , Yuak , NormalPrik , ... )
-    -ใช้ Raycast เพื่อ detect object ที่ mouse คลิก ถ้าคลิกโดนจะทำการ resize ให้ใหญ่ขึ้นเพื่อบอกว่าถูกเลือก
-    -เปลี่ยน state ในการเลือกตามการกด ( default -> pakSelected -> skillSelected -> enemySelected -> pressOkButton )
-*/
+using UnityEngine.UI;
 
 public class PakSelection : MonoBehaviour
 {
-
-    enum InputState
+    public enum GameState
     {
-        DEFAULT, CHARCTER_SELECTED, SKILL_SELECTED, SKILL_SELECTED_ONE_ALLY,
-        SKILL_SELECTED_ALL_ALLIANCES, SKILL_SELECTED_ALL_ENEMIES, SKILL_SELECTED_WHOLE_FIELD,
-        ENEMY_SELECTED, COMFIRMED, END_TURN
+        CHOOSE_CHARACTER, CHOOSE_SKILL, CHOOSE_CHAAM_SKILL, CHOOSE_COOK_SKILL, CHOOSE_TARGET,
+        WAIT_FOR_CONFIRM, DISPLAY_SKILL, END_TURN,
+
+        CHAAM_CHOOSE_TARGET, CHAAM_WAIT_FOR_CONFIRM
     };
 
-    private InputState currentState = InputState.END_TURN;
-    private InputState nextState;
-    private bool actionFinished;
+    private GameState currentState;
+    private PakRender selectedPak;
+    public List<PakRender> selectedTargets = new List<PakRender>();
+    private int selectedSkill;         // current selected skill
 
-    private string selectedPak = "";        // current selectd ally 
-    private string selectedEnemy = "";      // current selected enemy
-    private int selectedSkill = -1;         // current selected skill
+    // other scripts reference
+    private BattleUIController _UIcontroller;
+    public BattleManager battleManger;
 
-    // buffer field using to check state after the player clicked some of the field-related buttons
-    private bool okPressed = false, endTurnPressed = false, backPressed = false, cancelPressed = false;
+    public List<String> ingredient;
 
+    private CookingController _cookingController;
 
-    private int selectSkillBuffer = -1;     // buffer for storing user's click input
+    public GameObject comboPanel;
 
-    private CharacterManager characterManager;
-
-    [SerializeField]
-    private SkillMenuUI skillMenu;
-
-    [SerializeField]
-    private Button okButton, backButton, endTurnButton, cancelButton;
-
-    [SerializeField]
-    private GameObject supportMenu;
-
-    [SerializeField]
-    private GameObject Backdrop;
-
-
-    //Text
-    public Text selectTargetText;
-    public Text selectSkillText;
-
-    private List<GameObject> alreadySelectSkill;
+    private SkillObj cookSkill;
 
     private void OnEnable()
     {
-        ActionCommandHandler.OnComplete += SetActionFinished;
+        battleManger.SetChangeTurn(() => UpdateGameState(GameState.CHOOSE_CHARACTER));
     }
-
     private void OnDisable()
     {
-        ActionCommandHandler.OnComplete -= SetActionFinished;
+        battleManger.SetChangeTurn(null);
     }
 
+    // Start is called before the first frame update
     void Start()
     {
-        Spawner spawn = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Spawner>();
-        characterManager = spawn.characters;
+        AddListenerOfUI();
+        selectedSkill = -1;
+        Reset();
+        Debug.Log("Come Start in PakSelection");
+        _UIcontroller.UpdateUI(GameState.CHOOSE_CHARACTER);
+        ingredient = new List<string>();
 
-        // Set callback function for skill buttons
-        for (int i = 0; i < skillMenu.skills.Length; ++i)
+        if (SceneManager.GetActiveScene().name == "Battle1-2V2")
         {
-            int k = i;
-            skillMenu.skills[i].AddListener(() => SelectSkill(k));
+            GameObject.FindWithTag("GameController").GetComponent<PakSelection>().enabled = false;
         }
-
-        // Set callback function for game button
-        okButton.onClick.AddListener(() => okPressed = true);
-        backButton.onClick.AddListener(() => backPressed = true);
-        endTurnButton.onClick.AddListener(() => endTurnPressed = true);
-        cancelButton.onClick.AddListener(() => cancelPressed = true);
-
-        //Set text during pak selection to not active
-        selectTargetText.gameObject.SetActive(false);
-        selectSkillText.gameObject.SetActive(false);
-
-        alreadySelectSkill = new List<GameObject>(); //create a empty list
-
-        reset();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Change state and update UI
-        UpdateUI();
-        currentState = nextState;
-
-        if (backPressed)
+        if (currentState == GameState.CHOOSE_CHARACTER)
         {
-            if (currentState == InputState.ENEMY_SELECTED &&
-                selectedPak.CompareTo("") != 0)
+            if (ingredient.Capacity != 0)
             {
-                var holder = characterManager.GetCharacter(selectedPak);
-
-                // if select character is in action set it back to action state
-                if (holder.InAction)
-                {
-                    var pakRender = holder.character.GetComponent<PakRender>();
-                    pakRender.DisplayInAction(true);
-                }
-
-                selectedPak = "";
-                LockChar();
-
-                reset();
+                ingredient.Clear();
             }
-            else if (currentState == InputState.SKILL_SELECTED || currentState == InputState.SKILL_SELECTED_ALL_ALLIANCES || currentState == InputState.SKILL_SELECTED_ALL_ENEMIES || currentState == InputState.SKILL_SELECTED_ONE_ALLY || currentState == InputState.SKILL_SELECTED_WHOLE_FIELD)
+            //Is adding check win condition here is fine?
+            bool isPlayerWin = battleManger.IsPlayerWin();
+            bool isPlayerLose = battleManger.IsPlayerLose();
+            bool isGameOver = isPlayerWin || isPlayerLose;
+            if (isGameOver)
             {
-                selectedPak = "";
-                LockChar();
-                reset();
-            }
-            else if (currentState > InputState.DEFAULT && currentState < InputState.COMFIRMED)
-                reset();
-            return;
-        }
-
-
-        // waiting for user inputs according to current state
-        switch (currentState)
-        {
-            case InputState.CHARCTER_SELECTED:
-                // An ally character was choosed
-                selectSkillText.gameObject.SetActive(true); //set select skill text to actives
-
-                nextState = ChooseSkill();
-                // if (nextState != currentState)
-                UpdateCharacterLayer(nextState);
-                break;
-
-            //************************************************************************** Select target state
-            case InputState.SKILL_SELECTED: //now is Skill_Selected_one_enemy
-                // An skill to be add to commnad list was selected
-                selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
-                UnlockChar(); //let player select apporpriate target.
-
-                nextState = ChooseSkillTarget(); //now is function to select one enemy.
-                if (nextState != currentState)
-                    UpdateCharacterLayer(nextState);
-                break;
-            case InputState.SKILL_SELECTED_ONE_ALLY:
-                selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
-                UnlockChar(); //let player select apporpriate target.
-
-                nextState = ChooseSkillTargetOneAlliance();
-                if (nextState != currentState)
-                    UpdateCharacterLayer(nextState);
-                break;
-            //? Peem Do
-            case InputState.SKILL_SELECTED_ALL_ENEMIES:
-                selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
-                UnlockChar(); //let player select apporpriate target.
-
-                nextState = ChooseSkillTargetAllEnemies();
-                if (nextState != currentState)
-                    UpdateCharacterLayer(nextState);
-                break;
-            case InputState.SKILL_SELECTED_ALL_ALLIANCES:
-                selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
-                UnlockChar(); //let player select apporpriate target.
-
-                nextState = ChooseSkillTargetAllAlliances();
-                if (nextState != currentState)
-                    UpdateCharacterLayer(nextState);
-                break;
-            case InputState.SKILL_SELECTED_WHOLE_FIELD:
-                selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
-                UnlockChar(); //let player select apporpriate target.
-
-                nextState = ChooseSkillTargetWholeField();
-                if (nextState != currentState)
-                    UpdateCharacterLayer(nextState);
-                break;
-            //************************************************************************** Select target state
-
-            case InputState.ENEMY_SELECTED:
-                // An target for skilled was selected
-                nextState = ConfirmAction();
-                if (nextState == InputState.DEFAULT)
-                    reset();
-                break;
-            case InputState.COMFIRMED:
-                // Player clicked OK button
-                selectTargetText.gameObject.SetActive(false); //set select text to not actives
-                LockChar();
-                SendCommand();
-                reset();
-                break;
-            case InputState.END_TURN:
-                // Player clicked end-turn button
-                if (actionFinished)
+                if (isPlayerWin)
                 {
-                    reset();
-                }
-                break;
-            default:
-                nextState = PlayerEndTurn();
-                if (nextState != InputState.END_TURN)
-                {
-                    //Is adding check win condition here is fine?
-                    bool isPlayerWin = BattleManager.instance.IsPlayerWin();
-                    bool isPlayerLose = BattleManager.instance.IsPlayerLose();
-                    bool isGameOver = isPlayerWin || isPlayerLose;
-                    if (isGameOver)
+                    //do victory stuff
+                    LevelManager.instance.winTime += 1;
+                    if (SceneManager.GetActiveScene().name == "Battle1-2V2")
                     {
-                        if (isPlayerWin)
-                        {
-                            //do victory stuff
-                            LevelManager.instance.winTime+=1;
-                            SceneManager.LoadScene("VictoryScene");
-                            LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
-                        }
-                        else
-                        {
-                            //do defeat stuff
-                            SceneManager.LoadScene("LoseScene");
-                        }
+                        SceneManager.LoadScene("VictorySceneForTutorial");
                     }
                     else
                     {
-                        nextState = chooseCharacter();
+                        SaveManager.instance.playerDatabase.unlockStatus += 1;
+                        LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                        SceneManager.LoadScene("VictoryScene");
                     }
+                    // LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+
                 }
                 else
                 {
-                    characterManager.ResetAction();
-                    UnlockChar();
-                    alreadySelectSkill = new List<GameObject>();
-                    UpdateCharacterLayer(nextState);
-                }
-                break;
-        }
-
-    }
-
-    private void LateUpdate()
-    {
-        if (okPressed)
-        {
-            okPressed = false;
-        }
-
-        if (endTurnPressed)
-        {
-            endTurnPressed = false;
-        }
-
-        if (backPressed)
-        {
-            backPressed = false;
-        }
-
-        if (cancelPressed)
-        {
-            cancelPressed = false;
-        }
-        selectSkillBuffer = -1;
-    }
-
-    private InputState chooseCharacter()
-    {
-        // Player select ally character to use skill
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-            if (hit.collider != null)
-            {
-
-                if (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2")
-                    || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam"))
-                {
-                    // find game object data with tag
-                    if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.DEFAULT;
-
-                    CharacterHolder ally = characterManager.GetCharacter(hit.collider.tag);
-
-                    if (ally != null)
-                    {
-                        // Select the ally
-                        selectedPak = hit.collider.tag;
-                        ally.Select(true);
-
-                        // Send character to update on Skill menu
-                        UpdateSkillUIImage(ally.character);
-
-                        if (ally.InAction)
-                        {
-                            // Get old action data
-                            ActionCommand action = BattleManager.instance.actionCommandHandler.GetAction(selectedPak);
-
-                            // get index of the called skill in the caller pak
-                            selectedSkill = action.selectedSkill;
-                            skillMenu.ToggleSkillUI(selectedSkill);
-
-                            // get game tag of the target
-                            selectedEnemy = action.targets[0].gameObject.tag;
-                            characterManager.SetSelect(selectedEnemy, true);
-
-                            // Change UI from DEFAULT scene to ENEMY_SELECTED
-                            skillMenu.ToggleMenu(true);
-                            endTurnButton.gameObject.SetActive(false);
-                            Backdrop.SetActive(true);
-                            UpdateCharacterLayer(InputState.ENEMY_SELECTED);
-                            action.caller.DisplayInAction(false);
-                            return InputState.ENEMY_SELECTED;
-                        }
-
-
-                        return InputState.CHARCTER_SELECTED;
-                    }
+                    //do defeat stuff
+                    SceneManager.LoadScene("LoseScene");
                 }
             }
         }
 
-        return InputState.DEFAULT;
-    }
-
-    private InputState ChooseSkill()
-    {
-
-        if (selectSkillBuffer > -1)
+        if (currentState == GameState.CHOOSE_TARGET)
         {
-            try
-            {
-                selectedSkill = selectSkillBuffer;
-                skillMenu.ToggleSkillUI(selectedSkill);
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                Debug.LogError(e.Message);
-                nextState = InputState.DEFAULT;
-            }
-            Debug.Log("Skill selected");
-
-            //? Yod do
-            PakRender selectedPakRender = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-            Skill pakSkill = selectedPakRender.skill[selectedSkill];
-
-
-
-            switch (pakSkill.ActionType)
-            {
-                case "TargetAllAlliances":
-                    return InputState.SKILL_SELECTED_ALL_ALLIANCES; //TODO we have to for loop ทุกตัวใส่ List target.
-                case "TargetOneAlliance":
-                    return InputState.SKILL_SELECTED_ONE_ALLY;
-                case "TargetAllEnemies":
-                    return InputState.SKILL_SELECTED_ALL_ENEMIES;
-                case "TargetOneEnemy":
-                    return InputState.SKILL_SELECTED;
-                case "TargetWholeField":
-                    return InputState.SKILL_SELECTED_WHOLE_FIELD;   //TODO we have to for loop ทุกตัวใส่ List target.
-                default:
-                    Debug.LogError("Wrong Skill Type");
-                    break;
-            }
-
-
-
-            //return InputState.SKILL_SELECTED;
+            // Check skill target condition
+            if (selectedTargets.Count > 0)
+                UpdateGameState(GameState.WAIT_FOR_CONFIRM); // Show ok button
         }
 
-        // Check if player has change ally targets
+        if (currentState == GameState.CHAAM_CHOOSE_TARGET)
+        {
+            // Check skill target condition
+            if (selectedTargets.Count > 0)
+                UpdateGameState(GameState.CHAAM_WAIT_FOR_CONFIRM); // Show ok button
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-            if (hit.collider == null) return InputState.CHARCTER_SELECTED;
-
-
-            if ((selectedPak.CompareTo("") != 0) &&
-                    (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2")
-                    || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam")))
+            if (hit.collider != null &&
+                currentState != GameState.DISPLAY_SKILL &&
+                currentState != GameState.END_TURN)
             {
 
-                characterManager.SetSelect(selectedPak, false);
-
-                if (hit.collider.CompareTag(selectedPak))
+                PakRender character = hit.collider.GetComponent<PakRender>();
+                if (character == null)
                 {
-                    selectedPak = "";
-                    return InputState.DEFAULT;
+                    Debug.LogError(hit.collider.tag + " doesn't have PakRender component");
+                    return;
                 }
 
+                if (currentState == GameState.CHAAM_CHOOSE_TARGET || currentState == GameState.CHAAM_WAIT_FOR_CONFIRM)
+                {
+                    controlSkill(cookSkill, character);
+                }
+                else if (currentState == GameState.CHOOSE_TARGET || currentState == GameState.WAIT_FOR_CONFIRM)
+                {
+                    // Check the selected skill is all targets type
+                    SkillObj pakSkill = selectedPak.skills[selectedSkill];
+                    controlSkill(pakSkill, character);
+                }
+                else if (CharacterManager.IsPlayerTeam(hit.collider.tag))
+                {
+                    HandleChooseAlly(character);
+                }
+            }
+        }
 
-                selectedPak = hit.collider.tag;
-                GameObject ally = hit.collider.gameObject;
-                characterManager.SetSelect(selectedPak, true);
+
+    }
+
+    public void controlSkill(SkillObj skill, PakRender character)
+    {
+
+
+        if (skill.actionType == "TargetAllAlliances" ||
+            skill.actionType == "TargetAllEnemies" ||
+            skill.actionType == "TargetWholeField")
+            return;
+
+        // Check if the character is already selected
+        for (int i = 0; i < selectedTargets.Count; i++)
+        {
+            if (selectedTargets[i].CompareTag(character.tag))
+            {
+                return;
+            }
+        }
+
+        // Dummy if the number of targets is max
+        if (selectedTargets.Count >= 1)
+        {
+            selectedTargets[0].Selected = false;
+            selectedTargets.RemoveAt(0);
+        }
+
+        character.Selected = true;
+        selectedTargets.Add(character);
+        return;
+    }
+
+    public void HandleChooseAlly(PakRender ally)
+    {
+        switch (currentState)
+        {
+            case GameState.CHOOSE_CHARACTER:
+                // Select the ally
+                ally.Selected = true;
+                selectedPak = ally;
 
                 // Send character to update on Skill menu
-                UpdateSkillUIImage(ally);
-            }
-        }
-        return InputState.CHARCTER_SELECTED;
-    }
+                _UIcontroller.UpdateSkillMenuImage(ally);
 
-    private InputState ChooseSkillTargetOneAlliance()
-    {
-        selectTargetText.gameObject.SetActive(true);
-        if ((selectedSkill > -1)
-            && (selectSkillBuffer > -1))
-        {
-
-            if (selectedSkill == selectSkillBuffer)
-            {
-                selectedSkill = -1;
-                return InputState.CHARCTER_SELECTED;
-            }
-
-            selectedSkill = selectSkillBuffer;
-            skillMenu.ToggleSkillUI(selectedSkill);
-
-            Debug.Log("Now chabg skill to" + selectSkillBuffer); //selectSkillBuffer is index of skill in SkillMenuUI
-
-            //check here that the new skill is which type using switch case and return that state
-            PakRender selectedPakRender = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-            Skill pakSkill = selectedPakRender.skill[selectSkillBuffer];
-
-
-
-            switch (pakSkill.ActionType)
-            {
-                case "TargetAllAlliances":
-                    return InputState.SKILL_SELECTED_ALL_ALLIANCES; //TODO we have to for loop ทุกตัวใส่ List target.
-                case "TargetOneAlliance":
-                    return InputState.SKILL_SELECTED_ONE_ALLY;
-                case "TargetAllEnemies":
-                    return InputState.SKILL_SELECTED_ALL_ENEMIES;
-                case "TargetOneEnemy":
-                    return InputState.SKILL_SELECTED;
-                case "TargetWholeField":
-                    return InputState.SKILL_SELECTED_WHOLE_FIELD;   //TODO we have to for loop ทุกตัวใส่ List target.
-                default:
-                    Debug.LogError("Wrong Skill Type");
-                    break;
-            }
-
-            return InputState.SKILL_SELECTED_ONE_ALLY;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-            if (hit.collider == null) return InputState.SKILL_SELECTED_ONE_ALLY;
-
-            if (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2")
-                    || hit.collider.CompareTag("Plant3") || hit.collider.CompareTag("Chaam"))
-            {
-
-
-                if (!characterManager.hasCharacter(hit.collider.tag))
+                // Update tooltips
+                for (int i = 0; i < selectedPak.skills.Length; i++)
                 {
-                    Debug.Log(hit.collider.tag + " selected");
-                    return currentState;
+                    Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
+                    tooltip.setContent(selectedPak.skills[i].name, selectedPak.skills[i].description);
                 }
 
-                selectedEnemy = hit.collider.tag;
-                characterManager.SetSelect(selectedEnemy, true);
-                return InputState.ENEMY_SELECTED;
-            }
-        }
-        return InputState.SKILL_SELECTED_ONE_ALLY;
-    }
-
-
-    private InputState ChooseSkillTargetAllEnemies()
-    {
-        selectTargetText.gameObject.SetActive(true);
-        if ((selectedSkill > -1)
-            && (selectSkillBuffer > -1))
-        {
-
-            if (selectedSkill == selectSkillBuffer)
-            {
-                selectedSkill = -1;
-                return InputState.CHARCTER_SELECTED;
-            }
-            selectedSkill = selectSkillBuffer;
-            skillMenu.ToggleSkillUI(selectedSkill);
-
-            Debug.Log("Now chabg skill to" + selectSkillBuffer); //selectSkillBuffer is index of skill in SkillMenuUI
-
-            //check here that the new skill is which type using switch case and return that state
-            PakRender selectedPakRender = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-            Skill pakSkill = selectedPakRender.skill[selectSkillBuffer];
-
-
-
-            switch (pakSkill.ActionType)
-            {
-                case "TargetAllAlliances":
-                    return InputState.SKILL_SELECTED_ALL_ALLIANCES; //TODO we have to for loop ทุกตัวใส่ List target.
-                case "TargetOneAlliance":
-                    return InputState.SKILL_SELECTED_ONE_ALLY;
-                case "TargetAllEnemies":
-                    return InputState.SKILL_SELECTED_ALL_ENEMIES;
-                case "TargetOneEnemy":
-                    return InputState.SKILL_SELECTED;
-                case "TargetWholeField":
-                    return InputState.SKILL_SELECTED_WHOLE_FIELD;   //TODO we have to for loop ทุกตัวใส่ List target.
-                default:
-                    Debug.LogError("Wrong Skill Type");
-                    break;
-            }
-
-            return InputState.SKILL_SELECTED_ALL_ENEMIES;
-        }
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-        // if (hit.collider == null) return InputState.SKILL_SELECTED_ALL_ENEMIES;
-
-        // if (!characterManager.hasCharacter(hit.collider.tag))
-        // {
-        //     Debug.Log(hit.collider.tag + " selected");
-        //     return currentState;
-        // }
-
-        //need to click on one enemy to proceed
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit2 = Physics2D.Raycast(ray2.origin, ray2.direction);
-
-            if (hit2.collider == null) return InputState.SKILL_SELECTED_ALL_ENEMIES;
-
-            if (hit2.collider.CompareTag("Enemy1") || hit2.collider.CompareTag("Enemy2") || hit2.collider.CompareTag("Enemy3")
-                || hit2.collider.CompareTag("Enemy4") || hit2.collider.CompareTag("Boss"))
-            {
-                string selectedEnemySum = "";
-                foreach (CharacterHolder e in characterManager.getTeamHolders(1))
+                if (ally.InAction())
                 {
-                    selectedEnemy = e.character.tag;
-                    selectedEnemySum += e.character.tag;
-                    selectedEnemySum += ",";
-                    characterManager.SetSelect(selectedEnemy, true);
-                }
-                selectedEnemy = selectedEnemySum;
-                // selectedEnemy = hit2.collider.tag;
-                // characterManager.SetSelect(selectedEnemy, true);
-                return InputState.ENEMY_SELECTED;
-            }
-        }
-
-        return InputState.SKILL_SELECTED_ALL_ENEMIES;
-    }
-
-    private InputState ChooseSkillTargetAllAlliances()
-    {
-        selectTargetText.gameObject.SetActive(true);
-        if ((selectedSkill > -1)
-            && (selectSkillBuffer > -1))
-        {
-
-            if (selectedSkill == selectSkillBuffer)
-            {
-                selectedSkill = -1;
-                return InputState.CHARCTER_SELECTED;
-            }
-
-
-            selectedSkill = selectSkillBuffer;
-            skillMenu.ToggleSkillUI(selectedSkill);
-
-            Debug.Log("Now chabg skill to" + selectSkillBuffer); //selectSkillBuffer is index of skill in SkillMenuUI
-
-            //check here that the new skill is which type using switch case and return that state
-            PakRender selectedPakRender = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-            Skill pakSkill = selectedPakRender.skill[selectSkillBuffer];
-
-
-
-            switch (pakSkill.ActionType)
-            {
-                case "TargetAllAlliances":
-                    return InputState.SKILL_SELECTED_ALL_ALLIANCES; //TODO we have to for loop ทุกตัวใส่ List target.
-                case "TargetOneAlliance":
-                    return InputState.SKILL_SELECTED_ONE_ALLY;
-                case "TargetAllEnemies":
-                    return InputState.SKILL_SELECTED_ALL_ENEMIES;
-                case "TargetOneEnemy":
-                    return InputState.SKILL_SELECTED;
-                case "TargetWholeField":
-                    return InputState.SKILL_SELECTED_WHOLE_FIELD;   //TODO we have to for loop ทุกตัวใส่ List target.
-                default:
-                    Debug.LogError("Wrong Skill Type");
-                    break;
-            }
-
-            return InputState.SKILL_SELECTED_ALL_ALLIANCES;
-        }
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-        // if (hit.collider == null) return InputState.SKILL_SELECTED_ALL_ENEMIES;
-
-        // if (!characterManager.hasCharacter(hit.collider.tag))
-        // {
-        //     Debug.Log(hit.collider.tag + " selected");
-        //     return currentState;
-        // }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit2 = Physics2D.Raycast(ray2.origin, ray2.direction);
-
-            if (hit2.collider == null) return InputState.SKILL_SELECTED_ALL_ALLIANCES;
-
-            if (hit2.collider.CompareTag("Plant1") || hit2.collider.CompareTag("Plant2") || hit2.collider.CompareTag("Plant3")
-                || hit2.collider.CompareTag("Plant4") || hit2.collider.CompareTag("Chaam"))
-            {
-                string selectedEnemySum = "";
-                foreach (CharacterHolder e in characterManager.getTeamHolders(0))
-                {
-                    selectedEnemy = e.character.tag;
-                    selectedEnemySum += e.character.tag;
-                    selectedEnemySum += ",";
-                    characterManager.SetSelect(selectedEnemy, true);
-                }
-                selectedEnemy = selectedEnemySum;
-                // selectedEnemy = hit2.collider.tag;
-                // characterManager.SetSelect(selectedEnemy, true);
-
-                return InputState.ENEMY_SELECTED;
-            }
-        }
-
-        return InputState.SKILL_SELECTED_ALL_ALLIANCES;
-    }
-
-    private InputState ChooseSkillTargetWholeField()
-    {
-        selectTargetText.gameObject.SetActive(true);
-        if ((selectedSkill > -1)
-            && (selectSkillBuffer > -1))
-        {
-
-            if (selectedSkill == selectSkillBuffer)
-            {
-                selectedSkill = -1;
-                return InputState.CHARCTER_SELECTED;
-            }
-
-
-            selectedSkill = selectSkillBuffer;
-            skillMenu.ToggleSkillUI(selectedSkill);
-
-            Debug.Log("Now chabg skill to" + selectSkillBuffer); //selectSkillBuffer is index of skill in SkillMenuUI
-
-            //check here that the new skill is which type using switch case and return that state
-            PakRender selectedPakRender = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-            Skill pakSkill = selectedPakRender.skill[selectSkillBuffer];
-
-
-
-            switch (pakSkill.ActionType)
-            {
-                case "TargetAllAlliances":
-                    return InputState.SKILL_SELECTED_ALL_ALLIANCES; //TODO we have to for loop ทุกตัวใส่ List target.
-                case "TargetOneAlliance":
-                    return InputState.SKILL_SELECTED_ONE_ALLY;
-                case "TargetAllEnemies":
-                    return InputState.SKILL_SELECTED_ALL_ENEMIES;
-                case "TargetOneEnemy":
-                    return InputState.SKILL_SELECTED;
-                case "TargetWholeField":
-                    return InputState.SKILL_SELECTED_WHOLE_FIELD;   //TODO we have to for loop ทุกตัวใส่ List target.
-                default:
-                    Debug.LogError("Wrong Skill Type");
-                    break;
-            }
-
-            return InputState.SKILL_SELECTED_WHOLE_FIELD;
-        }
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-        // if (hit.collider == null) return InputState.SKILL_SELECTED_ALL_ENEMIES;
-
-        // if (!characterManager.hasCharacter(hit.collider.tag))
-        // {
-        //     Debug.Log(hit.collider.tag + " selected");
-        //     return currentState;
-        // }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit2 = Physics2D.Raycast(ray2.origin, ray2.direction);
-
-            if (hit2.collider == null) return InputState.SKILL_SELECTED_WHOLE_FIELD;
-
-            if (hit2.collider.CompareTag("Plant1") || hit2.collider.CompareTag("Plant2") || hit2.collider.CompareTag("Plant3")
-                || hit2.collider.CompareTag("Plant4") || hit2.collider.CompareTag("Chaam") || hit2.collider.CompareTag("Enemy1") || hit2.collider.CompareTag("Enemy2") || hit2.collider.CompareTag("Enemy3")
-                || hit2.collider.CompareTag("Enemy4") || hit2.collider.CompareTag("Boss"))
-            {
-
-                string selectedEnemySum = "";
-                List<CharacterHolder> chars = new List<CharacterHolder>();
-                chars.AddRange(characterManager.getTeamHolders(0));
-                chars.AddRange(characterManager.getTeamHolders(1));
-
-                foreach (CharacterHolder e in chars)
-                {
-                    selectedEnemy = e.character.tag;
-                    selectedEnemySum += e.character.tag;
-                    selectedEnemySum += ",";
-                    characterManager.SetSelect(selectedEnemy, true);
-                }
-                selectedEnemy = selectedEnemySum;
-                // selectedEnemy = hit.collider.tag;
-                // characterManager.SetSelect(selectedEnemy, true);
-                return InputState.ENEMY_SELECTED;
-            }
-        }
-
-        return InputState.SKILL_SELECTED_WHOLE_FIELD;
-    }
-
-    //! Original
-    private InputState ChooseSkillTarget()
-    {
-        selectTargetText.gameObject.SetActive(true);
-
-        if ((selectedSkill > -1)
-            && (selectSkillBuffer > -1))
-        {
-
-            if (selectedSkill == selectSkillBuffer)
-            {
-                selectedSkill = -1;
-                return InputState.CHARCTER_SELECTED;
-            }
-
-            selectedSkill = selectSkillBuffer;
-            skillMenu.ToggleSkillUI(selectSkillBuffer);
-            Debug.Log("Now chabg skill to" + selectSkillBuffer); //selectSkillBuffer is index of skill in SkillMenuUI
-
-            //check here that the new skill is which type using switch case and return that state
-            PakRender selectedPakRender = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-            Skill pakSkill = selectedPakRender.skill[selectSkillBuffer];
-
-
-
-            switch (pakSkill.ActionType)
-            {
-                case "TargetAllAlliances":
-                    return InputState.SKILL_SELECTED_ALL_ALLIANCES; //TODO we have to for loop ทุกตัวใส่ List target.
-                case "TargetOneAlliance":
-                    return InputState.SKILL_SELECTED_ONE_ALLY;
-                case "TargetAllEnemies":
-                    return InputState.SKILL_SELECTED_ALL_ENEMIES;
-                case "TargetOneEnemy":
-                    return InputState.SKILL_SELECTED;
-                case "TargetWholeField":
-                    return InputState.SKILL_SELECTED_WHOLE_FIELD;   //TODO we have to for loop ทุกตัวใส่ List target.
-                default:
-                    Debug.LogError("Wrong Skill Type");
-                    break;
-            }
-
-            return InputState.SKILL_SELECTED;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-            if (hit.collider == null) return InputState.SKILL_SELECTED;
-
-            if (hit.collider.CompareTag("Enemy1") || hit.collider.CompareTag("Enemy2") || hit.collider.CompareTag("Enemy3")
-                || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss"))
-            {
-
-
-                if (!characterManager.hasCharacter(hit.collider.tag))
-                {
-                    Debug.Log(hit.collider.tag + " selected");
-                    return currentState;
-                }
-
-
-
-                selectedEnemy = hit.collider.tag;
-                characterManager.SetSelect(selectedEnemy, true);
-                return InputState.ENEMY_SELECTED;
-            }
-        }
-        return InputState.SKILL_SELECTED;
-    }
-
-
-    private InputState ConfirmAction()
-    {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-            if (hit.collider == null) return currentState;
-
-            if ((selectedEnemy != "")
-                && (hit.collider.CompareTag("Enemy1") || hit.collider.CompareTag("Enemy2") || hit.collider.CompareTag("Enemy3")
-                || hit.collider.CompareTag("Enemy4") || hit.collider.CompareTag("Boss")))
-            {
-                if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED;
-
-
-                characterManager.SetSelect(selectedEnemy, false);
-                GameObject oldEnemy = characterManager.GetCharacter(selectedEnemy).character;
-
-                if (hit.collider.tag != selectedEnemy)
-                {
-                    selectedEnemy = hit.collider.tag;
-                    characterManager.SetSelect(selectedEnemy, true);
+                    // Get old action data
+                    ActionCommand action = battleManger.actionCommandHandler.GetAction(selectedPak.tag);
+
+                    // get index of the called skill in the caller pak
+                    if (action.selectedSkill.skillNation == SkillObj.SkillNation.NORMAL)
+                    {
+                        selectedSkill = action.convertSelectedSkillToIndex();
+                        _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
+                    }
+                    else if (action.selectedSkill.skillNation == SkillObj.SkillNation.COOKED)
+                    {
+                        Debug.Log("Skill UI For Cook skill work");
+                        // selectedSkill = 3;
+                        // _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
+                    }
+
+
+                    // get game tag of the target
+                    selectedTargets.AddRange(action.targets);
+                    foreach (var charc in selectedTargets)
+                        charc.Selected = true;
+
+
+                    var highlightChar = new List<PakRender>(action.targets);
+                    highlightChar.Add(selectedPak);
+
+                    CharacterManager.instance.LockAllCharacters(true, 2);
+                    UpdateCharacterLayer(highlightChar, true);
+                    UpdateGameState(GameState.DISPLAY_SKILL);
                 }
                 else
                 {
-                    return InputState.SKILL_SELECTED;
-                }
+                    CharacterManager.instance.LockAllCharacters(true, 1);
+                    if (selectedPak.gameObject.CompareTag("Chaam"))
+                    {
+                        UpdateGameState(GameState.CHOOSE_CHAAM_SKILL);
+                    }
+                    else
+                    {
+                        UpdateGameState(GameState.CHOOSE_SKILL);
+                    }
 
-                return InputState.ENEMY_SELECTED;
-            }
-
-            else if ((selectedEnemy != "")
-                && (hit.collider.CompareTag("Plant1") || hit.collider.CompareTag("Plant2") || hit.collider.CompareTag("Plant3")
-                || hit.collider.CompareTag("Chaam")))
-            {
-                if (!characterManager.hasCharacter(hit.collider.tag)) return InputState.SKILL_SELECTED_ONE_ALLY;
-
-                characterManager.SetSelect(selectedEnemy, false);
-                GameObject oldEnemy = characterManager.GetCharacter(selectedEnemy).character;
-
-                if (hit.collider.tag != selectedEnemy)
-                {
-
-                    selectedEnemy = hit.collider.tag;
-                    characterManager.SetSelect(selectedEnemy, true);
-                }
-                else
-                {
-                    return InputState.SKILL_SELECTED_ONE_ALLY;
-                }
-
-                return InputState.ENEMY_SELECTED;
-            }
-        }
-
-        var holder = characterManager.GetCharacter(selectedPak);
-        // Player presses cancel button
-        if (cancelPressed && holder.InAction)
-        {
-            // Remove action
-            var commandHandler = BattleManager.instance.actionCommandHandler;
-            commandHandler.RemoveAction(selectedPak);
-            holder.Action(false, 0);
-            return InputState.DEFAULT;
-        }
-
-        // Player presses ok button
-        if (okPressed)
-        {
-            // If holder is In action remove old action
-            // then waiting for the new one
-            if (holder.InAction)
-            {
-                var commandHandler = BattleManager.instance.actionCommandHandler;
-                commandHandler.RemoveAction(selectedPak);
-                holder.Action(false, 0);
-            }
-
-            return InputState.COMFIRMED;
-        }
-
-        return currentState;
-    }
-
-    private InputState PlayerEndTurn()
-    {
-        if (endTurnPressed)
-        {
-            BattleManager.instance.RunCommand();
-            return InputState.END_TURN;
-        }
-        return InputState.DEFAULT;
-    }
-
-    private void UpdateUI()
-    {
-
-        switch (nextState)
-        {
-            case InputState.CHARCTER_SELECTED:
-                skillMenu.ToggleMenu(true);
-                //? Yod do
-                PakRender pak = GameObject.Find(selectedPak).transform.GetChild(0).GetComponent<PakRender>();
-                skillMenu.skills[0].GetComponent<Tooltiptrigger>().setContent(pak.skill[0].Description);
-                skillMenu.skills[1].GetComponent<Tooltiptrigger>().setContent(pak.skill[1].Description);
-                skillMenu.skills[2].GetComponent<Tooltiptrigger>().setContent(pak.skill[2].Description);
-                // Debug.Log("Skill class is" + pak.GetType()); // GetType() return original type of this obj.
-                //?
-
-                backButton.gameObject.SetActive(true);
-                endTurnButton.gameObject.SetActive(false);
-                Backdrop.SetActive(true);
-                break;
-            case InputState.SKILL_SELECTED:
-                backButton.gameObject.SetActive(true);
-                okButton.gameObject.SetActive(false);
-                Backdrop.SetActive(true);
-                break;
-
-            case InputState.SKILL_SELECTED_ONE_ALLY:
-                backButton.gameObject.SetActive(true);
-                okButton.gameObject.SetActive(false);
-                Backdrop.SetActive(true);
-                break;
-            case InputState.SKILL_SELECTED_ALL_ENEMIES:
-                endTurnButton.gameObject.SetActive(false);
-                Backdrop.SetActive(true);
-                break;
-            case InputState.SKILL_SELECTED_ALL_ALLIANCES:
-                endTurnButton.gameObject.SetActive(false);
-                Backdrop.SetActive(true);
-                break;
-            case InputState.SKILL_SELECTED_WHOLE_FIELD:
-                endTurnButton.gameObject.SetActive(false);
-                Backdrop.SetActive(true);
-                break;
-            case InputState.ENEMY_SELECTED:
-                TooltipScreenSpaceUI.hideTooltip_Static();
-                okButton.gameObject.SetActive(true);
-                backButton.gameObject.SetActive(true);
-                if (selectedSkill == 0)
-                {
-                    skillMenu.skills[1].GetComponent<Button>().interactable = false;
-                    skillMenu.skills[2].GetComponent<Button>().interactable = false;
-                    //SkillMenuUI.skills[3].GetComponent<Button>().interactable = false; //ulti skill
-                }
-                if (selectedSkill == 1)
-                {
-                    skillMenu.skills[0].GetComponent<Button>().interactable = false;
-                    skillMenu.skills[2].GetComponent<Button>().interactable = false;
-                    //SkillMenuUI.skills[3].GetComponent<Button>().interactable = false; //ulti skill
-                }
-                if (selectedSkill == 2)
-                {
-                    skillMenu.skills[0].GetComponent<Button>().interactable = false;
-                    skillMenu.skills[1].GetComponent<Button>().interactable = false;
-                    //SkillMenuUI.skills[3].GetComponent<Button>().interactable = false; //ulti skill
-                }
-                // if(selectedSkill == 3){
-                //     skillMenu.skills[0].GetComponent<Button>().interactable = false;
-                //     skillMenu.skills[1].GetComponent<Button>().interactable = false;
-                //SkillMenuUI.skills[2].GetComponent<Button>().interactable = false;
-                // }
-
-                // if the selected pak is already in action show cancel button
-                var pakHolder = characterManager.GetCharacter(selectedPak);
-                if (pakHolder.InAction)
-                {
-                    cancelButton.gameObject.SetActive(true);
                 }
                 break;
-            case InputState.COMFIRMED:
-                endTurnButton.gameObject.SetActive(false);
-                okButton.gameObject.SetActive(false);
-                backButton.gameObject.SetActive(false);
-                cancelButton.gameObject.SetActive(false);
+            case GameState.CHOOSE_SKILL: // select new character
+                HandleChooseCharacter(ally);
                 break;
-            case InputState.END_TURN:
-                endTurnButton.gameObject.SetActive(false);
-                okButton.gameObject.SetActive(false);
-                backButton.gameObject.SetActive(false);
+            case GameState.CHOOSE_CHAAM_SKILL:
+                HandleChooseCharacter(ally);
                 break;
             default:
-                skillMenu.ToggleMenu(false);
-                backButton.gameObject.SetActive(false);
-                okButton.gameObject.SetActive(false);
-                cancelButton.gameObject.SetActive(false);
-                endTurnButton.gameObject.SetActive(true);
-                supportMenu.SetActive(false);
-                Backdrop.SetActive(false);
-                foreach (SkillUI skill in skillMenu.skills) {
-                    if (skill.isActiveAndEnabled)
-                        skill.GetComponent<Button>().interactable = true;
-                }
-                //skillMenu.skills[3].GetComponent<Button>().interactable = true; //ulti skill
                 break;
         }
     }
 
-    private void UpdateCharacterLayer(InputState state)
+    public void HandleChooseCharacter(PakRender ally)
     {
-        if (state == InputState.SKILL_SELECTED || state == InputState.SKILL_SELECTED_ALL_ENEMIES ||
-            (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED))
+        if (!ally.CompareTag(selectedPak.tag)) // choose new character
         {
-            characterManager.ResetHighLight();
-            var characterTags = new List<string> { "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss" };
-            characterTags.Add(selectedPak);
-            characterManager.HighLightCharacters(characterTags);
-        }
-        else if (state == InputState.SKILL_SELECTED_ONE_ALLY || state == InputState.SKILL_SELECTED_ALL_ALLIANCES ||
-            (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED))
-        {
-            characterManager.ResetHighLight();
-            var characterTags = new List<string> { "Plant1", "Plant2", "Plant3", "Plant4", "Chaam" };
-            characterManager.HighLightCharacters(characterTags);
-        }
-        else if (state == InputState.SKILL_SELECTED_WHOLE_FIELD ||
-            (currentState == InputState.DEFAULT && state == InputState.ENEMY_SELECTED))
-        {
-            characterManager.ResetHighLight();
-            var characterTags = new List<string> { "Enemy1", "Enemy2", "Enemy3", "Enemy4", "Boss", "Plant1", "Plant2", "Plant3", "Plant4", "Chaam" };
-            characterManager.HighLightCharacters(characterTags);
-        }
-        else if (state == InputState.DEFAULT ||
-                 state == InputState.END_TURN)
-        {
-            // Reset all highlight to default
-            characterManager.ResetHighLight();
-        }
-        else if (state == InputState.CHARCTER_SELECTED)
-        {
-            var characterTags = new List<string>();
-            characterTags.Add(selectedPak);
-            characterManager.HighLightCharacters(characterTags);
-        }
-    }
+            // Unselect old character
+            selectedPak.Selected = false;
+            selectedPak = null;
 
-    public void UpdateSkillUIImage(GameObject ally)
-    {
+            // Set new character
+            selectedPak = ally;
+            selectedPak.Selected = true;
 
-        PakRender pakRender = ally.GetComponent<PakRender>();
+            // Update images on skill menu
+            _UIcontroller.UpdateSkillMenuImage(ally);
 
-        // Check  if the ally gameobject has PakRende or ChaamRender
-        // WSprite is null if the ally does not have both
-        if (pakRender != null)
-        {
-            skillMenu.UpdateCharacterUI(pakRender.Pak.Image);
-            skillMenu.UpdateSkillUI(pakRender);
-
-        }
-    }
-
-
-    public void SendCommand()
-    {
-        GameObject caller = characterManager.GetCharacter(selectedPak).character;
-        if (caller != null)
-        {
-            characterManager.SetAction(selectedPak, true, selectedSkill);
-            Debug.Log(selectedEnemy);
-            if (selectedEnemy.Contains(","))
+            // Update tooltips
+            for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; i++)
             {
-                List<string> selectedEnemyList = new List<string>(selectedEnemy.Split(','));
-                selectedEnemyList.RemoveAt(selectedEnemyList.Count - 1);
-                GameObject[] targets = new GameObject[selectedEnemyList.Count];
-                for (int i = 0; i < selectedEnemyList.Count; i++)
-                {
-                    Debug.Log(selectedEnemyList[i]);
-                    targets[i] = characterManager.GetCharacter(selectedEnemyList[i]).character;
-                }
-                BattleManager.instance.AddNewCommand(caller, selectedSkill, targets);
-            }
-            else
-            {
-                GameObject[] targets = { characterManager.GetCharacter(selectedEnemy).character };
-                BattleManager.instance.AddNewCommand(caller, selectedSkill, targets);
+                Tooltiptrigger tooltip = _UIcontroller.skillMenu.skills[i].GetComponent<Tooltiptrigger>();
+                tooltip.setContent(selectedPak.skills[i].name, selectedPak.skills[i].description);
             }
 
+            if (currentState == GameState.CHOOSE_CHAAM_SKILL)
+            {
+                UpdateGameState(GameState.CHOOSE_SKILL);
+            }
+
+            if (currentState == GameState.CHOOSE_SKILL && selectedPak.CompareTag("Chaam"))
+            {
+                UpdateGameState(GameState.CHOOSE_CHAAM_SKILL);
+            }
+        }
+        else // choose same character
+        {
+            // Unselect old character
+            selectedPak.Selected = false;
+            selectedPak = null;
+
+            // the selected character is not setted
+            UpdateGameState(GameState.CHOOSE_CHARACTER);
         }
     }
 
-    public void reset()
+    public void HandleSelectSkill(int skillIndex)
     {
-        selectSkillText.gameObject.SetActive(false); //set select skill text to not actives
-        selectTargetText.gameObject.SetActive(false); //set select target text to not actives
+        Debug.Log("Button " + skillIndex + " clicked!");
 
-        nextState = InputState.DEFAULT;
+        if (currentState == GameState.CHOOSE_CHAAM_SKILL)
+        {
+            UpdateGameState(GameState.CHOOSE_SKILL);
+        }
 
-        characterManager.ResetSelect();
+        if (!(currentState == GameState.CHOOSE_SKILL || currentState == GameState.CHOOSE_TARGET || currentState == GameState.WAIT_FOR_CONFIRM))
+            return;
 
-        selectedPak = "";
-        selectedEnemy = "";
+        if (currentState == GameState.CHOOSE_TARGET || currentState == GameState.WAIT_FOR_CONFIRM)
+        {
+            // unselect all targets
+            CharacterManager.instance.ResetState(2);
+            // re-select current selected pak
+            selectedPak.Selected = true;
+            selectedTargets.Clear();
+        }
+
+        SkillObj pakSkill = null;
+        try
+        {
+            _UIcontroller.skillMenu.ToggleSkill(skillIndex);
+            pakSkill = selectedPak.skills[skillIndex];
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            Debug.LogError(e.Message);
+        }
+
+        if (pakSkill != null)
+        {
+            // Do something
+
+            if (selectedSkill == skillIndex)
+            {
+                selectedSkill = -1;
+                UpdateGameState(GameState.CHOOSE_CHARACTER);
+                return;
+            }
+
+            characterSelectMode(pakSkill.actionType);
+
+            selectedSkill = skillIndex;
+            UpdateGameState(GameState.CHOOSE_TARGET);
+        }
+    }
+
+    public void characterSelectMode(String Type)
+    {
+        switch (Type)
+        {
+            case "TargetAllAlliances":
+                var allys = CharacterManager.instance.GetAliveCharacters(0);
+                // Lock enemy team
+                CharacterManager.instance.LockAllCharacters(true, 1);
+                UpdateCharacterLayer(allys, true);
+
+                // Automatically select ally targets
+                SelectMultipleTargets(allys);
+                break;
+            case "TargetOneAlliance":
+                var allys2 = CharacterManager.instance.GetAliveCharacters(0);
+                // Lock enemy team
+                CharacterManager.instance.LockAllCharacters(true, 1);
+                UpdateCharacterLayer(allys2, true);
+                break;
+            case "TargetAllEnemies":
+                var enemies2 = CharacterManager.instance.GetAliveCharacters(1);
+
+                // Lock ally team
+                CharacterManager.instance.LockAllCharacters(true, 0);
+                UpdateCharacterLayer(enemies2, true);
+
+                // Automatically select enemies targets
+                SelectMultipleTargets(enemies2);
+                break;
+            case "TargetOneEnemy":
+                var enemies = CharacterManager.instance.GetAliveCharacters(1);
+                CharacterManager.instance.LockAllCharacters(true, 0);
+                UpdateCharacterLayer(enemies, true);
+                break;
+            case "TargetWholeField":
+                // get character of both team
+                var characters = CharacterManager.instance.GetAliveCharacters(2);
+                UpdateCharacterLayer(characters, true);
+
+                // Remove caller from ally list
+                characters.Remove(selectedPak);
+
+                // Automatically select ally targets
+                SelectMultipleTargets(characters);
+                break;
+            default:
+                Debug.LogError("Wrong Skill Type");
+                break;
+        }
+    }
+
+    public void HandleConfirm()
+    {
+        if (selectedPak != null && currentState == GameState.WAIT_FOR_CONFIRM)
+        {
+
+            float speed = selectedPak.currentSpeed;
+            SkillExecutor skillExecutor = selectedPak.GetSkillExecutor(selectedSkill);
+            // Deep copy
+            List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
+            ActionCommand newCommand = new ActionCommand(selectedPak, skillExecutor, skillTargets, speed);
+            battleManger.AddCommand(newCommand);
+
+            selectedPak.currentState = PakRender.State.InAction;
+            selectedPak.DisplayInAction(true, selectedSkill);
+
+            UpdateGameState(GameState.CHOOSE_CHARACTER);
+        }
+
+        if (selectedPak != null && currentState == GameState.CHAAM_WAIT_FOR_CONFIRM)
+        {
+            ChaamRender chaam = (ChaamRender)selectedPak;
+
+            if (chaam == null) return;
+
+            SkillExecutor skillExecutor = new SkillExecutor(cookSkill, () => chaam.setGuage(0));
+            // Deep copy
+            List<PakRender> skillTargets = new List<PakRender>(selectedTargets);
+
+            // Need Fix: Should implement skill hierarchy so we can also determine order of multiple cooking skills
+            ActionCommand newCommand = new ActionCommand(selectedPak, skillExecutor, skillTargets, 100); // Make cooking the fastest skill. quite hacking though.
+
+
+            battleManger.AddCommand(newCommand);
+            selectedPak.DisplayCookInAction(true, cookSkill);
+            selectedPak.currentState = PakRender.State.InAction;
+
+            UpdateGameState(GameState.CHOOSE_CHARACTER);
+        }
+    }
+
+    public void HandleBack()
+    {
+        if (currentState == GameState.DISPLAY_SKILL &&
+              selectedPak != null)
+        {
+
+            UpdateGameState(GameState.CHOOSE_CHARACTER);
+        }
+        else if (currentState > GameState.CHOOSE_CHARACTER && currentState < GameState.END_TURN)
+            UpdateGameState(GameState.CHOOSE_CHARACTER);
+        return;
+    }
+    public void HandleEndturn()
+    {
+        CharacterManager.instance.ResetState(0);
+        CharacterManager.instance.LockAllCharacters(true, 2);
+        UpdateGameState(GameState.END_TURN);
+        battleManger.RunCommand();
+        Debug.Log("-----------------------------------------------------TURN END-----------------------------------------------");
+        // //chaam must not dead
+        // try
+        // {
+        //     ChaamRender nongChaam = GameObject.FindGameObjectWithTag("Chaam").transform.GetChild(0).GetComponent<ChaamRender>();
+        //     nongChaam.addGuage(20);
+        // }
+        // catch (System.Exception)
+        // {
+        //     Debug.Log("Chaam is already tai ha.");
+        // }
+        List<PakRender> pakTeam = CharacterManager.instance.GetAliveCharacters(0);
+        foreach (PakRender x in pakTeam)
+        {
+            if (x.CompareTag("Chaam"))
+            {
+                ChaamRender nongChaam = (ChaamRender)x;
+                nongChaam.addGuage(34);
+                break;
+            }
+        }
+    }
+
+    public void HandleCancelAction()
+    {
+        // Player presses cancel button
+        if (currentState == GameState.DISPLAY_SKILL &&
+            selectedPak.InAction())
+        {
+            // Remove action
+            var commandHandler = battleManger.actionCommandHandler;
+            commandHandler.RemoveAction(selectedPak.tag, selectedSkill);
+            selectedPak.currentState = PakRender.State.Idle;
+            selectedPak.DisplayInAction(false);
+            UpdateGameState(GameState.CHOOSE_CHARACTER);
+        }
+    }
+
+    private void UpdateGameState(GameState state)
+    {
+        if (state == GameState.CHOOSE_CHARACTER)
+        {
+            var allys = CharacterManager.instance.GetAliveCharacters(0);
+            foreach (var ally in allys)
+            {
+                if (ally.InAction())
+                    ally.DisplayInAction(true);
+            }
+            Reset();
+        }
+        else if (state == GameState.CHOOSE_SKILL || state == GameState.DISPLAY_SKILL)
+        {
+            var allys = CharacterManager.instance.GetAliveCharacters(0);
+            foreach (var ally in allys)
+            {
+                ally.DisplayInAction(false);
+            }
+        }
+
+        _UIcontroller.UpdateUI(state);
+        currentState = state;
+        Debug.Log("Current State is " + currentState.ToString());
+    }
+
+    private void UpdateCharacterLayer(List<PakRender> characterList, bool value)
+    {
+        CharacterManager.instance.ResetState(3);
+
+        if (characterList == null) return;
+
+        foreach (var character in characterList)
+        {
+            character.GoToFrontLayer(value);
+            character.GetComponent<BoxCollider2D>().enabled = value;
+        }
+    }
+
+    private void SelectMultipleTargets(List<PakRender> paks, bool value = true)
+    {
+        foreach (var pak in paks)
+        {
+            pak.Selected = value;
+            selectedTargets.Add(pak);
+        }
+    }
+
+    private void Reset()
+    {
+        CharacterManager.instance.ResetState(2);
+        CharacterManager.instance.ResetState(3);
+        CharacterManager.instance.LockAllCharacters(false, 2);
+        selectedPak = null;
+        selectedTargets.Clear();
 
         if (selectedSkill > -1)
-            skillMenu.ToggleSkillUI(selectedSkill);
+            _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
         selectedSkill = -1;
-        selectSkillBuffer = -1;
-
-
-
-        actionFinished = false;
-        UpdateCharacterLayer(InputState.DEFAULT);
     }
 
-    public void SelectSkill(int index)
+    private void HandleCookButton()
     {
-        selectSkillBuffer = index;
-    }
+        ChaamRender chaam = (ChaamRender)selectedPak;
 
-    private void SetActionFinished()
-    {
-        actionFinished = true;
-    }
+        Debug.Log(chaam.getGuage());
 
-    private void LockChar()
-    {
-        if (selectedPak.CompareTo("") != 0)
+        if (chaam.getGuage() == 100)
         {
-            GameObject caller = characterManager.GetCharacter(selectedPak).character;
-            alreadySelectSkill.Add(caller);
+            UpdateGameState(GameState.CHOOSE_COOK_SKILL);
         }
-        foreach (GameObject e in alreadySelectSkill)
+        else
         {
-            e.GetComponent<BoxCollider2D>().enabled = false;
+            Debug.Log("Guage not full");
         }
-        return;
+
     }
 
-    private void UnlockChar()
+    private void HandleSupportButton(int index)
     {
-        List<CharacterHolder> temp = characterManager.getHolders();
-        foreach (CharacterHolder e in temp)
+        if (_UIcontroller.tickCook[index].activeSelf)
         {
-            e.character.GetComponent<BoxCollider2D>().enabled = true;
+            ingredient.Remove(CharacterSelecter.instance.GetSupports()[index]._name);
         }
-        return;
+        else
+        {
+            ingredient.Add(CharacterSelecter.instance.GetSupports()[index]._name);
+        }
+        _UIcontroller.tickCook[index].SetActive(!_UIcontroller.tickCook[index].activeSelf);
+        ingredient.Sort();
+        cookSkill = _cookingController.OnIngredientClick(ingredient, comboPanel);
+
+    }
+
+    private void HandleStartCookButton()
+    {
+        characterSelectMode(cookSkill.actionType);
+        UpdateGameState(GameState.CHAAM_CHOOSE_TARGET);
+
+        // _cookingController.OnStartCooking(ingredient, selectedPak, selectedTargets);
+    }
+
+    private void AddListenerOfUI()
+    {
+        _UIcontroller = GetComponent<BattleUIController>();
+        // Set callback function for skill buttons
+        for (int i = 0; i < _UIcontroller.skillMenu.skills.Length; ++i)
+        {
+            int k = i;
+            _UIcontroller.skillMenu.skills[i].AddListener(() =>
+            {
+                HandleSelectSkill(k);
+            });
+        }
+
+        // Set callback function for game button
+        _UIcontroller.okButton.onClick.AddListener(HandleConfirm);
+        _UIcontroller.backButton.onClick.AddListener(HandleBack);
+        _UIcontroller.endTurnButton.onClick.AddListener(HandleEndturn);
+        _UIcontroller.cancelButton.onClick.AddListener(HandleCancelAction);
+        _UIcontroller.cookButton.onClick.AddListener(HandleCookButton);
+        _UIcontroller.startCookButton.onClick.AddListener(HandleStartCookButton);
+        for (int i = 0; i < _UIcontroller.supportButton.Length; i++)
+        {
+            int k = i;
+            _UIcontroller.supportButton[i].onClick.AddListener(() => HandleSupportButton(k));
+        }
+        _cookingController = GetComponent<CookingController>();
+    }
+
+    // Getters, Setters
+    public PakRender SelectedPak
+    {
+        get { return this.selectedPak; }
     }
 }

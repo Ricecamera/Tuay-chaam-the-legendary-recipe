@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -578,7 +578,6 @@ GameObject:
   m_Component:
   - component: {fileID: 539540503}
   - component: {fileID: 539540504}
-  - component: {fileID: 539540505}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Spawner
@@ -612,12 +611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a9a768e4893fc45831b457c1aefd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characters: {fileID: 110392428}
   plants:
-  - {fileID: 2477663559980264429, guid: e4684865e6712b94292efae38a901ce5, type: 3}
-  enemies:
-  - {fileID: 7112338558754160059, guid: bc2967c7df9889445a333fdbcadf3887, type: 3}
-  - {fileID: 7112338558754160059, guid: bc2967c7df9889445a333fdbcadf3887, type: 3}
+  - {fileID: 0}
+  supports: []
   allySpawnPos:
   - {fileID: 1825844921}
   - {fileID: 525817312}
@@ -627,23 +623,9 @@ MonoBehaviour:
   - {fileID: 481780095}
   - {fileID: 1602421391}
   healthBar: []
-  chaam: {fileID: 3678362646462264695, guid: e567f4a398e3e2c46adc29ceacd20c3b, type: 3}
+  chaam: {fileID: 0}
   chaamSpawnPos: {fileID: 1943614277}
-  boss: {fileID: 0}
-  bossSpawnPos: {fileID: 565492851}
-  pakSelection: {fileID: 0}
---- !u!114 &539540505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539540502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6404a7daf12a1f4b903044f656c9994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  havePreset: 1
 --- !u!224 &543371956 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7173921338258702980, guid: 5e3c0c175ce2a174794258d4b37786ff, type: 3}
@@ -703,7 +685,7 @@ GameObject:
   - component: {fileID: 605886403}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: battleBG
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1727,7 +1709,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionText: {fileID: 1467566890}
-  dummySkill: {fileID: 0}
 --- !u!114 &1662004681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1740,6 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ae11751be5185488d18d3a36dc37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandList: []
   diedThisTurn: []
 --- !u!4 &1662004682
 Transform:
@@ -1878,7 +1860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

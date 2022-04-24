@@ -10,68 +10,62 @@ using System.Runtime.Serialization;
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    public string savePath;
     public Inventory Container;
-    public ItemDatabaseObject database;
-    // public void AddItem(ItemObject _item, int _amount)
-    // {
-    //     for (int i = 0; i < Container.Items.Length; i++)
-    //     {
-    //         if (Container.Items[i].ID == _item.id)
-    //         {
-    //             Container.Items[i].AddAmount(_amount);
-    //             return;
-    //         }
-    //     }
-    // }
+    //public ItemDatabaseObject database;
 
-    [ContextMenu("Save")]
-    public void Save()
-    {
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(stream, Container);
-        stream.Close();
-    }
-    // [ContextMenu("Load")]
-    // public void Load()
-    // {
+    //public void AddItem(ItemObject item,int idx) 
+    //{
+    //    Container.MainItems[idx].UpdateSlot(item._name, item, 1);
+    //}
 
-    //     if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
-    //     {
-    //         IFormatter formatter = new BinaryFormatter();
-    //         Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-    //         Inventory newContainer = (Inventory)formatter.Deserialize(stream);
-    //         for (int i = 0; i < Container.Items.Length; i++)
-    //         {
-    //             Container.Items[i].UpdateSlot(newContainer.Items[i].ID, newContainer.Items[i].item, newContainer.Items[i].amount);
-    //         }
-    //         stream.Close();
-
-    //     }
-
-    // }
+    private Dictionary<ItemType, List<string>> defaultInventory;
 
     [ContextMenu("Clear")]
     public void Clear()
     {
-        Container = new Inventory();
+        this.Container = new Inventory();
+    }
+
+    public void SetDefaultInventory()
+    {
+        defaultInventory = new Dictionary<ItemType, List<string>>();
+        defaultInventory.Add(ItemType.Chaam, new List<string>() { "Chaam1" });
+    }
+
+    public void ResetInventory()
+    {
+        for (int i = 0; i < Container.MainItems.Length; i++)
+        {
+            this.Container.MainItems[i] = new InventorySlot();
+        }
+        for (int i = 0; i < Container.ChaamItems.Length; i++)
+        {
+            this.Container.ChaamItems[i] = new InventorySlot();
+        }
+        for (int i = 0; i < Container.SupportItems.Length; i++)
+        {
+            this.Container.SupportItems[i] = new InventorySlot();
+        }
     }
 
 }
 
 
 [System.Serializable]
-// public class Inventory
-// {
-//     public InventorySlot[] Items = new InventorySlot[6];
-// }
 
 public class Inventory
 {
+
     public InventorySlot[] MainItems = new InventorySlot[6];
     public InventorySlot[] ChaamItems = new InventorySlot[6];
     public InventorySlot[] SupportItems = new InventorySlot[6];
+
+    public Inventory()
+    {
+        MainItems = new InventorySlot[6];
+        ChaamItems = new InventorySlot[6];
+        SupportItems = new InventorySlot[6];
+    }
 }
 
 
@@ -79,24 +73,24 @@ public class Inventory
 [System.Serializable]
 public class InventorySlot
 {
-    public int ID = -1;
+    public string Name;
     public ItemObject item;
     public int amount;
     public InventorySlot()
     {
-        ID = -1;
+        Name = "";
         item = null;
         amount = 0;
     }
-    public InventorySlot(int _id, ItemObject _item, int _amount)
+    public InventorySlot(string _name, ItemObject _item, int _amount)
     {
-        ID = _id;
+        Name = _name;
         item = _item;
         amount = _amount;
     }
-    public void UpdateSlot(int _id, ItemObject _item, int _amount)
+    public void UpdateSlot(string _name, ItemObject _item, int _amount)
     {
-        ID = _id;
+        Name = _name;
         item = _item;
         amount = _amount;
     }

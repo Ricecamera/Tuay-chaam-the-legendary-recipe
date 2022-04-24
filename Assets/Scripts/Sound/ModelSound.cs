@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelSound : MonoBehaviour
+public class ModelSound : MainMenuSound
 {
 
 }

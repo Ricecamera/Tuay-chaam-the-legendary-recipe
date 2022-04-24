@@ -11,7 +11,7 @@ public enum ItemType
 }
 public class ItemObject : ScriptableObject
 {
-    public string id;
+    public string _name;
     public Sprite uiDisplay;
     public ItemType type;
     public GameObject prefab;

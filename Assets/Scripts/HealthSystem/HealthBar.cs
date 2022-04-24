@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class HealthBar : MonoBehaviour
 {
 
     public Image guage;
 
-    private void OnEnable() {
+
+
+    private void OnEnable()
+    {
         guage.fillAmount = 0;
         gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
     }
@@ -23,11 +28,13 @@ public class HealthBar : MonoBehaviour
             guage.fillAmount = newValue;
     }
 
-    public float getFill(){
+    public float getFill()
+    {
         return guage.fillAmount;
     }
 
-    public void Reset() {
+    public void Reset()
+    {
         guage.fillAmount = 1;
     }
-} 
+}

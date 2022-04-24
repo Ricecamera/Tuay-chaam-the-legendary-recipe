@@ -2,175 +2,247 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleScene {
-    public class CharacterManager : MonoBehaviour {
-    
-    enum Team {PLAYER_TEAM, ENEMY_TEAM };
-    private SortedList<string, Team> lookupTable;
-    private Dictionary<string, CharacterHolder> holders;         // dictionary contains character holder
-
-    // Initialize character dictonarys
-    public void Intialize() {
-        lookupTable = new SortedList<string, Team>();
-        holders = new Dictionary<string, CharacterHolder>();
-    }
-
-    // Add a new character
-    public void AddCharacter(string tag, GameObject character, int teamKey) {
-        try {
-            // find the team of added character
-            Debug.Log(character);
-            Team team;
-            if (teamKey == 0)
-                team= Team.PLAYER_TEAM;
-            else if (teamKey == 1)
-                team= Team.ENEMY_TEAM;
-            else
-                throw new Exception("team key is not valid");
-
-
-            holders.Add(tag, new CharacterHolder(character));
-            lookupTable.Add(tag, team);
-        }
-        catch (Exception e) {
-            if (e is ArgumentException) {
-                Destroy(character); 
-            }
-            Debug.LogError(e.Message);
-        }
-    }
-
-    // Remove a specific chacracter by tag and team flag
-    public void RemoveCharacter(string tag) {
-        lookupTable.Remove(tag);
-        holders.Remove(tag);
-    }
-
-    // Get a specific character by tag and team flag
-    public CharacterHolder GetCharacter(string tag) {
-        CharacterHolder output = null;
-        try {
-            output = holders[tag];
-        } 
-        catch (Exception e) {
-            Debug.LogError(e.Message);
-            output = null;
-        }
-        
-        return output;
-    }
-
-    // Check if the dictionary has this tag
-    public bool hasCharacter(string tag) {
-        return holders.ContainsKey(tag);
-    }
-
-    // Set selected state of enemy character
-    public void SetSelect(string tag, bool value) {
-        try {
-            CharacterHolder found = holders[tag];
-            found.Select(value);
-        }
-        catch {
-            Debug.LogError("the character isn't exist!!");
-        }
-    }
-
-    public void SetAction(string tag, bool value, int index=0)
+namespace BattleScene
+{
+    public class CharacterManager : MonoBehaviour
     {
-        try
+        public static CharacterManager instance;
+        enum Team { PLAYER_TEAM, ENEMY_TEAM };
+        private Dictionary<string, PakRender> holders = new Dictionary<string, PakRender>();         // dictionary contains character holder
+
+        // Check team of tag object
+        public static bool IsPlayerTeam(string tag)
         {
-            CharacterHolder found = holders[tag];
-            found.Action(value,index);
+            return (tag.CompareTo("Plant1") == 0 || tag.CompareTo("Plant2") == 0
+                        || tag.CompareTo("Plant3") == 0 || tag.CompareTo("Chaam") == 0);
         }
-        catch
+
+        public static bool IsEnemyTeam(string tag)
         {
-            Debug.LogError("the character isn't exist!!");
+            return (tag.CompareTo("Enemy1") == 0 || tag.CompareTo("Enemy2") == 0 || tag.CompareTo("Enemy3") == 0
+                || tag.CompareTo("Enemy4") == 0 || tag.CompareTo("Boss") == 0);
         }
-    }
 
-    public string GetCharacterTeam(string tag) {
-        try {
-            Team team = lookupTable[tag];
 
-            if (team == Team.PLAYER_TEAM)
-                return "Player team";
-            return "Enemy team";
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        catch {
-            return "No team";
-        }
-    }
 
-    // Get a list of CharacterHolder of pakTeam
-    public List<CharacterHolder> getHolders(){
-        List<CharacterHolder> temp = new List<CharacterHolder>();
-        foreach (CharacterHolder e in holders.Values){
-            temp.Add(e);
-        }
-        return temp;
-    }
+        // Get a specific character by tag and team flag
+        public PakRender GetCharacter(string tag)
+        {
+            PakRender output = null;
+            try
+            {
+                output = holders[tag];
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                output = null;
+            }
 
-    // 0 is PLAYER_TEAM
-    // 1 is ENEMY_TEAM
-    public List<CharacterHolder> getTeamHolders(int teamKey) {
-        List<CharacterHolder> temp = new List<CharacterHolder>();
-        if (teamKey < 0 || teamKey > 1) {
+            return output;
+        }
+
+        // Check if the dictionary has this tag
+        public bool hasCharacter(string tag)
+        {
+            return holders.ContainsKey(tag);
+        }
+
+        // Add a new character
+        public void AddCharacter(string tag, GameObject character)
+        {
+            try
+            {
+                // find the team of added character
+                holders.Add(tag, character.GetComponent<PakRender>());
+            }
+            catch (Exception e)
+            {
+                if (e is ArgumentException)
+                {
+                    Destroy(character);
+                }
+                Debug.LogError(e.Message);
+            }
+        }
+
+        // Remove a specific chacracter by tag and team flag
+        public void RemoveCharacter(string tag)
+        {
+            holders.Remove(tag);
+        }
+
+        // Get a list of CharacterHolder of pakTeam
+        public List<PakRender> getHolders()
+        {
+            List<PakRender> temp = new List<PakRender>();
+            foreach (PakRender p in holders.Values)
+            {
+                temp.Add(p);
+            }
             return temp;
         }
 
-        Team team;
-        if (teamKey == 0)
-            team = Team.PLAYER_TEAM;
-        else
-            team = Team.ENEMY_TEAM;
-
-        foreach (var kv in lookupTable) {
-            if (kv.Value == team)
-                temp.Add(holders[kv.Key]);
-        }
-        return temp;
-    }
-
-    
-    public void HighLightCharacters(List<string> tags) {
-        foreach (var k_v in holders) {
-            // if the llst contain a key then highlight the character
-            if (tags.Contains(k_v.Key)) {
-                k_v.Value.HighLightLayer(true);
+        // 0 is PLAYER_TEAM
+        // 1 is ENEMY_TEAM
+        public List<PakRender> getTeamHolders(int teamKey)
+        {
+            if (teamKey < 0 || teamKey > 1)
+            {
+                throw new Exception("Invalid team key");
             }
-            else {
-                k_v.Value.HighLightLayer(false);
+
+            List<PakRender> temp = new List<PakRender>();
+
+            foreach (var kv in holders)
+            {
+                PakRender pak = kv.Value;
+
+                if (CheckTeamKey(teamKey, pak))
+                {
+                    temp.Add(pak);
+                }
+            }
+            return temp;
+        }
+
+        public List<PakRender> GetAliveCharacters(int teamKey)
+        {
+            if (teamKey < 0 || teamKey > 2)
+            {
+                throw new Exception("Invalid team key");
+            }
+
+            List<PakRender> temp = new List<PakRender>();
+
+            foreach (var kv in holders)
+            {
+                var pak = kv.Value;
+                if (pak.healthSystem.IsAlive)
+                {
+                    if (CheckTeamKey(teamKey, pak))
+                    {
+                        temp.Add(pak);
+                    }
+                }
+            }
+            return temp;
+        }
+
+        public List<PakRender> getAllAliveCharacters()
+        {
+            List<PakRender> alivePak = GetAliveCharacters(0);
+            alivePak.AddRange(GetAliveCharacters(1));
+            return alivePak;
+        }
+
+
+        public void HighLightCharacters(List<string> tags)
+        {
+            foreach (var k_v in holders)
+            {
+                // if the llst contain a key then highlight the character
+                if (tags.Contains(k_v.Key))
+                {
+                    k_v.Value.GoToFrontLayer(true);
+                }
+                else
+                {
+                    k_v.Value.GoToFrontLayer(false);
+                }
             }
         }
-    }
 
-    public void ResetHighLight() {
-        foreach (var k_v in holders) {
-             k_v.Value.HighLightLayer(false);
+        public void LockAllCharacters(bool value, int teamKey)
+        {
+            if (teamKey < 0 || teamKey > 2)
+            {
+                throw new Exception("Invalid team key");
+            }
+
+            foreach (var kv in holders)
+            {
+                var pak = kv.Value;
+                if (CheckTeamKey(teamKey, pak))
+                {
+                    pak.GetComponent<BoxCollider2D>().enabled = !value;
+                }
+            }
+        }
+
+        /** Reset state of all characters
+            * 0.Reset all state
+            * 1.Reset Action
+            * 2.Reset Select
+            * 3.Reset HighLight
+            */
+        public void ResetState(int options)
+        {
+            foreach (var k_v in holders)
+            {
+                switch (options)
+                {
+                    case 0:
+                        k_v.Value.GoToFrontLayer(false);
+                        k_v.Value.currentState = PakRender.State.Idle;
+                        k_v.Value.DisplayInAction(false);
+                        k_v.Value.Selected = false;
+                        break;
+                    case 1:
+                        k_v.Value.currentState = PakRender.State.Idle;
+                        k_v.Value.DisplayInAction(false);
+                        break;
+                    case 2:
+                        k_v.Value.Selected = false;
+                        break;
+                    case 3:
+                        k_v.Value.GoToFrontLayer(false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        // Clear dictionarys
+        public void Clear()
+        {
+            holders?.Clear();
+        }
+
+        private bool CheckTeamKey(int key, PakRender pak)
+        {
+            if (key < 0 || key > 2)
+            {
+                throw new Exception("Invalid team key");
+            }
+            return (key == 2) || (key == 0 && IsPlayerTeam(pak.tag)) || (key == 1 && IsEnemyTeam(pak.tag));
+        }
+
+        public List<PakRender> GetSpeedOfCharacters()
+        {
+            List<PakRender> aliveCharacter = getAllAliveCharacters();
+            //sort max to min 
+            aliveCharacter.Sort(delegate (PakRender x, PakRender y)
+        {
+            //compareTo < 0 => x < y , compareTo = 0 => x = y , compareTo > 0 => x > y
+            return -1 * x.currentSpeed.CompareTo(y.currentSpeed);
+        });
+            Debug.Log(aliveCharacter.ToString());
+            return aliveCharacter;
         }
     }
-
-    // Set select state of ally character
-    public void ResetSelect() {
-        foreach (var p in holders) {
-            CharacterHolder holder = p.Value;
-            holder.Select(false);
-        }
-    }
-
-    public void ResetAction() {
-        foreach (var p in holders) {
-            CharacterHolder holder = p.Value;
-            holder.Action(false, 0);
-        }
-    }
-
-    // Clear dictionarys
-    public void Clear() {
-        holders?.Clear();
-    }
-}
 }
 
 
