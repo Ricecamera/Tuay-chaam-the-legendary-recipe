@@ -220,6 +220,11 @@ namespace DialogueSystem
 
                 default:
                     Debug.Log("No more tuorial.");
+                    unlockedWell.GetComponent<BoxCollider2D>().enabled=true;
+                    foreach (GameObject well in lockedWell)
+                    {
+                        well.GetComponent<BoxCollider2D>().enabled=true;
+                    }
                     break;
             }
             // for (int i = 0; i < 7; i++)
