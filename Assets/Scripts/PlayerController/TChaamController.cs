@@ -29,22 +29,26 @@ public class TChaamController : MonoBehaviour
             frequency = 2;
             horizontal = 0;
             vertical = 0;
-            enemiesInLevelCanvas.enabled=false;
+            enemiesInLevelCanvas.enabled = false;
         }
         else
         {
             Destroy(gameObject);
         }
+
+        // set map unlock
+        LevelManager.instance.resetUnlockStatus();
+
     }
 
     // Update is called once per frame
     void Update()
-    {    
+    {
         if (Input.GetMouseButtonDown(0))
-        {    
+        {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-            
+
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
             //* Press well and goes to level
             // if (hit.collider != null && hit.collider.name.Contains("well")) {
@@ -55,22 +59,24 @@ public class TChaamController : MonoBehaviour
             //         hit.collider.isTrigger = false;
             //     }        
             // }
-            if (hit.collider != null && hit.collider.name.Contains("well") && hit.collider.GetComponent<LevelSelection>().getUnlocked() && playerDB.unlockStatus>1) {
+            if (hit.collider != null && hit.collider.name.Contains("well") && hit.collider.GetComponent<LevelSelection>().getUnlocked() && playerDB.unlockStatus > 1)
+            {
                 Debug.Log("Click on well");
-                enemiesInLevelCanvas.enabled= true;
+                enemiesInLevelCanvas.enabled = true;
                 // GameObject.Find("enemyInLevelCanvas").GetComponent<EnemiesInLevelController>().level=hit.collider.GetComponent<LevelSelection>().Level;
-                enemiesInLevelCanvas.GetComponent<EnemiesInLevelController>().wannaPlayLevel=hit.collider.GetComponent<LevelSelection>();
+                enemiesInLevelCanvas.GetComponent<EnemiesInLevelController>().wannaPlayLevel = hit.collider.GetComponent<LevelSelection>();
                 enemiesInLevelCanvas.GetComponent<EnemiesInLevelController>().setLevelText();
                 enemiesInLevelCanvas.GetComponent<EnemiesInLevelController>().lockAllWells();
                 enemiesInLevelCanvas.GetComponent<EnemiesInLevelController>().setEnemiesImage();
             }
-            else if (hit.collider != null && hit.collider.name.Contains("well") && playerDB.unlockStatus==1) {
+            else if (hit.collider != null && hit.collider.name.Contains("well") && playerDB.unlockStatus == 1)
+            {
                 Debug.Log("Click on well");
                 hit.collider.GetComponent<LevelSelection>().PressSelection("CharacterSelection");
                 if (!hit.collider.GetComponent<LevelSelection>().getUnlocked())
                 {
                     hit.collider.isTrigger = false;
-                }        
+                }
             }
         }
     }

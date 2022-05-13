@@ -19,10 +19,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         // unlockStatus = new List<bool>() { true, true, true, true, true, true, true, true };
-        for (int i = 0; i < SaveManager.instance.playerDatabase.unlockStatus; i++)
-        {
-            unlockStatus[i] = true;
-        }
+        resetUnlockStatus();
         // unlockStatus.AddRange(SaveManager.instance.playerDatabase.unlockStatus);
         playAniAlreadyMap = new List<bool>() { false, false, false, false, false, false, false, false };
         mapArrived = 2;
@@ -42,12 +39,18 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    // private void Update()
-    // {
-    //     if (mapArrived < unlockStatus.Count
-    //         && !unlockStatus[mapArrived])
-    //     {
-    //         unlockStatus[mapArrived] = true;
-    //     }
-    // }
+    public void resetUnlockStatus()
+    {
+        for (int i = 0; i < unlockStatus.Capacity; i++)
+        {
+            if (i < SaveManager.instance.playerDatabase.unlockStatus)
+            {
+                unlockStatus[i] = true;
+            }
+            else
+            {
+                unlockStatus[i] = false;
+            }
+        }
+    }
 }
