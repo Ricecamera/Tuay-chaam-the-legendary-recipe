@@ -51,6 +51,7 @@ public class VictoryScene : MonoBehaviour
             starR.SetActive(true);
             starL.SetActive(true);
             starM.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 3);
         }
         else if (SaveManager.instance.GetDieCount() == 1)
         //* Tester
@@ -58,18 +59,20 @@ public class VictoryScene : MonoBehaviour
         {
             starL.SetActive(true);
             starM.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 2);
         }
         else if (SaveManager.instance.GetDieCount() == 2)
         //* Tester
         //* else if (dieCount == 2)
         {
             starL.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 1);
         }
         else if (SaveManager.instance.GetDieCount() == 3)
         //* Tester
         //* else if (dieCount == 3)
         {
-
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 0);
         }
 
         //TODO drop item  
