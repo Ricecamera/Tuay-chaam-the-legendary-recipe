@@ -8,7 +8,7 @@ using System.Linq;
 public class PlayerDatabase : ScriptableObject
 {
     public int unlockStatus;
-    public List<int> starInMap = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 };
+    public List<int> starInMap = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0};
     public InventoryObject inventory;
 
     public void PlayerDatabaseToSaveData()
@@ -41,7 +41,7 @@ public class PlayerDatabase : ScriptableObject
 
     public void resetStar()
     {
-        starInMap = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 };
+        starInMap = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     }
 }
 
@@ -70,7 +70,7 @@ public class SaveData
     {
         unlockStatus = 1;
         inventory = new List<string>();
-        starInMap = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 };
+        starInMap = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     }
 
 }
