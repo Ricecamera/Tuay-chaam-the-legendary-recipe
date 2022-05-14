@@ -26,6 +26,9 @@ public class VictoryScene : MonoBehaviour
     [SerializeField]
     private GameObject clickToContinue;
 
+    [SerializeField]
+    private PlayerDatabase playerDB;
+
     //* Tester
     //* private int dieCount;
 
@@ -181,6 +184,10 @@ public class VictoryScene : MonoBehaviour
         //     SceneManager.LoadScene("CutScene_3");
         // }
         // else
-        SceneManager.LoadScene("opened-map");
+        if(playerDB.unlockStatus==9){
+            SceneManager.LoadScene("CutScene_4");
+        }else{
+            SceneManager.LoadScene("opened-map");
+        }
     }
 }

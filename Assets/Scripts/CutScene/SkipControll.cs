@@ -54,7 +54,7 @@ public class SkipControll : MonoBehaviour
                 }
                 else
                 {
-                    SceneLoader.Instance.LoadNextScene();
+                    SceneLoader.Instance.LoadSceneByName("opened-map");
                 }
             }
         }
