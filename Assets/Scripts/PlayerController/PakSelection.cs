@@ -48,7 +48,6 @@ public class PakSelection : MonoBehaviour
         AddListenerOfUI();
         selectedSkill = -1;
         Reset();
-        Debug.Log("Come Start in PakSelection");
         _UIcontroller.UpdateUI(GameState.CHOOSE_CHARACTER);
         ingredient = new List<string>();
 
@@ -125,7 +124,6 @@ public class PakSelection : MonoBehaviour
                 PakRender character = hit.collider.GetComponent<PakRender>();
                 if (character == null)
                 {
-                    Debug.LogError(hit.collider.tag + " doesn't have PakRender component");
                     return;
                 }
 
@@ -211,7 +209,6 @@ public class PakSelection : MonoBehaviour
                     }
                     else if (action.selectedSkill.skillNation == SkillObj.SkillNation.COOKED)
                     {
-                        Debug.Log("Skill UI For Cook skill work");
                         // selectedSkill = 3;
                         // _UIcontroller.skillMenu.ToggleSkill(selectedSkill);
                     }
@@ -300,7 +297,6 @@ public class PakSelection : MonoBehaviour
 
     public void HandleSelectSkill(int skillIndex)
     {
-        Debug.Log("Button " + skillIndex + " clicked!");
 
         if (currentState == GameState.CHOOSE_CHAAM_SKILL)
         {
@@ -457,17 +453,6 @@ public class PakSelection : MonoBehaviour
         CharacterManager.instance.LockAllCharacters(true, 2);
         UpdateGameState(GameState.END_TURN);
         battleManger.RunCommand();
-        Debug.Log("-----------------------------------------------------TURN END-----------------------------------------------");
-        // //chaam must not dead
-        // try
-        // {
-        //     ChaamRender nongChaam = GameObject.FindGameObjectWithTag("Chaam").transform.GetChild(0).GetComponent<ChaamRender>();
-        //     nongChaam.addGuage(20);
-        // }
-        // catch (System.Exception)
-        // {
-        //     Debug.Log("Chaam is already tai ha.");
-        // }
         List<PakRender> pakTeam = CharacterManager.instance.GetAliveCharacters(0);
         foreach (PakRender x in pakTeam)
         {
@@ -518,7 +503,6 @@ public class PakSelection : MonoBehaviour
 
         _UIcontroller.UpdateUI(state);
         currentState = state;
-        Debug.Log("Current State is " + currentState.ToString());
     }
 
     private void UpdateCharacterLayer(List<PakRender> characterList, bool value)
@@ -560,15 +544,10 @@ public class PakSelection : MonoBehaviour
     {
         ChaamRender chaam = (ChaamRender)selectedPak;
 
-        Debug.Log(chaam.getGuage());
 
         if (chaam.getGuage() == 100)
         {
             UpdateGameState(GameState.CHOOSE_COOK_SKILL);
-        }
-        else
-        {
-            Debug.Log("Guage not full");
         }
 
     }
