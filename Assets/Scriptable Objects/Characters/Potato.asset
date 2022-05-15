@@ -15,10 +15,10 @@ MonoBehaviour:
   entityId: 
   entityName: Potato
   description: 
-  baseAtk: 18
+  baseAtk: 20
   baseDef: 10
   maxHp: 60
-  baseSpeed: 16
+  baseSpeed: 15
   image: {fileID: 21300000, guid: c85ca147c51324647ad962d10613dfac, type: 3}
   bonusStatsPerLvl:
     addHp: 0

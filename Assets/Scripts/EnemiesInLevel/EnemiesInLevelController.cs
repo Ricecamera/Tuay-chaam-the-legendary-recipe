@@ -22,7 +22,7 @@ public class EnemiesInLevelController : MonoBehaviour
         enemiesInEachLevel.Add(4,new List<string> {"potato", "normalprik", "potato", "kanah"});
         enemiesInEachLevel.Add(5,new List<string> {"potato", "normalprik", "yuak", "mund"});
         enemiesInEachLevel.Add(6,new List<string> {"potato", "prikthai", "potato", "brogli"});
-        enemiesInEachLevel.Add(7,new List<string> {"potato", "yuak", "khaopod", "gluay"});
+        enemiesInEachLevel.Add(7,new List<string> {"potato", "yuak", "kaopod", "gluay"});
         enemiesInEachLevel.Add(8,new List<string> {"prikthai", "yuak", "normalprik", "cheepha"});
     }
 
