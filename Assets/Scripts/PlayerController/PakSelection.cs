@@ -478,6 +478,7 @@ public class PakSelection : MonoBehaviour
                 break;
             }
         }
+        HistoryRecord.instance.Show();
     }
 
     public void HandleCancelAction()

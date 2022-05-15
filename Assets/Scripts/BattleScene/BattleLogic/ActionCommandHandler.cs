@@ -149,5 +149,10 @@ namespace BattleScene.BattleLogic
             }
             return false;
         }
+
+        public List<ActionCommand> GetCommands()
+        {
+            return this.commandList;
+        }
     }
 }
