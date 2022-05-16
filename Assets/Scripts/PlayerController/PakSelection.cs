@@ -83,8 +83,11 @@ public class PakSelection : MonoBehaviour
                     }
                     else
                     {
-                        SaveManager.instance.playerDatabase.unlockStatus += 1;
-                        LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                        if (!LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1])
+                        {
+                            SaveManager.instance.playerDatabase.unlockStatus += 1;
+                            LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                        }
                         SceneManager.LoadScene("VictoryScene");
                     }
                     // LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;

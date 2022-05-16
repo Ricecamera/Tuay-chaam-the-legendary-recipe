@@ -14,7 +14,7 @@ public class SetOneEnemyHPTo10 : MeleeSkill
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");
         SoundManager.Instance.PlaySound("HitOneHard", soundBank[0].GetComponent<BattleSound>().clips);
-        
+
         return;
     }
 }

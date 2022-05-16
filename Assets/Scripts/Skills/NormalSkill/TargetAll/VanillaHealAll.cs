@@ -10,7 +10,7 @@ public class VanillaHealAll : RangeSkill
 
     public override void Execute(List<PakRender> target, PakRender self)
     {
-        int healValue = (int) ((float) self.healthSystem.MaxHp * healRatio);
+        int healValue = (int)((float)self.healthSystem.MaxHp * healRatio);
         foreach (PakRender e in target)
         {
             e.healthSystem.Heal(healValue);

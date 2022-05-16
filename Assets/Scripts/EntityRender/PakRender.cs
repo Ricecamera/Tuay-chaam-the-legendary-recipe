@@ -201,15 +201,29 @@ public class PakRender : MonoBehaviour, IComparable
 
     }
 
-    public void switchMat(int damage)
+    public void switchMat(int damage, bool isHeal)
     {
+
         if (flashcheck != null)
         {
             Debug.LogError("Coroutine call multiple time");
             StopCoroutine(flashcheck);
         }
-        if (this.gameObject.activeSelf)
-            StartCoroutine(DamageEffect(damage));
+        if (!isHeal)
+        {
+            if (this.gameObject.activeSelf)
+            {
+                StartCoroutine(DamageEffect(damage));
+            }
+        }
+        else
+        {
+            if (this.gameObject.activeSelf)
+            {
+                StartCoroutine(HealEffect());
+            }
+        }
+
     }
 
     public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete)
@@ -351,7 +365,7 @@ public class PakRender : MonoBehaviour, IComparable
     {
         int damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))));
         this.healthSystem.TakeDamage(damage);
-        this.switchMat(damage);
+        this.switchMat(damage, false);
     }
 
     //! Are you use this function or not ? not found where you use it
@@ -383,6 +397,16 @@ public class PakRender : MonoBehaviour, IComparable
         flashcheck = null;
     }
 
+    private IEnumerator HealEffect()
+    {
+        SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
+        Material whiteMat = (Material)Resources.Load<Material>("BuffMaterial");
+        Material originalMat = GetComponent<SpriteRenderer>().material;
+        sp.material = whiteMat;
+        yield return new WaitForSeconds(0.5f);
+        sp.material = originalMat;
+        flashcheck = null;
+    }
 
     public void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete)
     {
