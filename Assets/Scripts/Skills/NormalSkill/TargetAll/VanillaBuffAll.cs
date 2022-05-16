@@ -21,6 +21,7 @@ public class VanillaBuffAll : RangeSkill
             ParticleSystem vfx = Instantiate(particles, e.GetPosition(), Quaternion.identity);
             Destroy(vfx.gameObject, vfx.main.duration);
         }
+        self.switchMat(0, true);
 
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");

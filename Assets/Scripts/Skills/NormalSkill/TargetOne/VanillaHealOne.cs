@@ -11,6 +11,7 @@ public class VanillaHealOne : RangeSkill
     {
         int healValue = (int)((float)self.healthSystem.MaxHp * healRatio);
         target[0].healthSystem.Heal(healValue);
+        self.switchMat(0, true);
 
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");

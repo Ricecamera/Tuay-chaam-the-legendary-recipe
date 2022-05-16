@@ -201,7 +201,7 @@ public class PakRender : MonoBehaviour, IComparable
 
     }
 
-    public void switchMat(int damage, bool isHeal)
+    public void switchMat(int damage, bool isBuff)
     {
 
         if (flashcheck != null)
@@ -209,7 +209,7 @@ public class PakRender : MonoBehaviour, IComparable
             Debug.LogError("Coroutine call multiple time");
             StopCoroutine(flashcheck);
         }
-        if (!isHeal)
+        if (!isBuff)
         {
             if (this.gameObject.activeSelf)
             {
@@ -220,7 +220,7 @@ public class PakRender : MonoBehaviour, IComparable
         {
             if (this.gameObject.activeSelf)
             {
-                StartCoroutine(HealEffect());
+                StartCoroutine(BuffEffect());
             }
         }
 
@@ -397,13 +397,19 @@ public class PakRender : MonoBehaviour, IComparable
         flashcheck = null;
     }
 
-    private IEnumerator HealEffect()
+    private IEnumerator BuffEffect()
     {
         SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
         Material whiteMat = (Material)Resources.Load<Material>("BuffMaterial");
         Material originalMat = GetComponent<SpriteRenderer>().material;
         sp.material = whiteMat;
-        yield return new WaitForSeconds(0.5f);
+        Transform t = this.GetComponent<Transform>();
+        Vector3 oldpos = t.position;
+        Vector3 newpos = oldpos;
+        newpos.y = newpos.y + 1.0f;
+        this.SlideToPosition(newpos,()=>{});
+        yield return new WaitForSeconds(1.0f);
+        this.SlideToPosition(oldpos,()=>{});
         sp.material = originalMat;
         flashcheck = null;
     }
