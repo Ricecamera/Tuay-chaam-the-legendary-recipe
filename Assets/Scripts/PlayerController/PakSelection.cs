@@ -84,6 +84,11 @@ public class PakSelection : MonoBehaviour
                     {
                         SaveManager.instance.playerDatabase.unlockStatus += 1;
                         LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                        if (SaveManager.instance.playerDatabase.unlockStatus == 4 &&
+                            SaveManager.instance.playerDatabase.cookSystemStatus == PlayerProgress.LOCKED)
+                        {
+                            SaveManager.instance.playerDatabase.cookSystemStatus = PlayerProgress.ACQUIRED;
+                        }
                         SceneManager.LoadScene("VictoryScene");
                     }
                     // LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
