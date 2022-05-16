@@ -11,8 +11,6 @@ namespace DialogueSystem
     {
 
         [Header("Character Animations")]
-        // [SerializeField] private GameObject pointer;
-        // [SerializeField] private GameObject pointer2;
         [SerializeField] private GameObject textBox;
         [SerializeField] private GameObject Backdrop;
         [SerializeField] private PlayerDatabase playerDB;
@@ -23,12 +21,6 @@ namespace DialogueSystem
         [SerializeField] private GameObject settingButton;
         [SerializeField] private GameObject homeButton;
 
-        // [SerializeField] private GameObject well1;
-        // [SerializeField] private GameObject well2;
-        // [SerializeField] private GameObject well3;
-        // [SerializeField] private GameObject homeArrow;
-        // [SerializeField] private GameObject well3Arrow;
-        // [SerializeField] private GameObject background;
 
         private void Awake()
         {
@@ -143,7 +135,7 @@ namespace DialogueSystem
                             case 7://stay at case 6
                                 unlockedWell.GetComponent<BoxCollider2D>().enabled=true;
                                 transform.GetChild(6).gameObject.SetActive(true);
-                                transform.GetChild(6).gameObject.GetComponent<Text>().text="Now let's begin your adventure! Click on the well to enter the well.";
+                                transform.GetChild(6).gameObject.GetComponent<Text>().text="Now let's begin your adventure! Click on the well to enter battle.";
                                 break;
                             default:
                                 Debug.LogError("wrong message index");
@@ -233,77 +225,6 @@ namespace DialogueSystem
                     }
                     break;
             }
-            // for (int i = 0; i < 7; i++)
-            // {
-            //     Deactivate();
-            //     Debug.Log(i);
-            //     if (i < 2)
-            //     {
-            //         transform.GetChild(i).gameObject.SetActive(true);
-            //     }
-            //     if (i == 1) //* Dialogue สอนผู้เล่น
-            //     {
-            //         pointer.gameObject.SetActive(true);
-            //         pointer.SetTrigger("Pointer");
-            //         yield return new WaitUntil(() => WaitTrigger("Tonhom"));
-            //     }
-            //     else
-            //     {
-            //         pointer.gameObject.SetActive(false);
-            //     }
-
-            //     if (i == 2) //* กดตัวต้นหอม
-            //     {
-            //         pointer.gameObject.SetActive(false);
-            //         textBox.SetActive(false);
-            //         skillBox.SetActive(true);
-            //         yield return new WaitUntil(() => WaitTrigger("sk1"));
-            //     }
-            //     else if (i == 3) //* กดสกิล
-            //     {
-            //         background.GetComponent<Image>().color = new Color32(173, 103, 0, 255);
-            //         skillBox.transform.GetChild(5).gameObject.SetActive(false);
-            //     }
-            //     else if (i == 4) //* กดเลือกศัตรู
-            //     {
-            //         // background.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            //         textBox.SetActive(true);
-            //         skillBox.SetActive(false);
-            //         pointer2.gameObject.SetActive(true);
-            //         yield return new WaitForSeconds(1.5f);
-            //         transform.GetChild(2).gameObject.SetActive(true);
-            //         yield return new WaitUntil(() => WaitTrigger("Mah_EMOT 1_0"));
-            //     }
-            //     else if (i == 5)
-            //     { //* ตีหมา
-            //         background.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-            //         textBox.SetActive(false);
-            //         pointer2.gameObject.SetActive(false);
-            //     }
-            //     else if (i == 6)
-            //     { //* หมาหนี
-
-            //         yield return new WaitForSeconds(1.5f);
-            //         textBox.SetActive(true);
-            //         yield return new WaitForSeconds(0.5f);
-            //         transform.GetChild(3).gameObject.SetActive(true);
-            //     }
-            //     if (i < 2)
-            //     {
-            //         yield return new WaitUntil(() => transform.GetChild(i).GetComponent<TutorialLine>().isFinish);
-            //     }
-            //     else if (i == 4)
-            //     {
-            //         yield return new WaitUntil(() => transform.GetChild(2).GetComponent<TutorialLine>().isFinish);
-            //     }
-            //     else if (i == 6)
-            //     {
-            //         yield return new WaitUntil(() => transform.GetChild(3).GetComponent<TutorialLine>().isFinish);
-            //     }
-
-            // }
-            // gameObject.SetActive(false);
-            // LevelLoader.instance.LoadSpecificScene("VictoryScene");
         }
 
         public void Deactivate()

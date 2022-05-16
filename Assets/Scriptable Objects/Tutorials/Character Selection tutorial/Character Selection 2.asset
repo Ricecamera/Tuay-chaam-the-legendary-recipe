@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 338581ed76cc1c345bd29a5c231d4812, type: 3}
+  m_Name: Character Selection 2
+  m_EditorClassIdentifier: 
+  heading: Character Selection (2)
+  description: 'The bottom panal shows the list of characters that are avaiable in
+    your inventory. There are three type of character: Chaam, Pak, and Support. You
+    can click tabs on the top of the panel to change type.'
+  clip: {fileID: 32900000, guid: 849ae794e99e46f42abeff9332a04ca2, type: 3}

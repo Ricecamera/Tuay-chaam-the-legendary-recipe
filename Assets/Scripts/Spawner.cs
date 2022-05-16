@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
         try
         {
 
-            if (SceneManager.GetActiveScene().name == "Battle1-2V2")
+            if (SceneManager.GetActiveScene().name == "Battle Toturial")
             {
                 Debug.Log("It's working bro");
                 //Debug.Log(SaveManager.instance.playerDatabase.GetInventory().Container.ChaamItems[0].item.prefab);

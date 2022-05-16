@@ -39,6 +39,13 @@ public class EnemiesInLevelController : MonoBehaviour
     }
 
     public void goToBattle(){
+        if (SaveManager.instance.playerDatabase.unlockStatus == 4 &&
+            SaveManager.instance.playerDatabase.cookSystemStatus == PlayerProgress.ACQUIRED)
+        {
+            SaveManager.instance.playerDatabase.cookSystemStatus = PlayerProgress.UNLOCKED;
+            wannaPlayLevel.PressSelection("CookSystemTutorial");
+            return;
+        }
         wannaPlayLevel.PressSelection("CharacterSelection");
     }
 

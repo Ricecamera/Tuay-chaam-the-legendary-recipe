@@ -66,7 +66,6 @@ public class BattleUIController : MonoBehaviour
         switch (nextState)
         {
             case PakSelection.GameState.CHOOSE_SKILL:
-                Debug.Log("CHOOSE_SKILL");
                 selectSkillText.gameObject.SetActive(true);
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
@@ -74,7 +73,6 @@ public class BattleUIController : MonoBehaviour
                 cookButton.gameObject.SetActive(false);
                 break;
             case PakSelection.GameState.CHOOSE_CHAAM_SKILL:
-                Debug.Log("CHOOSE_CHAAM_SKILL");
                 selectSkillText.gameObject.SetActive(true);
                 skillMenu.ToggleMenu(true);
                 backButton.gameObject.SetActive(true);
@@ -176,7 +174,6 @@ public class BattleUIController : MonoBehaviour
                 {
                     if (battleManager.actionCommandHandler == null)
                     {
-                        Debug.Log("actionCommandHandler null");
                     }
                     else if (battleManager.actionCommandHandler.isChaamThisTurnUseCookSkill())
                     {
@@ -226,7 +223,6 @@ public class BattleUIController : MonoBehaviour
                 skillMenu.skills[1].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 skillMenu.skills[2].getMyButton().GetComponent<Image>().color = UnityEngine.Color.white;
                 cookButton.gameObject.GetComponent<Image>().color = UnityEngine.Color.white;
-                Debug.Log("BEFORE UPDATE SPEED");
 
                 if (SceneManager.GetActiveScene().name != "Battle1-2V2")
                 {
@@ -245,7 +241,6 @@ public class BattleUIController : MonoBehaviour
         }
         catch
         {
-            Debug.LogError("the target character does not have PakRender component");
         }
     }
 
@@ -256,9 +251,7 @@ public class BattleUIController : MonoBehaviour
 
     private void UpdateSpeedPanel()
     {
-        Debug.Log("Come Inside Speed");
         List<PakRender> aliveCharacter = CharacterManager.instance.GetSpeedOfCharacters();
-        Debug.Log("---------------------" + aliveCharacter.Capacity.ToString());
         for (int i = 0; i < speed.Length; i++)
         {
             if (i < aliveCharacter.Count)
@@ -276,7 +269,7 @@ public class BattleUIController : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Error");
+                    Debug.LogError("Error");
                 }
             }
             else

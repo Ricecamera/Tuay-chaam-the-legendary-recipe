@@ -98,6 +98,7 @@ public class SaveManager : MonoBehaviour
     {
         InitData();
         playerDatabase.unlockStatus = 1;
+        playerDatabase.cookSystemStatus = PlayerProgress.LOCKED;
         playerDatabase.resetStar();
         if (File.Exists(Application.persistentDataPath + "/game_save/player_data/player.txt"))
         {

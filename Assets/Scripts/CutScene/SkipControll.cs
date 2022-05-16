@@ -6,6 +6,11 @@ using UnityEngine.UI;
 public class SkipControll : MonoBehaviour
 {
     private float holdDownStartTime;
+
+    [SerializeField]
+    private bool useNextLogic = true;
+    public readonly string nextSceneName;
+
     [SerializeField] private GameObject holdToSkip; //hold to skip text
     private float counter; //counter for hold to skip text 
     private bool stateSkip; //state of hold to skip text
@@ -54,7 +59,15 @@ public class SkipControll : MonoBehaviour
                 }
                 else
                 {
-                    SceneLoader.Instance.LoadSceneByName("opened-map");
+                    if (useNextLogic)
+                    {
+                        SceneLoader.Instance.LoadNextScene();
+
+                    }
+                    else
+                    {
+                        SceneLoader.Instance.LoadSceneByName(nextSceneName);
+                    }
                 }
             }
         }
