@@ -54,16 +54,37 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             actor.GetComponent<Image>().sprite = commands[i].caller.Entity.image;
             actor.GetComponent<RectTransform>().sizeDelta = new Vector2(80f, 80f);
             actor.transform.SetParent(scrollPane.transform);
-            for (int j = 0; j < commands[i].targets.Count; j++)
-            {
+            if (commands[i].targets.Count == 1 ){
                 target = new GameObject("Target");
                 target.AddComponent<Image>();
-                target.GetComponent<Image>().sprite = commands[i].targets[j].Entity.image;
+                target.GetComponent<Image>().sprite = commands[i].targets[0].Entity.image;
                 target.GetComponent<RectTransform>().sizeDelta = new Vector2(80f, 80f);
-                target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f + (80 * j), 0f, 0f);
+                target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f, 0f, 0f);
                 target.transform.SetParent(actor.transform);
-                // target.SetActive(false);
             }
+            else if (commands[i].targets.Count > 1 && commands[i].targets.Count <= 4){
+                Debug.Log("Do all enemies");
+                target = new GameObject("All enemies"); 
+                target.AddComponent<TextMeshProUGUI>(); 
+                target.GetComponent<TextMeshProUGUI>().text = "All enemies";
+                target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f, 0f, 0f);
+                target.GetComponent<TextMeshProUGUI>().fontSize = 30;
+                target.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                target.GetComponent<TextMeshProUGUI>().font = font;
+                target.GetComponent<RectTransform>().sizeDelta = new Vector2(111.0746f, 33.6339f);
+            }
+            else if (commands[i].targets.Count >= 5){
+                Debug.Log("Do all units");
+                target = new GameObject("All units"); 
+                target.AddComponent<TextMeshProUGUI>(); 
+                target.GetComponent<TextMeshProUGUI>().text = "All units";
+                target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f, 0f, 0f);
+                target.GetComponent<TextMeshProUGUI>().fontSize = 30;
+                target.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
+                target.GetComponent<TextMeshProUGUI>().font = font;
+                target.GetComponent<RectTransform>().sizeDelta = new Vector2(111.0746f, 33.6339f);
+            }
+            
             skill = new GameObject("Skill");
             skill.AddComponent<Image>();
             skill.GetComponent<Image>().sprite = commands[i].selectedSkill.GetSkill().icon;

@@ -15,7 +15,7 @@ public class VanillaHealAll : RangeSkill
         {
             e.healthSystem.Heal(healValue);
         }
-        self.switchMat(0, true);
+        self.switchMat(0, 1);
 
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");

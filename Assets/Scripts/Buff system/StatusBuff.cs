@@ -36,13 +36,13 @@ namespace BuffSystem {
 
         public void UpdateStatus(StatLabel status, float ratio, PakRender character) {
             if (status == StatLabel.ATK) {
-                character.BonusAtk += (int) ratio * character.baseAtk;
+                character.BonusAtk += (int) (ratio * character.baseAtk);
             }
             else if (status == StatLabel.DEF) {
-                character.BonusDef += (int) ratio * character.baseDef;
+                character.BonusDef += (int) (ratio * character.baseDef);
             }
             else if (status == StatLabel.SPD) {
-                character.BonusSpeed += (int) ratio * character.baseSpeed;
+                character.BonusSpeed += (int) (ratio * character.baseSpeed);
             }
         }
     }

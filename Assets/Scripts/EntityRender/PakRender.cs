@@ -31,6 +31,7 @@ public class PakRender : MonoBehaviour, IComparable
     public int baseDef { get; private set; }
     public int baseSpeed { get; private set; }
 
+    [SerializeField]
     private int bonusAttack, bonusDef, bonusSpeed, setSkill = -1;
 
     [SerializeField]
@@ -201,27 +202,27 @@ public class PakRender : MonoBehaviour, IComparable
 
     }
 
-    public void switchMat(int damage, bool isBuff)
+    public void switchMat(int damage, int actionType)
     {
-
+        //actionType 0 = damage , 1 = buff , 2 = float of buum
         if (flashcheck != null)
         {
             Debug.LogError("Coroutine call multiple time");
             StopCoroutine(flashcheck);
         }
-        if (!isBuff)
-        {
-            if (this.gameObject.activeSelf)
-            {
-                StartCoroutine(DamageEffect(damage));
-            }
-        }
-        else
-        {
-            if (this.gameObject.activeSelf)
-            {
+        switch(actionType){
+            case 0: 
+                StartCoroutine(DamageEffect(damage)) ;
+                break;
+            case 1: 
                 StartCoroutine(BuffEffect());
-            }
+                break;
+            case 2:
+                StartCoroutine(FloatEffect());
+                break;
+            default:
+                Debug.LogError("Invalid actionType");
+                break;
         }
 
     }
@@ -272,25 +273,6 @@ public class PakRender : MonoBehaviour, IComparable
     // Add buff to this object
     public void AddBuff(BaseBuff buff)
     {
-        // Check for duplicate buff
-        for (int i = 0; i < attachedBuffs.Count; i++)
-        {
-            if (buff.name == attachedBuffs[i].name)
-            {
-                if (buff is ILastingBehaviour)
-                {
-                    ILastingBehaviour lastingEffect = (ILastingBehaviour)buff;
-
-                    // Execute OnDeactivate effect and add new OnInitialize effect
-                    lastingEffect.Deactivate(this);
-                    lastingEffect.Initialize(this);
-                }
-                // Reset duration
-                buffRemainingTurns[i] = buff.duration;
-                return;
-            }
-        }
-
         // Check if buff added to the character alreadly reach Maximum number
         if (attachedBuffs.Count == 10)
         {
@@ -365,7 +347,7 @@ public class PakRender : MonoBehaviour, IComparable
     {
         int damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))));
         this.healthSystem.TakeDamage(damage);
-        this.switchMat(damage, false);
+        this.switchMat(damage, 0);
     }
 
     //! Are you use this function or not ? not found where you use it
@@ -411,6 +393,16 @@ public class PakRender : MonoBehaviour, IComparable
         yield return new WaitForSeconds(1.0f);
         this.SlideToPosition(oldpos,()=>{});
         sp.material = originalMat;
+        flashcheck = null;
+    }
+    public IEnumerator FloatEffect(){
+        Transform t = this.GetComponent<Transform>();
+        Vector3 oldpos = t.position;
+        Vector3 newpos = oldpos;
+        newpos.y = newpos.y + 1.0f;
+        this.SlideToPosition(newpos,()=>{});
+        yield return new WaitForSeconds(1.0f);
+        this.SlideToPosition(oldpos,()=>{});
         flashcheck = null;
     }
 
