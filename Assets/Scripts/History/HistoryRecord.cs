@@ -60,7 +60,7 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 target.AddComponent<Image>();
                 target.GetComponent<Image>().sprite = commands[i].targets[j].Entity.image;
                 target.GetComponent<RectTransform>().sizeDelta = new Vector2(80f, 80f);
-                target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f, 0f, 0f);
+                target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f + (80 * j), 0f, 0f);
                 target.transform.SetParent(actor.transform);
                 // target.SetActive(false);
             }

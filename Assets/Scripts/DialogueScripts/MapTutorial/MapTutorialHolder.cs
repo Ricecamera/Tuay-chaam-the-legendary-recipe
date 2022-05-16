@@ -89,6 +89,7 @@ namespace DialogueSystem
 
                             case 3:
                                 Backdrop.SetActive(true);
+                                Debug.Log(Backdrop.activeSelf);
                                 bringNonUIToFront(unlockedWell,"VeryFront");
                                 // bringNonUIToFront(unlockedWell.transform.GetChild(1).);
                                 foreach (GameObject well in lockedWell)

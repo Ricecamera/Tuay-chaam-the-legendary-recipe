@@ -88,18 +88,29 @@ public class VictoryScene : MonoBehaviour
         //* Vector3(75,-126,0)
         foreach (ItemObject item in itemList)
         {
-            Debug.Log(item._name);
-            GameObject imageItem = new GameObject("ImageItem");
-            imageItem.AddComponent<Image>();
-            imageItem.AddComponent<Animator>();
-            imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
-            imageItem.GetComponent<Image>().sprite = item.uiDisplay;
-            imageItem.transform.SetParent(canvas.transform);
-            imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(x + 75 * i, -120, 0);
-            imageItem.transform.GetComponent<Image>().preserveAspect = true;
-            Debug.Log("Test item" + item._name);
+            // Debug.Log(item._name);
+            // GameObject imageItem = new GameObject("ImageItem");
+            // imageItem.AddComponent<Image>();
+            // imageItem.AddComponent<Animator>();
+            // imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
+            // imageItem.GetComponent<Image>().sprite = item.uiDisplay;
+            // imageItem.transform.SetParent(canvas.transform);
+            // imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(x + 75 * i, -120, 0);
+            // imageItem.transform.GetComponent<Image>().preserveAspect = true;
+            // Debug.Log("Test item" + item._name);
 
-
+            if (!DatabaseManager.instance.playerDatabase.inventory.existedItem(item))
+            {
+                GameObject imageItem = new GameObject("ImageItem");
+                imageItem.AddComponent<Image>();
+                imageItem.AddComponent<Animator>();
+                imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
+                imageItem.GetComponent<Image>().sprite = item.uiDisplay;
+                imageItem.transform.SetParent(canvas.transform);
+                imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(x + 75 * i, -120, 0);
+                imageItem.transform.GetComponent<Image>().preserveAspect = true;
+                Debug.Log("Test item" + item._name);
+            }
             bool addPak = false;
             foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().inventory.Container.MainItems)
             {
@@ -144,7 +155,7 @@ public class VictoryScene : MonoBehaviour
     private void Update()
     {
         updateCount++;
-        if (updateCount >= 300*3)
+        if (updateCount >= 300)
         {
             if (opacity == 255) textMode = 1;
             else if (opacity == 0) textMode = 0;
@@ -154,18 +165,18 @@ public class VictoryScene : MonoBehaviour
 
             if (textMode == 0 && updateTrigger)
             {
-                opacity++; updateTrigger = false;
+                opacity++; updateTrigger = true; //false
             }
             else if (textMode == 0) updateTrigger = true;
 
             if (textMode == 1 && updateTrigger)
             {
-                opacity--; updateTrigger = false;
+                opacity--; updateTrigger = true; //false
             }
             else if (textMode == 1) updateTrigger = true;
         }
 
-        if (Input.GetMouseButtonDown(0) && updateCount >= 400*3)
+        if (Input.GetMouseButtonDown(0) && updateCount >= 400)
         {
             goToNextScene();
         }
