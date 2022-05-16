@@ -45,7 +45,7 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         turn.GetComponent<TextMeshProUGUI>().fontSize = 30;
         turn.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
         turn.GetComponent<TextMeshProUGUI>().font = font;
-        turn.GetComponent<RectTransform>().sizeDelta = new Vector2(85.2556f, 32.4603f);
+        turn.GetComponent<RectTransform>().sizeDelta = new Vector2(111.0746f, 33.6339f);
         turn.transform.SetParent(scrollPane.transform);
         for (int i = 0; i < commands.Count; i++)
         {
@@ -59,13 +59,15 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 target = new GameObject("Target");
                 target.AddComponent<Image>();
                 target.GetComponent<Image>().sprite = commands[i].targets[j].Entity.image;
+                target.GetComponent<RectTransform>().sizeDelta = new Vector2(80f, 80f);
+                target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f, 0f, 0f);
                 target.transform.SetParent(actor.transform);
                 // target.SetActive(false);
             }
             skill = new GameObject("Skill");
             skill.AddComponent<Image>();
             skill.GetComponent<Image>().sprite = commands[i].selectedSkill.GetSkill().icon;
-            skill.GetComponent<RectTransform>().localPosition = new Vector3(23.9860001f, -23.9860001f, 0f);
+            skill.GetComponent<RectTransform>().localPosition = new Vector3(53f, -1.71659995e-05f, 0f);
             skill.GetComponent<RectTransform>().sizeDelta = new Vector2(32.0287f, 32.0287f);
             skill.transform.SetParent(actor.transform);
         }
@@ -74,10 +76,6 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         gameObject.SetActive(true);
-        if (eventData.pointerCurrentRaycast.gameObject.name == "Actor")
-        {
-            TooltipScreenSpaceUI.showTooltip_Static("Test ja", "1 2 3 4 5");
-        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
