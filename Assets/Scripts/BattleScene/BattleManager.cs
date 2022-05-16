@@ -58,6 +58,7 @@ namespace BattleScene
             Debug.Log("Battle Start!!");
 
 
+
             //---------------------------------New AI ---------------------------------------------//
 
             // Get list of pakTeam and enemy Team
@@ -66,7 +67,7 @@ namespace BattleScene
 
 
 
- 
+
 
             // Let AI controller selection its actions
             List<ActionCommand> temp = AI.selectAction(alivePak, aliveEnemies);
@@ -77,6 +78,8 @@ namespace BattleScene
 
             actionText.gameObject.SetActive(true);
             actionCommandHandler.RunCommands();
+            //* borrow command to make history record
+            HistoryRecord.instance.SetCommand(actionCommandHandler.GetCommands());
 
             //****
         }
@@ -97,6 +100,7 @@ namespace BattleScene
             foreach (var pak in holders)
                 pak.UpdateTurn();
             onChangeTurn();
+
         }
 
         public bool IsPlayerLose()

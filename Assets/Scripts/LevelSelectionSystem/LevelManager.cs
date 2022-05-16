@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
 
     public void resetUnlockStatus()
     {
-        for (int i = 0; i < unlockStatus.Capacity; i++)
+        for (int i = 0; i < unlockStatus.Count; i++)
         {
             if (i < SaveManager.instance.playerDatabase.unlockStatus)
             {

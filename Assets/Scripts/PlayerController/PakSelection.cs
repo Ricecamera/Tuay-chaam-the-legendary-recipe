@@ -115,7 +115,7 @@ public class PakSelection : MonoBehaviour
                 UpdateGameState(GameState.CHAAM_WAIT_FOR_CONFIRM); // Show ok button
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && HistoryButton.chooseFlag)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -481,6 +481,7 @@ public class PakSelection : MonoBehaviour
                 break;
             }
         }
+        HistoryRecord.instance.Show();
     }
 
     public void HandleCancelAction()

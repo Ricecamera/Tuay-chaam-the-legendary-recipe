@@ -15,55 +15,69 @@ public class SkillExecutor
     public event Action OnFinishExecute;
 
     //Constructortor
-    public SkillExecutor(SkillObj skill) {
+    public SkillExecutor(SkillObj skill)
+    {
         this.cooldown = 0;
         this.skill = skill;
         this.maxCooldown = skill.maxCooldown;
         this.OnFinishExecute = null;
     }
-    public SkillExecutor(SkillObj skill, Action onFinishExecute) {
+    public SkillExecutor(SkillObj skill, Action onFinishExecute)
+    {
         this.cooldown = 0;
         this.skill = skill;
         this.maxCooldown = skill.maxCooldown;
         this.OnFinishExecute += onFinishExecute;
     }
 
-    public void performSkill(List<PakRender> target, PakRender self) {
-        skill.performSkill(target, self, () => {
+    public void performSkill(List<PakRender> target, PakRender self)
+    {
+        skill.performSkill(target, self, () =>
+        {
             // Complete callback
             cooldown = maxCooldown;
             OnFinishExecute?.Invoke();
         });
     }
 
-    public void SetSkill(SkillObj newSkill) {
+    public void SetSkill(SkillObj newSkill)
+    {
         this.cooldown = 0;
         this.skill = newSkill;
         this.maxCooldown = newSkill.maxCooldown;
     }
 
     //Getters, Setters
-    public string SkillId {
-        get { 
-            return this.skill.skillId; 
+    public string SkillId
+    {
+        get
+        {
+            return this.skill.skillId;
         }
- 
+
     }
-    public string SkillName {
-        get { 
-            return this.skill.skillName; 
+    public string SkillName
+    {
+        get
+        {
+            return this.skill.skillName;
         }
     }
-    public string Description {
-        get { 
-            return this.skill.description; 
+    public string Description
+    {
+        get
+        {
+            return this.skill.description;
         }
     }
-    public int Cooldown {
-        get { 
-            return this.cooldown; 
+    public int Cooldown
+    {
+        get
+        {
+            return this.cooldown;
         }
-        set {
+        set
+        {
             if (value < 0)
                 cooldown = 0;
             else if (value > maxCooldown)
@@ -73,24 +87,36 @@ public class SkillExecutor
         }
     }
 
-    public SkillObj.SkillNation skillNation {
-        get {
+    public SkillObj.SkillNation skillNation
+    {
+        get
+        {
             return skill.skillNation;
         }
     }
 
-    public int MaxCooldown {
+    public int MaxCooldown
+    {
         get { return maxCooldown; }
     }
-    public Sprite Icon {
-        get {
+    public Sprite Icon
+    {
+        get
+        {
             return this.skill.icon;
         }
     }
 
-    public string ActionType {
-        get { 
+    public string ActionType
+    {
+        get
+        {
             return this.skill.actionType;
         }
+    }
+
+    public SkillObj GetSkill()
+    {
+        return this.skill;
     }
 }

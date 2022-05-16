@@ -17,7 +17,7 @@ public class VanillaBuffOne : RangeSkill
     {
 
         target[0].AddBuff(buff);
-        self.switchMat(0, true);
+        self.switchMat(0, 1);
         ParticleSystem vfx = Instantiate(particles, target[0].GetPosition(), Quaternion.identity);
         Destroy(vfx.gameObject, vfx.main.duration);
 
