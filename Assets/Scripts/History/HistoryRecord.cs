@@ -29,7 +29,7 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private GameObject skill;
     [SerializeField] private GameObject scrollPane;
 
-    private List<string> nameList = new List<string>(new string[] { "Actor", "Skill", "Target", "Turn" });
+    private List<string> nameList = new List<string>(new string[] { "Actor", "Skill", "Target", "Turn", "All allies" , "All enemies" ,  "All units" });
 
     public void SetCommand(List<ActionCommand> commands)
     {
@@ -63,15 +63,27 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 target.transform.SetParent(actor.transform);
             }
             else if (commands[i].targets.Count > 1 && commands[i].targets.Count <= 4){
-                Debug.Log("Do all enemies");
-                target = new GameObject("All enemies"); 
-                target.AddComponent<TextMeshProUGUI>(); 
-                target.GetComponent<TextMeshProUGUI>().text = "All enemies";
+                if ( commands[i].selectedSkill.ActionType.Contains("Alliances"))
+                {
+                    Debug.Log("Do all allies");
+                    target = new GameObject("All allies");
+                    target.AddComponent<TextMeshProUGUI>();
+                    target.GetComponent<TextMeshProUGUI>().text = "All allies";
+                }
+                else
+                {
+                    Debug.Log("Do all enemies");
+                    target = new GameObject("All enemies");
+                    target.AddComponent<TextMeshProUGUI>();
+                    target.GetComponent<TextMeshProUGUI>().text = "All enemies";
+                }
+                
                 target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f, 0f, 0f);
-                target.GetComponent<TextMeshProUGUI>().fontSize = 30;
+                target.GetComponent<TextMeshProUGUI>().fontSize = 22;
                 target.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
                 target.GetComponent<TextMeshProUGUI>().font = font;
                 target.GetComponent<RectTransform>().sizeDelta = new Vector2(111.0746f, 33.6339f);
+                target.transform.SetParent(actor.transform);
             }
             else if (commands[i].targets.Count >= 5){
                 Debug.Log("Do all units");
@@ -79,10 +91,11 @@ public class HistoryRecord : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 target.AddComponent<TextMeshProUGUI>(); 
                 target.GetComponent<TextMeshProUGUI>().text = "All units";
                 target.GetComponent<RectTransform>().localPosition = new Vector3(113.099998f, 0f, 0f);
-                target.GetComponent<TextMeshProUGUI>().fontSize = 30;
+                target.GetComponent<TextMeshProUGUI>().fontSize = 22;
                 target.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
                 target.GetComponent<TextMeshProUGUI>().font = font;
                 target.GetComponent<RectTransform>().sizeDelta = new Vector2(111.0746f, 33.6339f);
+                target.transform.SetParent(actor.transform);
             }
             
             skill = new GameObject("Skill");
