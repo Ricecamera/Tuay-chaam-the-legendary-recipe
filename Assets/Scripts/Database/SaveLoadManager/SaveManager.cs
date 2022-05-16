@@ -98,6 +98,7 @@ public class SaveManager : MonoBehaviour
     {
         InitData();
         playerDatabase.unlockStatus = 1;
+        playerDatabase.resetStar();
         if (File.Exists(Application.persistentDataPath + "/game_save/player_data/player.txt"))
         {
             Debug.Log("It's working");

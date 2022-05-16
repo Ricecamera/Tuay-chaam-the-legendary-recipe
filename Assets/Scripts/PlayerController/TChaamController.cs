@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using DialogueSystem;
 
 public class TChaamController : MonoBehaviour
 {
@@ -38,7 +39,6 @@ public class TChaamController : MonoBehaviour
 
         // set map unlock
         LevelManager.instance.resetUnlockStatus();
-
     }
 
     // Update is called once per frame

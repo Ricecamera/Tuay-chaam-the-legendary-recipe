@@ -44,6 +44,11 @@ namespace DialogueSystem
             third time or more: show nothing
 
         */
+
+        private void Start() {
+            //update stars on wells
+            updateWellsStars();
+        }
         public IEnumerator tutorialSequence()
         {
             Deactivate();
@@ -340,6 +345,40 @@ namespace DialogueSystem
         private void bringNonUIToBack(GameObject theObject, string layer){
             SpriteRenderer theObjectSprite = theObject.GetComponent<SpriteRenderer>();
             theObjectSprite.sortingLayerName = layer;
+        }
+
+        public void updateWellsStars(){
+            for (int i=1; i<=8; i++){
+                Debug.Log("Loop number");
+                Debug.Log(i);
+                if(i<playerDB.unlockStatus){ //played level
+                    int yellowStarsNum=playerDB.starInMap[i];
+                    Debug.Log(yellowStarsNum);
+                    Transform st;
+                    if(i==1){   //this well is in unlocked well
+                        st= unlockedWell.transform.GetChild(2);
+                    }else{      //this well is in locked well
+                        st= lockedWell[i-2].transform.GetChild(2);
+                    }
+                    for(int j=0; j<6; j++){
+                        if(j<3) st.GetChild(j).gameObject.SetActive(true);  //show grey stars
+                        else{
+                            if(yellowStarsNum>0){
+                                Debug.Log(j);
+                                st.GetChild(j).gameObject.SetActive(true);  //show obtained yellow stars
+                                Debug.Log("Yellow stars appear!");
+                                yellowStarsNum--;                                
+                            }else{
+                                break;                                
+                            }
+                        }
+                    }
+                    Debug.Log("To next loop");
+                }
+                else{   //not played level
+                    break;
+                }
+            }
         }
     }
 }

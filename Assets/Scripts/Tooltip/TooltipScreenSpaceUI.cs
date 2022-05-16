@@ -41,29 +41,6 @@ public class TooltipScreenSpaceUI : MonoBehaviour
 
     private void Update()
     {
-        //Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
-
-        // if (anchoredPosition.x + gameObject.GetComponent<Image>().sprite.rect.width > canvasRectTransform.rect.width)
-        // {
-        //     //Tooltip left screen on right side
-        //     anchoredPosition.x = canvasRectTransform.rect.width - gameObject.GetComponent<Image>().sprite.rect.width;
-
-        // }
-
-        // if (anchoredPosition.y + gameObject.GetComponent<Image>().sprite.rect.height > canvasRectTransform.rect.height)
-        // {
-        //     //Tooltip left screen on top side
-        //     anchoredPosition.y = canvasRectTransform.rect.height - gameObject.GetComponent<Image>().sprite.rect.height;
-
-        // }
-
-        // Debug.Log("Width : " + gameObject.GetComponent<Image>().sprite.rect.width + " Scale : " + rectTransform.localScale.x);
-        // Debug.Log("Height : " + gameObject.GetComponent<Image>().sprite.rect.width + " Scale : " + rectTransform.localScale.x);
-
-        // anchoredPosition.x = (canvasRectTransform.rect.width - gameObject.GetComponent<Image>().sprite.rect.width) * rectTransform.localScale.x;
-        // anchoredPosition.y = (canvasRectTransform.rect.height - gameObject.GetComponent<Image>().sprite.rect.height) * rectTransform.localScale.y;
-        // rectTransform.anchoredPosition = anchoredPosition;
-        // gameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
 
         Vector2 position = Input.mousePosition;
 
@@ -97,12 +74,29 @@ public class TooltipScreenSpaceUI : MonoBehaviour
     private void showTooltip(string headerText, string describeText)
     {
         gameObject.SetActive(true);
+        // Color c = gameObject.GetComponent<Image>().color;
+        // c.a = 0f;
+        // gameObject.GetComponent<Image>().color = c;
+        // for (float alpha = 0.05f; alpha < 1; alpha += 0.05f)
+        // {
+        //     c.a = alpha;
+            
+        //     gameObject.GetComponent<Image>().color = c;
+        // }
         setText(headerText, describeText);
     }
 
     private void hideTooltip()
     {
         gameObject.SetActive(false);
+        // Color c = gameObject.transform.GetChild(0).GetComponent<Image>().color;
+        // c.a = 1f;
+        // gameObject.transform.GetChild(0).GetComponent<Image>().color = c;
+        // for (float alpha = 1f; alpha < 0; alpha -= 0.05f)
+        // {
+        //     c.a = alpha;
+        //     gameObject.transform.GetChild(0).GetComponent<Image>().color = c;
+        // }
     }
 
     public static void showTooltip_Static(string headerText, string describeText)

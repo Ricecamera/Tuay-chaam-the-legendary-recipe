@@ -18,12 +18,12 @@ public class EnemiesInLevelController : MonoBehaviour
         enemiesInEachLevel.Add(0,new List<string> {"potato", "potato"});
         enemiesInEachLevel.Add(1,new List<string> {"potato", "potato", "carrot"});
         enemiesInEachLevel.Add(2,new List<string> {"potato", "potato", "eggplant"});
-        enemiesInEachLevel.Add(3,new List<string> {"potato", "potato", "normalprik", "garlic"});
-        enemiesInEachLevel.Add(4,new List<string> {"potato", "normalprik", "potato", "kanah"});
-        enemiesInEachLevel.Add(5,new List<string> {"potato", "normalprik", "yuak", "mund"});
-        enemiesInEachLevel.Add(6,new List<string> {"potato", "prikthai", "potato", "brogli"});
-        enemiesInEachLevel.Add(7,new List<string> {"potato", "yuak", "khaopod", "gluay"});
-        enemiesInEachLevel.Add(8,new List<string> {"prikthai", "yuak", "normalprik", "cheepha"});
+        enemiesInEachLevel.Add(3,new List<string> {"carrot", "potato", "normalprik", "garlic"});
+        enemiesInEachLevel.Add(4,new List<string> {"prikthai", "normalprik", "carrot", "mund"});
+        enemiesInEachLevel.Add(5,new List<string> {"prikthai", "normalprik", "yuak", "kanah"});
+        enemiesInEachLevel.Add(6,new List<string> {"eggplant", "prikthai", "brogli", "brogli"});
+        enemiesInEachLevel.Add(7,new List<string> {"normalprik", "eggplant", "kaopod", "gluay"});
+        enemiesInEachLevel.Add(8,new List<string> {"kaopod", "mund", "gluay", "cheepha"});
     }
 
     // private void OnEnable() {

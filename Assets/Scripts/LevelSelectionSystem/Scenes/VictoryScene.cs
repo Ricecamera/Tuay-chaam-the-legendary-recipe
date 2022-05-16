@@ -26,6 +26,9 @@ public class VictoryScene : MonoBehaviour
     [SerializeField]
     private GameObject clickToContinue;
 
+    [SerializeField]
+    private PlayerDatabase playerDB;
+
     //* Tester
     //* private int dieCount;
 
@@ -51,6 +54,7 @@ public class VictoryScene : MonoBehaviour
             starR.SetActive(true);
             starL.SetActive(true);
             starM.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 3);
         }
         else if (SaveManager.instance.GetDieCount() == 1)
         //* Tester
@@ -58,18 +62,20 @@ public class VictoryScene : MonoBehaviour
         {
             starL.SetActive(true);
             starM.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 2);
         }
         else if (SaveManager.instance.GetDieCount() == 2)
         //* Tester
         //* else if (dieCount == 2)
         {
             starL.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 1);
         }
         else if (SaveManager.instance.GetDieCount() == 3)
         //* Tester
         //* else if (dieCount == 3)
         {
-
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 0);
         }
 
         //TODO drop item  
@@ -138,7 +144,7 @@ public class VictoryScene : MonoBehaviour
     private void Update()
     {
         updateCount++;
-        if (updateCount >= 300)
+        if (updateCount >= 300*3)
         {
             if (opacity == 255) textMode = 1;
             else if (opacity == 0) textMode = 0;
@@ -148,18 +154,18 @@ public class VictoryScene : MonoBehaviour
 
             if (textMode == 0 && updateTrigger)
             {
-                opacity++; updateTrigger = true;
+                opacity++; updateTrigger = false;
             }
             else if (textMode == 0) updateTrigger = true;
 
             if (textMode == 1 && updateTrigger)
             {
-                opacity--; updateTrigger = true;
+                opacity--; updateTrigger = false;
             }
             else if (textMode == 1) updateTrigger = true;
         }
 
-        if (Input.GetMouseButtonDown(0) && updateCount >= 400)
+        if (Input.GetMouseButtonDown(0) && updateCount >= 400*3)
         {
             goToNextScene();
         }
@@ -178,6 +184,10 @@ public class VictoryScene : MonoBehaviour
         //     SceneManager.LoadScene("CutScene_3");
         // }
         // else
-        SceneManager.LoadScene("opened-map");
+        if(playerDB.unlockStatus==9){
+            SceneManager.LoadScene("CutScene_4");
+        }else{
+            SceneManager.LoadScene("opened-map");
+        }
     }
 }

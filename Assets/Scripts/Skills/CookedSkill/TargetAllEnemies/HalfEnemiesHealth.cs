@@ -10,7 +10,7 @@ public class HalfEnemiesHealth : MeleeSkill
         foreach (PakRender e in target)
         {
             // damage = atkValue*(100/(100+e.pak.Def));
-            int damage = (int)(e.healthSystem.CurrentHp / 2);
+            int damage = (int)(e.healthSystem.MaxHp / 1.35);
             if (damage <= 0)
             {
                 damage = 1;

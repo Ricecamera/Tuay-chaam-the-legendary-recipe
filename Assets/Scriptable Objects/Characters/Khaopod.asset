@@ -16,9 +16,9 @@ MonoBehaviour:
   entityName: Khaopod
   description: 
   baseAtk: 60
-  baseDef: 20
-  maxHp: 150
-  baseSpeed: 34
+  baseDef: 70
+  maxHp: 400
+  baseSpeed: 24
   image: {fileID: 21300000, guid: 831bf17d707b16b4c81c2bbf56776858, type: 3}
   bonusStatsPerLvl:
     addHp: 0
