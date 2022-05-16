@@ -4501,7 +4501,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 296298585680258049, guid: cc53c907dbc79774a83d76cae50ea0df, type: 3}
       propertyPath: m_Looping
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 296298585680258049, guid: cc53c907dbc79774a83d76cae50ea0df, type: 3}
       propertyPath: m_SkipOnDrop
@@ -4581,11 +4581,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 296298585803976896, guid: cc53c907dbc79774a83d76cae50ea0df, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 296298585803976896, guid: cc53c907dbc79774a83d76cae50ea0df, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 296298585803976896, guid: cc53c907dbc79774a83d76cae50ea0df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

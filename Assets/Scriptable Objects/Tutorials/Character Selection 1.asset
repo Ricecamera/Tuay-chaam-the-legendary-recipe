@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ef8d3f5c512c0d419d0f7dd9b2ac004, type: 3}
-  m_Name: Character Selection
+  m_Name: Character Selection 1
   m_EditorClassIdentifier: 
   heading: Character Selection
   description: After you click a well, you will arrive at Character Selection scene.
