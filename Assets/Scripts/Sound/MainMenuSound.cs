@@ -11,7 +11,12 @@ public class MainMenuSound : MonoBehaviour
     private void Start()
     {
         // SoundManager.Instance.PlaySound(clips[0].source);
-        SoundManager.Instance.PlaySound("bgm_menu", clips);
+        // SoundManager.Instance.PlaySound("bgm_menu", clips);
+    }
+
+    private void Awake()
+    {
+        SoundManager.Instance.setSound(SoundManager.Instance.volValue);
     }
 
     // private void Update()

@@ -4,12 +4,14 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Heal one", menuName = "Assets/skill/Heal one")]
-public class VanillaHealOne :RangeSkill {
+public class VanillaHealOne : RangeSkill
+{
     public float healRatio = .25f;
     public override void Execute(List<PakRender> target, PakRender self)
     {
-        int healValue = (int) ((float) self.healthSystem.MaxHp * healRatio);
+        int healValue = (int)((float)self.healthSystem.MaxHp * healRatio);
         target[0].healthSystem.Heal(healValue);
+        self.switchMat(0, true);
 
         //add sound effect
         GameObject[] soundBank = GameObject.FindGameObjectsWithTag("SoundBank");

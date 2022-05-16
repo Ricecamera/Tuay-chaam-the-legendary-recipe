@@ -15,10 +15,10 @@ MonoBehaviour:
   entityId: 
   entityName: Gluay
   description: 
-  baseAtk: 20
-  baseDef: 20
+  baseAtk: 60
+  baseDef: 80
   maxHp: 400
-  baseSpeed: 50
+  baseSpeed: 20
   image: {fileID: 21300000, guid: ea9365c52b6d64f4ab2c00931a284a54, type: 3}
   bonusStatsPerLvl:
     addHp: 0

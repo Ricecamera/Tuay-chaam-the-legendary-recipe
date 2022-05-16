@@ -366,6 +366,7 @@ namespace DialogueSystem
                             if(yellowStarsNum>0){
                                 Debug.Log(j);
                                 st.GetChild(j).gameObject.SetActive(true);  //show obtained yellow stars
+                                Debug.Log("Yellow stars appear!");
                                 yellowStarsNum--;                                
                             }else{
                                 break;                                

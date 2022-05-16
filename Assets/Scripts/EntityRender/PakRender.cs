@@ -201,15 +201,29 @@ public class PakRender : MonoBehaviour, IComparable
 
     }
 
-    public void switchMat(int damage)
+    public void switchMat(int damage, bool isBuff)
     {
+
         if (flashcheck != null)
         {
             Debug.LogError("Coroutine call multiple time");
             StopCoroutine(flashcheck);
         }
-        if (this.gameObject.activeSelf)
-            StartCoroutine(DamageEffect(damage));
+        if (!isBuff)
+        {
+            if (this.gameObject.activeSelf)
+            {
+                StartCoroutine(DamageEffect(damage));
+            }
+        }
+        else
+        {
+            if (this.gameObject.activeSelf)
+            {
+                StartCoroutine(BuffEffect());
+            }
+        }
+
     }
 
     public void Attack(Vector3 targetPosition, Action onReachTarget, Action onComplete)
@@ -351,7 +365,7 @@ public class PakRender : MonoBehaviour, IComparable
     {
         int damage = (int)((atkValue * (float)(100f / (100f + this.currentDef))));
         this.healthSystem.TakeDamage(damage);
-        this.switchMat(damage);
+        this.switchMat(damage, false);
     }
 
     //! Are you use this function or not ? not found where you use it
@@ -383,6 +397,22 @@ public class PakRender : MonoBehaviour, IComparable
         flashcheck = null;
     }
 
+    private IEnumerator BuffEffect()
+    {
+        SpriteRenderer sp = this.GetComponent<SpriteRenderer>();
+        Material whiteMat = (Material)Resources.Load<Material>("BuffMaterial");
+        Material originalMat = GetComponent<SpriteRenderer>().material;
+        sp.material = whiteMat;
+        Transform t = this.GetComponent<Transform>();
+        Vector3 oldpos = t.position;
+        Vector3 newpos = oldpos;
+        newpos.y = newpos.y + 1.0f;
+        this.SlideToPosition(newpos,()=>{});
+        yield return new WaitForSeconds(1.0f);
+        this.SlideToPosition(oldpos,()=>{});
+        sp.material = originalMat;
+        flashcheck = null;
+    }
 
     public void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete)
     {

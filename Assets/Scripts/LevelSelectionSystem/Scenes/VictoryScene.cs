@@ -144,7 +144,7 @@ public class VictoryScene : MonoBehaviour
     private void Update()
     {
         updateCount++;
-        if (updateCount >= 300)
+        if (updateCount >= 300*3)
         {
             if (opacity == 255) textMode = 1;
             else if (opacity == 0) textMode = 0;
@@ -154,18 +154,18 @@ public class VictoryScene : MonoBehaviour
 
             if (textMode == 0 && updateTrigger)
             {
-                opacity++; updateTrigger = true;
+                opacity++; updateTrigger = false;
             }
             else if (textMode == 0) updateTrigger = true;
 
             if (textMode == 1 && updateTrigger)
             {
-                opacity--; updateTrigger = true;
+                opacity--; updateTrigger = false;
             }
             else if (textMode == 1) updateTrigger = true;
         }
 
-        if (Input.GetMouseButtonDown(0) && updateCount >= 400)
+        if (Input.GetMouseButtonDown(0) && updateCount >= 400*3)
         {
             goToNextScene();
         }

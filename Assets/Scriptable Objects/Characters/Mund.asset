@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   baseAtk: 18
   baseDef: 100
-  maxHp: 300
+  maxHp: 310
   baseSpeed: 24
   image: {fileID: 21300000, guid: 9cef9bfa053071d4c83ae8b28c61be49, type: 3}
   bonusStatsPerLvl:

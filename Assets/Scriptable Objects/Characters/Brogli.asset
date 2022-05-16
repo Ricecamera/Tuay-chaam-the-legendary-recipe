@@ -15,10 +15,10 @@ MonoBehaviour:
   entityId: 
   entityName: Brogli
   description: 
-  baseAtk: 25
-  baseDef: 50
-  maxHp: 170
-  baseSpeed: 30
+  baseAtk: 30
+  baseDef: 30
+  maxHp: 230
+  baseSpeed: 22
   image: {fileID: 21300000, guid: bfd8e4d941d759145aa47e54f1b2bb4d, type: 3}
   bonusStatsPerLvl:
     addHp: 0

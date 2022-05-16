@@ -13,7 +13,7 @@ public class Buum : RangeSkill
         target.Remove(self);
         foreach (PakRender e in target)
         {
-            if (damage - e.currentDef <= 0) damage = 0;
+            if (damage - e.currentDef <= 0) damage = UnityEngine.Random.Range(50, 60);
             if (e.healthSystem.IsAlive)
             {
                 e.healthSystem.TakeDamage(damage);
