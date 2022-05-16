@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialS/Battle Tutorial.unity
     guid: a1f52588567bfed428f85d675266e079
+  - enabled: 1
+    path: Assets/Scenes/TutorialS/CookSystemTutorial.unity
+    guid: d1171069a16bcd1498df7763a1e5fb44
   m_configObjects: {}

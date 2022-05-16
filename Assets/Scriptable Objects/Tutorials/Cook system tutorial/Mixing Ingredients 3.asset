@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 338581ed76cc1c345bd29a5c231d4812, type: 3}
-  m_Name: Select your ingredients
+  m_Name: Mixing Ingredients 3
   m_EditorClassIdentifier: 
-  heading: Select your indredients
-  description: To use cook skill you must have support characters. Mixing these character
-    with cook skill can give you many combination of effect! Select your ingredients
-    in the support.
-  clip: {fileID: 32900000, guid: 276860cccac52cf4eac04c641612a379, type: 3}
+  heading: Mixing Ingredients (3)
+  description: This skill is powerful but can't use often. So choose wisely when
+    to use it and which target to apply effect on!
+  clip: {fileID: 32900000, guid: 3e6bfd78c50c8d44cb8d330e66333221, type: 3}

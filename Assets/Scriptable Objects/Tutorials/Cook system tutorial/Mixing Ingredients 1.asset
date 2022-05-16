@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef8d3f5c512c0d419d0f7dd9b2ac004, type: 3}
+  m_Name: Mixing Ingredients 1
+  m_EditorClassIdentifier: 
+  heading: Mixing Ingredients
+  description: 'When you are perfroming a cooking action, the ingredient list will
+    show up at the top of the screen. Select these ingredients to create a special
+    dish! '
+  image: {fileID: 2800000, guid: 156638a9e137e1e4d8b225a663c14d0e, type: 3}

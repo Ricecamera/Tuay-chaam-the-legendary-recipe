@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef8d3f5c512c0d419d0f7dd9b2ac004, type: 3}
+  m_Name: Cook system 1
+  m_EditorClassIdentifier: 
+  heading: Cook System
+  description: Now you can use Cook skill. Cook skill is to use support ingredients
+    and cook them together to make a dish that player can use it to buff our ingredients
+    that are currently battled or debuff our enemy.
+  image: {fileID: 2800000, guid: c01a17bc81a9c2547ac265239a9e8c79, type: 3}

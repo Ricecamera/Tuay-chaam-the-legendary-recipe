@@ -32,9 +32,14 @@ public class CharacterSelect : MonoBehaviour
                 {
                     CharacterSelecter.instance.ShowPopup();
                 }
+                else if (SceneManager.GetActiveScene().buildIndex == 12)
+                {
+                    // this scene is cook system tutorial
+                    SceneLoader.Instance.LoadSceneByIndex(6); // Load battle scene
+                }
                 else
                 {
-                    SceneLoader.Instance.LoadNextScene();
+                    SceneLoader.Instance.LoadNextScene(); // Load battle scene
                 }
             });
             backButton.onClick.AddListener(SceneLoader.Instance.LoadPrevScene);
