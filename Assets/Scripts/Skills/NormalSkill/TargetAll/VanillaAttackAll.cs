@@ -4,13 +4,14 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Attack all target", menuName = "Assets/skill/attack all")]
-public class VanillaAttackAll : MeleeSkill {
+public class VanillaAttackAll : MeleeSkill
+{
 
     public float damageRatio;
 
     public override void Execute(List<PakRender> target, PakRender self)
     {
-        int atkValue = (int) (self.currentAtk * damageRatio);
+        int atkValue = (int)(self.currentAtk * damageRatio);
         foreach (PakRender e in target)
         {
             e.takeDamage(atkValue);

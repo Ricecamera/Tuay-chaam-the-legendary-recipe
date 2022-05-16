@@ -14,8 +14,13 @@ public class BattleSound : MonoBehaviour
         // SoundManager.Instance.PlaySound("bgm_battle", clips); //play BGM
     }
 
-    public void PlaySoundByName(string name) {
-        SoundManager.Instance.PlaySound(name,clips);
+    private void Awake()
+    {
+        SoundManager.Instance.setSound(SoundManager.Instance.volValue);
+    }
+    public void PlaySoundByName(string name)
+    {
+        SoundManager.Instance.PlaySound(name, clips);
     }
 
     // private void Update()
