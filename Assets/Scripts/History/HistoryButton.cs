@@ -10,22 +10,25 @@ public class HistoryButton : MonoBehaviour
     [SerializeField]
     private GameObject scrollPane;
 
-    Ray ray;
-    RaycastHit hit;
+    public static bool chooseFlag; 
     private void Start()
     {
         button.onClick.AddListener(() =>
         {
             scrollPane.SetActive(true);
+            chooseFlag = false;
         });
         scrollPane.SetActive(false);
+        chooseFlag = true; 
     }
     void Update()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+        if (hit.collider != null)
         {
-            print(hit.collider.name);
+            Debug.Log("Target name: " + hit.collider.name);
         }
     }
+
 }

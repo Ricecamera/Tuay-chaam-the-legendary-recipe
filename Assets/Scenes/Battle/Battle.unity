@@ -461,8 +461,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0025577545, y: 172.97583}
-  m_SizeDelta: {x: 102.82, y: 0}
+  m_AnchoredPosition: {x: -9.1739, y: 172.97554}
+  m_SizeDelta: {x: 228.1842, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &314458983
 MonoBehaviour:
@@ -2126,7 +2126,7 @@ GameObject:
   - component: {fileID: 997911581}
   - component: {fileID: 997911580}
   m_Layer: 5
-  m_Name: Button
+  m_Name: History Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2150,8 +2150,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -476.9669, y: 35.4395}
-  m_SizeDelta: {x: 70.0662, y: 70.8791}
+  m_AnchoredPosition: {x: -486.95, y: 35.4395}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &997911580
 MonoBehaviour:
@@ -2353,7 +2353,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142755242}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2361,11 +2361,11 @@ RectTransform:
   - {fileID: 314458982}
   m_Father: {fileID: 997911579}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16.38, y: -1.9458}
-  m_SizeDelta: {x: 102.8253, y: 345.951}
+  m_AnchoredPosition: {x: -98.45436, y: -1.9458}
+  m_SizeDelta: {x: 246.534, y: 345.951}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1142755244
 MonoBehaviour:
@@ -2387,7 +2387,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f56cd1153b91be743b6ddd270c821eaa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f43a1829fb716ad47afd7144f916e8a5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2418,6 +2418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 1662004680}
+  font: {fileID: 11400000, guid: 77bb0bf5eab88d6479077ca07b535daf, type: 2}
   scrollPane: {fileID: 314458981}
 --- !u!114 &1142755247
 MonoBehaviour:
