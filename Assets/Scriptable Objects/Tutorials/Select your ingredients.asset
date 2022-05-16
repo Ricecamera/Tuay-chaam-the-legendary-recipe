@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 338581ed76cc1c345bd29a5c231d4812, type: 3}
-  m_Name: New Video Page
+  m_Name: Select your ingredients
   m_EditorClassIdentifier: 
-  heading: Professor Red
-  description: Haha hoho!
-  clip: {fileID: 0}
+  heading: Select your indredients
+  description: To use cook skill you must have support characters. Mixing these character
+    with cook skill can give you many combination of effect! Select your ingredients
+    in the support.
+  clip: {fileID: 32900000, guid: 276860cccac52cf4eac04c641612a379, type: 3}

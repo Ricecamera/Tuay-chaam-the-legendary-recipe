@@ -47,4 +47,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialS/VictorySceneForTutorial.unity
     guid: c3fed7d6902e67844ba48a71442fb8b0
+  - enabled: 1
+    path: Assets/Scenes/TutorialS/CharacterSelectionTutorial.unity
+    guid: c763055722911ef43bb6e49dbd81173b
+  - enabled: 1
+    path: Assets/Scenes/TutorialS/Battle Tutorial.unity
+    guid: a1f52588567bfed428f85d675266e079
   m_configObjects: {}

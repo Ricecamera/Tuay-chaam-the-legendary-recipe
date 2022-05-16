@@ -72,7 +72,7 @@ public class TChaamController : MonoBehaviour
             else if (hit.collider != null && hit.collider.name.Contains("well") && playerDB.unlockStatus == 1)
             {
                 Debug.Log("Click on well");
-                hit.collider.GetComponent<LevelSelection>().PressSelection("CharacterSelection");
+                hit.collider.GetComponent<LevelSelection>().PressSelection("CharacterSelectionTutorial");
                 if (!hit.collider.GetComponent<LevelSelection>().getUnlocked())
                 {
                     hit.collider.isTrigger = false;

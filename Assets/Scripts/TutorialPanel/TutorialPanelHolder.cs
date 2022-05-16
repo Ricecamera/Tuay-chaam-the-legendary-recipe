@@ -1,14 +1,14 @@
-using System;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.Video;
 using TMPro;
 
 namespace TutorialPanel {
     public class TutorialPanelHolder : MonoBehaviour
     {
-
+        public UnityEvent OnClose = new UnityEvent();
         [SerializeField]
         private TextMeshProUGUI heading, description, indexText;
 
@@ -27,8 +27,6 @@ namespace TutorialPanel {
         {
             currentIndex = 0;
             maxIndex = playlist.Count;
-
-
             UpdatePage(currentIndex);
         }
 
@@ -48,10 +46,15 @@ namespace TutorialPanel {
             }
         }
 
+        public void CloseTutorial() {
+            OnClose.Invoke();
+            gameObject.SetActive(false);
+        }
+
         private void UpdatePage(int Index) {
             indexText.text = (Index + 1) + " / " + maxIndex;
 
-            if (playlist[currentIndex] is ImagePage) {
+            if (playlist[Index] is ImagePage) {
 
                 // show the image and hide the video player
                 mainPlayer.gameObject.SetActive(false);
@@ -71,7 +74,7 @@ namespace TutorialPanel {
                 heading.text = imagePage.heading;
 
             }
-            else if (playlist[currentIndex] is VideoPage) {
+            else if (playlist[Index] is VideoPage) {
                 // show the video player and hide the image
                 mainPlayer.gameObject.SetActive(true);
                 showedImage.gameObject.SetActive(false);

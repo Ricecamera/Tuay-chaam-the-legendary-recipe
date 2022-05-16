@@ -114,7 +114,9 @@ public class PakSelection : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+            int layer_mask = LayerMask.GetMask("Default", "TutorialPanel");
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, layer_mask);
 
             if (hit.collider != null &&
                 currentState != GameState.DISPLAY_SKILL &&
