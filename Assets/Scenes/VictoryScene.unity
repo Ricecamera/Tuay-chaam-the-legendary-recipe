@@ -1141,6 +1141,7 @@ MonoBehaviour:
   canvas: {fileID: 945439534}
   animator: {fileID: 9100000, guid: 5abe4aa34abff394ab43410e00bba06d, type: 2}
   clickToContinue: {fileID: 893244879}
+  playerDB: {fileID: 11400000, guid: 7a26c6b001e03904b9c6c456b1f76679, type: 2}
 --- !u!1 &1089496661
 GameObject:
   m_ObjectHideFlags: 0

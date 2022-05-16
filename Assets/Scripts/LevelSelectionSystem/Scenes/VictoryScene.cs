@@ -26,6 +26,9 @@ public class VictoryScene : MonoBehaviour
     [SerializeField]
     private GameObject clickToContinue;
 
+    [SerializeField]
+    private PlayerDatabase playerDB;
+
     //* Tester
     //* private int dieCount;
 
@@ -51,6 +54,7 @@ public class VictoryScene : MonoBehaviour
             starR.SetActive(true);
             starL.SetActive(true);
             starM.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 3);
         }
         else if (SaveManager.instance.GetDieCount() == 1)
         //* Tester
@@ -58,18 +62,20 @@ public class VictoryScene : MonoBehaviour
         {
             starL.SetActive(true);
             starM.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 2);
         }
         else if (SaveManager.instance.GetDieCount() == 2)
         //* Tester
         //* else if (dieCount == 2)
         {
             starL.SetActive(true);
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 1);
         }
         else if (SaveManager.instance.GetDieCount() == 3)
         //* Tester
         //* else if (dieCount == 3)
         {
-
+            DatabaseManager.instance.playerDatabase.setStar(LevelManager.instance.thislevel, 0);
         }
 
         //TODO drop item  
@@ -82,18 +88,29 @@ public class VictoryScene : MonoBehaviour
         //* Vector3(75,-126,0)
         foreach (ItemObject item in itemList)
         {
-            Debug.Log(item._name);
-            GameObject imageItem = new GameObject("ImageItem");
-            imageItem.AddComponent<Image>();
-            imageItem.AddComponent<Animator>();
-            imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
-            imageItem.GetComponent<Image>().sprite = item.uiDisplay;
-            imageItem.transform.SetParent(canvas.transform);
-            imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(x + 75 * i, -120, 0);
-            imageItem.transform.GetComponent<Image>().preserveAspect = true;
-            Debug.Log("Test item" + item._name);
+            // Debug.Log(item._name);
+            // GameObject imageItem = new GameObject("ImageItem");
+            // imageItem.AddComponent<Image>();
+            // imageItem.AddComponent<Animator>();
+            // imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
+            // imageItem.GetComponent<Image>().sprite = item.uiDisplay;
+            // imageItem.transform.SetParent(canvas.transform);
+            // imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(x + 75 * i, -120, 0);
+            // imageItem.transform.GetComponent<Image>().preserveAspect = true;
+            // Debug.Log("Test item" + item._name);
 
-
+            if (!DatabaseManager.instance.playerDatabase.inventory.existedItem(item))
+            {
+                GameObject imageItem = new GameObject("ImageItem");
+                imageItem.AddComponent<Image>();
+                imageItem.AddComponent<Animator>();
+                imageItem.GetComponent<Animator>().runtimeAnimatorController = animator;
+                imageItem.GetComponent<Image>().sprite = item.uiDisplay;
+                imageItem.transform.SetParent(canvas.transform);
+                imageItem.transform.GetComponent<RectTransform>().localPosition = new Vector3(x + 75 * i, -120, 0);
+                imageItem.transform.GetComponent<Image>().preserveAspect = true;
+                Debug.Log("Test item" + item._name);
+            }
             bool addPak = false;
             foreach (var slot in DatabaseManager.instance.GetPlayerDatabase().inventory.Container.MainItems)
             {
@@ -148,13 +165,13 @@ public class VictoryScene : MonoBehaviour
 
             if (textMode == 0 && updateTrigger)
             {
-                opacity++; updateTrigger = true;
+                opacity++; updateTrigger = true; //false
             }
             else if (textMode == 0) updateTrigger = true;
 
             if (textMode == 1 && updateTrigger)
             {
-                opacity--; updateTrigger = true;
+                opacity--; updateTrigger = true; //false
             }
             else if (textMode == 1) updateTrigger = true;
         }
@@ -178,6 +195,10 @@ public class VictoryScene : MonoBehaviour
         //     SceneManager.LoadScene("CutScene_3");
         // }
         // else
-        SceneManager.LoadScene("opened-map");
+        if(playerDB.unlockStatus==9){
+            SceneManager.LoadScene("CutScene_4");
+        }else{
+            SceneManager.LoadScene("opened-map");
+        }
     }
 }

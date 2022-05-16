@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEditor;
 using System.Runtime.Serialization;
+using System.Linq;
 //ISerializationCallbackReceiver
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
@@ -46,6 +47,18 @@ public class InventoryObject : ScriptableObject
         {
             this.Container.SupportItems[i] = new InventorySlot();
         }
+    }
+
+    public bool existedItem(ItemObject item)
+    {
+        if (this.Container.MainItems.Where(invSlot => invSlot.item == item).Count() != 0 ||
+            this.Container.ChaamItems.Where(invSlot => invSlot.item == item).Count() != 0 ||
+            this.Container.SupportItems.Where(invSlot => invSlot.item == item).Count() != 0
+        )
+        {
+            return true;
+        }
+        return false;
     }
 
 }

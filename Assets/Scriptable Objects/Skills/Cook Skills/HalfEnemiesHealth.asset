@@ -16,6 +16,7 @@ MonoBehaviour:
   skillName: HalfEnemiesHealth
   skillNation: 1
   icon: {fileID: 21300000, guid: c2d12a714666aff4c8d87701eed0704e, type: 3}
-  description: 'Tomyum with Honey: Half all enemies HP'
+  description: 'Tomyum with Honey: Deal damage to all enemies equals to 75% of their
+    max HP'
   actionType: TargetAllEnemies
   maxCooldown: 1

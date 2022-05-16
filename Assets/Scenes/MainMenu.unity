@@ -396,7 +396,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -727,7 +727,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 242905337}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1593713106}
+        m_TargetAssemblyTypeName: CharacterSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &242905337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,7 +874,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 8.999998}
+  m_AnchoredPosition: {x: 4.6002, y: 13.617}
   m_SizeDelta: {x: 204.8786, y: 39.2336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &320317789
@@ -1141,6 +1153,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1593713106}
+        m_TargetAssemblyTypeName: CharacterSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &339761812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,7 +1428,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 399825321}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1593713106}
+        m_TargetAssemblyTypeName: CharacterSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &399825321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2660,6 +2696,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1593713106}
+        m_TargetAssemblyTypeName: CharacterSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: sfx_click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &921594089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,10 +2982,10 @@ MonoBehaviour:
   clips:
   - name: BGM
     source: {fileID: 371487210}
-    volume: 0
-  - name: Click
+    volume: 0.3
+  - name: button
     source: {fileID: 890661366}
-    volume: 0
+    volume: 0.344
 --- !u!4 &1593713107
 Transform:
   m_ObjectHideFlags: 0
@@ -3601,7 +3649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11092981cbae6604fa9f120c7f6ed315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startVolValue: 0
+  volValue: 0
 --- !u!4 &1805806601
 Transform:
   m_ObjectHideFlags: 0
@@ -3699,7 +3747,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1818792056}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1593713106}
+        m_TargetAssemblyTypeName: CharacterSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1818792056
 MonoBehaviour:
   m_ObjectHideFlags: 0

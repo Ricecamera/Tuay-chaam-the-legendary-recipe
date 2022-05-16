@@ -15,9 +15,9 @@ MonoBehaviour:
   entityId: 
   entityName: Kanah
   description: 
-  baseAtk: 30
+  baseAtk: 60
   baseDef: 30
-  maxHp: 200
+  maxHp: 240
   baseSpeed: 22
   image: {fileID: 21300000, guid: 21d23766bd81c0748bf6b752276e777d, type: 3}
   bonusStatsPerLvl:

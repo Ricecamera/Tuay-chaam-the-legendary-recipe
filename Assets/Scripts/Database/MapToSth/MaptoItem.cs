@@ -47,7 +47,7 @@ public class MaptoItem : MonoBehaviour
         AddItem(1, DatabaseManager.instance.GetItemFromGameDB("salt"));
         AddItem(2, DatabaseManager.instance.GetItemFromGameDB("eggplant"));
         AddItem(2, DatabaseManager.instance.GetItemFromGameDB("honey"));
-        AddItem(2, DatabaseManager.instance.GetItemFromGameDB("lime"));
+        AddItem(3, DatabaseManager.instance.GetItemFromGameDB("lime"));
         AddItem(3, DatabaseManager.instance.GetItemFromGameDB("garlic"));
         AddItem(4, DatabaseManager.instance.GetItemFromGameDB("chaam2"));
         AddItem(5, DatabaseManager.instance.GetItemFromGameDB("prikthai_support")); //support

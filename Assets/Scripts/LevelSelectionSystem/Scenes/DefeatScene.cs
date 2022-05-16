@@ -39,13 +39,13 @@ public class DefeatScene : MonoBehaviour
 
             if (textMode == 0 && updateTrigger)
             {
-                opacity++; updateTrigger = true;
+                opacity++; updateTrigger = true; //false
             }
             else if (textMode == 0) updateTrigger = true;
 
             if (textMode == 1 && updateTrigger)
             {
-                opacity--; updateTrigger = true;
+                opacity--; updateTrigger = true; //false
             }
             else if (textMode == 1) updateTrigger = true;
         }

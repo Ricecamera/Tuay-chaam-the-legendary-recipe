@@ -15,4 +15,4 @@ MonoBehaviour:
   buffName: Burn Buff
   duration: 3
   buffIcon: {fileID: 0}
-  damageRatio: 0.1
+  damageRatio: 0.15

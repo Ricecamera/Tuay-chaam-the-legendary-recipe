@@ -1,5 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/TutorialS/Battle Tutorial.unity.meta
 guid: a1f52588567bfed428f85d675266e079
+|||||||| af10fbf:Assets/Scenes/tutorial/tutorialSCENE1.unitypackage.meta
+guid: 7f1267e591e7cba439d35fada9cc0854
+========
+guid: cadda3d3d3cba8848a9edcc3f256cac3
+folderAsset: yes
+>>>>>>>> master:Assets/Scripts/History.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
