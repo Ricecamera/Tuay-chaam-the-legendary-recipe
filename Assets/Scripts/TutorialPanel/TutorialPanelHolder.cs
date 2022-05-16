@@ -57,7 +57,7 @@ namespace TutorialPanel {
             if (playlist[Index] is ImagePage) {
 
                 // show the image and hide the video player
-                mainPlayer.gameObject.SetActive(false);
+                
                 showedImage.gameObject.SetActive(true);
 
                 ImagePage imagePage = (ImagePage)playlist[Index];
@@ -77,7 +77,7 @@ namespace TutorialPanel {
             else if (playlist[Index] is VideoPage) {
                 // show the video player and hide the image
                 mainPlayer.gameObject.SetActive(true);
-                showedImage.gameObject.SetActive(false);
+                
 
                 VideoPage videoPage = (VideoPage) playlist[Index];
 
@@ -111,10 +111,12 @@ namespace TutorialPanel {
             if (playlist[currentIndex] is ImagePage) {
                 // clear old image sprite
                 showedImage.texture = null;
+                showedImage.gameObject.SetActive(false);
             }
             else if (playlist[currentIndex] is VideoPage) {
                 // clear old video
                 mainPlayer.Stop();
+                mainPlayer.gameObject.SetActive(false);
             }
         }
 
