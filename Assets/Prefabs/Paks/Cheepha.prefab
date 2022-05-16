@@ -159,6 +159,10 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
   - {fileID: 11400000, guid: 1069085ed92f1da48900768785c0bb30, type: 2}
+  bonusAttack: 0
+  bonusDef: 0
+  bonusSpeed: 0
+  setSkill: -1
   actionIcon: {fileID: 1651321965726324652}
   selectedIcon: {fileID: 6716876284416023942}
   buffDisplayer: {fileID: 3456272039271581112}
@@ -262,11 +266,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.93
+      value: 1.36
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.79
+      value: 7.74
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -290,7 +294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011080, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7814540e411749b4b907b0303b7a119e, type: 3}

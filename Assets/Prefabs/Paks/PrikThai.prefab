@@ -142,6 +142,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skills:
   - {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
+  bonusAttack: 0
+  bonusDef: 0
+  bonusSpeed: 0
+  setSkill: -1
   actionIcon: {fileID: 1753595673039798862}
   selectedIcon: {fileID: 1973326543541266483}
   buffDisplayer: {fileID: 3637956407229533570}
@@ -617,11 +621,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.93
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.79
+      value: 5.82
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

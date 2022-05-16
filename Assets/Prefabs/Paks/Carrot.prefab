@@ -146,6 +146,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
   - {fileID: 11400000, guid: 1069085ed92f1da48900768785c0bb30, type: 2}
   - {fileID: 11400000, guid: be8d1d19f798e6a47a09c9ae5a542ed8, type: 2}
+  bonusAttack: 0
+  bonusDef: 0
+  bonusSpeed: 0
+  setSkill: -1
   actionIcon: {fileID: 1677122984628089534}
   selectedIcon: {fileID: 5974708055019866289}
   buffDisplayer: {fileID: 940215025798232118}

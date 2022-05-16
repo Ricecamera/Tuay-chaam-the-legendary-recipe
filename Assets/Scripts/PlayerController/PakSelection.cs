@@ -76,11 +76,7 @@ public class PakSelection : MonoBehaviour
                 {
                     //do victory stuff
                     LevelManager.instance.winTime += 1;
-                    if (SceneManager.GetActiveScene().name == "Battle1-2V2")
-                    {
-                        SceneManager.LoadScene("VictorySceneForTutorial");
-                    }
-                    else
+                    if (SceneManager.GetActiveScene().name != "Battle Tutorial")
                     {
                         SaveManager.instance.playerDatabase.unlockStatus += 1;
                         LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
@@ -89,9 +85,9 @@ public class PakSelection : MonoBehaviour
                         {
                             SaveManager.instance.playerDatabase.cookSystemStatus = PlayerProgress.ACQUIRED;
                         }
-                        SceneManager.LoadScene("VictoryScene");
+                        
                     }
-                    // LevelManager.instance.unlockStatus[LevelManager.instance.thislevel - 1 + 1] = true;
+                    SceneManager.LoadScene("VictoryScene");
 
                 }
                 else

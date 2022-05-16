@@ -84,6 +84,7 @@ namespace TutorialPanel {
                 if (videoPage.clip != null) {
                     // set new video and play it
                     mainPlayer.clip = videoPage.clip;
+                    mainPlayer.frame = 0;
                     mainPlayer.Play();
                 }
                 else {
@@ -116,7 +117,7 @@ namespace TutorialPanel {
             else if (playlist[currentIndex] is VideoPage) {
                 // clear old video
                 mainPlayer.Stop();
-                mainPlayer.gameObject.SetActive(false);
+                mainPlayer.clip = null;
             }
         }
 

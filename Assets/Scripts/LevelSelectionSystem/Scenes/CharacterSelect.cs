@@ -32,17 +32,19 @@ public class CharacterSelect : MonoBehaviour
                 {
                     CharacterSelecter.instance.ShowPopup();
                 }
-                else if (SceneManager.GetActiveScene().buildIndex == 12)
+                else if (SceneManager.GetActiveScene().buildIndex == 8 || SceneManager.GetActiveScene().buildIndex == 9)
                 {
                     // this scene is cook system tutorial
-                    SceneLoader.Instance.LoadSceneByIndex(6); // Load battle scene
+                    SceneLoader.Instance.LoadSceneByIndex(11); // Load battle scene
                 }
                 else
                 {
                     SceneLoader.Instance.LoadNextScene(); // Load battle scene
                 }
             });
-            backButton.onClick.AddListener(SceneLoader.Instance.LoadPrevScene);
+            backButton.onClick.AddListener(() => {
+                SceneLoader.Instance.LoadSceneByName("opened-map");
+            });
             // helpButton.onClick.AddListener(Help);
         }
     }

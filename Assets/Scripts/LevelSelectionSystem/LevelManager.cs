@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 
     public List<bool> playAniAlreadyMap { get; set; }
 
-    public int thislevel;
+    public int thislevel = 0;
 
     //number of time map was open;
     public int mapArrived;

@@ -161,6 +161,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
   - {fileID: 11400000, guid: 4f681f038b8bba442a38c3089deae586, type: 2}
   - {fileID: 11400000, guid: 1069085ed92f1da48900768785c0bb30, type: 2}
+  bonusAttack: 0
+  bonusDef: 0
+  bonusSpeed: 0
+  setSkill: -1
   actionIcon: {fileID: 1651321965726324652}
   selectedIcon: {fileID: 6716876284416023942}
   buffDisplayer: {fileID: 3456272039271581112}
@@ -1100,6 +1104,22 @@ PrefabInstance:
     - target: {fileID: 2467759885754001389, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_fontSize
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467759885754001389, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
+      propertyPath: m_margin.w
+      value: -6.0828824
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467759885754001389, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
+      propertyPath: m_margin.x
+      value: -18.248648
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467759885754001389, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
+      propertyPath: m_margin.y
+      value: -6.517381
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467759885754001389, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
+      propertyPath: m_margin.z
+      value: -18.900383
       objectReference: {fileID: 0}
     - target: {fileID: 2467759885754001389, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_fontSizeBase

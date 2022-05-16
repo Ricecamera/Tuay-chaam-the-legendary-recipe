@@ -144,6 +144,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06f0a15001fa95c4cbaac4e56a98ec85, type: 2}
   - {fileID: 11400000, guid: a4d3236ce0b6f8748b63ffbbf3d5d3fd, type: 2}
   - {fileID: 11400000, guid: 88111c5a769a35242959b81f1f22f9c2, type: 2}
+  bonusAttack: 0
+  bonusDef: 0
+  bonusSpeed: 0
+  setSkill: -1
   actionIcon: {fileID: 3475161359665207122}
   selectedIcon: {fileID: 7962015681781712699}
   buffDisplayer: {fileID: 9217155927664450101}
@@ -211,11 +215,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2467759886346011076, guid: 7814540e411749b4b907b0303b7a119e, type: 3}
       propertyPath: m_LocalPosition.x
