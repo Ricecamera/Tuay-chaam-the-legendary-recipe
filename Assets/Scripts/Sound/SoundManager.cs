@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Video;
 
 public class SoundManager : MonoBehaviour
 {
@@ -56,6 +57,11 @@ public class SoundManager : MonoBehaviour
             GameObject.Find("SoundBank").transform.GetChild(i).GetComponent<AudioSource>().volume = volume;
         }
         SoundManager.Instance.volValue = volume;
+    }
+
+    public void setVideoSound(float volume)
+    {
+        GameObject.Find("SoundBank").transform.GetChild(0).GetComponent<VideoPlayer>().SetDirectAudioVolume(0, volume);
     }
 
 

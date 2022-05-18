@@ -78,7 +78,7 @@ public class BattleUIController : MonoBehaviour
                 backButton.gameObject.SetActive(true);
                 endTurnButton.gameObject.SetActive(false);
                 List<int> noCookLevel = new List<int>() { 1, 2, 3 };
-                if (SceneManager.GetActiveScene().name == "Battle1-2V2" || noCookLevel.Contains(LevelManager.instance.thislevel))
+                if (SceneManager.GetActiveScene().name == "Battle Tutorial" || noCookLevel.Contains(LevelManager.instance.thislevel))
                 {
                     cookButton.gameObject.SetActive(false);
                 }
